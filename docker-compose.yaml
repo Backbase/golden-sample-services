@@ -1,0 +1,173 @@
+version: "3.7"
+# https://docs.docker.com/compose/compose-file/
+
+x-common-variables: &common-variables
+  SIG_SECRET_KEY: JWTSecretKeyDontUseInProduction!
+  EXTERNAL_SIG_SECRET_KEY: JWTSecretKeyDontUseInProduction!
+  EXTERNAL_ENC_SECRET_KEY: JWTEncKeyDontUseInProduction666!
+  eureka.client.serviceUrl.defaultZone: http://registry:8080/eureka
+  eureka.instance.non-secure-port: 8080
+  management.endpoints.web.exposure.include: info,health,beans,bindings,gateway
+  SPRING_MAIN_BANNER-MODE: 'off'
+
+x-database-variables: &database-variables
+  spring.liquibase.enabled: 'true'
+  spring.datasource.username: root
+  spring.datasource.password: backbase
+  spring.datasource.driver-class-name: com.mysql.jdbc.Driver
+  spring.jpa.database-platform: org.hibernate.dialect.MySQL5Dialect
+  spring.jpa.properties.hibernate.dialect: org.hibernate.dialect.MySQL5Dialect
+
+x-message-broker-variables: &message-broker-variables
+  spring.activemq.broker-url: tcp://message-broker:61616
+  spring.activemq.user: admin
+  spring.activemq.password: admin
+
+services:
+
+  message-broker:
+    image: rmohr/activemq:5.15.9-alpine
+    container_name: demo_activemq
+    privileged: true
+    ports:
+      - "61616:61616"
+      - "8161:8161"
+      - "5672:5672"
+      - "61613:61613"
+      - "1883:1883"
+      - "61614:61614"
+
+  mysql:
+    image: mysql:5.7.18
+    # Set max_allowed_packet to 512M for provisioning
+    command: --max-allowed-packet=512M --performance-schema=FALSE --transaction-isolation=READ-COMMITTED --init-connect='SET collation_connection=utf8_bin' --init-connect='SET NAMES utf8;' --character-set-server=utf8 --collation-server=utf8_bin --lower-case-table-names=2 --max-connections=500
+    container_name: demo_mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=backbase
+    ports:
+      - "3306:3306"
+    volumes:
+      - demo_mysql_data:/var/lib/mysql
+
+  edge:
+    image: repo.backbase.com/backbase-docker-releases/edge:IPS-1.12.0
+    ports:
+      - "8080:8080"
+    environment:
+      <<: *common-variables
+      gateway.actuator.user: admin
+      gateway.actuator.password: admin
+    links:
+      - registry
+      - token-converter
+
+  registry:
+    image: repo.backbase.com/backbase-docker-releases/registry:IPS-1.12.0
+    ports:
+      - "8761:8080"
+
+  token-converter:
+    image: repo.backbase.com/backbase-docker-releases/bb-authentication-token-converter-service:IPS-1.12.0
+    ports:
+      - "7779:8080"
+    environment:
+      <<: *common-variables
+    links:
+      - registry
+
+  auth:
+    image: repo.backbase.com/backbase-docker-releases/authentication-dev:IPS-1.12.0-no-production
+    ports:
+      - "7778:8080"
+    environment:
+      <<: *common-variables
+      <<: *message-broker-variables
+    links:
+      - registry
+      - message-broker
+
+  product:
+    image: docker.io/torrespro/product
+    ports:
+      - "9091:8080"
+    environment:
+      <<: *common-variables
+      <<: *database-variables
+    links:
+      - registry
+      - mysql
+
+  review:
+    image: docker.io/torrespro/review
+    ports:
+      - "9092:8080"
+    environment:
+      <<: *common-variables
+      <<: *database-variables
+    links:
+      - registry
+      - mysql
+
+  store:
+    image: docker.io/torrespro/store
+    ports:
+      - "9093:8080"
+    environment:
+      <<: *common-variables
+    links:
+      - registry
+
+  prom:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/eureka-instances.json:/etc/prometheus/eureka-instances.json
+    command: "--config.file=/etc/prometheus/prometheus.yml --storage.tsdb.path=/prometheus"
+    ports:
+      - 9090:9090
+    networks:
+      - performance
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - '3000:3000'
+    volumes:
+      - grafana-storage:/var/lib/grafana
+      - ./grafana-provisioning/:/etc/grafana/provisioning
+    depends_on:
+      - prom
+      # environment:
+      # - GF_SECURITY_ADMIN_USER=${GRAFANA_USERNAME}
+      # - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
+    networks:
+      - performance
+
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    environment:
+      - STORAGE_TYPE=mem
+      # - STORAGE_TYPE=mysql
+      # - MYSQL_DB = dbs
+      # - MYSQL_HOST=mysql_zip
+    # - JAVA_OPTS=-Dlogging.level.zipkin=DEBUG
+    ports:
+      - 9411:9411
+    # depends_on:
+    #     - storage
+
+  swaggerui:
+    image: swaggerapi/swagger-ui
+    container_name: swaggerui
+    environment:
+      - SWAGGER_JSON=/foo/service-api.yaml
+    ports:
+      - 80:8080
+    volumes:
+      - ./review/src/main/resources:/foo
+
+
+volumes:
+  demo_mysql_data:
+  grafana-storage:

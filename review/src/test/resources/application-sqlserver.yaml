@@ -1,0 +1,3 @@
+spring:
+  datasource:
+    url: jdbc:tc:sqlserver://localhost;instance=SQLEXPRESS;databaseName=databasename

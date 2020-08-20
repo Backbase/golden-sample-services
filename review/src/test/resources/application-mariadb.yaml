@@ -1,0 +1,3 @@
+spring:
+  datasource:
+    url: jdbc:tc:mariadb:10.3.13:///databasename

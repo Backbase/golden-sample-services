@@ -1,0 +1,72 @@
+@startuml "bigbankplc"
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4_Container.puml
+' uncomment the following line and comment the first to use locally
+' !include C4_Container.puml
+
+skinparam wrapWidth 200
+skinparam maxMessageSize 200
+
+LAYOUT_TOP_DOWN
+'LAYOUT_AS_SKETCH
+'LAYOUT_WITH_LEGEND
+
+
+Person(customer, Customer, "A customer")
+
+System(system, System, "Another system")
+
+System_Boundary(c1, "Product Store") {
+
+'    Container(app, "Customer Application", "Javascript, Angular", "Allows customers to manage their profile")
+
+    Container(edge_service, "Edge Service", "Java, Spring Boot", "Single entry point to the system")
+
+    Container(auth_service, "Auth Service", "Java, Spring Boot", "Auth Service")
+
+    Container(token_service, "Token Converter Service", "Java, Spring Boot", "Token Converter Service")
+
+'    Container(config_service, "Config Service", "Java, Spring Boot", "Config Service")
+
+    Container(eureka_service, "Eureka Service Discovery", "Java, Spring Boot", "Eureka Service")
+
+    Container(store_service, "Store Service", "Java, Spring Boot", "The point of access for customer information")
+
+'    Container(message_bus, "Message Bus", "RabbitMQ", "Transport for business events")
+
+    Container(product_service, "Product Service", "Java, Spring Boot", "Manages product information")
+
+    Container(review_service, "Review Service", "Java, Spring Boot", "Manages product reviews")
+
+    ContainerDb(product_db, "Product Database", "MySQL", "Stores a normalized version of all products data")
+
+    ContainerDb(review_db, "Review Database", "MySQL", "Stores a normalized version of all reviews data")
+
+'    Container(audit_store, "Audit Store", "Event Store", "Stores information about events that have happened")
+}
+
+Rel(customer, edge_service, "Uses", "/client-api/ with external token")
+Rel(edge_service, store_service, "Uses", "/client-api/ with internal token")
+Rel(edge_service, eureka_service, "Uses", "/eureka/")
+Rel(edge_service, auth_service, "Authenticate")
+Rel(edge_service, token_service, "external token", "/convert")
+Rel(token_service, edge_service, "internal token")
+
+'Rel_R(app, store_service, "Updates customer information using", "async, JSON/HTTPS")
+
+'Rel_L(store_service, app, "Sends events to", "WebSocket")
+'Rel_R(store_service, message_bus, "Sends customer update events to")
+'Rel(store_service, customer_db, "Stores data in", "JDBC")
+
+Rel(store_service, token_service, "Get token", "/oauth/token with internal token")
+Rel(store_service, review_service, "Sends customer update events to", "/service-api/")
+Rel(store_service, product_service, "Sends customer update events to", "/service-api/")
+
+
+Rel(system, product_service, "Creates a product", "/integration-api/")
+
+Rel(product_service, product_db, "Stores data in", "JDBC")
+Rel(review_service, review_db, "Stores data in", "JDBC")
+
+Lay_R(product_service, review_service)
+
+@enduml

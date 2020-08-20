@@ -1,0 +1,4 @@
+# Server configs
+server:
+  port: 9080
+

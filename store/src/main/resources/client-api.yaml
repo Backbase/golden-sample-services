@@ -1,0 +1,110 @@
+openapi: 3.0.1
+info:
+  title: Store Client API
+  description: Description of the API...
+  termsOfService: http://atorres.es
+  contact:
+    name: Contact
+    url: http://atorres.es
+    email: me@mail.com
+  license:
+    name: License
+    url: http://atorres.es
+  version: 1.0.0
+servers:
+- url: http://localhost:8080/client-api/
+tags:
+- name: product-composite-client-impl
+  description: REST API for composite product information.
+paths:
+  /v1/product-composite/{productId}:
+    get:
+      tags:
+      - product-composite-client-impl
+      summary: Returns a composite view of the specified product id
+      description: |
+        # Normal response
+        If the requested product id is found the method will return information regarding:
+        1. Base product information
+        1. Reviews
+
+
+        # Expected partial and error responses
+        In the following cases, only a partial response be created (used to simplify testing of error conditions)
+
+        ## Product id 113
+        200 - Ok, but no recommendations will be returned
+
+        ## Product id 213
+        200 - Ok, but no reviews will be returned
+
+        ## Non numerical product id
+        400 - A <b>Bad Request</b> error will be returned
+
+        ## Product id 13
+        404 - A <b>Not Found</b> error will be returned
+
+        ## Negative product ids
+        422 - An <b>Unprocessable Entity</b> error will be returned
+      operationId: getProductUsingGET
+      parameters:
+      - name: productId
+        in: path
+        description: productId
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductAggregate'
+        400:
+          description: Bad Request, invalid format of the request. See response message
+            for more information.
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not found, the specified id does not exist.
+          content: {}
+        422:
+          description: Unprocessable entity, input parameters caused the processing
+            to fails. See response message for more information.
+          content: {}
+components:
+  schemas:
+    ProductAggregate:
+      title: ProductAggregate
+      type: object
+      properties:
+        name:
+          type: string
+        productId:
+          type: integer
+          format: int64
+        reviews:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReviewSummary'
+        weight:
+          type: integer
+          format: int32
+    ReviewSummary:
+      title: ReviewSummary
+      type: object
+      properties:
+        author:
+          type: string
+        reviewId:
+          type: integer
+          format: int64
+        subject:
+          type: string

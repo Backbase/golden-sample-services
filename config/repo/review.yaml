@@ -1,0 +1,19 @@
+spring:
+  jpa:
+    show-sql: true
+    open-in-view: false
+    # Strongly recommend to set this property to "none" or with flyway  to "validate" in a
+    # production environment!
+    hibernate.ddl-auto: none
+  datasource:
+    ## You often do not need to specify the driver-class-name,
+    ## since Spring Boot can deduce it for most databases from the url.
+    #driver-class-name: com.mysql.cj.jdbc.Driver
+    url: "jdbc:mysql://${app.database.mysql.host}/review-db?useSSL=false&serverTimezone=UTC"
+    username: user
+    password: pwd
+    hikari:
+      initialization-fail-timeout: 60000
+      connection-test-query: SELECT 1
+      maximum-pool-size: 10
+

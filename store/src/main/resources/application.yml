@@ -1,0 +1,43 @@
+server:
+  port: 9917
+  error:
+    include-message: always
+
+# No service discovery setup
+app:
+  product-service:
+    host: localhost
+    port: 9915
+  review-service:
+    host: localhost
+    port: 9916
+
+# API Registry client configuration
+eureka:
+  instance:
+    metadata-map:
+      public: true
+      role: live
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8080/registry/eureka/
+
+# Configure Internal JWT handler
+sso:
+  jwt:
+    internal:
+      signature:
+        key:
+          type: ENV
+          value: SIG_SECRET_KEY
+
+# Spring health monitoring
+management:
+  health:
+    jms:
+     enabled: false
+
+logging:
+  level:
+    root: INFO
+    com.backbase.goldensample: DEBUG

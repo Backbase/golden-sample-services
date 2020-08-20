@@ -1,0 +1,16 @@
+spring:
+  liquibase:
+    enabled: false
+  jpa:
+    show-sql: true
+    open-in-view: false
+    # Strongly recommend to set this property to "none"
+    # production environment!
+    hibernate.ddl-auto: create-drop
+  datasource:
+#    ## You often do not need to specify the driver-class-name,
+#    ## since Spring Boot can deduce it for most databases from the url.
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+    url: jdbc:tc:mysql:5.7:///databasename
+    username: test
+    password: test

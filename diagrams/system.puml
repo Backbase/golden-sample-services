@@ -1,0 +1,56 @@
+@startuml "system"
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4_Container.puml
+' uncomment the following line and comment the first to use locally
+' !include C4_Container.puml
+
+skinparam wrapWidth 200
+skinparam maxMessageSize 200
+
+LAYOUT_LEFT_RIGHT
+'LAYOUT_AS_SKETCH
+'LAYOUT_WITH_LEGEND
+
+
+Person(customer, Customer, "A customer")
+
+System(system, System, "Another system")
+
+System_Boundary(c1, "Product Store") {
+
+'    Container(app, "Customer Application", "Javascript, Angular", "Allows customers to manage their profile")
+
+    Container(store_service, "Store Service", "Java, Spring Boot", "The point of access for customer information")
+
+'    Container(message_bus, "Message Bus", "RabbitMQ", "Transport for business events")
+
+    Container(product_service, "Product Service", "Java, Spring Boot", "Manages product information")
+
+    Container(review_service, "Review Service", "Java, Spring Boot", "Manages product reviews")
+
+    ContainerDb(product_db, "Product Database", "MySQL", "Stores a normalized version of all products data")
+
+    ContainerDb(review_db, "Review Database", "MySQL", "Stores a normalized version of all reviews data")
+
+'    Container(audit_store, "Audit Store", "Event Store", "Stores information about events that have happened")
+}
+
+Rel(customer, store_service, "Uses", "/client-api/")
+
+'Rel_R(app, store_service, "Updates customer information using", "async, JSON/HTTPS")
+
+'Rel_L(store_service, app, "Sends events to", "WebSocket")
+'Rel_R(store_service, message_bus, "Sends customer update events to")
+'Rel(store_service, customer_db, "Stores data in", "JDBC")
+
+Rel(store_service, review_service, "Gets reviews information from", "/service-api/")
+Rel(store_service, product_service, "Gets products information from", "/service-api/")
+
+
+Rel(system, product_service, "Creates a product", "/integration-api/")
+
+Rel(product_service, review_db, "Stores data in", "JDBC")
+Rel(review_service, product_db, "Stores data in", "JDBC")
+
+Lay_R(product_service, review_service)
+
+@enduml

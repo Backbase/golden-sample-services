@@ -1,0 +1,7 @@
+server:
+  port: 8443 # SSL Port
+
+logging.level:
+  org.springframework.cloud.gateway: TRACE
+  org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator: INFO
+  org.springframework.web.server.adapter.HttpWebHandlerAdapter: TRACE
