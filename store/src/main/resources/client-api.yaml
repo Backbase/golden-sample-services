@@ -12,12 +12,12 @@ info:
     url: http://atorres.es
   version: 1.0.0
 servers:
-- url: http://localhost:8080/client-api/
+- url: http://localhost:8080/
 tags:
 - name: product-composite-client-impl
   description: REST API for composite product information.
 paths:
-  /v1/product-composite/{productId}:
+  /client-api/v1/product-composite/{productId}:
     get:
       tags:
       - product-composite-client-impl
@@ -101,10 +101,13 @@ components:
       title: ReviewSummary
       type: object
       properties:
-        author:
-          type: string
         reviewId:
           type: integer
           format: int64
+        author:
+          type: string
         subject:
           type: string
+        content:
+          type: string
+

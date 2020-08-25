@@ -1,0 +1,4 @@
+###
+GET http://localhost:9917/client-api/v1/product-composite/1
+
+

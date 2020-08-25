@@ -19,6 +19,7 @@ eureka:
       public: true
       role: live
   client:
+    enabled: false
     serviceUrl:
       defaultZone: http://localhost:8080/registry/eureka/
 
@@ -30,6 +31,23 @@ sso:
         key:
           type: ENV
           value: SIG_SECRET_KEY
+
+backbase:
+  security:
+    mtls:
+      enabled: false
+    public:
+      paths:
+        - "/**"
+
+buildingblocks:
+  security:
+    csrf:
+      autoconfig: true
+      enabled: false
+
+security:
+  disabled: true
 
 # Spring health monitoring
 management:

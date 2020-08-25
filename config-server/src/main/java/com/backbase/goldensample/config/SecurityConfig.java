@@ -10,7 +10,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
     http
-        // Disable CRCF to allow POST to /encrypt and /decrypt endpoints
+        // Disable CSRF to allow POST to /encrypt and /decrypt endpoints
         .csrf()
             .disable()
         .authorizeRequests()

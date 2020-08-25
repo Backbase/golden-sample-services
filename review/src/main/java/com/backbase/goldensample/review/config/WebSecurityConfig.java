@@ -1,4 +1,4 @@
-package com.backbase.goldensample.product;
+package com.backbase.goldensample.review.config;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
