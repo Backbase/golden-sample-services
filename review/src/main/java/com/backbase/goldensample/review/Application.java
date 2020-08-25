@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableJpaRepositories(basePackages = {"com.backbase.goldensample.review.persistence"})
-@EntityScan(basePackages = {"com.backbase.goldensample.product.persistence"})
+@EntityScan(basePackages = {"com.backbase.goldensample.review.persistence"})
 @EnableJpaAuditing
 @ComponentScan("com.backbase.goldensample.review")
 public class Application extends SpringBootServletInitializer {

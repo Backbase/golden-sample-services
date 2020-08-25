@@ -1,7 +1,7 @@
 package com.backbase.goldensample.review.service;
 
 
-import com.backbase.goldensample.review.mappper.ReviewMapper;
+import com.backbase.goldensample.review.mapper.ReviewMapper;
 import com.backbase.goldensample.review.persistence.ReviewEntity;
 import com.backbase.goldensample.review.persistence.ReviewRepository;
 import com.backbase.reviews.api.service.v2.model.Review;
@@ -48,7 +48,28 @@ public class ReviewServiceImpl implements ReviewService {
     }
   }
 
-  public List<Review> getReviews(long productId) {
+  @Override
+  public Review updateReview(Review body) throws Exception {
+    ReviewEntity entity = mapper.apiToEntity(body);
+    ReviewEntity newEntity = repository.save(entity);
+
+    log.debug(
+        "updateReview: update a review entity: {}/{}", body.getProductId(), body.getReviewId());
+    return mapper.entityToApi(newEntity);
+  }
+
+  //  @Override
+//  public List<Review> getReviews(long productId) {
+//
+//    List<Review> list = mapper.entityListToApiList(repository.findByProductId(productId));
+//
+//    log.debug("getReviews: response size: {}", list.size());
+//
+//    return list;
+//  }
+
+  @Override
+  public List<Review> getReviewsByProductId(long productId) {
 
     List<Review> list = mapper.entityListToApiList(repository.findByProductId(productId));
 
@@ -57,6 +78,7 @@ public class ReviewServiceImpl implements ReviewService {
     return list;
   }
 
+  @Override
   public Review getReview(long reviewId) {
 
     Review review = mapper.entityToApi(repository.findById(reviewId).get());

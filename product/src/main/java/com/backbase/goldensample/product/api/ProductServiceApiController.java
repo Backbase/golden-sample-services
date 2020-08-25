@@ -40,7 +40,7 @@ public class ProductServiceApiController implements ProductServiceImplApi {
       e.printStackTrace();
       //TODO add log
     }
-    return ResponseEntity.ok().build();
+    return ResponseEntity.noContent().build();
   }
 
   @Override
@@ -72,13 +72,14 @@ public class ProductServiceApiController implements ProductServiceImplApi {
   public ResponseEntity<Void> putProduct(@Valid Product product) {
     Product productWithId = prodService.updateProduct(product);
 
-    return ResponseEntity.ok().build();
+    return ResponseEntity.noContent().build();
   }
 
   @Override
   public ResponseEntity<Void> putProductById(Long productId, @Valid Product product) {
+    product.setProductId(productId);
     Product productWithId = prodService.updateProduct(product);
 
-    return ResponseEntity.ok().build();
+    return ResponseEntity.noContent().build();
   }
 }

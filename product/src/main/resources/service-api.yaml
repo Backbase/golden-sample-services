@@ -65,7 +65,7 @@ paths:
             schema:
               $ref: '#/components/schemas/Product'
       responses:
-        '201':
+        '204':
           description: If the transactions have been created and/or updated successfully
           content:
             application/json:
@@ -83,7 +83,7 @@ paths:
             schema:
               $ref: '#/components/schemas/Product'
       responses:
-        '201':
+        '204':
           description: OK
   /service-api/v1/products/{productId}:
     get:
@@ -139,7 +139,7 @@ paths:
             type: integer
             format: int64
       responses:
-        201:
+        204:
           description: OK
         400:
           description: Bad Request, invalid format of the request. See response message
@@ -179,7 +179,7 @@ paths:
             schema:
               $ref: '#/components/schemas/Product'
       responses:
-        '201':
+        '204':
           description: OK
 components:
   schemas:

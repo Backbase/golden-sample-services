@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Version;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,9 +30,6 @@ public class ProductEntity {
   @Id
   @GeneratedValue
   private Long id;
-
-  @Version
-  private short version;
 
   private String name;
 

@@ -5,6 +5,12 @@ Content-Type: application/json
 "weight":  "5",
 "createDate":  "2020-12-01"}
 
+> {%
+  client.test("Id exists", function() {
+  client.assert(response.body.hasOwnProperty("id"), "Cannot find 'id' option in response");
+});
+%}
+
 ###
 GET http://localhost:9915/service-api/v1/products/
 
@@ -17,6 +23,15 @@ Content-Type: application/json
   "weight":  "5",
   "createDate":  "2020-12-01"}
 
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 201, "Response status is not 201");
+});
+%}
+
+###
+GET http://localhost:9915/service-api/v1/products/1
+
 ###
 PUT http://localhost:9915/service-api/v2/products/1
 Content-Type: application/json
@@ -26,10 +41,26 @@ Content-Type: application/json
   "weight":  "5",
   "createDate":  "2020-12-01"}
 
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 201, "Response status is not 201");
+});
+%}
+
 ###
 GET http://localhost:9915/service-api/v1/products/1
 
 ###
 DELETE http://localhost:9915/service-api/v1/products/1
 
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 201, "Response status is not 201");
+});
+%}
 
+###
+GET http://localhost:9915/service-api/v1/products/1
+
+###
+GET http://localhost:9915/service-api/v1/products/

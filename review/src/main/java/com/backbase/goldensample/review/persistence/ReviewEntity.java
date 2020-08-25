@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.Table;
-import javax.persistence.Version;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -34,8 +33,6 @@ public class ReviewEntity {
   @Id
   @GeneratedValue(strategy = IDENTITY)
   private Long id;
-
-  @Version private int version;
 
   @NonNull
   private Long productId;

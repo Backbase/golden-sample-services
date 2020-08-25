@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
-import com.backbase.goldensample.review.mappper.ReviewMapper;
+import com.backbase.goldensample.review.mapper.ReviewMapper;
 import com.backbase.goldensample.review.persistence.ReviewEntity;
 import com.backbase.reviews.api.service.v2.model.Review;
 import java.util.Collections;

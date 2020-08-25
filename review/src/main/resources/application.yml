@@ -54,7 +54,7 @@ spring:
   datasource:
     ## You often do not need to specify the driver-class-name,
     ## since Spring Boot can deduce it for most databases from the url.
-    #driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: com.mysql.jdbc.Driver
     url: "jdbc:mysql://localhost:3306/review?useSSL=false&serverTimezone=UTC&createDatabaseIfNotExist=true"
     username: root
     password: backbase

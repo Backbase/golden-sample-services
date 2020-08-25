@@ -17,7 +17,7 @@ tags:
   - name: review-service-impl
     description: REST API for review information.
 paths:
-  /reviews/{productId}:
+  /service-api/v1/products/{productId}/reviews:
     get:
       tags:
         - review-service-impl
@@ -71,7 +71,7 @@ paths:
             type: integer
             format: int64
       responses:
-        201:
+        204:
           description: OK
         400:
           description: Bad Request, invalid format of the request. See response message
@@ -90,7 +90,7 @@ paths:
           description: Unprocessable entity, input parameters caused the processing
             to fails. See response message for more information.
           content: {}
-  /reviews:
+  /service-api/v1/reviews:
     post:
       tags:
         - review-service-impl
@@ -103,7 +103,7 @@ paths:
             schema:
               $ref: '#/components/schemas/Review'
       responses:
-        '201':
+        '204':
           description: If the transactions have been created and/or updated successfully
           content:
             application/json:
@@ -121,13 +121,13 @@ paths:
             schema:
               $ref: '#/components/schemas/Review'
       responses:
-        '201':
+        '204':
           description: If the transactions have been created and/or updated successfully
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ReviewId'
-  /reviews/{reviewId}:
+  /service-api/v1/reviews/{reviewId}:
     get:
       tags:
         - review-service-impl
@@ -181,7 +181,7 @@ paths:
             type: integer
             format: int64
       responses:
-        201:
+        204:
           description: OK
         400:
           description: Bad Request, invalid format of the request. See response message

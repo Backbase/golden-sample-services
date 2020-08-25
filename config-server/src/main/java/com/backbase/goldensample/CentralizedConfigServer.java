@@ -1,4 +1,4 @@
-package com.siriusxi.cloud.infra.cs;
+package com.backbase.goldensample;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

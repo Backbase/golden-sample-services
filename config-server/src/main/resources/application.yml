@@ -27,8 +27,3 @@ management:
 logging:
     level:
         root: info
----
-spring:
-    profiles: docker
-    cloud:
-        config.server.native.searchLocations: file:/config/repo

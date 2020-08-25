@@ -1,6 +1,5 @@
 package com.backbase.goldensample.product;
 
-import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.transaction.annotation.Propagation.NOT_SUPPORTED;
@@ -19,7 +18,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -75,7 +73,6 @@ class PersistenceIT {
 
     ProductEntity foundEntity = repository.findById(savedEntity.getId()).get();
 
-    assertEquals(1, (long) foundEntity.getVersion());
     assertEquals("amazon 2", foundEntity.getName());
   }
 
@@ -101,39 +98,38 @@ class PersistenceIT {
 //  }
 
   @Test
-  public void optimisticLockError() {
-
-    // Store the saved entity in two separate entity objects
-    ProductEntity entity1 = repository.findById(savedEntity.getId()).orElse(new ProductEntity()),
-        entity2 = repository.findById(savedEntity.getId()).orElse(new ProductEntity());
-
-    // Update the entity using the first entity object
-    entity1.setName("amazon 1");
-    repository.save(entity1);
-
-    /*
-      Update the entity using the second entity object.
-      This should fail since the second entity now holds a old version number,
-      i.e. a Optimistic Lock Error
-    */
-    try {
-      entity2.setName("amazon 2");
-      repository.save(entity2);
-
-      fail("Expected an OptimisticLockingFailureException");
-    } catch (OptimisticLockingFailureException ignored) {
-    }
-
-    // Get the updated entity from the database and verify its new sate
-    var updatedEntity = repository.findById(savedEntity.getId()).orElse(new ProductEntity());
-
-    assertEquals(1, updatedEntity.getVersion());
-    assertEquals("amazon 1", updatedEntity.getName());
-  }
+//  public void optimisticLockError() {
+//
+//    // Store the saved entity in two separate entity objects
+//    ProductEntity entity1 = repository.findById(savedEntity.getId()).orElse(new ProductEntity()),
+//        entity2 = repository.findById(savedEntity.getId()).orElse(new ProductEntity());
+//
+//    // Update the entity using the first entity object
+//    entity1.setName("amazon 1");
+//    repository.save(entity1);
+//
+//    /*
+//      Update the entity using the second entity object.
+//      This should fail since the second entity now holds a old version number,
+//      i.e. a Optimistic Lock Error
+//    */
+//    try {
+//      entity2.setName("amazon 2");
+//      repository.save(entity2);
+//
+//      fail("Expected an OptimisticLockingFailureException");
+//    } catch (OptimisticLockingFailureException ignored) {
+//    }
+//
+//    // Get the updated entity from the database and verify its new sate
+//    var updatedEntity = repository.findById(savedEntity.getId()).orElse(new ProductEntity());
+//
+//    assertEquals(1, updatedEntity.getVersion());
+//    assertEquals("amazon 1", updatedEntity.getName());
+//  }
 
   private void assertEqualsReview(ProductEntity expectedEntity, ProductEntity actualEntity) {
     Assert.assertEquals(expectedEntity.getId(),        actualEntity.getId());
-    Assert.assertEquals(expectedEntity.getVersion(),   actualEntity.getVersion());
     Assert.assertEquals(expectedEntity.getName(),    actualEntity.getName());
     Assert.assertEquals(expectedEntity.getWeight(),   actualEntity.getWeight());
     Assert.assertEquals(expectedEntity.getCreateDate(),   actualEntity.getCreateDate());

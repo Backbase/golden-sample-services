@@ -1,4 +1,4 @@
-package com.backbase.goldensample.review.mappper;
+package com.backbase.goldensample.review.mapper;
 
 
 import static org.mapstruct.factory.Mappers.getMapper;
@@ -19,7 +19,6 @@ public interface ReviewMapper {
   Review entityToApi(ReviewEntity entity);
 
   @Mapping(source = "reviewId", target = "id")
-  @Mapping(target = "version", ignore = true)
   ReviewEntity apiToEntity(Review api);
 
   List<Review> entityListToApiList(List<ReviewEntity> entity);
