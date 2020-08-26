@@ -1,0 +1,45 @@
+POST http://localhost:9915/integration-api/v1/products/
+Content-Type: application/json
+
+{"name": "Product 1",
+"weight":  "5",
+"createDate":  "2020-12-01"}
+
+> {%
+  client.test("Id exists", function() {
+  client.assert(response.body.hasOwnProperty("id"), "Cannot find 'id' option in response");
+});
+%}
+
+###
+GET http://localhost:9915/integration-api/v1/products/
+
+###
+PUT http://localhost:9915/integration-api/v1/products
+Content-Type: application/json
+
+{ "productId" : "1",
+  "name": "Product Updated",
+  "weight":  "5",
+  "createDate":  "2020-12-01"}
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 204, "Response status is not 204");
+});
+%}
+
+###
+GET http://localhost:9915/integration-api/v1/products/1
+
+###
+DELETE http://localhost:9915/integration-api/v1/products/1
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 204, "Response status is not 204");
+});
+%}
+
+###
+GET http://localhost:9915/integration-api/v1/products/1

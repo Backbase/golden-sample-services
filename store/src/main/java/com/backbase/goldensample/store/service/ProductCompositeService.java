@@ -37,7 +37,9 @@ public class ProductCompositeService {
             LOG.debug("Will call the getProduct API on URL: {}", productServiceImplApi.getApiClient());
 
             Product product = productServiceImplApi.getProductUsingGET(productId);
-            LOG.debug("Found a product with id: {}", product.getProductId());
+            if (product != null) {
+                LOG.debug("Found a product with id: {}", product.getProductId());
+            }
 
             return product;
     }

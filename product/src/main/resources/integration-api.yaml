@@ -1,0 +1,161 @@
+openapi: 3.0.1
+info:
+  title: Product Integration API
+  description: Description of the API...
+  termsOfService: http://atorres.es
+  contact:
+    name: Contact
+    url: http://atorres.es
+    email: me@mail.com
+  license:
+    name: Copyright Backbase
+    url: https://www.backbase.com/legal
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+tags:
+  - name: product-integration-impl
+    description: Integration REST API for product information.
+paths:
+  /integration-api/v1/products:
+    post:
+      tags:
+        - product-integration-impl
+      summary:  Create a product
+      description: |
+      operationId: postProduct
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '204':
+          description: If the transactions have been created and/or updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductId'
+    put:
+      tags:
+        - product-integration-impl
+      summary:  Update a product
+      description: |
+      operationId: putProduct
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '204':
+          description: OK
+  /integration-api/v1/products/{productId}:
+    get:
+      tags:
+        - product-integration-impl
+      summary: Returns a product with the specified product id
+      description: |
+      operationId: getProductUsingGET
+      parameters:
+        - name: productId
+          in: path
+          description: productId
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        400:
+          description: Bad Request, invalid format of the request. See response message
+            for more information.
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not found, the specified id does not exist.
+          content: {}
+        422:
+          description: Unprocessable entity, input parameters caused the processing
+            to fails. See response message for more information.
+          content: {}
+    delete:
+      tags:
+        - product-integration-impl
+      summary: Deletes a product with the specified product id
+      description: |
+      operationId: deleteProduct
+      parameters:
+        - name: productId
+          in: path
+          description: productId
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        204:
+          description: OK
+        400:
+          description: Bad Request, invalid format of the request. See response message
+            for more information.
+          content: {}
+        401:
+          description: Unauthorized
+          content: {}
+        403:
+          description: Forbidden
+          content: {}
+        404:
+          description: Not found, the specified id does not exist.
+          content: {}
+        422:
+          description: Unprocessable entity, input parameters caused the processing
+            to fails. See response message for more information.
+          content: {}
+components:
+  schemas:
+    Product:
+      title: Product
+      type: object
+      properties:
+        name:
+          type: string
+        productId:
+          type: integer
+          format: int64
+        weight:
+          type: integer
+          format: int32
+        createDate:
+          description: The date when the product was created
+          type: string
+          format: date
+    ProductList:
+      title: ProductList
+      description: An array of products
+      type: array
+      items:
+        $ref: '#/components/schemas/Product'
+      required:
+        - ProductList
+    ProductId:
+      type: object
+      description: Object that defines an id attribute only.
+      properties:
+        id:
+          description: Internally used unique identification
+          type: integer
+          format: int64
+      required:
+        - id

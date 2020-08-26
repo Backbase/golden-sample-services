@@ -182,7 +182,7 @@
         <artifactId>boat-maven-plugin</artifactId>
         <executions>
           <execution>
-            <id>generate-client-api-code</id>
+            <id>generate-service-api-code</id>
             <goals>
               <goal>generate</goal>
             </goals>
@@ -210,6 +210,35 @@
               </configOptions>
             </configuration>
           </execution>
+          <execution>
+            <id>generate-integration-api-code</id>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <phase>generate-sources</phase>
+            <configuration>
+              <output>${project.build.directory}/generated-sources/api</output>
+              <generateSupportingFiles>true</generateSupportingFiles>
+              <generatorName>spring</generatorName>
+              <strictSpec>true</strictSpec>
+              <generateApiTests>false</generateApiTests>
+              <generateModelTests>false</generateModelTests>
+              <inputSpec>${project.basedir}/src/main/resources/integration-api.yaml</inputSpec>
+              <configOptions>
+                <library>spring-mvc</library>
+                <dateLibrary>legacy</dateLibrary>
+                <interfaceOnly>true</interfaceOnly>
+                <skipDefaultInterface>true</skipDefaultInterface>
+                <useBeanValidation>true</useBeanValidation>
+                <useClassLevelBeanValidation>false</useClassLevelBeanValidation>
+                <useTags>true</useTags>
+                <java8>true</java8>
+                <useOptional>false</useOptional>
+                <apiPackage>com.backbase.product.api.integration.v2</apiPackage>
+                <modelPackage>com.backbase.product.api.service.v2.model</modelPackage>
+              </configOptions>
+            </configuration>
+          </execution>
         </executions>
       </plugin>
       <plugin>
@@ -217,15 +246,6 @@
         <artifactId>versions-maven-plugin</artifactId>
         <version>2.7</version>
       </plugin>
-<!--      <plugin>-->
-<!--        <groupId>org.apache.maven.plugins</groupId>-->
-<!--        <artifactId>maven-surefire-plugin</artifactId>-->
-<!--        <configuration>-->
-<!--          <systemPropertyVariables>-->
-<!--            <SIG_SECRET_KEY>JWTSecretKeyDontUseInProduction!</SIG_SECRET_KEY>-->
-<!--          </systemPropertyVariables>-->
-<!--        </configuration>-->
-<!--      </plugin>-->
     </plugins>
   </build>
 
