@@ -40,7 +40,7 @@ class PersistenceIT {
 
     repository.deleteAll();
 
-    ReviewEntity entity = new ReviewEntity();
+    ReviewEntity entity = new ReviewEntity(1L, "author", "subject", "content");
     savedEntity = repository.save(entity);
 
     assertEquals(entity, savedEntity);

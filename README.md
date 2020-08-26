@@ -14,11 +14,10 @@ Backbase Golden Sample --> Parent folder.
 |- config --> All system configuration files 
 |- config-server --> Centralized Configuration server
 |- diagrams --> All docs and diagrams. 
-|-store-services 
-  |- product --> Product Microservice 
-  |- review --> Review Microservice 
-  |- store --> Store Microservice 
-|- docker-compose.yml --> contains all services landscape with RabbitMQ 
+|- product --> Product Microservice 
+|- review --> Review Microservice 
+|- store --> Store Microservice 
+|- docker-compose.yml --> contains all services landscape including infra like MySQL, RabbitMQ, Zipkin, Prometheus, etc 
 ```
 Now, as we have learned about different system components, then let's start.
 
@@ -133,6 +132,8 @@ The following points are covered in this 1st stage (other stages topics will be 
 #### Resources
 - We will add more business concepts while keeping the project software stack updated to the most recent software versions. 
 Besides, adding more use cases and problems, ours teams are facing in a day by day work.
+- The book [Hands-On Microservices With Spring Boot and Spring
+   Cloud book by Packt Publishing](https://www.packtpub.com/web-development/hands-on-microservices-with-spring-boot-and-spring-cloud).
 - [CloudNative](https://www.cncf.io/) recommendations.
 - [Twelve-Factor application](https://12factor.net/).
 - [Spring Cloud framework](https://spring.io/projects/spring-cloud).
@@ -141,4 +142,4 @@ Besides, adding more use cases and problems, ours teams are facing in a day by d
 #### Contributions
 
 Please create a branch and a PR with your contributions.
-Commit messages should follow: https://seesparkbox.com/foundry/semantic_commit_messages
+Commit messages should follow [semantic commit messages](https://seesparkbox.com/foundry/semantic_commit_messages)
