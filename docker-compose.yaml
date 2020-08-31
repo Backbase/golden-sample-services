@@ -19,8 +19,9 @@ x-common-variables: &common-variables
   backbase.security.public.paths: '/actuator/**,/integration-api/**'
 
 x-database-variables: &database-variables
-  spring.liquibase.enabled: 'false'
-  spring.jpa.hibernate.ddl-auto: create
+  spring.liquibase.enabled: 'true'
+  spring.liquibase.change-log: "classpath:/db/db.changelog-master.yaml"
+  spring.jpa.hibernate.ddl-auto: none
   spring.datasource.username: root
   spring.datasource.password: backbase
   spring.datasource.driver-class-name: com.mysql.jdbc.Driver
@@ -97,7 +98,7 @@ services:
       - message-broker
 
   product:
-    image: docker.io/torrespro/product
+    image: harbor.backbase.eu/experimental/golden-sample/product:latest
     ports:
       - "9091:8080"
     environment:
@@ -110,7 +111,7 @@ services:
       - mysql
 
   review:
-    image: docker.io/torrespro/review
+    image: harbor.backbase.eu/experimental/golden-sample/review:latest
     ports:
       - "9092:8080"
     environment:
@@ -123,7 +124,7 @@ services:
       - mysql
 
   store:
-    image: docker.io/torrespro/store
+    image: harbor.backbase.eu/experimental/golden-sample/store:latest
     ports:
       - "9093:8080"
     environment:

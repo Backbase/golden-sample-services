@@ -27,9 +27,24 @@
     <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
     <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
     <testcontainers.version>1.14.2</testcontainers.version>
-    <docker.repo.url>docker.io</docker.repo.url>
-    <docker.repo.project>torrespro</docker.repo.project>
     <boat-maven-plugin.version>0.2.1</boat-maven-plugin.version>
+
+    <!--
+    Specify the Docker Registry url. Always end with a slash
+    -->
+    <docker.repository.url>harbor.backbase.eu/experimental/golden-sample</docker.repository.url>
+    <!--
+    For more information on Authentication Methods is found here: https://github.com/GoogleContainerTools/jib/tree/master/jib-maven-plugin#authentication-methods
+
+    When choosing ECR, ensure you have the latest
+    Make sure you have the docker-credential-ecr-login command line tool (https://github.com/awslabs/amazon-ecr-credential-helper).
+    Jib automatically uses docker-credential-ecr-login for obtaining credentials.
+    -->
+    <jib-maven-plugin.credHelper/>
+
+    <!-- Stream Convention -->
+    <jib-maven-plugin.image>${docker.repository.url}/${project.artifactId}</jib-maven-plugin.image>
+    <jib-maven-plugin.tag>${project.version}</jib-maven-plugin.tag>
   </properties>
 
   <dependencies>
@@ -269,6 +284,35 @@
                   <goal>generateChangeLog</goal>
                 </goals>
                 <phase>generate-resources</phase>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>dockerize</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.google.cloud.tools</groupId>
+            <artifactId>jib-maven-plugin</artifactId>
+            <version>2.4.0</version>
+            <configuration>
+              <to>
+                <image>${jib-maven-plugin.image}</image>
+                <credHelper>${jib-maven-plugin.credHelper}</credHelper>
+                <tags>
+                  <tag>${jib-maven-plugin.tag}</tag>
+                </tags>
+              </to>
+            </configuration>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>build</goal>
+                </goals>
+                <phase>package</phase>
               </execution>
             </executions>
           </plugin>
