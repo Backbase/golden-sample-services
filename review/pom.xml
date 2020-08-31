@@ -220,4 +220,32 @@
     </plugins>
   </build>
 
+  <profiles>
+    <profile>
+      <id>liquibase</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-maven-plugin</artifactId>
+            <version>3.10.2</version>
+            <configuration>
+              <changeLogFile>${basedir}/src/main/resources/db/db.changelog-master.yaml</changeLogFile>
+              <propertyFile>${basedir}/src/main/resources/liquibase.properties</propertyFile>
+              <outputChangeLogFile>${basedir}/src/main/resources/db/changelog/000-create.yaml</outputChangeLogFile>
+            </configuration>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>generateChangeLog</goal>
+                </goals>
+                <phase>generate-resources</phase>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
 </project>
