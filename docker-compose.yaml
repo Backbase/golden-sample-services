@@ -7,11 +7,20 @@ x-common-variables: &common-variables
   EXTERNAL_ENC_SECRET_KEY: JWTEncKeyDontUseInProduction666!
   eureka.client.serviceUrl.defaultZone: http://registry:8080/eureka
   eureka.instance.non-secure-port: 8080
-  management.endpoints.web.exposure.include: info,health,beans,bindings,gateway
+  eureka.client.enabled: 'true'
+  eureka.instance.preferIpAddress: 'false'
+  management.endpoints.web.exposure.include: info,health,beans,bindings,gateway,prometheus
   SPRING_MAIN_BANNER-MODE: 'off'
+  management.endpoint.metrics.enabled: 'true'
+  management.endpoint.env.enabled: 'true'
+  management.metrics.export.prometheus.enabled: 'true'
+  management.endpoint.prometheus.enabled: 'true'
+  backbase.security.http.public-paths-configurer-enabled: 'true'
+  backbase.security.public.paths: '/actuator/**,/integration-api/**'
 
 x-database-variables: &database-variables
-  spring.liquibase.enabled: 'true'
+  spring.liquibase.enabled: 'false'
+  spring.jpa.hibernate.ddl-auto: create
   spring.datasource.username: root
   spring.datasource.password: backbase
   spring.datasource.driver-class-name: com.mysql.jdbc.Driver
@@ -48,6 +57,7 @@ services:
       - "3306:3306"
     volumes:
       - demo_mysql_data:/var/lib/mysql
+      - ./config/database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
 
   edge:
     image: repo.backbase.com/backbase-docker-releases/edge:IPS-1.12.0
@@ -93,6 +103,8 @@ services:
     environment:
       <<: *common-variables
       <<: *database-variables
+      <<- SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/product?useSSL=false&serverTimezone=UTC&createDatabaseIfNotExist=true
+      <<- server.port: 8080
     links:
       - registry
       - mysql
@@ -104,6 +116,8 @@ services:
     environment:
       <<: *common-variables
       <<: *database-variables
+      <<- SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/review?useSSL=false&serverTimezone=UTC&createDatabaseIfNotExist=true
+      <<- server.port: 8080
     links:
       - registry
       - mysql
@@ -114,19 +128,22 @@ services:
       - "9093:8080"
     environment:
       <<: *common-variables
+      <<- server.port: 8080
     links:
       - registry
 
   prom:
     image: prom/prometheus
     volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-      - ./prometheus/eureka-instances.json:/etc/prometheus/eureka-instances.json
+      - ./config/performance/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     command: "--config.file=/etc/prometheus/prometheus.yml --storage.tsdb.path=/prometheus"
     ports:
       - 9090:9090
-    networks:
-      - performance
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    ports:
+      - "9100:9100"
 
   grafana:
     image: grafana/grafana:latest
@@ -134,14 +151,10 @@ services:
       - '3000:3000'
     volumes:
       - grafana-storage:/var/lib/grafana
-      - ./grafana-provisioning/:/etc/grafana/provisioning
-    depends_on:
-      - prom
-      # environment:
-      # - GF_SECURITY_ADMIN_USER=${GRAFANA_USERNAME}
-      # - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
-    networks:
-      - performance
+      - ./config/performance/grafana-provisioning/:/etc/grafana/provisioning
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=backbase
 
   zipkin:
     image: openzipkin/zipkin
