@@ -8,7 +8,6 @@ import java.util.List;
 import javax.validation.Valid;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,31 +15,33 @@ import org.springframework.web.bind.annotation.RestController;
  * Class <code>ReviewController</code> is the implementation of the main Review Endpoint API
  * definition.
  *
- * @see ReviewController
+ * @see ReviewServiceApiController
  */
 @RestController
 @Log4j2
-public class ReviewController implements ReviewServiceImplApi {
+public class ReviewServiceApiController implements ReviewServiceImplApi {
 
   /** Review service business logic interface. */
   private final ReviewService reviewService;
 
   @Autowired
-  public ReviewController(@Qualifier("ReviewServiceImpl") ReviewService reviewService) {
+  public ReviewServiceApiController(ReviewService reviewService) {
     this.reviewService = reviewService;
   }
 
 
   @Override
   public ResponseEntity<Void> deleteReview(Long reviewId) {
-    return null;
+    this.reviewService.deleteReview(reviewId);
+
+    return ResponseEntity.noContent().build();
   }
 
   @Override
   public ResponseEntity<Void> deleteReviewsByProductId(Long productId) {
     this.reviewService.deleteReviews(productId);
 
-    return ResponseEntity.ok().build();
+    return ResponseEntity.noContent().build();
   }
 
   @Override
@@ -77,6 +78,6 @@ public class ReviewController implements ReviewServiceImplApi {
       e.printStackTrace();
     }
 
-    return ResponseEntity.ok().build();
+    return ResponseEntity.noContent().build();
   }
 }

@@ -11,7 +11,7 @@ x-common-variables: &common-variables
   SPRING_MAIN_BANNER-MODE: 'off'
 
 x-database-variables: &database-variables
-  spring.liquibase.enabled: 'true'
+  spring.liquibase.enabled: 'false'
   spring.datasource.username: root
   spring.datasource.password: backbase
   spring.datasource.driver-class-name: com.mysql.jdbc.Driver
@@ -89,33 +89,35 @@ services:
   product:
     image: docker.io/torrespro/product
     ports:
-      - "9091:8080"
+      - "9915:9915"
     environment:
       <<: *common-variables
       <<: *database-variables
+      spring.datasource.url: jdbc:mysql://mysql:3306/product?cacheServerConfiguration=true&createDatabaseIfNotExist=true
     links:
-      - registry
+#      - registry
       - mysql
 
   review:
     image: docker.io/torrespro/review
     ports:
-      - "9092:8080"
+      - "9916:9916"
     environment:
       <<: *common-variables
       <<: *database-variables
+      spring.datasource.url: jdbc:mysql://mysql:3306/review?cacheServerConfiguration=true&createDatabaseIfNotExist=true
     links:
-      - registry
+#      - registry
       - mysql
 
   store:
     image: docker.io/torrespro/store
     ports:
-      - "9093:8080"
+      - "9917:9917"
     environment:
       <<: *common-variables
-    links:
-      - registry
+#    links:
+#      - registry
 
   prom:
     image: prom/prometheus
@@ -125,8 +127,6 @@ services:
     command: "--config.file=/etc/prometheus/prometheus.yml --storage.tsdb.path=/prometheus"
     ports:
       - 9090:9090
-    networks:
-      - performance
 
   grafana:
     image: grafana/grafana:latest
@@ -140,8 +140,6 @@ services:
       # environment:
       # - GF_SECURITY_ADMIN_USER=${GRAFANA_USERNAME}
       # - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
-    networks:
-      - performance
 
   zipkin:
     image: openzipkin/zipkin
@@ -161,7 +159,7 @@ services:
     image: swaggerapi/swagger-ui
     container_name: swaggerui
     environment:
-      - SWAGGER_JSON=/foo/service-api.yaml
+      - SWAGGER_JSON=/foo/integration-api.yaml
     ports:
       - 80:8080
     volumes:

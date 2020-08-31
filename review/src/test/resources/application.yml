@@ -13,3 +13,6 @@ spring:
     url: jdbc:tc:mysql:5.7:///databasename
     username: test
     password: test
+
+security:
+  disabled: true

@@ -16,15 +16,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class StoreController implements ProductCompositeClientImplApi {
+public class StoreClientApiController implements ProductCompositeClientImplApi {
 
-    private static final Logger LOG = LoggerFactory.getLogger(StoreController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(StoreClientApiController.class);
 
-    private ProductCompositeService integration;
+    private ProductCompositeService productCompositeService;
 
     @Autowired
-    public StoreController(ProductCompositeService integration) {
-        this.integration = integration;
+    public StoreClientApiController(ProductCompositeService productCompositeService) {
+        this.productCompositeService = productCompositeService;
     }
 
 
@@ -32,10 +32,10 @@ public class StoreController implements ProductCompositeClientImplApi {
     public ResponseEntity<ProductAggregate> getProductUsingGET(Long productId) {
         LOG.debug("getCompositeProduct: lookup a product aggregate for productId: {}", productId);
 
-        Product product = integration.getProduct(productId);
+        Product product = productCompositeService.getProduct(productId);
         if (product == null) throw new NotFoundException("No product found for productId: " + productId);
 
-        List<Review> reviews = integration.getReviews(productId);
+        List<Review> reviews = productCompositeService.getReviews(productId);
 
         LOG.debug("getCompositeProduct: aggregate entity found for productId: {}", productId);
 

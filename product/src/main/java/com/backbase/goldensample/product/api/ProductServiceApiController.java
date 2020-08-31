@@ -8,7 +8,6 @@ import com.backbase.product.api.service.v2.model.ProductId;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,7 +27,7 @@ public class ProductServiceApiController implements ProductServiceImplApi {
     private final ProductService prodService;
 
     @Autowired
-    public ProductServiceApiController(@Qualifier("ProductServiceImpl") ProductService prodService) {
+    public ProductServiceApiController(ProductService prodService) {
         this.prodService = prodService;
     }
 
