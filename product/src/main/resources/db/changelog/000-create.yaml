@@ -1,7 +1,7 @@
 databaseChangeLog:
 - changeSet:
-    id: 1598858051757-1
-    author: jamesv (generated)
+    id: 1598858603756-1
+    author: backbase (generated)
     changes:
     - createTable:
         columns:
@@ -10,8 +10,8 @@ databaseChangeLog:
             type: BIGINT
         tableName: hibernate_sequence
 - changeSet:
-    id: 1598858051757-2
-    author: jamesv (generated)
+    id: 1598858603756-2
+    author: backbase (generated)
     changes:
     - createTable:
         columns:

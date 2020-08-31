@@ -1,34 +1,36 @@
 databaseChangeLog:
 - changeSet:
-    id: 1598858090523-1
-    author: jamesv (generated)
+    id: 1598858637542-1
+    author: backbase (generated)
     changes:
     - createTable:
         columns:
         - column:
-            name: next_val
-            type: BIGINT
-        tableName: hibernate_sequence
-- changeSet:
-    id: 1598858090523-2
-    author: jamesv (generated)
-    changes:
-    - createTable:
-        columns:
-        - column:
+            autoIncrement: true
             constraints:
               nullable: false
               primaryKey: true
             name: id
             type: BIGINT
         - column:
-            name: create_date
-            type: datetime
+            name: author
+            type: VARCHAR(50)
         - column:
-            name: name
+            name: content
             type: VARCHAR(255)
         - column:
-            name: weight
-            type: INT
-        tableName: product
+            name: product_id
+            type: BIGINT
+        - column:
+            name: subject
+            type: VARCHAR(255)
+        tableName: review
+- changeSet:
+    id: 1598858637542-2
+    author: backbase (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: product_id, id
+        constraintName: review_unique_idx
+        tableName: review
 
