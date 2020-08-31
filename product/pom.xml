@@ -17,7 +17,7 @@
   <groupId>com.backbase</groupId>
   <artifactId>product</artifactId>
   <version>1.0.0-SNAPSHOT</version>
-  <packaging>war</packaging>
+  <packaging>jar</packaging>
   <name>Backbase :: product-service</name>
 
   <properties>
@@ -48,6 +48,10 @@
   </properties>
 
   <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-tomcat</artifactId>
+    </dependency>
     <dependency>
       <groupId>com.backbase.buildingblocks</groupId>
       <artifactId>service-sdk-starter-test</artifactId>
@@ -153,6 +157,33 @@
       </plugins>
     </pluginManagement>
     <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>build-info</id>
+            <goals>
+              <goal>build-info</goal>
+            </goals>
+            <phase>process-resources</phase>
+            <configuration>
+              <additionalProperties>
+                <version>${version}</version>
+              </additionalProperties>
+            </configuration>
+          </execution>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+            <phase>post-integration-test</phase>
+            <configuration>
+              <executable>true</executable>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>properties-maven-plugin</artifactId>
@@ -306,6 +337,14 @@
                   <tag>${jib-maven-plugin.tag}</tag>
                 </tags>
               </to>
+              <container>
+                <appRoot>/app</appRoot>
+                <entrypoint>
+                  java,-cp,/app/classes:/app/resources:/app/libs/*,com.backbase.goldensample.product.Application
+                </entrypoint>
+                <user>nonroot:nonroot</user>
+                <workingDirectory>/home/nonroot</workingDirectory>
+              </container>
             </configuration>
             <executions>
               <execution>
