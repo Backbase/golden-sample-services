@@ -55,7 +55,7 @@ public class StoreClientApiController implements ProductCompositeClientImplApi {
         LOG.debug("createCompositeProduct: creates a new composite entity for productId: {}",
             productAggregate.getProductId());
 
-        Product product = new Product().name(productAggregate.getName()).weight(productAggregate.getWeight());
+        Product product = new Product().name(productAggregate.getName()).weight(productAggregate.getWeight()).createDate(productAggregate.getCreateDate());
         ProductId productId = productCompositeService.createProduct(product);
         product.productId(productId.getId());
 

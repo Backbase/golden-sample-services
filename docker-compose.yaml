@@ -98,7 +98,7 @@ services:
       - message-broker
 
   product:
-    image: harbor.backbase.eu/experimental/golden-sample/product:latest
+    image: harbor.backbase.eu/experimental/golden-sample/product:1.0.0
     ports:
       - "9915:8080"
     environment:
@@ -110,7 +110,7 @@ services:
       - mysql
 
   review:
-    image: harbor.backbase.eu/experimental/golden-sample/review:latest
+    image: harbor.backbase.eu/experimental/golden-sample/review:1.0.0
     ports:
       - "9916:8080"
     environment:
@@ -122,11 +122,15 @@ services:
       - mysql
 
   store:
-    image: harbor.backbase.eu/experimental/golden-sample/store:latest
+    image: harbor.backbase.eu/experimental/golden-sample/store:1.0.0
     ports:
       - "9917:8080"
     environment:
       <<: *common-variables
+      app.product-service.host: product
+      app.product-service.port: 8080
+      app.review-service.host: review
+      app.review-service.port: 8080
     links:
       - registry
 
