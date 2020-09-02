@@ -17,6 +17,7 @@ x-common-variables: &common-variables
   management.endpoint.prometheus.enabled: 'true'
   backbase.security.http.public-paths-configurer-enabled: 'true'
   backbase.security.public.paths: '/actuator/**,/integration-api/**'
+  server.port: 8080
 
 x-database-variables: &database-variables
   spring.liquibase.enabled: 'false'
@@ -97,38 +98,35 @@ services:
       - message-broker
 
   product:
-    image: docker.io/torrespro/product
+    image: harbor.backbase.eu/experimental/golden-sample/product:latest
     ports:
       - "9915:8080"
     environment:
       <<: *common-variables
       <<: *database-variables
-      server.port: 8080
       spring.datasource.url: jdbc:mysql://mysql:3306/product?cacheServerConfiguration=true&createDatabaseIfNotExist=true
     links:
       - registry
       - mysql
 
   review:
-    image: docker.io/torrespro/review
+    image: harbor.backbase.eu/experimental/golden-sample/review:latest
     ports:
       - "9916:8080"
     environment:
       <<: *common-variables
       <<: *database-variables
-      server.port: 8080
       spring.datasource.url: jdbc:mysql://mysql:3306/review?cacheServerConfiguration=true&createDatabaseIfNotExist=true
     links:
       - registry
       - mysql
 
   store:
-    image: docker.io/torrespro/store
+    image: harbor.backbase.eu/experimental/golden-sample/store:latest
     ports:
       - "9917:8080"
     environment:
       <<: *common-variables
-      <<- server.port: 8080
     links:
       - registry
 
