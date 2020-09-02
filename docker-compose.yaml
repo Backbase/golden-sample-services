@@ -7,11 +7,20 @@ x-common-variables: &common-variables
   EXTERNAL_ENC_SECRET_KEY: JWTEncKeyDontUseInProduction666!
   eureka.client.serviceUrl.defaultZone: http://registry:8080/eureka
   eureka.instance.non-secure-port: 8080
-  management.endpoints.web.exposure.include: info,health,beans,bindings,gateway
+  eureka.client.enabled: 'true'
+  eureka.instance.preferIpAddress: 'false'
+  management.endpoints.web.exposure.include: info,health,beans,bindings,gateway,prometheus
   SPRING_MAIN_BANNER-MODE: 'off'
+  management.endpoint.metrics.enabled: 'true'
+  management.endpoint.env.enabled: 'true'
+  management.metrics.export.prometheus.enabled: 'true'
+  management.endpoint.prometheus.enabled: 'true'
+  backbase.security.http.public-paths-configurer-enabled: 'true'
+  backbase.security.public.paths: '/actuator/**,/integration-api/**'
 
 x-database-variables: &database-variables
   spring.liquibase.enabled: 'false'
+  spring.jpa.hibernate.ddl-auto: create
   spring.datasource.username: root
   spring.datasource.password: backbase
   spring.datasource.driver-class-name: com.mysql.jdbc.Driver
@@ -48,6 +57,7 @@ services:
       - "3306:3306"
     volumes:
       - demo_mysql_data:/var/lib/mysql
+      - ./config/database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
 
   edge:
     image: repo.backbase.com/backbase-docker-releases/edge:IPS-1.12.0
@@ -89,44 +99,51 @@ services:
   product:
     image: docker.io/torrespro/product
     ports:
-      - "9915:9915"
+      - "9915:8080"
     environment:
       <<: *common-variables
       <<: *database-variables
+      server.port: 8080
       spring.datasource.url: jdbc:mysql://mysql:3306/product?cacheServerConfiguration=true&createDatabaseIfNotExist=true
     links:
-#      - registry
+      - registry
       - mysql
 
   review:
     image: docker.io/torrespro/review
     ports:
-      - "9916:9916"
+      - "9916:8080"
     environment:
       <<: *common-variables
       <<: *database-variables
+      server.port: 8080
       spring.datasource.url: jdbc:mysql://mysql:3306/review?cacheServerConfiguration=true&createDatabaseIfNotExist=true
     links:
-#      - registry
+      - registry
       - mysql
 
   store:
     image: docker.io/torrespro/store
     ports:
-      - "9917:9917"
+      - "9917:8080"
     environment:
       <<: *common-variables
-#    links:
-#      - registry
+      <<- server.port: 8080
+    links:
+      - registry
 
   prom:
     image: prom/prometheus
     volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-      - ./prometheus/eureka-instances.json:/etc/prometheus/eureka-instances.json
+      - ./config/performance/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     command: "--config.file=/etc/prometheus/prometheus.yml --storage.tsdb.path=/prometheus"
     ports:
       - 9090:9090
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    ports:
+      - "9100:9100"
 
   grafana:
     image: grafana/grafana:latest
@@ -134,12 +151,10 @@ services:
       - '3000:3000'
     volumes:
       - grafana-storage:/var/lib/grafana
-      - ./grafana-provisioning/:/etc/grafana/provisioning
-    depends_on:
-      - prom
-      # environment:
-      # - GF_SECURITY_ADMIN_USER=${GRAFANA_USERNAME}
-      # - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
+      - ./config/performance/grafana-provisioning/:/etc/grafana/provisioning
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=backbase
 
   zipkin:
     image: openzipkin/zipkin
@@ -159,7 +174,7 @@ services:
     image: swaggerapi/swagger-ui
     container_name: swaggerui
     environment:
-      - SWAGGER_JSON=/foo/integration-api.yaml
+      - SWAGGER_JSON=/foo/service-api.yaml
     ports:
       - 80:8080
     volumes:
