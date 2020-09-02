@@ -64,16 +64,16 @@ public class ReviewServiceApiController implements ReviewServiceImplApi {
     } catch (Exception e) {
       e.printStackTrace();
     }
-    ReviewId productId = new ReviewId();
-    productId.setId(reviewWithId.getReviewId());
+    ReviewId reviewId = new ReviewId();
+    reviewId.setId(reviewWithId.getReviewId());
 
-    return ResponseEntity.ok(productId);
+    return ResponseEntity.ok(reviewId);
   }
 
   @Override
   public ResponseEntity<ReviewId> putReview(@Valid Review review) {
     try {
-      Review productWithId = reviewService.updateReview(review);
+      Review reviewWithId = reviewService.updateReview(review);
     } catch (Exception e) {
       e.printStackTrace();
     }

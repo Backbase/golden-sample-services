@@ -12,15 +12,15 @@ info:
     url: http://atorres.es
   version: 1.0.0
 servers:
-- url: http://localhost:8080/
+  - url: http://localhost:8080/
 tags:
-- name: product-composite-client-impl
-  description: REST API for composite product information.
+  - name: product-composite-client-impl
+    description: REST API for composite product information.
 paths:
   /client-api/v1/product-composite/{productId}:
     get:
       tags:
-      - product-composite-client-impl
+        - product-composite-client-impl
       summary: Returns a composite view of the specified product id
       description: |
         # Normal response
@@ -48,13 +48,13 @@ paths:
         422 - An <b>Unprocessable Entity</b> error will be returned
       operationId: getProductUsingGET
       parameters:
-      - name: productId
-        in: path
-        description: productId
-        required: true
-        schema:
-          type: integer
-          format: int64
+        - name: productId
+          in: path
+          description: productId
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
         200:
           description: OK
@@ -79,6 +79,25 @@ paths:
           description: Unprocessable entity, input parameters caused the processing
             to fails. See response message for more information.
           content: {}
+  /client-api/v1/product-composite:
+    post:
+      tags:
+        - product-composite-client-impl
+      summary:  Creates a product aggregate
+      description: |
+      operationId: postProduct
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductAggregate'
+      responses:
+        '200':
+          description: If the product have been created and/or updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductAggregate'
 components:
   schemas:
     ProductAggregate:
@@ -97,6 +116,10 @@ components:
         weight:
           type: integer
           format: int32
+        createDate:
+          description: The date when the product was created
+          type: string
+          format: date
     ReviewSummary:
       title: ReviewSummary
       type: object
@@ -106,6 +129,8 @@ components:
           format: int64
         author:
           type: string
+          minLength: 6
+          maxLength: 50
         subject:
           type: string
         content:

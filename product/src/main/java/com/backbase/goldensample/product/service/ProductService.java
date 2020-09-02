@@ -1,7 +1,7 @@
 package com.backbase.goldensample.product.service;
 
 
-import com.backbase.goldensample.product.exception.NotFoundException;
+import com.backbase.buildingblocks.presentation.errors.NotFoundException;
 import com.backbase.product.api.service.v2.model.Product;
 import java.util.List;
 

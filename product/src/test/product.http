@@ -25,7 +25,7 @@ Content-Type: application/json
 
 > {%
 client.test("Request executed successfully", function() {
-  client.assert(response.status === 201, "Response status is not 201");
+  client.assert(response.status === 204, "Response status is not 204");
 });
 %}
 
@@ -43,7 +43,7 @@ Content-Type: application/json
 
 > {%
 client.test("Request executed successfully", function() {
-  client.assert(response.status === 201, "Response status is not 201");
+  client.assert(response.status === 204, "Response status is not 204");
 });
 %}
 
@@ -55,7 +55,7 @@ DELETE http://localhost:9915/service-api/v1/products/1
 
 > {%
 client.test("Request executed successfully", function() {
-  client.assert(response.status === 201, "Response status is not 201");
+  client.assert(response.status === 204, "Response status is not 204");
 });
 %}
 

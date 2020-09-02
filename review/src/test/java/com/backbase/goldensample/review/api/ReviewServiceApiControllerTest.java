@@ -95,12 +95,30 @@ class ReviewServiceApiControllerTest {
     }
 
     @Test
+    void shouldRejectNewProductWithInvalidPayload() throws Exception {
+
+        String requestBody = "{\n" +
+            "  \"productId\": \"1\",\n" +
+            "  \"author\": \"name\",\n" +
+            "  \"subject\": \"subject\",\n" +
+            "  \"content\": \"long content\"\n" +
+            "}";
+
+        this
+            .mockMvc
+            .perform(post("/service-api/v1/reviews")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestBody))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
     void shouldCreateNewProductWithValidPayload() throws Exception {
         Review reviewOne = createReview(1L, 1L, "name", "subject", "long content");
 
         String requestBody = "{\n" +
             "  \"productId\": \"1\",\n" +
-            "  \"author\": \"name\",\n" +
+            "  \"author\": \"author\",\n" +
             "  \"subject\": \"subject\",\n" +
             "  \"content\": \"long content\"\n" +
             "}";
@@ -121,7 +139,7 @@ class ReviewServiceApiControllerTest {
 
         String requestBody = "{\n" +
             "  \"productId\": \"1\",\n" +
-            "  \"author\": \"name\",\n" +
+            "  \"author\": \"author\",\n" +
             "  \"subject\": \"subject\",\n" +
             "  \"content\": \"long content\"\n" +
             "}";

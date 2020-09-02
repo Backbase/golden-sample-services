@@ -65,8 +65,8 @@ paths:
             schema:
               $ref: '#/components/schemas/Product'
       responses:
-        '204':
-          description: If the transactions have been created and/or updated successfully
+        '200':
+          description: If the product have been created and/or updated successfully
           content:
             application/json:
               schema:

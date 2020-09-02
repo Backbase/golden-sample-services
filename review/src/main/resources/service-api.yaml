@@ -214,6 +214,8 @@ components:
           format: int64
         author:
           type: string
+          minLength: 6
+          maxLength: 50
         content:
           type: string
         subject:

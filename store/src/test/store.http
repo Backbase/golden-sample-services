@@ -1,0 +1,76 @@
+###
+GET http://localhost:9917/client-api/v1/product-composite/99
+
+> {%
+client.test("No product found with id 99", function() {
+  client.assert(response.status === 404, "Response status is not 404");
+});
+%}
+
+###
+POST http://localhost:9917/client-api/v1/product-composite
+Content-Type: application/json
+
+{
+  "name": "Product 1",
+  "reviews": [
+    {
+      "author": "author",
+      "subject": "great",
+      "content": "best product ever"
+    },
+    {
+      "author": "hatersgonnahate",
+      "subject": "bad",
+      "content": "worst product ever"
+    }
+  ],
+  "weight": 5,
+  "createDate": "2020-12-01"
+}
+
+> {%
+  client.test("Id exists", function() {
+  client.assert(response.body.hasOwnProperty("productId"), "Cannot find 'productId' option in response");
+});
+%}
+
+###
+GET http://localhost:9917/client-api/v1/product-composite/1
+
+> {%
+  client.test("Product exists", function() {
+  client.assert(response.body.hasOwnProperty("productId"), "Cannot find 'productId' option in response");
+});
+%}
+
+
+###
+POST http://localhost:9917/client-api/v1/product-composite
+Content-Type: application/json
+
+{
+  "name": "Product 1",
+  "reviews": [
+    {
+      "author": "author",
+      "subject": "great",
+      "content": "best product ever"
+    },
+    {
+      "author": "hater",
+      "subject": "bad",
+      "content": "worst product ever"
+    }
+  ],
+  "weight": 5,
+  "createDate": "2020-12-01"
+}
+
+> {%
+client.test("Bad Request", function() {
+  client.assert(response.status === 400, "Response status is not 400");
+});
+%}
+
+
