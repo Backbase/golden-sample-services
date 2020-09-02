@@ -49,10 +49,6 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-tomcat</artifactId>
-    </dependency>
-    <dependency>
       <groupId>com.backbase.buildingblocks</groupId>
       <artifactId>service-sdk-starter-test</artifactId>
       <scope>test</scope>
