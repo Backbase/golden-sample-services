@@ -17,6 +17,7 @@ x-common-variables: &common-variables
   management.endpoint.prometheus.enabled: 'true'
   backbase.security.http.public-paths-configurer-enabled: 'true'
   backbase.security.public.paths: '/actuator/**,/integration-api/**'
+  server.port: 8080
 
 x-database-variables: &database-variables
   spring.liquibase.enabled: 'true'
@@ -100,12 +101,11 @@ services:
   product:
     image: harbor.backbase.eu/experimental/golden-sample/product:latest
     ports:
-      - "9091:8080"
+      - "9915:8080"
     environment:
       <<: *common-variables
       <<: *database-variables
-      <<- SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/product?useSSL=false&serverTimezone=UTC&createDatabaseIfNotExist=true
-      <<- server.port: 8080
+      spring.datasource.url: jdbc:mysql://mysql:3306/product?cacheServerConfiguration=true&createDatabaseIfNotExist=true
     links:
       - registry
       - mysql
@@ -113,12 +113,11 @@ services:
   review:
     image: harbor.backbase.eu/experimental/golden-sample/review:latest
     ports:
-      - "9092:8080"
+      - "9916:8080"
     environment:
       <<: *common-variables
       <<: *database-variables
-      <<- SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/review?useSSL=false&serverTimezone=UTC&createDatabaseIfNotExist=true
-      <<- server.port: 8080
+      spring.datasource.url: jdbc:mysql://mysql:3306/review?cacheServerConfiguration=true&createDatabaseIfNotExist=true
     links:
       - registry
       - mysql
@@ -126,10 +125,13 @@ services:
   store:
     image: harbor.backbase.eu/experimental/golden-sample/store:latest
     ports:
-      - "9093:8080"
+      - "9917:8080"
     environment:
       <<: *common-variables
-      <<- server.port: 8080
+      app.product-service.host: product
+      app.product-service.port: 8080
+      app.review-service.host: review
+      app.review-service.port: 8080
     links:
       - registry
 

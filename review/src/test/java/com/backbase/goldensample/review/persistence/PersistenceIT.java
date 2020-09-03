@@ -1,12 +1,10 @@
-package com.backbase.goldensample.review;
+package com.backbase.goldensample.review.persistence;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.transaction.annotation.Propagation.NOT_SUPPORTED;
 
 
-import com.backbase.goldensample.review.persistence.ReviewEntity;
-import com.backbase.goldensample.review.persistence.ReviewRepository;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;

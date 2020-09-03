@@ -1,0 +1,70 @@
+POST http://localhost:9916/service-api/v1/reviews/
+Content-Type: application/json
+
+{ "productId":  "1",
+  "author": "author",
+  "subject":  "great",
+  "content":  "best product ever" }
+
+> {%
+  client.test("Id exists", function() {
+  client.assert(response.body.hasOwnProperty("id"), "Cannot find 'id' option in response");
+});
+%}
+
+###
+POST http://localhost:9916/service-api/v1/reviews/
+Content-Type: application/json
+
+{ "productId":  "1",
+  "author": "name",
+  "subject":  "great",
+  "content":  "best product ever" }
+
+> {%
+client.test("Bad Request", function() {
+  client.assert(response.status === 400, "Response status is not 400");
+});
+%}
+
+###
+GET http://localhost:9916/service-api/v1/products/1/reviews/
+
+###
+PUT http://localhost:9916/service-api/v1/reviews
+Content-Type: application/json
+
+{ "reviewId" : "1",
+  "productId" : "1",
+  "author": "author",
+  "subject":  "great",
+  "content":  "worst product ever" }
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 204, "Response status is not 204");
+});
+%}
+
+###
+GET http://localhost:9916/service-api/v1/reviews/1
+
+###
+DELETE http://localhost:9916/service-api/v1/reviews/1
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 204, "Response status is not 204");
+});
+%}
+
+###
+DELETE http://localhost:9916/service-api/v1/products/1/reviews
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 204, "Response status is not 204");
+});
+%}
+
+

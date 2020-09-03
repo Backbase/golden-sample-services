@@ -16,7 +16,7 @@
 
   <groupId>com.backbase</groupId>
   <artifactId>review</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <packaging>war</packaging>
   <name>Backbase :: review-service</name>
 
@@ -28,23 +28,7 @@
     <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
     <testcontainers.version>1.14.2</testcontainers.version>
     <boat-maven-plugin.version>0.2.1</boat-maven-plugin.version>
-
-    <!--
-    Specify the Docker Registry url. Always end with a slash
-    -->
-    <docker.repository.url>harbor.backbase.eu/experimental/golden-sample</docker.repository.url>
-    <!--
-    For more information on Authentication Methods is found here: https://github.com/GoogleContainerTools/jib/tree/master/jib-maven-plugin#authentication-methods
-
-    When choosing ECR, ensure you have the latest
-    Make sure you have the docker-credential-ecr-login command line tool (https://github.com/awslabs/amazon-ecr-credential-helper).
-    Jib automatically uses docker-credential-ecr-login for obtaining credentials.
-    -->
-    <jib-maven-plugin.credHelper/>
-
-    <!-- Stream Convention -->
-    <jib-maven-plugin.image>${docker.repository.url}/${project.artifactId}</jib-maven-plugin.image>
-    <jib-maven-plugin.tag>${project.version}</jib-maven-plugin.tag>
+    <docker.repo.project>experimental/golden-sample</docker.repo.project>
   </properties>
 
   <dependencies>
