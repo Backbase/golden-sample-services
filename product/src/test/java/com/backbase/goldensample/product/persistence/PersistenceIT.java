@@ -1,12 +1,11 @@
-package com.backbase.goldensample.product;
+package com.backbase.goldensample.product.persistence;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.transaction.annotation.Propagation.NOT_SUPPORTED;
 
 
-import com.backbase.goldensample.product.persistence.ProductEntity;
-import com.backbase.goldensample.product.persistence.ProductRepository;
+import com.backbase.goldensample.product.DockerizedTest;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -14,19 +13,19 @@ import org.junit.Assert;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @DataJpaTest
 @Transactional(propagation = NOT_SUPPORTED)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class PersistenceIT {
+class PersistenceIT extends DockerizedTest {
 
   @Autowired private ProductRepository repository;
 
@@ -88,45 +87,6 @@ class PersistenceIT {
 
     assertEqualsReview(savedEntity, foundEntity);
   }
-
-//  @Test
-//  public void duplicateError() {
-//
-//    Assertions.assertThrows(
-//        DataIntegrityViolationException.class,
-//        () -> repository.save(new ProductEntity("amazon 1", 20, TODAY)));
-//  }
-
-  @Test
-//  public void optimisticLockError() {
-//
-//    // Store the saved entity in two separate entity objects
-//    ProductEntity entity1 = repository.findById(savedEntity.getId()).orElse(new ProductEntity()),
-//        entity2 = repository.findById(savedEntity.getId()).orElse(new ProductEntity());
-//
-//    // Update the entity using the first entity object
-//    entity1.setName("amazon 1");
-//    repository.save(entity1);
-//
-//    /*
-//      Update the entity using the second entity object.
-//      This should fail since the second entity now holds a old version number,
-//      i.e. a Optimistic Lock Error
-//    */
-//    try {
-//      entity2.setName("amazon 2");
-//      repository.save(entity2);
-//
-//      fail("Expected an OptimisticLockingFailureException");
-//    } catch (OptimisticLockingFailureException ignored) {
-//    }
-//
-//    // Get the updated entity from the database and verify its new sate
-//    var updatedEntity = repository.findById(savedEntity.getId()).orElse(new ProductEntity());
-//
-//    assertEquals(1, updatedEntity.getVersion());
-//    assertEquals("amazon 1", updatedEntity.getName());
-//  }
 
   private void assertEqualsReview(ProductEntity expectedEntity, ProductEntity actualEntity) {
     Assert.assertEquals(expectedEntity.getId(),        actualEntity.getId());

@@ -1,13 +1,11 @@
 package com.backbase.goldensample.product.api;
 
-import com.backbase.goldensample.product.exception.NotFoundException;
 import com.backbase.goldensample.product.service.ProductService;
 import com.backbase.product.api.integration.v2.ProductIntegrationImplApi;
 import com.backbase.product.api.service.v2.model.Product;
 import com.backbase.product.api.service.v2.model.ProductId;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,32 +25,21 @@ public class ProductIntegrationApiController implements ProductIntegrationImplAp
     private final ProductService prodService;
 
     @Autowired
-    public ProductIntegrationApiController(@Qualifier("ProductServiceImpl") ProductService prodService) {
+    public ProductIntegrationApiController(ProductService prodService) {
         this.prodService = prodService;
     }
 
 
     @Override
     public ResponseEntity<Void> deleteProduct(Long productId) {
-        try {
-            prodService.deleteProduct(productId);
-        } catch (NotFoundException e) {
-            e.printStackTrace();
-            //TODO add log
-        }
+        prodService.deleteProduct(productId);
         return ResponseEntity.noContent().build();
     }
 
 
     @Override
     public ResponseEntity<Product> getProductUsingGET(Long productId) {
-        try {
-            return ResponseEntity.ok(prodService.getProduct(productId, 0, 0));
-        } catch (NotFoundException e) {
-            e.printStackTrace();
-            //TODO add log
-        }
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(prodService.getProduct(productId, 0, 0));
     }
 
     @Override
@@ -67,7 +54,6 @@ public class ProductIntegrationApiController implements ProductIntegrationImplAp
     @Override
     public ResponseEntity<Void> putProduct(@Valid Product product) {
         Product productWithId = prodService.updateProduct(product);
-
         return ResponseEntity.noContent().build();
     }
 }

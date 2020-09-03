@@ -13,8 +13,8 @@
 
   <properties>
     <java.version>11</java.version>
-    <maven.install.skip>true</maven.install.skip>
-    <maven.deploy.skip>true</maven.deploy.skip>
+<!--    <maven.install.skip>true</maven.install.skip>-->
+<!--    <maven.deploy.skip>true</maven.deploy.skip>-->
   </properties>
 
 

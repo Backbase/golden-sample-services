@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.0.3
 info:
   title: Review Service API
   description: Description of the API...
@@ -214,6 +214,8 @@ components:
           format: int64
         author:
           type: string
+          minLength: 6
+          maxLength: 50
         content:
           type: string
         subject:

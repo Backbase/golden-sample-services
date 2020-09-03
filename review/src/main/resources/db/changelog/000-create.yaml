@@ -1,0 +1,36 @@
+databaseChangeLog:
+- changeSet:
+    id: 1598858637542-1
+    author: backbase (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: id
+            type: BIGINT
+        - column:
+            name: author
+            type: VARCHAR(50)
+        - column:
+            name: content
+            type: VARCHAR(255)
+        - column:
+            name: product_id
+            type: BIGINT
+        - column:
+            name: subject
+            type: VARCHAR(255)
+        tableName: review
+- changeSet:
+    id: 1598858637542-2
+    author: backbase (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: product_id, id
+        constraintName: review_unique_idx
+        tableName: review
+
