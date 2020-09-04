@@ -45,22 +45,4 @@ public class ProductEntity {
     this.weight = weight;
     this.createDate = createDate;
   }
-
-  //  @Override
-//  public boolean equals(Object o) {
-//    if (this == o) return true;
-//
-//    if (!(o instanceof ProductEntity))
-//      return false;
-//
-//    ProductEntity other = (ProductEntity) o;
-//
-//    return id != null &&
-//        id.equals(other.getId());
-//  }
-//
-//  @Override
-//  public int hashCode() {
-//    return 31;
-//  }
 }

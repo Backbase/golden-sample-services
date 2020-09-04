@@ -1,34 +1,50 @@
 databaseChangeLog:
-- changeSet:
-    id: 1598858603756-1
-    author: backbase (generated)
-    changes:
-    - createTable:
-        columns:
-        - column:
-            name: next_val
-            type: BIGINT
-        tableName: hibernate_sequence
-- changeSet:
-    id: 1598858603756-2
-    author: backbase (generated)
-    changes:
-    - createTable:
-        columns:
-        - column:
-            constraints:
-              nullable: false
-              primaryKey: true
-            name: id
-            type: BIGINT
-        - column:
-            name: create_date
-            type: datetime
-        - column:
-            name: name
-            type: VARCHAR(255)
-        - column:
-            name: weight
-            type: INT
-        tableName: product
+  - changeSet:
+      id: create-hibernate-sequence-table
+      author: backbase
+      dbms: mysql
+      changes:
+        - createTable:
+            tableName: hibernate_sequence
+            columns:
+              - column:
+                  name: next_val
+                  type: bigint
+        - insert:
+            tableName: hibernate_sequence
+            columns:
+              - column:
+                  name: next_val
+                  value: 1
+  - changeSet:
+      id: create-hibernate-sequence
+      author: backbase
+      dbms: mssql,oracle,mariadb
+      changes:
+        - createSequence:
+            sequenceName: hibernate_sequence
+            startValue: 1
+            incrementBy: 5
+  - changeSet:
+      id: create product table
+      author: backbase
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: create_date
+                  type: datetime
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: weight
+                  type: INT
+            tableName: product
 
