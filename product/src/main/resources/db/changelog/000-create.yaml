@@ -1,21 +1,8 @@
 databaseChangeLog:
-  - changeSet:
-      id: create-hibernate-sequence-table
-      author: backbase
+  - property:
+      name: autoIncrement
+      value: true
       dbms: mysql
-      changes:
-        - createTable:
-            tableName: hibernate_sequence
-            columns:
-              - column:
-                  name: next_val
-                  type: bigint
-        - insert:
-            tableName: hibernate_sequence
-            columns:
-              - column:
-                  name: next_val
-                  value: 1
   - changeSet:
       id: create-hibernate-sequence
       author: backbase
@@ -26,12 +13,13 @@ databaseChangeLog:
             startValue: 1
             incrementBy: 5
   - changeSet:
-      id: create product table
+      id: create-product-table
       author: backbase
       changes:
         - createTable:
             columns:
               - column:
+                  autoIncrement: ${autoIncrement}
                   constraints:
                     nullable: false
                     primaryKey: true

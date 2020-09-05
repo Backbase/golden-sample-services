@@ -1,9 +1,11 @@
-## Liquibase
+# Liquibase
+
+## Generate a ChangeLog From an Existing Database
 
 In this example we will generate liquibase changelog from existing database.
 
 ### Steps
-1. Start docker-compose with spring.liquibase.enabled=false and spring.jpa.hibernate.ddl-auto=create.
+1. Start docker-compose with `spring.liquibase.enabled=false` and `spring.jpa.hibernate.ddl-auto=create`.
 2. Create liquibase.properties and add liquibase-maven-plugin.
 3. Generate liquibase changelog.
 4. Remove docker volume and enable liquibase.
@@ -49,8 +51,8 @@ driver=com.mysql.jdbc.Driver
   </profiles>
 ```
 
-### Generate a ChangeLog From an Existing Database
-mvn clean install -Pliquibase
+### Execute the maven profile
+    mvn clean install -Pliquibase
 
 Update db.changelog-master.yaml
 ```
@@ -181,8 +183,9 @@ It used that connection to determine the SQL dialect to use and to query the DAT
 have already been executed.
 
 #### Controlling updateSql SQL Syntax
-With version 3.2, Liquibase added a new “offline” mode. Instead of specifying a jdbc url such as *jdbc:mysql://localhost:3306/product* you can use offline:mysql or offline:mssql which lets Liquibase know what dialect to use. 
-For finer dialect control, you can specify parameters like *offline:mysql?version=3.4&caseSensitive=false*
+With version 3.2, Liquibase added a new “offline” mode. Instead of specifying a jdbc url such as `jdbc:mysql://localhost:3306/product` you 
+can use `offline:mysql` or `offline:mssql` which lets Liquibase know what dialect to use. 
+For finer dialect control, you can specify parameters like `offline:mysql?version=3.4&caseSensitive=false`
 
 ##### Available dialect parameters:
 
@@ -197,7 +200,7 @@ you cannot rely on the DATABASECHANGELOG table to track what changeSets have alr
 Instead, offline mode uses a CSV file which mimics the structure of the DATABASECHANGELOG table.
 
 By default, Liquibase will use a file called “databasechangelog.csv” in the working directory, but it can be specified 
-with a “changeLogFile” parameter such as *offline:mssql?changeLogFile=path/to/file.csv*
+with a “changeLogFile” parameter such as `offline:mssql?changeLogFile=path/to/file.csv`
 
 It is up to you to ensure that the contents of the csv file match what is in the database. Running *updateSQL* 
 automatically appends to the CSV file under the assumption that you will apply the SQL to the database. 

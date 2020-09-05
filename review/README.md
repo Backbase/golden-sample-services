@@ -1,6 +1,11 @@
-# core-service
+# Review-service
 
-_Fill out this file with some information about your Service._
+The review service manages product review and stores the following information about each review: 
+* Product ID 
+* Review ID 
+* Author 
+* Subject 
+* Content
 
 #Getting Started
 * [Extend and build](https://community.backbase.com/documentation/ServiceSDK/latest/extend_and_build)
@@ -8,6 +13,7 @@ _Fill out this file with some information about your Service._
 ## Dependencies
 
 Requires a running Eureka registry, by default on port 8080.
+Requires a MySQL database, by default on port 3316
 
 ## Configuration
 

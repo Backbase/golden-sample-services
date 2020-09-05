@@ -122,8 +122,6 @@
       <version>2.6.2</version>
       <scope>test</scope>
     </dependency>
-
-
   </dependencies>
 
   <build>

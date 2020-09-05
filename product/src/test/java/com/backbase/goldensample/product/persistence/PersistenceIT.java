@@ -6,6 +6,7 @@ import static org.springframework.transaction.annotation.Propagation.NOT_SUPPORT
 
 
 import com.backbase.goldensample.product.DockerizedTest;
+import com.backbase.goldensample.product.config.IdentityStrategyOverrideConfiguration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -17,6 +18,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 @DataJpaTest
 @Transactional(propagation = NOT_SUPPORTED)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Import(IdentityStrategyOverrideConfiguration.class)
 class PersistenceIT extends DockerizedTest {
 
   @Autowired private ProductRepository repository;

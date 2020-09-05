@@ -219,4 +219,63 @@
     </plugins>
   </build>
 
+  <profiles>
+    <profile>
+      <id>generateSQL</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-maven-plugin</artifactId>
+            <version>3.10.2</version>
+            <executions>
+              <execution>
+                <id>mysql</id>
+                <configuration>
+                  <changeLogFile>${basedir}/src/main/resources/db/db.changelog-master.yaml</changeLogFile>
+                  <url>offline:mysql?outputLiquibaseSql=none&amp;changeLogFile=${basedir}/src/main/resources/db/mysql/databasechangelog.csv</url>
+                  <username>root</username>
+                  <password>backbase</password>
+                  <migrationSqlOutputFile>${basedir}/src/main/resources/db/mysql/create.sql</migrationSqlOutputFile>
+                </configuration>
+                <goals>
+                  <goal>updateSQL</goal>
+                </goals>
+                <phase>process-resources</phase>
+              </execution>
+              <execution>
+                <id>mssql</id>
+                <configuration>
+                  <changeLogFile>${basedir}/src/main/resources/db/db.changelog-master.yaml</changeLogFile>
+                  <url>offline:mssql?outputLiquibaseSql=none&amp;changeLogFile=${basedir}/src/main/resources/db/mssql/databasechangelog.csv</url>
+                  <username>root</username>
+                  <password>backbase</password>
+                  <migrationSqlOutputFile>${basedir}/src/main/resources/db/mssql/create.sql</migrationSqlOutputFile>
+                </configuration>
+                <goals>
+                  <goal>updateSQL</goal>
+                </goals>
+                <phase>process-resources</phase>
+              </execution>
+              <execution>
+                <id>oracle</id>
+                <configuration>
+                  <changeLogFile>${basedir}/src/main/resources/db/db.changelog-master.yaml</changeLogFile>
+                  <url>offline:oracle?outputLiquibaseSql=none&amp;changeLogFile=${basedir}/src/main/resources/db/oracle/databasechangelog.csv</url>
+                  <username>root</username>
+                  <password>backbase</password>
+                  <migrationSqlOutputFile>${basedir}/src/main/resources/db/oracle/create.sql</migrationSqlOutputFile>
+                </configuration>
+                <goals>
+                  <goal>updateSQL</goal>
+                </goals>
+                <phase>process-resources</phase>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
 </project>
