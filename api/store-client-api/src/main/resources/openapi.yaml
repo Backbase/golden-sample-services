@@ -1,52 +1,48 @@
 openapi: 3.0.3
 info:
   title: Store Client API
+  version: 1.0.0
   description: Description of the API...
-  termsOfService: http://atorres.es
-  contact:
-    name: Contact
-    url: http://atorres.es
-    email: me@mail.com
   license:
     name: License
     url: http://atorres.es
-  version: 1.0.0
 servers:
-  - url: http://localhost:8080/
+  - description: Prism mock server
+    url: http://localhost:4010
+  - description: Service running locally
+    url: http://localhost:9917
 tags:
-  - name: product-composite-client-impl
-    description: REST API for composite product information.
+  - name: product-composite-client
 paths:
   /client-api/v1/product-composite/{productId}:
     get:
       tags:
-        - product-composite-client-impl
-      summary: Returns a composite view of the specified product id
+        - product-composite-client
+      summary: Retrieve product view by ID
       description: |
         # Normal response
-        If the requested product id is found the method will return information regarding:
+        If the requested product ID is found, then the method will return information regarding:
         1. Base product information
         1. Reviews
 
-
         # Expected partial and error responses
-        In the following cases, only a partial response be created (used to simplify testing of error conditions)
+        In the following cases, only a partial response will be created (used to simplify testing of error conditions)
 
-        ## Product id 113
+        ## Product ID 113
         200 - Ok, but no recommendations will be returned
 
-        ## Product id 213
+        ## Product ID 213
         200 - Ok, but no reviews will be returned
 
-        ## Non numerical product id
+        ## Non numerical product ID
         400 - A <b>Bad Request</b> error will be returned
 
-        ## Product id 13
+        ## Product ID 13
         404 - A <b>Not Found</b> error will be returned
 
-        ## Negative product ids
+        ## Negative product IDs
         422 - An <b>Unprocessable Entity</b> error will be returned
-      operationId: getProductUsingGET
+      operationId: getProductById
       parameters:
         - name: productId
           in: path
@@ -56,83 +52,82 @@ paths:
             type: integer
             format: int64
       responses:
-        200:
-          description: OK
+        '200':
+          description: If the product is retrieved successfully
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProductAggregate'
-        400:
-          description: Bad Request, invalid format of the request. See response message
-            for more information.
-          content: {}
-        401:
-          description: Unauthorized
-          content: {}
-        403:
-          description: Forbidden
-          content: {}
-        404:
-          description: Not found, the specified id does not exist.
-          content: {}
-        422:
-          description: Unprocessable entity, input parameters caused the processing
-            to fails. See response message for more information.
-          content: {}
+              example:
+                $ref: examples/product-aggregate.json
+        '400':
+          description: If one or more request parameters don't comply with the specification
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+              example:
+                $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/examples/bad-request-validation-error.json
+        '401':
+          description: If the authentication credentials provided are invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+              example:
+                $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/examples/unauthorized-error.json
+        '404':
+          description: If the product cannot be found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+              example:
+                $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/examples/not-found-error.json
+        '500':
+          description: If a runtime error occurs while processing the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+              example:
+                $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/examples/internal-server-error.json
   /client-api/v1/product-composite:
     post:
       tags:
-        - product-composite-client-impl
-      summary:  Creates a product aggregate
-      description: |
+        - product-composite-client
+      summary: Create a product aggregate
+      description: Creates a product aggregate
       operationId: postProduct
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/ProductAggregate'
+            example:
+              $ref: examples/product-aggregate.json
       responses:
         '200':
-          description: If the product have been created and/or updated successfully
+          description: If the product has been created successfully
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProductAggregate'
+              example:
+                $ref: examples/product-aggregate.json
 components:
   schemas:
     ProductAggregate:
-      title: ProductAggregate
-      type: object
-      properties:
-        name:
-          type: string
-        productId:
-          type: integer
-          format: int64
-        reviews:
-          type: array
-          items:
-            $ref: '#/components/schemas/ReviewSummary'
-        weight:
-          type: integer
-          format: int32
-        createDate:
-          description: The date when the product was created
-          type: string
-          format: date
+      $ref: schemas/product-aggregate.yaml
     ReviewSummary:
-      title: ReviewSummary
-      type: object
-      properties:
-        reviewId:
-          type: integer
-          format: int64
-        author:
-          type: string
-          minLength: 6
-          maxLength: 50
-        subject:
-          type: string
-        content:
-          type: string
-
+      $ref: schemas/review-summary.yaml
+    ErrorItem:
+      $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/schemas/error-item.yaml
+    BadRequestError:
+      $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/schemas/bad-request-error.yaml
+    UnauthorizedError:
+      $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/schemas/unauthorized-error.yaml
+    InternalServerError:
+      $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/schemas/internal-server-error.yaml
+    NotFoundError:
+      $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/schemas/not-found-error.yaml

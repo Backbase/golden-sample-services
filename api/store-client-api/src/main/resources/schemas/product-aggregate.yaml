@@ -1,0 +1,18 @@
+type: object
+properties:
+  name:
+    type: string
+  productId:
+    type: integer
+    format: int64
+  reviews:
+    type: array
+    items:
+      $ref: '../openapi.yaml#/components/schemas/ReviewSummary'
+  weight:
+    type: integer
+    format: int32
+  createDate:
+    description: The date when the product was created
+    type: string
+    format: date

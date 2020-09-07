@@ -1,0 +1,13 @@
+type: object
+properties:
+  reviewId:
+    type: integer
+    format: int64
+  author:
+    type: string
+    minLength: 6
+    maxLength: 50
+  subject:
+    type: string
+  content:
+    type: string
