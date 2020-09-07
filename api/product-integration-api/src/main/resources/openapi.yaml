@@ -45,6 +45,14 @@ paths:
                 $ref: '#/components/schemas/BadRequestError'
               example:
                 $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/examples/bad-request-validation-error.json
+        '401':
+          description: If the authentication credentials provided are invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+              example:
+                $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/examples/unauthorized-error.json
         '500':
           description: If a runtime error occurs while processing the request
           content:
@@ -77,6 +85,14 @@ paths:
                 $ref: '#/components/schemas/BadRequestError'
               example:
                 $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/examples/bad-request-validation-error.json
+        '401':
+          description: If the authentication credentials provided are invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+              example:
+                $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/examples/unauthorized-error.json
         '500':
           description: If a runtime error occurs while processing the request
           content:
