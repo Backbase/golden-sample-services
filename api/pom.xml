@@ -106,6 +106,26 @@
                         </environmentVariables>
                     </configuration>
                 </plugin>
+
+                <plugin>
+                    <groupId>com.backbase.oss</groupId>
+                    <artifactId>boat-maven-plugin</artifactId>
+                    <version>0.1.6</version>
+                    <executions>
+                        <execution>
+                            <id>generate-docs</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>generate</goal>
+                            </goals>
+                            <configuration>
+                                <inputSpec>${project.build.directory}/openapi.yaml</inputSpec>
+                                <output>${project.build.directory}/generated-docs</output>
+                                <generatorName>html2</generatorName>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
