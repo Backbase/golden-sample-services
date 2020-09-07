@@ -58,7 +58,6 @@
                                 <arguments>run validate</arguments>
                             </configuration>
                         </execution>
-                        <!--Disabled until https://github.com/stoplightio/spectral/issues/870 is solved
                         <execution>
                             <id>lint spec</id>
                             <goals>
@@ -76,7 +75,7 @@
                             <configuration>
                                 <arguments>run lint-schemas</arguments>
                             </configuration>
-                        </execution -->
+                        </execution>
                         <execution>
                             <id>bundle spec</id>
                             <goals>
