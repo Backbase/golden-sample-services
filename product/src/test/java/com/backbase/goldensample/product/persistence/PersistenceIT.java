@@ -4,11 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.transaction.annotation.Propagation.NOT_SUPPORTED;
 
-
 import com.backbase.goldensample.product.DockerizedTest;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.LocalDate;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,8 +28,7 @@ class PersistenceIT extends DockerizedTest {
 
   private ProductEntity savedEntity;
 
-  private static final Instant TODAY = LocalDateTime.of(2020, 1, 28, 12, 26)
-      .toInstant(ZoneOffset.UTC);
+  private static final LocalDate TODAY = LocalDate.of(2020, 1, 28);
 
   @BeforeAll
   public static void envSetup() {

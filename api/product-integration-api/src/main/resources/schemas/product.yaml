@@ -12,5 +12,3 @@ properties:
     description: The date when the product was created
     type: string
     format: date
-required:
-  - productId

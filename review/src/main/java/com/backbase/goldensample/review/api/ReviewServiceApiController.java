@@ -1,7 +1,7 @@
 package com.backbase.goldensample.review.api;
 
 import com.backbase.goldensample.review.service.ReviewService;
-import com.backbase.reviews.api.service.v2.ReviewServiceImplApi;
+import com.backbase.reviews.api.service.v2.ReviewServiceApi;
 import com.backbase.reviews.api.service.v2.model.Review;
 import com.backbase.reviews.api.service.v2.model.ReviewId;
 import java.util.List;
@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
  * Class <code>ReviewController</code> is the implementation of the main Review Endpoint API
  * definition.
  *
- * @see ReviewServiceApiController
+ * @see ReviewServiceApi
  */
 @RestController
 @Log4j2
-public class ReviewServiceApiController implements ReviewServiceImplApi {
+public class ReviewServiceApiController implements ReviewServiceApi {
 
   /** Review service business logic interface. */
   private final ReviewService reviewService;
@@ -51,7 +51,7 @@ public class ReviewServiceApiController implements ReviewServiceImplApi {
   }
 
   @Override
-  public ResponseEntity<Review> getReviewUsingGET(Long reviewId) {
+  public ResponseEntity<Review> getReviewById(Long reviewId) {
     Review review = reviewService.getReview(reviewId);
     return ResponseEntity.ok(review);
   }
