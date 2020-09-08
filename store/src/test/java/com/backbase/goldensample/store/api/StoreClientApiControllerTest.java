@@ -10,14 +10,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
 import com.backbase.goldensample.product.api.client.v2.model.Product;
 import com.backbase.goldensample.product.api.client.v2.model.ProductId;
 import com.backbase.goldensample.review.api.client.v2.model.Review;
 import com.backbase.goldensample.review.api.client.v2.model.ReviewId;
 import com.backbase.goldensample.store.service.ProductCompositeService;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.TimeZone;
 import org.junit.jupiter.api.DisplayName;
@@ -55,11 +54,11 @@ class StoreClientApiControllerTest {
     void shouldGetReviewsWhenServiceReturnsReviewsOfAProduct() throws Exception {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-        Date dateInUTC = dateFormat.parse("2011-10-16");
+        LocalDate createDate = LocalDate.of(2011, 10, 16);
 
         Review reviewOne = createReview(1L, 1L, "author", "subject", "long content");
         Review reviewTwo = createReview(2L, 1L, "another author", "another subject", "super long content");
-        Product productOne = createProduct(1L, "Product 1", 23, dateInUTC);
+        Product productOne = createProduct(1L, "Product 1", 23, createDate);
 
         when(productCompositeService.getProduct(1L)).thenReturn((productOne));
         when(productCompositeService.getReviews(1L)).thenReturn((List.of(reviewOne, reviewTwo)));
@@ -77,7 +76,7 @@ class StoreClientApiControllerTest {
             .andExpect(jsonPath("$.weight", is(23)))
             //TODO revisit this test
 //            .andExpect(jsonPath("$.createDate", is(dateFormat.format(dateInUTC))))
-            .andExpect(content().json("{'createDate': '2011-10-16T00:00:00.000+00:00'}"))
+            .andExpect(content().json("{'createDate': '2011-10-16'}"))
             .andExpect(jsonPath("$.name", is("Product 1")));
 
         verify(productCompositeService).getProduct(1L);
@@ -116,7 +115,7 @@ class StoreClientApiControllerTest {
     }
 
 
-    private Product createProduct(Long id, String name, Integer weight, Date createDate) {
+    private Product createProduct(Long id, String name, Integer weight, LocalDate createDate) {
         Product result = new Product().productId(id).name(name).weight(weight).createDate(createDate);
         return result;
     }

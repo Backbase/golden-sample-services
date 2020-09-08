@@ -1,10 +1,10 @@
 package com.backbase.goldensample.store.service;
 
 import com.backbase.buildingblocks.presentation.errors.NotFoundException;
-import com.backbase.goldensample.product.api.client.v2.ProductServiceImplApi;
+import com.backbase.goldensample.product.api.client.v2.ProductServiceApi;
 import com.backbase.goldensample.product.api.client.v2.model.Product;
 import com.backbase.goldensample.product.api.client.v2.model.ProductId;
-import com.backbase.goldensample.review.api.client.v2.ReviewServiceImplApi;
+import com.backbase.goldensample.review.api.client.v2.ReviewServiceApi;
 import com.backbase.goldensample.review.api.client.v2.model.Review;
 import com.backbase.goldensample.review.api.client.v2.model.ReviewId;
 import com.backbase.goldensample.store.HttpErrorInfo;
@@ -23,14 +23,14 @@ public class ProductCompositeService {
 
     private static final Logger LOG = LoggerFactory.getLogger(ProductCompositeService.class);
 
-    private final ProductServiceImplApi productServiceImplApi;
-    private final ReviewServiceImplApi reviewServiceImplApi;
+    private final ProductServiceApi productServiceImplApi;
+    private final ReviewServiceApi reviewServiceImplApi;
     private final ObjectMapper mapper;
 
     @Autowired
     public ProductCompositeService(
-        ProductServiceImplApi productServiceImplApi,
-        ReviewServiceImplApi reviewServiceImplApi,
+        ProductServiceApi productServiceImplApi,
+        ReviewServiceApi reviewServiceImplApi,
         ObjectMapper mapper
     ) {
         this.productServiceImplApi = productServiceImplApi;
@@ -43,7 +43,7 @@ public class ProductCompositeService {
         try {
             LOG.debug("Will call the getProduct API on URL: {}", productServiceImplApi.getApiClient().getBasePath());
 
-            Product product = productServiceImplApi.getProductUsingGET(productId);
+            Product product = productServiceImplApi.getProductById(productId);
             if (product != null) {
                 LOG.debug("Found a product with id: {}", product.getProductId());
             }

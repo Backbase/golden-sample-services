@@ -4,19 +4,18 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
 import com.backbase.goldensample.product.service.ProductService;
 import com.backbase.product.api.service.v2.model.Product;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -52,8 +51,8 @@ class ProductServiceApiControllerTest {
 
     @Test
     void shouldGetProductsWhenServiceReturnsProducts() throws Exception {
-        Product productOne = createProduct(1L, "Product 1", 23, new Date());
-        Product productTwo= createProduct(2L, "Product 2", 32, new Date());
+        Product productTwo= createProduct(2L, "Product 2", 32, LocalDate.now());
+        Product productOne = createProduct(1L, "Product 1", 23, LocalDate.now());
 
         when(productService.getAllProducts()).thenReturn(List.of(productOne, productTwo));
 
@@ -73,7 +72,7 @@ class ProductServiceApiControllerTest {
 
     @Test
     void shouldGetProductWhenServiceReturnProduct() throws Exception {
-        Product productOne = createProduct(1L, "Product 1", 23, new Date());
+        Product productOne = createProduct(1L, "Product 1", 23, LocalDate.now());
 
         when(productService.getProduct(1,0,0)).thenReturn(productOne);
 
@@ -91,7 +90,7 @@ class ProductServiceApiControllerTest {
 
     @Test
     void shouldCreateNewProductWithValidPayload() throws Exception {
-        Product productOne = createProduct(1L, "Product 1", 23, new Date());
+        Product productOne = createProduct(1L, "Product 1", 23, LocalDate.now());
 
         String requestBody = "{\n" +
             "  \"name\": \"Product 1\",\n" +
@@ -165,7 +164,7 @@ class ProductServiceApiControllerTest {
     }
 
 
-    private Product createProduct(Long id, String name, Integer weight, Date createDate) {
+    private Product createProduct(Long id, String name, Integer weight, LocalDate createDate) {
         Product result = new Product().productId(id).name(name).weight(weight).createDate(createDate);
         return result;
     }

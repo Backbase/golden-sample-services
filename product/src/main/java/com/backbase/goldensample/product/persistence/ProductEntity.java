@@ -1,7 +1,6 @@
 package com.backbase.goldensample.product.persistence;
 
-import com.backbase.goldensample.product.config.IdentityStrategyOverrideConfiguration;
-import java.time.Instant;
+import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -70,14 +69,15 @@ public class ProductEntity {
 
     private Integer weight;
 
-    private Instant createDate;
+  private LocalDate createDate;
 
     public ProductEntity() {
     }
 
-    public ProductEntity(String name, Integer weight, Instant createDate) {
-        this.name = name;
-        this.weight = weight;
-        this.createDate = createDate;
-    }
+  public ProductEntity(String name, Integer weight, LocalDate createDate) {
+    this.name = name;
+    this.weight = weight;
+    this.createDate = createDate;
+  }
+
 }

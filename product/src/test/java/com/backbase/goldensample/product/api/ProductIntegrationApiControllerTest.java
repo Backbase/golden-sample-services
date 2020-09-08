@@ -12,10 +12,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
 import com.backbase.goldensample.product.service.ProductService;
 import com.backbase.product.api.service.v2.model.Product;
-import java.util.Date;
+import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -35,7 +34,7 @@ class ProductIntegrationApiControllerTest {
 
     @Test
     void shouldGetProductWhenServiceReturnProduct() throws Exception {
-        Product productOne = createProduct(1L, "Product 1", 23, new Date());
+        Product productOne = createProduct(1L, "Product 1", 23, LocalDate.now());
 
         when(productService.getProduct(1,0,0)).thenReturn(productOne);
 
@@ -53,7 +52,7 @@ class ProductIntegrationApiControllerTest {
 
     @Test
     void shouldCreateNewProductWithValidPayload() throws Exception {
-        Product productOne = createProduct(1L, "Product 1", 23, new Date());
+        Product productOne = createProduct(1L, "Product 1", 23, LocalDate.now());
 
         String requestBody = "{\n" +
             "  \"name\": \"Product 1\",\n" +
@@ -105,7 +104,7 @@ class ProductIntegrationApiControllerTest {
     }
 
 
-    private Product createProduct(Long id, String name, Integer weight, Date createDate) {
+    private Product createProduct(Long id, String name, Integer weight, LocalDate createDate) {
         Product result = new Product().productId(id).name(name).weight(weight).createDate(createDate);
         return result;
     }

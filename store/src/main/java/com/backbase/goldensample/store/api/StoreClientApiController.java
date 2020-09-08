@@ -5,12 +5,12 @@ import com.backbase.goldensample.product.api.client.v2.model.Product;
 import com.backbase.goldensample.product.api.client.v2.model.ProductId;
 import com.backbase.goldensample.review.api.client.v2.model.Review;
 import com.backbase.goldensample.review.api.client.v2.model.ReviewId;
-import com.backbase.goldensample.store.api.service.v2.ProductCompositeClientImplApi;
+import com.backbase.goldensample.store.api.service.v2.ProductCompositeClientApi;
 import com.backbase.goldensample.store.api.service.v2.model.ProductAggregate;
 import com.backbase.goldensample.store.api.service.v2.model.ReviewSummary;
 import com.backbase.goldensample.store.service.ProductCompositeService;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
@@ -21,7 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class StoreClientApiController implements ProductCompositeClientImplApi {
+public class StoreClientApiController implements ProductCompositeClientApi {
 
     private static final Logger LOG = LoggerFactory.getLogger(StoreClientApiController.class);
 
@@ -34,7 +34,7 @@ public class StoreClientApiController implements ProductCompositeClientImplApi {
 
 
     @Override
-    public ResponseEntity<ProductAggregate> getProductUsingGET(Long productId) {
+    public ResponseEntity<ProductAggregate> getProductById(Long productId) {
         LOG.debug("getCompositeProduct: lookup a product aggregate for productId: {}", productId);
 
         Product product = productCompositeService.getProduct(productId);
@@ -83,7 +83,7 @@ public class StoreClientApiController implements ProductCompositeClientImplApi {
         long productId = product.getProductId();
         String name = product.getName();
         int weight = product.getWeight();
-        Date createDate = product.getCreateDate();
+        LocalDate createDate = product.getCreateDate();
 
         // 2. Copy summary review info, if available
         List<ReviewSummary> reviewSummaries = (reviews == null) ? null :
