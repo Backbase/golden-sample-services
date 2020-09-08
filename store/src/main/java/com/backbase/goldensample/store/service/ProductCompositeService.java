@@ -64,7 +64,7 @@ public class ProductCompositeService {
             LOG.debug("Found {} reviews for a product with id: {}", reviews.size(), productId);
             return reviews;
 
-        } catch (Exception ex) {
+        } catch (HttpClientErrorException ex) {
             LOG.warn("Got an exception while requesting reviews, return zero reviews: {}", ex.getMessage());
             return new ArrayList<>();
         }

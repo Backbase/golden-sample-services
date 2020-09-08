@@ -12,16 +12,17 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Date;
 import org.junit.jupiter.api.Test;
+import org.mapstruct.factory.Mappers;
 
 class MapperTests {
 
-    private final ProductMapper mapper = ProductMapper.INSTANCE;
+    private final ProductMapper mapper = Mappers.getMapper(ProductMapper.class);
 
     private static final Instant TODAY = LocalDateTime.of(2020, 1, 28, 12, 26)
         .toInstant(ZoneOffset.UTC);
 
     @Test
-    public void mapperTests() {
+    void mapperTests() {
 
         assertNotNull(mapper);
 

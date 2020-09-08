@@ -46,7 +46,7 @@ class PersistenceIT extends DockerizedTest {
   @BeforeEach
   public void setupDb() {
 
-    repository.deleteAll();
+//    repository.deleteAll();
 
     ProductEntity entity = new ProductEntity("amazon", 1, TODAY);
     savedEntity = repository.save(entity);
@@ -55,7 +55,7 @@ class PersistenceIT extends DockerizedTest {
   }
 
   @Test
-  public void create() {
+  void create() {
     ProductEntity newEntity = new ProductEntity("n", 2, TODAY);
     repository.save(newEntity);
 
@@ -68,7 +68,7 @@ class PersistenceIT extends DockerizedTest {
   }
 
   @Test
-  public void update() {
+  void update() {
 
     savedEntity.setName("amazon 2");
     repository.save(savedEntity);
@@ -79,13 +79,13 @@ class PersistenceIT extends DockerizedTest {
   }
 
   @Test
-  public void delete() {
+  void delete() {
     repository.delete(savedEntity);
     assertFalse(repository.existsById(savedEntity.getId()));
   }
 
   @Test
-  public void getById() {
+  void getById() {
     ProductEntity foundEntity = repository.findById(savedEntity.getId()).get();
 
     assertEqualsReview(savedEntity, foundEntity);

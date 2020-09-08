@@ -33,10 +33,10 @@ class ProductIntegrationApiControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    private final Product productOne = createProduct(1L, "Product 1", 23, new Date());
+
     @Test
     void shouldGetProductWhenServiceReturnProduct() throws Exception {
-        Product productOne = createProduct(1L, "Product 1", 23, new Date());
-
         when(productService.getProduct(1,0,0)).thenReturn(productOne);
 
         this.mockMvc
@@ -53,7 +53,6 @@ class ProductIntegrationApiControllerTest {
 
     @Test
     void shouldCreateNewProductWithValidPayload() throws Exception {
-        Product productOne = createProduct(1L, "Product 1", 23, new Date());
 
         String requestBody = "{\n" +
             "  \"name\": \"Product 1\",\n" +
@@ -83,7 +82,7 @@ class ProductIntegrationApiControllerTest {
             "}";
 
         when(productService.updateProduct(any(Product.class)))
-            .thenReturn(any(Product.class));
+            .thenReturn(productOne);
 
         this
             .mockMvc

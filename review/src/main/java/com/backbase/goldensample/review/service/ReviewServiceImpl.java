@@ -80,7 +80,7 @@ public class ReviewServiceImpl implements ReviewService {
     public void deleteReview(long reviewId) {
         log.debug(
             "deleteReview: tries to delete review with reviewId: {}", reviewId);
-        repository.findById(reviewId).ifPresent(review -> repository.delete(review));
+        repository.findById(reviewId).ifPresent(repository::delete);
     }
 
 }

@@ -36,6 +36,8 @@ class ReviewServiceApiControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    private final Review reviewOne = createReview(1L, 1L, "author", "subject", "long content");
+
     @Test
     void shouldGetEmptyArrayWhenNoReviews() throws Exception {
 
@@ -51,7 +53,6 @@ class ReviewServiceApiControllerTest {
 
     @Test
     void shouldGetReviewsWhenServiceReturnsReviewsOfAProduct() throws Exception {
-        Review reviewOne = createReview(1L, 1L, "author", "subject", "long content");
         Review reviewTwo = createReview(2L, 1L, "another author", "another subject", "super long content");
 
         when(reviewService.getReviewsByProductId(1L)).thenReturn(List.of(reviewOne, reviewTwo));
@@ -76,8 +77,6 @@ class ReviewServiceApiControllerTest {
 
     @Test
     void shouldGetReviewWhenServiceReturnReviewById() throws Exception {
-        Review reviewOne = createReview(1L, 1L, "author", "subject", "long content");
-
         when(reviewService.getReview(1)).thenReturn(reviewOne);
 
         this.mockMvc
@@ -95,7 +94,7 @@ class ReviewServiceApiControllerTest {
     }
 
     @Test
-    void shouldRejectNewProductWithInvalidPayload() throws Exception {
+    void shouldRejectNewReviewWithInvalidPayload() throws Exception {
 
         String requestBody = "{\n" +
             "  \"productId\": \"1\",\n" +
@@ -113,9 +112,7 @@ class ReviewServiceApiControllerTest {
     }
 
     @Test
-    void shouldCreateNewProductWithValidPayload() throws Exception {
-        Review reviewOne = createReview(1L, 1L, "name", "subject", "long content");
-
+    void shouldCreateNewReviewWithValidPayload() throws Exception {
         String requestBody = "{\n" +
             "  \"productId\": \"1\",\n" +
             "  \"author\": \"author\",\n" +
@@ -135,7 +132,7 @@ class ReviewServiceApiControllerTest {
     }
 
     @Test
-    void shouldUpdateAProductWithValidPayload() throws Exception {
+    void shouldUpdateReviewWithValidPayload() throws Exception {
 
         String requestBody = "{\n" +
             "  \"productId\": \"1\",\n" +
@@ -146,7 +143,7 @@ class ReviewServiceApiControllerTest {
 
 
         when(reviewService.updateReview(any(Review.class)))
-            .thenReturn(any(Review.class));
+            .thenReturn(reviewOne);
 
         this
             .mockMvc
