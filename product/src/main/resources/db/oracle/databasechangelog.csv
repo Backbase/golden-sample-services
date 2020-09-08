@@ -1,0 +1,3 @@
+"ID","AUTHOR","FILENAME","DATEEXECUTED","ORDEREXECUTED","EXECTYPE","MD5SUM","DESCRIPTION","COMMENTS","TAG","LIQUIBASE","CONTEXTS","LABELS","DEPLOYMENT_ID"
+"create-hibernate-sequence","backbase","/Users/andres/Development/golden-example/backbase-golden-example/product/src/main/resources/db/changelog/000-create.yaml","2020-09-05T12:57:53.925","1","EXECUTED","8:155bd6925fb1204ede420e47e04d8b45","createSequence sequenceName=hibernate_sequence","","","3.10.2","()","","9303473921"
+"create-product-table","backbase","/Users/andres/Development/golden-example/backbase-golden-example/product/src/main/resources/db/changelog/000-create.yaml","2020-09-05T12:57:53.928","2","EXECUTED","8:8b72553b0eeba1a39d1e80883d0fcc24","createTable tableName=product",,"","3.10.2","()","","9303473921"

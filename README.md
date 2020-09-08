@@ -1,7 +1,7 @@
 # Backbase Golden Sample μServices system
 
 - This project is a development of a small set of [Backbase Service SDK](https://community.backbase.com/documentation/ServiceSDK/latest/index) (**Spring Boot** and **Cloud**) based Microservices projects that implement cloud-native intuitive, Microservices design patterns, and coding best practices.
-- The project follows [**CloudNative**](https://www.cncf.io/) recommendations and The [**twelve-factor app**](https://12factor.net/) methodology for building *software-as-a-service apps* to show how μServices should be developed and deployed.
+- The project follows [**CloudNative**](https://www.cncf.io/) recommendations and the [**twelve-factor app**](https://12factor.net/) methodology for building *software-as-a-service apps* to show how μServices should be developed and deployed.
 - This project uses cutting edge technologies like Docker, Kubernetes, Elasticsearch Stack for
  logging and monitoring, Java SE 11, MySQL databases, all components developed with TDD in mind, covering integration & performance testing, and many more.
  - This project is going to be developed as stages

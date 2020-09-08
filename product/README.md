@@ -1,6 +1,10 @@
-# core-service
+# Product-service
 
-_Fill out this file with some information about your Service._
+The product service manages product information and describes each product with the following attributes: 
+* Product ID 
+* Name 
+* Weight
+* Creation Date
 
 #Getting Started
 * [Extend and build](https://community.backbase.com/documentation/ServiceSDK/latest/extend_and_build)
@@ -8,6 +12,7 @@ _Fill out this file with some information about your Service._
 ## Dependencies
 
 Requires a running Eureka registry, by default on port 8080.
+Requires a MySQL database, by default on port 3316
 
 ## Configuration
 

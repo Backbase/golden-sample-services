@@ -1,0 +1,2 @@
+"ID","AUTHOR","FILENAME","DATEEXECUTED","ORDEREXECUTED","EXECTYPE","MD5SUM","DESCRIPTION","COMMENTS","TAG","LIQUIBASE","CONTEXTS","LABELS","DEPLOYMENT_ID"
+"create-product-table","backbase","/Users/andres/Development/golden-example/backbase-golden-example/product/src/main/resources/db/changelog/000-create.yaml","2020-09-05T12:57:53.756","1","EXECUTED","8:c2d5a559ed4cfc53c900c840179984f7","createTable tableName=product",,"","3.10.2","()","","9303473686"

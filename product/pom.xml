@@ -106,7 +106,7 @@
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
       <version>5.1.47</version>
-<!--      <scope>test</scope>-->
+      <!--      <scope>test</scope>-->
     </dependency>
     <!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc -->
     <dependency>
@@ -121,8 +121,6 @@
       <version>2.6.2</version>
       <scope>test</scope>
     </dependency>
-
-
   </dependencies>
 
   <build>
@@ -227,5 +225,89 @@
       </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>generateSQL</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-maven-plugin</artifactId>
+            <version>3.10.2</version>
+            <executions>
+              <execution>
+                <id>mysql</id>
+                <configuration>
+                  <changeLogFile>${basedir}/src/main/resources/db/db.changelog-master.yaml</changeLogFile>
+                  <url>offline:mysql?outputLiquibaseSql=none&amp;changeLogFile=${basedir}/src/main/resources/db/mysql/databasechangelog.csv</url>
+                  <username>root</username>
+                  <password>backbase</password>
+                  <migrationSqlOutputFile>${basedir}/src/main/resources/db/mysql/create.sql</migrationSqlOutputFile>
+                </configuration>
+                <goals>
+                  <goal>updateSQL</goal>
+                </goals>
+                <phase>process-resources</phase>
+              </execution>
+              <execution>
+                <id>mssql</id>
+                <configuration>
+                  <changeLogFile>${basedir}/src/main/resources/db/db.changelog-master.yaml</changeLogFile>
+                  <url>offline:mssql?outputLiquibaseSql=none&amp;changeLogFile=${basedir}/src/main/resources/db/mssql/databasechangelog.csv</url>
+                  <username>root</username>
+                  <password>backbase</password>
+                  <migrationSqlOutputFile>${basedir}/src/main/resources/db/mssql/create.sql</migrationSqlOutputFile>
+                </configuration>
+                <goals>
+                  <goal>updateSQL</goal>
+                </goals>
+                <phase>process-resources</phase>
+              </execution>
+              <execution>
+                <id>oracle</id>
+                <configuration>
+                  <changeLogFile>${basedir}/src/main/resources/db/db.changelog-master.yaml</changeLogFile>
+                  <url>offline:oracle?outputLiquibaseSql=none&amp;changeLogFile=${basedir}/src/main/resources/db/oracle/databasechangelog.csv</url>
+                  <username>root</username>
+                  <password>backbase</password>
+                  <migrationSqlOutputFile>${basedir}/src/main/resources/db/oracle/create.sql</migrationSqlOutputFile>
+                </configuration>
+                <goals>
+                  <goal>updateSQL</goal>
+                </goals>
+                <phase>process-resources</phase>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>generateChangeLog</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-maven-plugin</artifactId>
+            <version>3.10.2</version>
+            <configuration>
+              <changeLogFile>${basedir}/src/main/resources/db/db.changelog-master.yaml</changeLogFile>
+              <propertyFile>${basedir}/src/main/resources/liquibase.properties</propertyFile>
+              <outputChangeLogFile>${basedir}/src/main/resources/db/changelog/000-create.yaml</outputChangeLogFile>
+            </configuration>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>generateChangeLog</goal>
+                </goals>
+                <phase>generate-resources</phase>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
 </project>
