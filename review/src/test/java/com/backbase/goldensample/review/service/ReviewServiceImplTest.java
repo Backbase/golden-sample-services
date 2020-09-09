@@ -19,8 +19,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
@@ -31,7 +29,6 @@ class ReviewServiceImplTest {
     @Mock
     private ReviewRepository reviewRepository;
 
-    @Spy
     ReviewMapper reviewMapper = Mappers.getMapper(ReviewMapper.class);
 
     private final Review review = new Review().reviewId(1L).productId(1L).author("author").subject("subject").content("long content");
@@ -39,9 +36,7 @@ class ReviewServiceImplTest {
 
     @BeforeEach
     public void init() {
-        MockitoAnnotations.initMocks(this);
         reviewService = new ReviewServiceImpl(reviewRepository, reviewMapper);
-
     }
 
     @Test
@@ -55,7 +50,6 @@ class ReviewServiceImplTest {
 
         when(reviewRepository.findByProductId(1L)).thenReturn(list);
 
-        //test
         List<Review> reviews = reviewService.getReviewsByProductId(1L);
 
         assertEquals(2, reviews.size());

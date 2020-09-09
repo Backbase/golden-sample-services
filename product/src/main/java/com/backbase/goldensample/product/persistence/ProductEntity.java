@@ -70,8 +70,9 @@ public class ProductEntity {
 
     private Integer weight;
 
-  private LocalDate createDate;
+    private LocalDate createDate;
 
+    //No-Op
     public ProductEntity() {
     }
 

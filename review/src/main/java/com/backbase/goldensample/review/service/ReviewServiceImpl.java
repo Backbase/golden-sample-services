@@ -31,7 +31,7 @@ public class ReviewServiceImpl implements ReviewService {
         ReviewEntity newEntity = repository.save(entity);
 
         log.debug(
-            "createReview: created a review entity: {}/{}", newEntity.getProductId(), newEntity.getId());
+            "created a review entity: {}/{}", newEntity.getProductId(), newEntity.getId());
         return mapper.entityToApi(newEntity);
 
     }
@@ -42,7 +42,7 @@ public class ReviewServiceImpl implements ReviewService {
         ReviewEntity newEntity = repository.save(entity);
 
         log.debug(
-            "updateReview: update a review entity: {}/{}", newEntity.getProductId(), newEntity.getId());
+            "update a review entity: {}/{}", newEntity.getProductId(), newEntity.getId());
         return mapper.entityToApi(newEntity);
     }
 
@@ -51,7 +51,7 @@ public class ReviewServiceImpl implements ReviewService {
 
         List<Review> list = mapper.entityListToApiList(repository.findByProductId(productId));
 
-        log.debug("getReviews: response size: {}", list.size());
+        log.debug("response size: {}", list.size());
 
         return list;
     }
@@ -59,7 +59,7 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public Review getReview(long reviewId) {
 
-        log.debug("getReview: {}", reviewId);
+        log.debug("get review with id: {}", reviewId);
 
         return repository.findById(reviewId).map(mapper::entityToApi)
             .orElseThrow(() -> new NotFoundException(String.format("Item is not found with id : '%s'", reviewId)));
@@ -68,7 +68,7 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public void deleteReviews(long productId) {
         log.debug(
-            "deleteReviews: tries to delete reviews for the product with productId: {}", productId);
+            "tries to delete reviews for the product with productId: {}", productId);
         repository.deleteAll(repository.findByProductId(productId));
     }
 
@@ -79,7 +79,7 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public void deleteReview(long reviewId) {
         log.debug(
-            "deleteReview: tries to delete review with reviewId: {}", reviewId);
+            "tries to delete review with reviewId: {}", reviewId);
         repository.findById(reviewId).ifPresent(repository::delete);
     }
 

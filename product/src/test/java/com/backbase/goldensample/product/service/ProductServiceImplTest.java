@@ -1,5 +1,6 @@
 package com.backbase.goldensample.product.service;
 
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -15,14 +16,11 @@ import com.backbase.product.api.service.v2.model.Product;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
@@ -33,7 +31,6 @@ class ProductServiceImplTest {
     @Mock
     private ProductRepository productRepository;
 
-    @Spy
     ProductMapper productMapper = Mappers.getMapper(ProductMapper.class);
 
     private static final LocalDate TODAY = LocalDate.of(2020, 1, 28);
@@ -43,9 +40,7 @@ class ProductServiceImplTest {
 
     @BeforeEach
     public void init() {
-        MockitoAnnotations.initMocks(this);
         productService = new ProductServiceImpl(productRepository, productMapper);
-
     }
 
     @Test
@@ -61,7 +56,6 @@ class ProductServiceImplTest {
 
         when(productRepository.findAll()).thenReturn(list);
 
-        //test
         List<Product> empList = productService.getAllProducts();
 
         assertEquals(3, empList.size());
@@ -94,7 +88,7 @@ class ProductServiceImplTest {
 
     @Test
     void getProductByIdWithErrorTest() {
-        Assertions.assertThrows(RuntimeException.class, () -> productService.getProduct(1, 0, 100));
+        assertThrows(RuntimeException.class, () -> productService.getProduct(1, 0, 100));
     }
 
     @Test

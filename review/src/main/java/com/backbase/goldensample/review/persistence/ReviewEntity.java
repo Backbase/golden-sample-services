@@ -77,6 +77,7 @@ public class ReviewEntity {
     @NotBlank
     private String content;
 
+    //No-Op
     public ReviewEntity() {
     }
 
