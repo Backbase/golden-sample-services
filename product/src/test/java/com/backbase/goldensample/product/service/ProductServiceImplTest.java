@@ -12,11 +12,8 @@ import com.backbase.goldensample.product.mapper.ProductMapper;
 import com.backbase.goldensample.product.persistence.ProductEntity;
 import com.backbase.goldensample.product.persistence.ProductRepository;
 import com.backbase.product.api.service.v2.model.Product;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,10 +36,9 @@ class ProductServiceImplTest {
     @Spy
     ProductMapper productMapper = Mappers.getMapper(ProductMapper.class);
 
-    private static final Instant TODAY = LocalDateTime.of(2020, 1, 28, 12, 26)
-        .toInstant(ZoneOffset.UTC);
+    private static final LocalDate TODAY = LocalDate.of(2020, 1, 28);
 
-    private final Product product = new Product().productId(1L).name("Product").weight(20).createDate(Date.from(TODAY));
+    private final Product product = new Product().productId(1L).name("Product").weight(20).createDate(TODAY);
     private final ProductEntity productEntity = new ProductEntity(1L, "Product1", 20, TODAY);
 
     @BeforeEach
@@ -54,7 +50,7 @@ class ProductServiceImplTest {
 
     @Test
     void getAllProductsTest() {
-        List<ProductEntity> list = new ArrayList<ProductEntity>();
+        List<ProductEntity> list = new ArrayList<>();
         ProductEntity productOne = new ProductEntity(1L, "Product1", 20, TODAY);
         ProductEntity productTwo = new ProductEntity(2L, "Product2", 21, TODAY);
         ProductEntity productThree = new ProductEntity(3L, "Product3", 22, TODAY);
@@ -81,7 +77,7 @@ class ProductServiceImplTest {
         assertAll(
             () -> assertEquals("Product1", product.getName()),
             () -> assertEquals(20, product.getWeight()),
-            () -> assertEquals(Date.from(TODAY), product.getCreateDate()));
+            () -> assertEquals(TODAY, product.getCreateDate()));
     }
 
     @Test
@@ -93,12 +89,12 @@ class ProductServiceImplTest {
         assertAll(
             () -> assertEquals("Product1", product.getName()),
             () -> assertEquals(20, product.getWeight()),
-            () -> assertEquals(Date.from(TODAY), product.getCreateDate()));
+            () -> assertEquals(TODAY, product.getCreateDate()));
     }
 
     @Test
     void getProductByIdWithErrorTest() {
-        Assertions.assertThrows(RuntimeException.class, () -> {productService.getProduct(1, 0, 100);});
+        Assertions.assertThrows(RuntimeException.class, () -> productService.getProduct(1, 0, 100));
     }
 
     @Test

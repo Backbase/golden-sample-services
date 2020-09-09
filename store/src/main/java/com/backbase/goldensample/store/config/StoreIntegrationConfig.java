@@ -1,8 +1,8 @@
 package com.backbase.goldensample.store.config;
 
 import com.backbase.goldensample.product.api.client.ApiClient;
-import com.backbase.goldensample.product.api.client.v2.ProductServiceImplApi;
-import com.backbase.goldensample.review.api.client.v2.ReviewServiceImplApi;
+import com.backbase.goldensample.product.api.client.v2.ProductServiceApi;
+import com.backbase.goldensample.review.api.client.v2.ReviewServiceApi;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,8 +16,8 @@ public class StoreIntegrationConfig {
     @Value("${app.review-service.port}") int reviewServicePort;
 
     @Bean
-    public ProductServiceImplApi productServiceImplApi() {
-        return new ProductServiceImplApi(apiClient());
+    public ProductServiceApi productServiceImplApi() {
+        return new ProductServiceApi(apiClient());
     }
 
     @Bean
@@ -27,8 +27,8 @@ public class StoreIntegrationConfig {
     }
 
     @Bean
-    public ReviewServiceImplApi reviewServiceImplApi() {
-        return new ReviewServiceImplApi(apiReviewClient());
+    public ReviewServiceApi reviewServiceImplApi() {
+        return new ReviewServiceApi(apiReviewClient());
     }
 
     @Bean

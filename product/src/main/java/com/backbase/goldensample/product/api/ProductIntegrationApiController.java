@@ -1,7 +1,7 @@
 package com.backbase.goldensample.product.api;
 
 import com.backbase.goldensample.product.service.ProductService;
-import com.backbase.product.api.integration.v2.ProductIntegrationImplApi;
+import com.backbase.product.api.integration.v2.ProductIntegrationApi;
 import com.backbase.product.api.service.v2.model.Product;
 import com.backbase.product.api.service.v2.model.ProductId;
 import javax.validation.Valid;
@@ -14,13 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Class <code>ProductController</code> is the implementation of the main Product Endpoint API definition.
  *
- * @see ProductIntegrationImplApi
+ * @see ProductIntegrationApi
  */
 @RestController
 @RequestMapping
 @Slf4j
-public class ProductIntegrationApiController implements ProductIntegrationImplApi {
-
+public class ProductIntegrationApiController implements ProductIntegrationApi {
     /**
      * Product service business logic interface.
      */
@@ -40,7 +39,7 @@ public class ProductIntegrationApiController implements ProductIntegrationImplAp
 
 
     @Override
-    public ResponseEntity<Product> getProductUsingGET(Long productId) {
+    public ResponseEntity<Product> getProductById(Long productId) {
         return ResponseEntity.ok(prodService.getProduct(productId, 0, 0));
     }
 

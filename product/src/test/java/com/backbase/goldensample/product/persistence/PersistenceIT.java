@@ -7,9 +7,7 @@ import static org.springframework.transaction.annotation.Propagation.NOT_SUPPORT
 
 import com.backbase.goldensample.product.DockerizedTest;
 import com.backbase.goldensample.product.config.IdentityStrategyOverrideConfiguration;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.LocalDate;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,8 +32,7 @@ class PersistenceIT extends DockerizedTest {
 
   private ProductEntity savedEntity;
 
-  private static final Instant TODAY = LocalDateTime.of(2020, 1, 28, 12, 26)
-      .toInstant(ZoneOffset.UTC);
+  private static final LocalDate TODAY = LocalDate.of(2020, 1, 28);
 
   @BeforeAll
   public static void envSetup() {
@@ -46,7 +43,7 @@ class PersistenceIT extends DockerizedTest {
   @BeforeEach
   public void setupDb() {
 
-//    repository.deleteAll();
+    repository.deleteAll();
 
     ProductEntity entity = new ProductEntity("amazon", 1, TODAY);
     savedEntity = repository.save(entity);

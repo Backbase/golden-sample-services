@@ -1,0 +1,14 @@
+{
+  "productId": 1,
+  "name": "Coke",
+  "weight": 100,
+  "createDate": "2020-09-01",
+  "reviews": [
+    {
+      "reviewId": 1,
+      "author": "John Doe",
+      "content": "I have no words for it",
+      "subject": "Very nice!"
+    }
+  ]
+}

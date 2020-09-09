@@ -13,27 +13,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-import com.backbase.goldensample.product.service.ProductService;
 import com.backbase.product.api.service.v2.model.Product;
-import java.util.Date;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(ProductIntegrationApiController.class)
-class ProductIntegrationApiControllerTest {
-
-    @MockBean
-    private ProductService productService;
-
-    @Autowired
-    private MockMvc mockMvc;
-
-    private final Product productOne = createProduct(1L, "Product 1", 23, new Date());
+class ProductIntegrationApiControllerTest extends ProductApiControllerTest {
 
     @Test
     void shouldGetProductWhenServiceReturnProduct() throws Exception {
@@ -53,7 +40,6 @@ class ProductIntegrationApiControllerTest {
 
     @Test
     void shouldCreateNewProductWithValidPayload() throws Exception {
-
         String requestBody = "{\n" +
             "  \"name\": \"Product 1\",\n" +
             "  \"weight\": \"23\",\n" +
@@ -101,12 +87,6 @@ class ProductIntegrationApiControllerTest {
             .andExpect(status().isNoContent());
 
         verify(productService).deleteProduct(1L);
-    }
-
-
-    private Product createProduct(Long id, String name, Integer weight, Date createDate) {
-        Product result = new Product().productId(id).name(name).weight(weight).createDate(createDate);
-        return result;
     }
 
 }
