@@ -1,0 +1,16 @@
+[
+  {
+    "reviewId": "1",
+    "productId": "1",
+    "author": "author",
+    "subject": "great",
+    "content": "worst product ever"
+  },
+  {
+    "reviewId": "1",
+    "productId": "1",
+    "author": "hatersgonnahate",
+    "subject": "bad",
+    "content": "worst product ever"
+  }
+]
