@@ -1,7 +1,6 @@
 package com.backbase.goldensample.product.service;
 
 
-import com.backbase.buildingblocks.presentation.errors.NotFoundException;
 import com.backbase.product.api.service.v2.model.Product;
 import java.util.List;
 
@@ -28,7 +27,7 @@ public interface ProductService {
    * @return the product, if found, else null.
    * @since v0.1
    */
-  Product getProduct(long id, int delay, int faultPercent) throws NotFoundException;
+  Product getProduct(long id, int delay, int faultPercent);
 
   /**
    * Get all the products
@@ -65,5 +64,5 @@ public interface ProductService {
    * @param id to be deleted.
    * @since v0.1
    */
-  default void deleteProduct(long id) throws NotFoundException {}
+  default void deleteProduct(long id){}
 }

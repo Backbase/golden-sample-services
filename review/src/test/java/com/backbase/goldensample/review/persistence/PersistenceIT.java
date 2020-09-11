@@ -48,7 +48,7 @@ class PersistenceIT {
   }
 
   @Test
-  public void create() {
+  void create() {
     ReviewEntity newEntity = new ReviewEntity(1L, "author", "subject", "content");
     repository.save(newEntity);
 
@@ -61,7 +61,7 @@ class PersistenceIT {
   }
 
   @Test
-  public void update() {
+  void update() {
 
     savedEntity.setAuthor("amazon 2");
     repository.save(savedEntity);
@@ -72,13 +72,13 @@ class PersistenceIT {
   }
 
   @Test
-  public void delete() {
+  void delete() {
     repository.delete(savedEntity);
     assertFalse(repository.existsById(savedEntity.getId()));
   }
 
   @Test
-  public void getById() {
+  void getById() {
     ReviewEntity foundEntity = repository.findById(savedEntity.getId()).get();
 
     assertEqualsReview(savedEntity, foundEntity);

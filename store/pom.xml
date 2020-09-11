@@ -25,7 +25,6 @@
     <org.lombok.version>1.18.12</org.lombok.version>
     <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
     <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
-    <testcontainers.version>1.14.2</testcontainers.version>
     <boat-maven-plugin.version>0.2.1</boat-maven-plugin.version>
     <docker.repo.project>experimental/golden-sample</docker.repo.project>
   </properties>
@@ -76,8 +75,6 @@
       <artifactId>jsr305</artifactId>
       <version>3.0.2</version>
     </dependency>
-
-
   </dependencies>
 
   <build>

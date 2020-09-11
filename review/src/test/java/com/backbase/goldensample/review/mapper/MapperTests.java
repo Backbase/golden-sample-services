@@ -10,13 +10,14 @@ import com.backbase.reviews.api.service.v2.model.Review;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.Test;
+import org.mapstruct.factory.Mappers;
 
 class MapperTests {
 
-    private final ReviewMapper mapper = ReviewMapper.INSTANCE;
+    private final ReviewMapper mapper = Mappers.getMapper(ReviewMapper.class);;
 
     @Test
-    public void mapperTests() {
+    void mapperTests() {
 
         assertNotNull(mapper);
 
@@ -41,7 +42,7 @@ class MapperTests {
     }
 
     @Test
-    public void mapperListTests() {
+    void mapperListTests() {
 
         assertNotNull(mapper);
 

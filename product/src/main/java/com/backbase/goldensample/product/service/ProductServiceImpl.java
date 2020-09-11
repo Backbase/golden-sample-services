@@ -7,12 +7,12 @@ import com.backbase.product.api.service.v2.model.Product;
 import java.time.Duration;
 import java.util.List;
 import java.util.Random;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-@Log4j2
+@Slf4j
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository repository;
@@ -39,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product getProduct(long productId, int delay, int faultPercent) throws NotFoundException {
+    public Product getProduct(long productId, int delay, int faultPercent) {
         if (delay > 0) {
             simulateDelay(delay);
         }
@@ -63,18 +63,11 @@ public class ProductServiceImpl implements ProductService {
      it will not report any failure if the entity is not found Always 200
     */
     @Override
-    public void deleteProduct(long productId) throws NotFoundException {
+    public void deleteProduct(long productId) {
 
         log.debug("deleteProduct: tries to delete an entity with productId: {}", productId);
 
-        repository.findById(productId).ifPresent(product -> repository.delete(product));
-    }
-
-    // TODO could be added to a utility class to be used by all core services implementations.
-    private void isValidProductId(long productId) {
-        if (productId < 1) {
-            throw new RuntimeException("Invalid productId: " + productId);
-        }
+        repository.findById(productId).ifPresent(repository::delete);
     }
 
     private void simulateDelay(int delay) {

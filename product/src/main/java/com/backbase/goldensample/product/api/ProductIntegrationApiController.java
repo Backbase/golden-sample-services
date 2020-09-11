@@ -5,6 +5,7 @@ import com.backbase.product.api.integration.v2.ProductIntegrationApi;
 import com.backbase.product.api.service.v2.model.Product;
 import com.backbase.product.api.service.v2.model.ProductId;
 import javax.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,8 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping
+@Slf4j
 public class ProductIntegrationApiController implements ProductIntegrationApi {
-
     /**
      * Product service business logic interface.
      */
@@ -54,6 +55,7 @@ public class ProductIntegrationApiController implements ProductIntegrationApi {
     @Override
     public ResponseEntity<Void> putProduct(@Valid Product product) {
         Product productWithId = prodService.updateProduct(product);
+        log.debug("product with {} updated...", productWithId.getProductId());
         return ResponseEntity.noContent().build();
     }
 }

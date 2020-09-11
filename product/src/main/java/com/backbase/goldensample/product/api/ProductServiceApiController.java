@@ -6,6 +6,7 @@ import com.backbase.product.api.service.v2.model.Product;
 import com.backbase.product.api.service.v2.model.ProductId;
 import java.util.List;
 import javax.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping
+@Slf4j
 public class ProductServiceApiController implements ProductServiceApi {
 
     /**
@@ -59,6 +61,7 @@ public class ProductServiceApiController implements ProductServiceApi {
     @Override
     public ResponseEntity<Void> putProduct(@Valid Product product) {
         Product productWithId = prodService.updateProduct(product);
+        log.debug("product with id {} updated", productWithId.getProductId());
         return ResponseEntity.noContent().build();
     }
 
@@ -66,6 +69,7 @@ public class ProductServiceApiController implements ProductServiceApi {
     public ResponseEntity<Void> putProductById(Long productId, @Valid Product product) {
         product.setProductId(productId);
         Product productWithId = prodService.updateProduct(product);
+        log.debug("product with id {} updated", productWithId.getProductId());
         return ResponseEntity.noContent().build();
     }
 }

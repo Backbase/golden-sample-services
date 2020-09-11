@@ -8,15 +8,16 @@ import com.backbase.goldensample.product.persistence.ProductEntity;
 import com.backbase.product.api.service.v2.model.Product;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
+import org.mapstruct.factory.Mappers;
 
 class MapperTests {
 
-    private final ProductMapper mapper = ProductMapper.INSTANCE;
+    private final ProductMapper mapper = Mappers.getMapper(ProductMapper.class);
 
     private static final LocalDate TODAY = LocalDate.of(2020, 1, 28);
 
     @Test
-    public void mapperTests() {
+    void mapperTests() {
 
         assertNotNull(mapper);
 

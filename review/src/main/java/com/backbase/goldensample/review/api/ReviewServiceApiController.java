@@ -58,26 +58,17 @@ public class ReviewServiceApiController implements ReviewServiceApi {
 
   @Override
   public ResponseEntity<ReviewId> postReview(@Valid Review review) {
-    Review reviewWithId = null;
-    try {
-      reviewWithId = reviewService.createReview(review);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+    Review reviewWithId = reviewService.createReview(review);
+    log.debug("review with id {} created", reviewWithId.getProductId());
     ReviewId reviewId = new ReviewId();
     reviewId.setId(reviewWithId.getReviewId());
-
     return ResponseEntity.ok(reviewId);
   }
 
   @Override
   public ResponseEntity<ReviewId> putReview(@Valid Review review) {
-    try {
-      Review reviewWithId = reviewService.updateReview(review);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-
+    Review reviewWithId = reviewService.updateReview(review);
+    log.debug("review with id {} updated", reviewWithId.getProductId());
     return ResponseEntity.noContent().build();
   }
 }

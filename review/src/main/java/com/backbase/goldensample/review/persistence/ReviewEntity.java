@@ -11,10 +11,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -23,11 +22,10 @@ import org.hibernate.annotations.GenericGenerator;
     indexes = {
         @Index(name = "review_unique_idx", unique = true, columnList = "productId, id")
     })
-@Data
-@NoArgsConstructor
-@RequiredArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 @Builder
+@AllArgsConstructor
 public class ReviewEntity {
 
     /**
@@ -78,4 +76,15 @@ public class ReviewEntity {
     @NonNull
     @NotBlank
     private String content;
+
+    //No-Op
+    public ReviewEntity() {
+    }
+
+    public ReviewEntity(Long productId, String author, String subject, String content) {
+        this.productId = productId;
+        this.author = author;
+        this.subject = subject;
+        this.content = content;
+    }
 }
