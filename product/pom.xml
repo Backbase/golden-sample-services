@@ -319,5 +319,11 @@
       </releases>
     </repository>
   </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>backbase</id>
+      <url>https://repo.backbase.com/repo</url>
+    </pluginRepository>
+  </pluginRepositories>
 
 </project>

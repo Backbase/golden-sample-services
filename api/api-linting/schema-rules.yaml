@@ -1,0 +1,17 @@
+rules:
+  $ref-references-reusable-components:
+    description: "$ref may only point to elements in the components section of openapi.yaml in order to generate good class names"
+    severity: error
+    resolved: false
+    given: "$..*.$ref"
+    then:
+      function: pattern
+      functionOptions:
+        match: '^.*\#\/components\/schemas.*$'
+  no-x-java-type:
+    description: "x-java-type is not allowed because the specification must be technology neutral"
+    severity: error
+    given: '$..*.x-java-type'
+    then:
+      field: '@key'
+      function: falsy
