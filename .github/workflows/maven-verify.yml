@@ -18,7 +18,6 @@ jobs:
     name: On Label
     # This job runs on Linux
     runs-on: ubuntu-latest
-    if: contains( github.event.pull_request.labels.*.name, 'run integration tests' )
     steps:
     - uses: actions/checkout@v2
     - name: Cache local Maven repository
