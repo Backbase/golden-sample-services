@@ -3,16 +3,15 @@
 
 # name: Java CI with Maven
 
+# name: Manual workflow
 # on:
-#   push:
-#     branches: [ main ]
 #   pull_request:
-#     branches: [ main ]
-
-name: Manual workflow
+#     types: [labeled]
 on:
+  push:
+    branches: [ main ]
   pull_request:
-    types: [labeled]
+    branches: [ main ]   
 
 jobs:
   build:
