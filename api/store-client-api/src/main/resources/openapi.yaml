@@ -67,7 +67,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/BadRequestError'
               example:
-                $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/examples/bad-request-validation-error.json
+                $ref: lib/examples/bad-request-validation-error.json
         '401':
           description: If the authentication credentials provided are invalid
           content:
@@ -75,7 +75,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnauthorizedError'
               example:
-                $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/examples/unauthorized-error.json
+                $ref: lib/examples/unauthorized-error.json
         '404':
           description: If the product cannot be found
           content:
@@ -83,7 +83,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
               example:
-                $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/examples/not-found-error.json
+                $ref: lib/examples/not-found-error.json
         '500':
           description: If a runtime error occurs while processing the request
           content:
@@ -91,7 +91,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/InternalServerError'
               example:
-                $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/examples/internal-server-error.json
+                $ref: lib/examples/internal-server-error.json
   /client-api/v1/product-composite:
     post:
       tags:
@@ -121,13 +121,21 @@ components:
       $ref: schemas/product-aggregate.yaml
     ReviewSummary:
       $ref: schemas/review-summary.yaml
-    ErrorItem:
-      $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/schemas/error-item.yaml
     BadRequestError:
-      $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/schemas/bad-request-error.yaml
-    UnauthorizedError:
-      $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/schemas/unauthorized-error.yaml
+      $ref: 'lib/schemas/bad-request-error.yaml'
+    ConflictError:
+      $ref: 'lib/schemas/conflict-error.yaml'
+    Currency:
+      $ref: 'lib/schemas/currency.yaml'
+    ErrorItem:
+      $ref: 'lib/schemas/error-item.yaml'
+    ForbiddenError:
+      $ref: 'lib/schemas/forbidden-error.yaml'
     InternalServerError:
-      $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/schemas/internal-server-error.yaml
+      $ref: 'lib/schemas/internal-server-error.yaml'
     NotFoundError:
-      $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/schemas/not-found-error.yaml
+      $ref: 'lib/schemas/not-found-error.yaml'
+    NotAcceptableError:
+      $ref: 'lib/schemas/not-acceptable-error.yaml'
+    UnauthorizedError:
+      $ref: 'lib/schemas/unauthorized-error.yaml'

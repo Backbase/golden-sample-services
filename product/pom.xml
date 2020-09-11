@@ -310,4 +310,14 @@
     </profile>
   </profiles>
 
+  <repositories>
+    <repository>
+      <id>backbase</id>
+      <url>https://repo.backbase.com/repo</url>
+      <releases>
+        <updatePolicy>always</updatePolicy>
+      </releases>
+    </repository>
+  </repositories>
+
 </project>

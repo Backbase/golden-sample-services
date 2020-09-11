@@ -15,7 +15,6 @@
     <java.version>11</java.version>
   </properties>
 
-
   <modules>
     <module>api</module>
     <module>product</module>

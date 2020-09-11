@@ -30,7 +30,7 @@ jobs:
       uses: actions/setup-java@v1
       with: # running setup-java again overwrites the settings.xml
         java-version: 11
-        server-id: maven # Value of the distributionManagement/repository/id field of the pom.xml
+        server-id: backbase # Value of the distributionManagement/repository/id field of the pom.xml
         server-username: ${{ secrets.MAVEN_USERNAME }} # env variable for username in deploy
         server-password: ${{ secrets.MAVEN_PASSWORD }} # env variable for token in deploy
     - name: Build with Maven

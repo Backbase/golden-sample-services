@@ -20,11 +20,47 @@
 
     <properties>
         <frontend-plugin.version>1.8.0</frontend-plugin.version>
+        <boat-maven-plugin.version>0.2.1</boat-maven-plugin.version>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>common-types</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>3.1.1</version>
+                    <executions>
+                        <execution>
+                            <id>unpack-common-types-lib</id>
+                            <phase>initialize</phase>
+                            <goals>
+                                <goal>unpack</goal>
+                            </goals>
+                            <configuration>
+                                <skip>false</skip>
+                                <artifactItems>
+                                    <artifactItem>
+                                        <groupId>com.backbase.buildingblocks</groupId>
+                                        <artifactId>common-types</artifactId>
+                                        <type>jar</type>
+                                        <overWrite>true</overWrite>
+                                        <outputDirectory>src/main/resources/lib</outputDirectory>
+                                        <excludes>META-INF/**,com/**</excludes>
+                                    </artifactItem>
+                                </artifactItems>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
                 <plugin>
                     <groupId>com.github.eirslett</groupId>
                     <artifactId>frontend-maven-plugin</artifactId>
@@ -110,7 +146,7 @@
                 <plugin>
                     <groupId>com.backbase.oss</groupId>
                     <artifactId>boat-maven-plugin</artifactId>
-                    <version>0.1.6</version>
+                    <version>${boat-maven-plugin.version}</version>
                     <executions>
                         <execution>
                             <id>generate-docs</id>
