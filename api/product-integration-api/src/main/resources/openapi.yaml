@@ -44,7 +44,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/BadRequestError'
               example:
-                $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/examples/bad-request-validation-error.json
+                $ref: lib/examples/bad-request-validation-error.json
         '401':
           description: If the authentication credentials provided are invalid
           content:
@@ -52,7 +52,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnauthorizedError'
               example:
-                $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/examples/unauthorized-error.json
+                $ref: lib/examples/unauthorized-error.json
         '500':
           description: If a runtime error occurs while processing the request
           content:
@@ -60,7 +60,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/InternalServerError'
               example:
-                $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/examples/internal-server-error.json
+                $ref: lib/examples/internal-server-error.json
     put:
       tags:
         - product-integration
@@ -84,7 +84,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/BadRequestError'
               example:
-                $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/examples/bad-request-validation-error.json
+                $ref: lib/examples/bad-request-validation-error.json
         '401':
           description: If the authentication credentials provided are invalid
           content:
@@ -92,7 +92,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnauthorizedError'
               example:
-                $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/examples/unauthorized-error.json
+                $ref: lib/examples/unauthorized-error.json
         '500':
           description: If a runtime error occurs while processing the request
           content:
@@ -100,7 +100,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/InternalServerError'
               example:
-                $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/examples/internal-server-error.json
+                $ref: lib/examples/internal-server-error.json
   /integration-api/v1/products/{productId}:
     get:
       tags:
@@ -132,7 +132,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/BadRequestError'
               example:
-                $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/examples/bad-request-validation-error.json
+                $ref: lib/examples/bad-request-validation-error.json
         '401':
           description: If the authentication credentials provided are invalid
           content:
@@ -140,7 +140,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnauthorizedError'
               example:
-                $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/examples/unauthorized-error.json
+                $ref: lib/examples/unauthorized-error.json
         '403':
           description: If the current user doesn't have authorization to view the requested product
           content:
@@ -148,7 +148,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
               example:
-                $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/examples/forbidden-error.json
+                $ref: lib/examples/forbidden-error.json
         '404':
           description: If the product cannot be found
           content:
@@ -156,7 +156,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
               example:
-                $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/examples/not-found-error.json
+                $ref: lib/examples/not-found-error.json
         '500':
           description: If a runtime error occurs while processing the request
           content:
@@ -164,7 +164,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/InternalServerError'
               example:
-                $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/examples/internal-server-error.json
+                $ref: lib/examples/internal-server-error.json
     delete:
       tags:
         - product-integration
@@ -189,7 +189,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/BadRequestError'
               example:
-                $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/examples/bad-request-validation-error.json
+                $ref: lib/examples/bad-request-validation-error.json
         '401':
           description: If the authentication credentials provided are invalid
           content:
@@ -197,7 +197,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnauthorizedError'
               example:
-                $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/examples/unauthorized-error.json
+                $ref: lib/examples/unauthorized-error.json
         '403':
           description: If the current user doesn't have authorization to delete the requested product
           content:
@@ -205,7 +205,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
               example:
-                $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/examples/forbidden-error.json
+                $ref: lib/examples/forbidden-error.json
         '404':
           description: If the product cannot be found
           content:
@@ -213,7 +213,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
               example:
-                $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/examples/not-found-error.json
+                $ref: lib/examples/not-found-error.json
         '500':
           description: If a runtime error occurs while processing the request
           content:
@@ -221,22 +221,28 @@ paths:
               schema:
                 $ref: '#/components/schemas/InternalServerError'
               example:
-                $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/examples/internal-server-error.json
+                $ref: lib/examples/internal-server-error.json
 components:
   schemas:
     Product:
       $ref: schemas/product.yaml
     ProductId:
       $ref: schemas/product-id.yaml
-    ErrorItem:
-      $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/schemas/error-item.yaml
     BadRequestError:
-      $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/schemas/bad-request-error.yaml
-    UnauthorizedError:
-      $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/schemas/unauthorized-error.yaml
+      $ref: 'lib/schemas/bad-request-error.yaml'
+    ConflictError:
+      $ref: 'lib/schemas/conflict-error.yaml'
+    Currency:
+      $ref: 'lib/schemas/currency.yaml'
+    ErrorItem:
+      $ref: 'lib/schemas/error-item.yaml'
     ForbiddenError:
-      $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/schemas/forbidden-error.yaml
+      $ref: 'lib/schemas/forbidden-error.yaml'
     InternalServerError:
-      $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/schemas/internal-server-error.yaml
+      $ref: 'lib/schemas/internal-server-error.yaml'
     NotFoundError:
-      $ref: https://stash.backbase.com/projects/SSDK/repos/common-types/raw/src/main/resources/schemas/not-found-error.yaml
+      $ref: 'lib/schemas/not-found-error.yaml'
+    NotAcceptableError:
+      $ref: 'lib/schemas/not-acceptable-error.yaml'
+    UnauthorizedError:
+      $ref: 'lib/schemas/unauthorized-error.yaml'
