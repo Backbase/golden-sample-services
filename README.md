@@ -2,8 +2,8 @@
 
 - This project is a development of a small set of [Backbase Service SDK](https://community.backbase.com/documentation/ServiceSDK/latest/index) (**Spring Boot** and **Cloud**) based Microservices projects that implement cloud-native intuitive, Microservices design patterns, and coding best practices.
 - The project follows [**CloudNative**](https://www.cncf.io/) recommendations and the [**twelve-factor app**](https://12factor.net/) methodology for building *software-as-a-service apps* to show how μServices should be developed and deployed.
-- This project uses cutting edge technologies like Docker, Kubernetes, Elasticsearch Stack for
- logging and monitoring, Java SE 11, MySQL databases, all components developed with TDD in mind, covering integration & performance testing, and many more.
+- This project uses technologies used in broadly Backbase like Docker, Kubernetes, Java SE 11, Spring Boot, Spring Cloud, 
+TestContainers and Liquibase among others, all components covering integration & performance testing, and many more.
  - This project is going to be developed as stages
 ---
 ## Getting started
@@ -14,9 +14,16 @@ Backbase Golden Sample --> Parent folder.
 |- config --> All system configuration files 
 |- config-server --> Centralized Configuration server
 |- diagrams --> All docs and diagrams. 
-|- product --> Product Microservice 
-|- review --> Review Microservice 
-|- store --> Store Microservice 
+|-api 
+  |- api-linting --> API specification linters. 
+  |- product-integration-api  
+  |- product-service-api 
+  |- review-service-api  
+  |- store-client-api   
+|-services 
+  |- product --> Product Microservice 
+  |- review --> Review Microservice 
+  |- store --> Store Microservice 
 |- docker-compose.yml --> contains all services landscape including infra like MySQL, RabbitMQ, Zipkin, Prometheus, etc 
 ```
 Now, as we have learned about different system components, then let's start.
@@ -66,9 +73,9 @@ The following are the initially required software pieces:
 
 3. **curl**: this command-line tool for testing HTTP-based APIs can be downloaded and installed from https://curl.haxx.se/download.html.
 
-5. Spring Boot Initializer: This *Initializer* generates *spring* boot project with just what you need to start quickly! Start from here https://start.spring.io/.
+4. **Spring Boot Initializer**: This *Initializer* generates *spring* boot project with just what you need to start quickly! Start from here https://start.spring.io/.
 
-6. **Docker Desktop**: The fastest way to containerize applications on your desktop, and you can download it from here [https://www.docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop)
+5. **Docker Desktop**: The fastest way to containerize applications on your desktop, and you can download it from here [https://www.docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop)
 
    > For each future stage, We will list the newly required software. 
 
@@ -76,7 +83,7 @@ Follow the installation guide for each software website link and check your soft
 
 ## Using an IDE
 
-I recommend that you work with your Java code using an IDE that supports the development of Spring Boot applications such as Spring Tool Suite or IntelliJ IDEA Ultimate Edition. So you can use the Spring Boot Dashboard to run the services, run each microservice test case, and many more.
+We recommend that you work with your Java code using an IDE that supports the development of Spring Boot applications such as Spring Tool Suite or IntelliJ IDEA Ultimate Edition. So you can use the Spring Boot Dashboard to run the services, run each microservice test case, and many more.
 
 All that you want to do is just fire up your IDE **->** open or import the parent folder `backbase-golden-sample,` and everything will be ready for you.
 
@@ -91,7 +98,7 @@ The first thing to do is to open **git bash** command line, and then simply you 
 ```
 
 ------
-This project will de developed in steps, and each such step will be a release in its own, so you can go back and forward between versions to see the differences and how adding things solve specific problems we face.
+This project will be developed in steps, and each such step will be a release in its own, so you can go back and forward between versions to see the differences and how adding things solve specific problems we face.
 
 The main idea of the project for now is three microservices: **Store**, **Product** and **Review**. **Product** and **Review** microservices are CRUD applications saving data in a MySQL Database, and **Store Service** calls the other two services (*Product* and *Review*) statically to generate client aggregate response for a specific product. 
 
@@ -116,7 +123,8 @@ https://github.com/Backbase/golden-sample-services/issues
 
 ## Getting started
 
-The first stage, aka (**Release v1.0**), is about creating and implementing a set of Microservices.
+The first stage, aka (**Release v1.0**), is about creating and implementing a set of Microservices exposing a RestAPI 
+and with Database access.
 
 ### Creating a Set of communicating Microservices (Release v1.0)
 
@@ -125,7 +133,7 @@ The following points are covered in this 1st stage (other stages topics will be 
 - Introducing the microservice landscape as a diagram.
 - Generating skeleton for **Store**, **Product**, and **Review** microservices.
 - Adding RESTful APIs.
-- Testing the APIs manually using swagger.
+- Adding Data layer
 - Developing automated microservices integration tests in isolation.
 - Developing Blackbox automated tests to the microservice landscape.
 

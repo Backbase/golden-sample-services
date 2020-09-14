@@ -1,0 +1,142 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.backbase</groupId>
+    <artifactId>services</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+
+  <groupId>com.backbase</groupId>
+  <artifactId>store</artifactId>
+  <version>1.0.0</version>
+  <packaging>war</packaging>
+  <name>Backbase :: store-service</name>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.backbase.buildingblocks</groupId>
+      <artifactId>service-sdk-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Add dependencies for your services, e.g. API Specs, integration clients -->
+
+    <!-- Uncomment the following dependency if DBS inter-service communication is needed -->
+
+    <dependency>
+      <groupId>com.backbase.buildingblocks</groupId>
+      <artifactId>communication</artifactId>
+    </dependency>
+
+    <!-- Start - POJO creation made easy -->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <!-- End - POJO creation made easy -->
+    <!-- Start - POJO <-> Entity conversion made easy
+         https://community.backbase.com/documentation/ServiceSDK/latest/service_sdk_ref_service_sdk_starter_mapping -->
+    <dependency>
+      <groupId>com.backbase.buildingblocks</groupId>
+      <artifactId>service-sdk-starter-mapping</artifactId>
+    </dependency>
+    <!-- End - POJO <-> Entity conversion made easy -->
+    <dependency>
+      <groupId>io.swagger</groupId>
+      <artifactId>swagger-annotations</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.openapitools</groupId>
+      <artifactId>jackson-databind-nullable</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.findbugs</groupId>
+      <artifactId>jsr305</artifactId>
+      <version>3.0.2</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>properties-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>com.backbase.oss</groupId>
+        <artifactId>boat-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>generate-client-api-code</id>
+            <goals>
+              <goal>generate-spring-boot-embedded</goal>
+            </goals>
+            <phase>generate-sources</phase>
+            <configuration>
+              <inputSpec>${project.basedir}/../../api/store-client-api/src/main/resources/openapi.yaml</inputSpec>
+              <apiPackage>com.backbase.goldensample.store.api.service.v2</apiPackage>
+              <modelPackage>com.backbase.goldensample.store.api.service.v2.model</modelPackage>
+            </configuration>
+          </execution>
+          <execution>
+            <id>generate-product-client-api-code</id>
+            <goals>
+              <goal>generate-rest-template-embedded</goal>
+            </goals>
+            <phase>generate-sources</phase>
+            <configuration>
+              <inputSpec>${project.basedir}/../../api/product-service-api/src/main/resources/openapi.yaml</inputSpec>
+              <apiPackage>com.backbase.goldensample.product.api.client.v2</apiPackage>
+              <modelPackage>com.backbase.goldensample.product.api.client.v2.model</modelPackage>
+            </configuration>
+          </execution>
+          <execution>
+            <id>generate-review-client-api-code</id>
+            <goals>
+              <goal>generate-rest-template-embedded</goal>
+            </goals>
+            <!--            With that goal BOAT is using the following defaults
+            <configuration>
+              <output>${project.build.directory}/generated-sources/openapi</output>
+              <generateSupportingFiles>true</generateSupportingFiles>
+              <generatorName>java</generatorName>
+              <strictSpec>true</strictSpec>
+              <generateApiTests>false</generateApiTests>
+              <generateModelTests>false</generateModelTests>
+              <inputSpec>${project.basedir}/../api/product-service-api/src/main/resources/openapi.yaml</inputSpec>
+              <configOptions>
+                <library>resttemplate</library>
+                <dateLibrary>java8</dateLibrary>
+                <interfaceOnly>true</interfaceOnly>
+                <skipDefaultInterface>true</skipDefaultInterface>
+                <useBeanValidation>true</useBeanValidation>
+                <useClassLevelBeanValidation>false</useClassLevelBeanValidation>
+                <useTags>true</useTags>
+                <java8>true</java8>
+                <useOptional>false</useOptional>
+                <apiPackage>com.backbase.goldensample.product.api.client.v2</apiPackage>
+                <modelPackage>com.backbase.goldensample.product.api.client.v2.model</modelPackage>
+              </configOptions>
+            </configuration>
+            -->
+            <phase>generate-sources</phase>
+            <configuration>
+              <inputSpec>${project.basedir}/../../api/review-service-api/src/main/resources/openapi.yaml</inputSpec>
+              <apiPackage>com.backbase.goldensample.review.api.client.v2</apiPackage>
+              <modelPackage>com.backbase.goldensample.review.api.client.v2.model</modelPackage>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>versions-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
