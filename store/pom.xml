@@ -25,7 +25,7 @@
     <org.lombok.version>1.18.12</org.lombok.version>
     <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
     <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
-    <boat-maven-plugin.version>0.2.1</boat-maven-plugin.version>
+    <boat-maven-plugin.version>0.2.2</boat-maven-plugin.version>
     <docker.repo.project>experimental/golden-sample</docker.repo.project>
   </properties>
 
@@ -115,88 +115,37 @@
           <execution>
             <id>generate-client-api-code</id>
             <goals>
-              <goal>generate</goal>
+              <goal>generate-spring-boot-embedded</goal>
             </goals>
             <phase>generate-sources</phase>
             <configuration>
-              <output>${project.build.directory}/generated-sources/api</output>
-              <generateSupportingFiles>true</generateSupportingFiles>
-              <generatorName>spring</generatorName>
-              <strictSpec>true</strictSpec>
-              <generateApiTests>false</generateApiTests>
-              <generateModelTests>false</generateModelTests>
               <inputSpec>${project.basedir}/../api/store-client-api/src/main/resources/openapi.yaml</inputSpec>
-              <configOptions>
-                <library>spring-mvc</library>
-                <dateLibrary>java8</dateLibrary>
-                <interfaceOnly>true</interfaceOnly>
-                <skipDefaultInterface>true</skipDefaultInterface>
-                <useBeanValidation>true</useBeanValidation>
-                <useClassLevelBeanValidation>false</useClassLevelBeanValidation>
-                <useTags>true</useTags>
-                <java8>true</java8>
-                <useOptional>false</useOptional>
-                <apiPackage>com.backbase.goldensample.store.api.service.v2</apiPackage>
-                <modelPackage>com.backbase.goldensample.store.api.service.v2.model</modelPackage>
-              </configOptions>
+              <apiPackage>com.backbase.goldensample.store.api.service.v2</apiPackage>
+              <modelPackage>com.backbase.goldensample.store.api.service.v2.model</modelPackage>
             </configuration>
           </execution>
           <execution>
             <id>generate-product-client-api-code</id>
             <goals>
-              <goal>generate</goal>
+              <goal>generate-rest-template-embedded</goal>
             </goals>
             <phase>generate-sources</phase>
             <configuration>
-              <output>${project.build.directory}/generated-sources/api</output>
-              <generateSupportingFiles>true</generateSupportingFiles>
-              <generatorName>java</generatorName>
-              <strictSpec>true</strictSpec>
-              <generateApiTests>false</generateApiTests>
-              <generateModelTests>false</generateModelTests>
               <inputSpec>${project.basedir}/../api/product-service-api/src/main/resources/openapi.yaml</inputSpec>
-              <configOptions>
-                <library>resttemplate</library>
-                <dateLibrary>java8</dateLibrary>
-                <interfaceOnly>true</interfaceOnly>
-                <skipDefaultInterface>true</skipDefaultInterface>
-                <useBeanValidation>true</useBeanValidation>
-                <useClassLevelBeanValidation>false</useClassLevelBeanValidation>
-                <useTags>true</useTags>
-                <java8>true</java8>
-                <useOptional>false</useOptional>
-                <apiPackage>com.backbase.goldensample.product.api.client.v2</apiPackage>
-                <modelPackage>com.backbase.goldensample.product.api.client.v2.model</modelPackage>
-              </configOptions>
+              <apiPackage>com.backbase.goldensample.product.api.client.v2</apiPackage>
+              <modelPackage>com.backbase.goldensample.product.api.client.v2.model</modelPackage>
             </configuration>
           </execution>
           <execution>
             <id>generate-review-client-api-code</id>
             <goals>
-              <goal>generate</goal>
+              <goal>generate-rest-template-embedded</goal>
             </goals>
             <phase>generate-sources</phase>
             <configuration>
-              <output>${project.build.directory}/generated-sources/api</output>
-              <generateSupportingFiles>true</generateSupportingFiles>
-              <generatorName>java</generatorName>
-              <strictSpec>true</strictSpec>
-              <generateApiTests>false</generateApiTests>
-              <generateModelTests>false</generateModelTests>
               <inputSpec>${project.basedir}/../api/review-service-api/src/main/resources/openapi.yaml</inputSpec>
-              <configOptions>
-                <library>resttemplate</library>
-                <dateLibrary>java8</dateLibrary>
-                <interfaceOnly>true</interfaceOnly>
-                <skipDefaultInterface>true</skipDefaultInterface>
-                <useBeanValidation>true</useBeanValidation>
-                <useClassLevelBeanValidation>false</useClassLevelBeanValidation>
-                <useTags>true</useTags>
-                <java8>true</java8>
-                <useOptional>false</useOptional>
-                <apiPackage>com.backbase.goldensample.review.api.client.v2</apiPackage>
-                <modelPackage>com.backbase.goldensample.review.api.client.v2.model</modelPackage>
-              </configOptions>
+              <apiPackage>com.backbase.goldensample.review.api.client.v2</apiPackage>
+              <modelPackage>com.backbase.goldensample.review.api.client.v2.model</modelPackage>
             </configuration>
           </execution>
         </executions>
