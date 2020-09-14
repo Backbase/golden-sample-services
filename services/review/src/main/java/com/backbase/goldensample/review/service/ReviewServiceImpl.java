@@ -27,6 +27,7 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public Review createReview(Review review) {
 
+        log.debug("creating review {}", review);
         ReviewEntity entity = mapper.apiToEntity(review);
         ReviewEntity newEntity = repository.save(entity);
 
@@ -38,6 +39,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public Review updateReview(Review review) {
+        log.debug("updating review {}", review);
         ReviewEntity entity = mapper.apiToEntity(review);
         ReviewEntity newEntity = repository.save(entity);
 
@@ -49,6 +51,7 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public List<Review> getReviewsByProductId(long productId) {
 
+        log.debug("get reviews by product id {}", productId);
         List<Review> list = mapper.entityListToApiList(repository.findByProductId(productId));
 
         log.debug("response size: {}", list.size());
