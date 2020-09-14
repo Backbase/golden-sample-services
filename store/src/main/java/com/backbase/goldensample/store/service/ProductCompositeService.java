@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 
 @Component
+@Slf4j
 public class ProductCompositeService {
-
-    private static final Logger LOG = LoggerFactory.getLogger(ProductCompositeService.class);
 
     private final ProductServiceApi productServiceImplApi;
     private final ReviewServiceApi reviewServiceImplApi;
@@ -41,11 +41,11 @@ public class ProductCompositeService {
     public Product getProduct(long productId) {
 
         try {
-            LOG.debug("Will call the getProduct API on URL: {}", productServiceImplApi.getApiClient().getBasePath());
+            log.debug("Will call the getProduct API on URL: {}", productServiceImplApi.getApiClient().getBasePath());
 
             Product product = productServiceImplApi.getProductById(productId);
             if (product != null) {
-                LOG.debug("Found a product with id: {}", product.getProductId());
+                log.debug("Found a product with id: {}", product.getProductId());
             }
 
             return product;
@@ -58,14 +58,14 @@ public class ProductCompositeService {
     public List<Review> getReviews(long productId) {
 
         try {
-            LOG.debug("Will call the getReviews API on URL: {}", reviewServiceImplApi.getApiClient().getBasePath());
+            log.debug("Will call the getReviews API on URL: {}", reviewServiceImplApi.getApiClient().getBasePath());
             List<Review> reviews = reviewServiceImplApi.getReviewListByProductId(productId);
 
-            LOG.debug("Found {} reviews for a product with id: {}", reviews.size(), productId);
+            log.debug("Found {} reviews for a product with id: {}", reviews.size(), productId);
             return reviews;
 
         } catch (HttpClientErrorException ex) {
-            LOG.warn("Got an exception while requesting reviews, return zero reviews: {}", ex.getMessage());
+            log.warn("Got an exception while requesting reviews, return zero reviews: {}", ex.getMessage());
             return new ArrayList<>();
         }
     }
@@ -73,9 +73,9 @@ public class ProductCompositeService {
     public ProductId createProduct(Product product) {
 
         try {
-            LOG.debug("Will post a new product to URL: {}", productServiceImplApi.getApiClient().getBasePath());
+            log.debug("Will post a new product to URL: {}", productServiceImplApi.getApiClient().getBasePath());
             ProductId productId = productServiceImplApi.postProduct(product);
-            LOG.debug("Created a product with id: {}", productId.getId());
+            log.debug("Created a product with id: {}", productId.getId());
             return productId;
         } catch (
             HttpClientErrorException ex) {
@@ -87,9 +87,9 @@ public class ProductCompositeService {
     public ReviewId createReview(Review body) {
 
         try {
-            LOG.debug("Will post a new review to URL: {}", reviewServiceImplApi.getApiClient().getBasePath());
+            log.debug("Will post a new review to URL: {}", reviewServiceImplApi.getApiClient().getBasePath());
             ReviewId reviewId = reviewServiceImplApi.postReview(body);
-            LOG.debug("Created a review with id: {}", reviewId.getId());
+            log.debug("Created a review with id: {}", reviewId.getId());
             return reviewId;
         } catch (
             HttpClientErrorException ex) {
@@ -104,8 +104,8 @@ public class ProductCompositeService {
                 return new NotFoundException(getErrorMessage(ex));
 
             default:
-                LOG.warn("Got a unexpected HTTP error: {}, will rethrow it", ex.getStatusCode());
-                LOG.warn("Error body: {}", ex.getResponseBodyAsString());
+                log.warn("Got a unexpected HTTP error: {}, will rethrow it", ex.getStatusCode());
+                log.warn("Error body: {}", ex.getResponseBodyAsString());
                 return ex;
         }
     }
