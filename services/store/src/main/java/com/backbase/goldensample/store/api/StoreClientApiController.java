@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +22,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Slf4j
 public class StoreClientApiController implements ProductCompositeClientApi {
-
-    private static final Logger LOG = LoggerFactory.getLogger(StoreClientApiController.class);
 
     private ProductCompositeService productCompositeService;
 
@@ -35,16 +35,17 @@ public class StoreClientApiController implements ProductCompositeClientApi {
 
     @Override
     public ResponseEntity<ProductAggregate> getProductById(Long productId) {
-        LOG.debug("getCompositeProduct: lookup a product aggregate for productId: {}", productId);
+        log.debug("getCompositeProduct: lookup a product aggregate for productId: {}", productId);
 
         Product product = productCompositeService.getProduct(productId);
         if (product == null) {
+            log.debug("No product was found for id {}", productId);
             throw new NotFoundException("No product found for productId: " + productId);
         }
 
         List<Review> reviews = productCompositeService.getReviews(productId);
 
-        LOG.debug("getCompositeProduct: aggregate entity found for productId: {}", productId);
+        log.debug("getCompositeProduct: aggregate entity found for productId: {}", productId);
 
         return ResponseEntity.ok(createProductAggregate(product, reviews));
     }
@@ -52,7 +53,7 @@ public class StoreClientApiController implements ProductCompositeClientApi {
     @Override
     public ResponseEntity<ProductAggregate> postProduct(@Valid ProductAggregate productAggregate) {
 
-        LOG.debug("createCompositeProduct: creates a new composite entity for productId: {}",
+        log.debug("createCompositeProduct: creates a new composite entity for productId: {}",
             productAggregate.getProductId());
 
         Product product = new Product().name(productAggregate.getName()).weight(productAggregate.getWeight()).createDate(productAggregate.getCreateDate());
@@ -70,7 +71,7 @@ public class StoreClientApiController implements ProductCompositeClientApi {
                 reviews.add(review);
             });
         }
-        LOG.debug("createCompositeProduct: composite entities created for productId: {}",
+        log.debug("createCompositeProduct: composite entities created for productId: {}",
             productAggregate.getProductId());
 
         return ResponseEntity.ok(createProductAggregate(product, reviews));
