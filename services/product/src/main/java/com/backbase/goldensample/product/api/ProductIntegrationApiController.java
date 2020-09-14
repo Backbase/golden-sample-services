@@ -33,29 +33,34 @@ public class ProductIntegrationApiController implements ProductIntegrationApi {
 
     @Override
     public ResponseEntity<Void> deleteProduct(Long productId) {
+        log.debug("Delete product id {}", productId);
         prodService.deleteProduct(productId);
+        log.debug("Product id {} deleted", productId);
         return ResponseEntity.noContent().build();
     }
 
 
     @Override
     public ResponseEntity<Product> getProductById(Long productId) {
+        log.debug("Get product by id {}", productId);
         return ResponseEntity.ok(prodService.getProduct(productId, 0, 0));
     }
 
     @Override
     public ResponseEntity<ProductId> postProduct(@Valid Product product) {
+        log.debug("Create a product {}", product);
         Product productWithId = prodService.createProduct(product);
         ProductId productId = new ProductId();
         productId.setId(productWithId.getProductId());
-
+        log.debug("Product {} created", productId);
         return ResponseEntity.ok(productId);
     }
 
     @Override
     public ResponseEntity<Void> putProduct(@Valid Product product) {
+        log.debug("Update a product {}", product);
         Product productWithId = prodService.updateProduct(product);
-        log.debug("product with {} updated...", productWithId.getProductId());
+        log.debug("product with {} updated.", productWithId.getProductId());
         return ResponseEntity.noContent().build();
     }
 }
