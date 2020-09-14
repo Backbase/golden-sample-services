@@ -28,12 +28,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product createProduct(Product body) {
+        log.debug("Service creating product {}", body);
         return mapper.entityToApi(repository
             .save(mapper.apiToEntity(body)));
     }
 
     @Override
     public Product updateProduct(Product body) {
+        log.debug("Service updating product {}", body);
         return mapper.entityToApi(repository
             .save(mapper.apiToEntity(body)));
     }
@@ -41,10 +43,12 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product getProduct(long productId, int delay, int faultPercent) {
         if (delay > 0) {
+            log.debug("Simulating delay of {}", delay);
             simulateDelay(delay);
         }
 
         if (faultPercent > 0) {
+            log.debug("Introducing error in a %{}", faultPercent);
             throwErrorIfBadLuck(faultPercent);
         }
 
@@ -92,6 +96,7 @@ public class ProductServiceImpl implements ProductService {
     private int getRandomNumber(int min, int max) {
 
         if (max < min) {
+            log.warn("Max value {} show ve greater than min {}", max, min);
             throw new RuntimeException("Max must be greater than min");
         }
 
