@@ -96,7 +96,7 @@ public class ProductServiceImpl implements ProductService {
     private int getRandomNumber(int min, int max) {
 
         if (max < min) {
-            log.warn("Max value {} show ve greater than min {}", max, min);
+            log.warn("Max value {} show be greater than min {}", max, min);
             throw new RuntimeException("Max must be greater than min");
         }
 
