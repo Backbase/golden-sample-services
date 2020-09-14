@@ -32,32 +32,37 @@ public class ReviewServiceApiController implements ReviewServiceApi {
 
   @Override
   public ResponseEntity<Void> deleteReview(Long reviewId) {
+    log.debug("Deleting Review with id {}", reviewId);
     this.reviewService.deleteReview(reviewId);
-
+    log.debug("Review id {} removed", reviewId);
     return ResponseEntity.noContent().build();
   }
 
   @Override
   public ResponseEntity<Void> deleteReviewsByProductId(Long productId) {
+    log.debug("Deleting Product {} Reviews", productId);
     this.reviewService.deleteReviews(productId);
-
+    log.debug("Product {} Reviews removed", productId);
     return ResponseEntity.noContent().build();
   }
 
   @Override
   public ResponseEntity<List<Review>> getReviewListByProductId(Long productId) {
+    log.debug("Get product {} reviews", productId);
     List<Review> listReview = reviewService.getReviewsByProductId(productId);
     return ResponseEntity.ok(listReview);
   }
 
   @Override
   public ResponseEntity<Review> getReviewById(Long reviewId) {
+    log.debug("Get review id {}", reviewId);
     Review review = reviewService.getReview(reviewId);
     return ResponseEntity.ok(review);
   }
 
   @Override
   public ResponseEntity<ReviewId> postReview(@Valid Review review) {
+    log.debug("creating review {}", review);
     Review reviewWithId = reviewService.createReview(review);
     log.debug("review with id {} created", reviewWithId.getProductId());
     ReviewId reviewId = new ReviewId();
@@ -67,6 +72,7 @@ public class ReviewServiceApiController implements ReviewServiceApi {
 
   @Override
   public ResponseEntity<ReviewId> putReview(@Valid Review review) {
+    log.debug("updating review {}", review);
     Review reviewWithId = reviewService.updateReview(review);
     log.debug("review with id {} updated", reviewWithId.getProductId());
     return ResponseEntity.noContent().build();
