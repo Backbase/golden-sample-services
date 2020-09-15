@@ -1,4 +1,4 @@
-# Backbase Golden Sample μServices system
+# Backbase Golden Sample MicroServices system
 
 - This project is a development of a small set of [Backbase Service SDK](https://community.backbase.com/documentation/ServiceSDK/latest/index) (**Spring Boot** and **Cloud**) based Microservices projects that implement cloud-native intuitive, Microservices design patterns, and coding best practices.
 - The project follows [**CloudNative**](https://www.cncf.io/) recommendations and the [**twelve-factor app**](https://12factor.net/) methodology for building *software-as-a-service apps* to show how μServices should be developed and deployed.
@@ -6,8 +6,8 @@
 TestContainers and Liquibase among others, all components covering integration & performance testing, and many more.
  - This project is going to be developed as stages
 ---
-## Getting started
-### System components Structure
+## Description
+### System Structure
 Let's explain first the system structure to understand its components:
 ```
 Backbase Golden Sample --> Parent folder. 
@@ -28,7 +28,7 @@ Backbase Golden Sample --> Parent folder.
 ```
 Now, as we have learned about different system components, then let's start.
 
-### System Boundary - μServices Landscape
+### System Boundary - Microservices Landscape
 
 The microservice-based system landscape that we will use it consists of two core microservices, the Product, 
 Review and services, all of which deal with one type of resource, and a composite microservice called the Product Composite service, which aggregates information
@@ -67,11 +67,11 @@ presents information about a product as follows:
 
 The following are the initially required software pieces:
 
-1. **Git**: it can be downloaded and installed from https://git-scm.com/downloads.
+1. **Backbase SDK**
 
-2. **Java 11 EA**: it can be downloaded and installed from https://jdk.java.net/11/.
+2. **Git**: it can be downloaded and installed from https://git-scm.com/downloads.
 
-3. **curl**: this command-line tool for testing HTTP-based APIs can be downloaded and installed from https://curl.haxx.se/download.html.
+3. **Java 11 EA**: it can be downloaded and installed from https://jdk.java.net/11/.
 
 4. **Spring Boot Initializer**: This *Initializer* generates *spring* boot project with just what you need to start quickly! Start from here https://start.spring.io/.
 

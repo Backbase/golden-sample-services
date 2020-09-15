@@ -1,4 +1,4 @@
-# Review-service
+# Review service
 
 The review service manages product review and stores the following information about each review: 
 * Product ID 

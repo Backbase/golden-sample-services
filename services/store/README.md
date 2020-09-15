@@ -1,4 +1,4 @@
-# core-service
+# Store service
 
 The store service is a product composite service that aggregates information from the core services and 
 presents information about a product as follows: 
