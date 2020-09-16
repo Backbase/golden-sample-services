@@ -1,4 +1,4 @@
-# Product-service
+# Product service
 
 The product service manages product information and describes each product with the following attributes: 
 * Product ID 
