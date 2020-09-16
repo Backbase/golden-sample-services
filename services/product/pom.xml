@@ -22,10 +22,6 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- Add dependencies for your services, e.g. API Specs, integration clients -->
-
-    <!-- Uncomment the following dependency if DBS inter-service communication is needed -->
-
     <dependency>
       <groupId>com.backbase.buildingblocks</groupId>
       <artifactId>communication</artifactId>
@@ -83,6 +79,7 @@
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
+      <scope>test</scope>
     </dependency>
     <!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc -->
     <dependency>
@@ -99,10 +96,6 @@
 
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>properties-maven-plugin</artifactId>
-      </plugin>
       <plugin>
         <groupId>com.backbase.oss</groupId>
         <artifactId>boat-maven-plugin</artifactId>
@@ -162,4 +155,34 @@
       </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <!--  to run locally -->
+    <profile>
+      <id>local</id>
+      <dependencies>
+        <dependency>
+          <groupId>mysql</groupId>
+          <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+      </dependencies>
+    </profile>
+<!--    adding a profile with the same name that will override the drivers configuration back to the one that’s
+        in the original docker-image profile in core so mvn clean install -P docker-image is invoked
+        it will include the default drivers as it merges the profiles-->
+    <profile>
+      <id>docker-image</id>
+      <dependencies>
+        <dependency>
+          <groupId>mysql</groupId>
+          <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <dependency>
+          <groupId>com.microsoft.sqlserver</groupId>
+          <artifactId>mssql-jdbc</artifactId>
+        </dependency>
+      </dependencies>
+    </profile>
+  </profiles>
+
 </project>

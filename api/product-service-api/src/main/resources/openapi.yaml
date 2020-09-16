@@ -101,6 +101,7 @@ paths:
               example:
                 $ref: lib/examples/internal-server-error.json
     put:
+      deprecated: true
       tags:
         - product-service
       summary:  Update a product

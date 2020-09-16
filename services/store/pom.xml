@@ -22,10 +22,6 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- Add dependencies for your services, e.g. API Specs, integration clients -->
-
-    <!-- Uncomment the following dependency if DBS inter-service communication is needed -->
-
     <dependency>
       <groupId>com.backbase.buildingblocks</groupId>
       <artifactId>communication</artifactId>
@@ -62,10 +58,6 @@
 
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>properties-maven-plugin</artifactId>
-      </plugin>
       <plugin>
         <groupId>com.backbase.oss</groupId>
         <artifactId>boat-maven-plugin</artifactId>
