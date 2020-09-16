@@ -101,6 +101,7 @@ paths:
               example:
                 $ref: lib/examples/internal-server-error.json
     put:
+      deprecated: true
       tags:
         - product-service
       summary:  Update a product
@@ -162,28 +163,7 @@ paths:
         - product-service
       summary: Retrieve a product by ID
       description: |
-        # Normal response
-        If the requested product ID is found the method will return information regarding:
-        1. Base product information
-        1. Reviews
-
-        # Expected partial and error responses
-        In the following cases, only a partial response be created (used to simplify testing of error conditions)
-
-        ## Product ID 113
-        200 - Ok, but no recommendations will be returned
-
-        ## Product ID 213
-        200 - Ok, but no reviews will be returned
-
-        ## Non numerical product id
-        400 - A <b>Bad Request</b> error will be returned
-
-        ## Product ID 13
-        404 - A <b>Not Found</b> error will be returned
-
-        ## Negative product IDs
-        422 - An <b>Unprocessable Entity</b> error will be returned
+        If the requested product ID is found the method will return information regarding base product information
       operationId: getProductById
       parameters:
         - name: productId

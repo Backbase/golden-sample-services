@@ -17,9 +17,7 @@
 
   <modules>
     <module>api</module>
-    <module>product</module>
-    <module>review</module>
-    <module>store</module>
+    <module>services</module>
   </modules>
 
 </project>

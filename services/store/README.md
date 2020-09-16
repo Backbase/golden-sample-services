@@ -1,11 +1,9 @@
-# Review-service
+# Store service
 
-The review service manages product review and stores the following information about each review: 
-* Product ID 
-* Review ID 
-* Author 
-* Subject 
-* Content
+The store service is a product composite service that aggregates information from the core services and 
+presents information about a product as follows: 
+* Product information, as described in the *product* service 
+* A list of product reviews for the specified product, as described in the *review* service 
 
 #Getting Started
 * [Extend and build](https://community.backbase.com/documentation/ServiceSDK/latest/extend_and_build)
@@ -13,7 +11,8 @@ The review service manages product review and stores the following information a
 ## Dependencies
 
 Requires a running Eureka registry, by default on port 8080.
-Requires a MySQL database, by default on port 3316
+Requires a running Product service, by default on port 9916.
+Requires a running Review service, by default on port 9917.
 
 ## Configuration
 
