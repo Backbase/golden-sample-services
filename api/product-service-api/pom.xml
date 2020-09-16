@@ -17,14 +17,221 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.1</version>
+                <executions>
+                    <execution>
+                        <id>unpack-common-types-lib</id>
+                        <phase/>
+                    </execution>
+                    <execution>
+                        <id>unpack-common-types-lib-v1</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <skip>false</skip>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.backbase.buildingblocks</groupId>
+                                    <artifactId>common-types</artifactId>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>src/main/resources/v1/lib</outputDirectory>
+                                    <excludes>META-INF/**,com/**</excludes>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>unpack-common-types-lib-v2</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <skip>false</skip>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.backbase.buildingblocks</groupId>
+                                    <artifactId>common-types</artifactId>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>src/main/resources/v2/lib</outputDirectory>
+                                    <excludes>META-INF/**,com/**</excludes>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
+                <version>${frontend-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>install node and yarn</id>
+                        <goals>
+                            <goal>install-node-and-yarn</goal>
+                        </goals>
+                        <configuration>
+                            <nodeVersion>v12.16.3</nodeVersion>
+                            <yarnVersion>v1.22.4</yarnVersion>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>yarn install</id>
+                        <goals>
+                            <goal>yarn</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>install</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>validate spec</id>
+                        <phase/>
+                    </execution>
+                    <execution>
+                        <id>lint spec</id>
+                        <phase/>
+                    </execution>
+                    <execution>
+                        <id>lint schemas</id>
+                        <phase/>
+                    </execution>
+                    <execution>
+                        <id>bundle spec</id>
+                        <phase/>
+                    </execution>
+                    <execution>
+                        <id>validate spec-v1</id>
+                        <goals>
+                            <goal>yarn</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>run validate-v1</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>validate spec-v2</id>
+                        <goals>
+                            <goal>yarn</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>run validate-v2</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>lint spec-v1</id>
+                        <goals>
+                            <goal>yarn</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>run lint-openapi-v1</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>lint spec-v2</id>
+                        <goals>
+                            <goal>yarn</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>run lint-openapi-v2</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>lint schemas-v1</id>
+                        <goals>
+                            <goal>yarn</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>run lint-schemas-v1</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>lint schemas-v2</id>
+                        <goals>
+                            <goal>yarn</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>run lint-schemas-v2</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>bundle spec-v1</id>
+                        <goals>
+                            <goal>yarn</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>run bundle-v1</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>bundle spec-v2</id>
+                        <goals>
+                            <goal>yarn</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>run bundle-v2</arguments>
+                        </configuration>
+                    </execution>
+                    <!-- execution>
+                        <id>check backwards compatibility</id>
+                        <goals>
+                            <goal>yarn</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>run check-backwards-compatibility</arguments>
+                        </configuration>
+                    </execution -->
+                </executions>
+                <configuration>
+                    <installDirectory>target</installDirectory>
+                    <workingDirectory>${project.basedir}</workingDirectory>
+                    <environmentVariables>
+                        <BASE_PATH>${project.basedir}</BASE_PATH>
+                        <SPEC_AUTH>${api-backbase-cloud.auth}</SPEC_AUTH>
+                        <!--suppress MavenModelInspection (each module must define this property) -->
+                        <SPEC_NAME>${api-spec.name}</SPEC_NAME>
+                    </environmentVariables>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>com.backbase.oss</groupId>
                 <artifactId>boat-maven-plugin</artifactId>
+                <version>${boat-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>generate-docs</id>
+                        <phase/>
+                    </execution>
+                    <execution>
+                        <id>generate-docs-v1</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.build.directory}/v1/openapi.yaml</inputSpec>
+                            <output>${project.build.directory}/v1/generated-docs</output>
+                            <generatorName>html2</generatorName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-docs-v2</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.build.directory}/v2/openapi.yaml</inputSpec>
+                            <output>${project.build.directory}/v2/generated-docs</output>
+                            <generatorName>html2</generatorName>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

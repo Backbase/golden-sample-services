@@ -1,10 +1,10 @@
-package com.backbase.goldensample.product.api;
+package com.backbase.goldensample.product.api.service.v2;
 
-import com.backbase.goldensample.product.mapper.ProductIntegrationMapper;
 import com.backbase.goldensample.product.service.ProductService;
-import com.backbase.product.api.integration.v2.ProductIntegrationApi;
-import com.backbase.product.api.integration.v2.model.Product;
-import com.backbase.product.api.integration.v2.model.ProductId;
+import com.backbase.product.api.service.v2.ProductServiceApi;
+import com.backbase.product.api.service.v2.model.Product;
+import com.backbase.product.api.service.v2.model.ProductId;
+import java.util.List;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,22 +15,21 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Class <code>ProductController</code> is the implementation of the main Product Endpoint API definition.
  *
- * @see ProductIntegrationApi
+ * @see ProductServiceApi
  */
 @RestController
 @RequestMapping
 @Slf4j
-public class ProductIntegrationApiController implements ProductIntegrationApi {
+public class ProductServiceApiV2Controller implements ProductServiceApi {
+
     /**
      * Product service business logic interface.
      */
     private final ProductService prodService;
-    private final ProductIntegrationMapper mapper;
 
     @Autowired
-    public ProductIntegrationApiController(ProductService prodService, ProductIntegrationMapper mapper) {
+    public ProductServiceApiV2Controller(ProductService prodService) {
         this.prodService = prodService;
-        this.mapper = mapper;
     }
 
 
@@ -42,17 +41,22 @@ public class ProductIntegrationApiController implements ProductIntegrationApi {
         return ResponseEntity.noContent().build();
     }
 
+    @Override
+    public ResponseEntity<List<Product>> getProducts() {
+        log.debug("Get list of products");
+        return ResponseEntity.ok(prodService.getAllProducts());
+    }
 
     @Override
     public ResponseEntity<Product> getProductById(Long productId) {
         log.debug("Get product by id {}", productId);
-        return ResponseEntity.ok(mapper.fromApiToIntegration(prodService.getProduct(productId, 0, 0)));
+        return ResponseEntity.ok(prodService.getProduct(productId, 0, 0));
     }
 
     @Override
     public ResponseEntity<ProductId> postProduct(@Valid Product product) {
         log.debug("Create a product {}", product);
-        com.backbase.product.api.service.v2.model.Product productWithId = prodService.createProduct(mapper.fromIntegrationToApi(product));
+        Product productWithId = prodService.createProduct(product);
         ProductId productId = new ProductId();
         productId.setId(productWithId.getProductId());
         log.debug("Product {} created", productId);
@@ -62,8 +66,17 @@ public class ProductIntegrationApiController implements ProductIntegrationApi {
     @Override
     public ResponseEntity<Void> putProduct(@Valid Product product) {
         log.debug("Update a product {}", product);
-        com.backbase.product.api.service.v2.model.Product productWithId = prodService.updateProduct(mapper.fromIntegrationToApi(product));
-        log.debug("product with {} updated.", productWithId.getProductId());
+        Product productWithId = prodService.updateProduct(product);
+        log.debug("product with id {} updated", productWithId.getProductId());
+        return ResponseEntity.noContent().build();
+    }
+
+    @Override
+    public ResponseEntity<Void> putProductById(Long productId, @Valid Product product) {
+        log.debug("Update a product {} with values {}", productId, product);
+        product.setProductId(productId);
+        Product productWithId = prodService.updateProduct(product);
+        log.debug("product with id {} updated", productWithId.getProductId());
         return ResponseEntity.noContent().build();
     }
 }

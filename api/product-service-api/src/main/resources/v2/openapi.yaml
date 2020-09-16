@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Product Service API
-  version: 1.0.0
+  version: 2.0.0
   description: Description of the API...
   license:
     name: Copyright Backbase
@@ -14,7 +14,7 @@ servers:
 tags:
   - name: product-service
 paths:
-  /service-api/v1/products:
+  /service-api/v2/products:
     get:
       tags:
         - product-service
@@ -156,7 +156,7 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
               example:
                 $ref: lib/examples/internal-server-error.json
-  /service-api/v1/products/{productId}:
+  /service-api/v2/products/{productId}:
     get:
       tags:
         - product-service
@@ -283,7 +283,6 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
               example:
                 $ref: lib/examples/internal-server-error.json
-  /service-api/v2/products/{productId}:
     put:
       tags:
         - product-service

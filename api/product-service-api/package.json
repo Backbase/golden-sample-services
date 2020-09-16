@@ -1,0 +1,21 @@
+{
+  "name": "backbase-golden-sample-api",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "validate-v1": "swagger-cli validate $BASE_PATH/src/main/resources/v1/openapi.yaml",
+    "validate-v2": "swagger-cli validate $BASE_PATH/src/main/resources/v2/openapi.yaml",
+    "lint-openapi-v1": "spectral lint $BASE_PATH/src/main/resources/v1/openapi.yaml --ruleset $BASE_PATH/../api-linting/openapi-rules.yaml",
+    "lint-openapi-v2": "spectral lint $BASE_PATH/src/main/resources/v2/openapi.yaml --ruleset $BASE_PATH/../api-linting/openapi-rules.yaml",
+    "lint-schemas-v1": "spectral lint $BASE_PATH/src/main/resources/v1/schemas/**/*.yaml --ruleset $BASE_PATH/../api-linting/schema-rules.yaml",
+    "lint-schemas-v2": "spectral lint $BASE_PATH/src/main/resources/v2/schemas/**/*.yaml --ruleset $BASE_PATH/../api-linting/schema-rules.yaml",
+    "bundle-v1": "swagger-cli bundle -t yaml -o $BASE_PATH/target/v1/openapi.yaml $BASE_PATH/src/main/resources/v1/openapi.yaml",
+    "bundle-v2": "swagger-cli bundle -t yaml -o $BASE_PATH/target/v2/openapi.yaml $BASE_PATH/src/main/resources/v2/openapi.yaml"
+  },
+  "dependencies": {
+    "@stoplight/prism-cli": "3.3.6",
+    "@stoplight/spectral": "5.5.0",
+    "openapi-diff": "0.23.2",
+    "swagger-cli": "4.0.4"
+  }
+}

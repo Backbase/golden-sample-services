@@ -14,6 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
+import com.backbase.goldensample.product.api.service.v2.ProductServiceApiV2Controller;
 import com.backbase.product.api.service.v2.model.Product;
 import java.time.LocalDate;
 import java.util.List;
@@ -24,7 +25,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-@WebMvcTest(ProductServiceApiController.class)
+@WebMvcTest(ProductServiceApiV2Controller.class)
 class ProductServiceApiControllerTest extends ProductApiControllerTest {
 
     @Test
