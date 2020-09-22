@@ -25,7 +25,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 @WebMvcTest(ProductServiceApiController.class)
-class ProductServiceApiControllerTest extends ProductApiControllerTest {
+class ProductServiceApiControllerTest extends ProductApiController {
 
     @Test
     void shouldGetEmptyArrayWhenNoProducts() throws Exception {

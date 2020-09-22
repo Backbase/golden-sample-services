@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-public class ProductApiControllerTest {
+public class ProductApiController {
 
     private static final LocalDate TODAY = LocalDate.of(2020, 1, 28);
     protected final Product productOne = createProduct(1L, "Product 1", 23, TODAY);

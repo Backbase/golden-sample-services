@@ -20,7 +20,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
 @WebMvcTest(ProductIntegrationApiController.class)
-class ProductIntegrationApiControllerTest extends ProductApiControllerTest {
+class ProductIntegrationApiControllerTest extends ProductApiController {
 
     @Test
     void shouldGetProductWhenServiceReturnProduct() throws Exception {
