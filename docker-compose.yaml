@@ -18,6 +18,9 @@ x-common-variables: &common-variables
   backbase.security.http.public-paths-configurer-enabled: 'true'
   backbase.security.public.paths: '/actuator/**,/integration-api/**'
   server.port: 8080
+  SPRING_ZIPKIN_ENABLED: 'true'
+  SPRING_ZIPKIN_BASEURL: 'http://zipkin:9411'
+  SPRING_SLEUTH_SAMPLER_PROBABILITY: 1
 
 x-database-variables: &database-variables
   spring.liquibase.enabled: 'true'
