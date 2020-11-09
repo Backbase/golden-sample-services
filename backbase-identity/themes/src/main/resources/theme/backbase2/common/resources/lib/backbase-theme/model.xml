@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog>
+    <feature>
+        <name>backbase-theme</name>
+        <contextItemName>[BBHOST]</contextItemName>
+        <properties>
+            <property label="Title" name="title" viewHint="text-input,admin">
+                <value type="string">Backbase Theme 2.0 - Baseline</value>
+            </property>
+            <property name="version" label="Version" readonly="true" viewHint="text-input,admin,designModeOnly">
+                <value type="string">2.91.2</value>
+            </property>
+            <property label="Path" name="path" viewHint="">
+                <value type="string">scss/main.scss</value>
+            </property>
+        </properties>
+    </feature>
+</catalog>

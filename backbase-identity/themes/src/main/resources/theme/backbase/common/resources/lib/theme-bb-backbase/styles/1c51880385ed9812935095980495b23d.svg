@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="278px" height="165px" viewBox="0 0 278 165" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.1 (67048) - http://www.bohemiancoding.com/sketch -->
+    <title>Card Management/Credit Card/Active</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="278" height="165" rx="8"></rect>
+    </defs>
+    <g id="Card-Management/Credit-Card/Active" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Background">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <g id="Mask"></g>
+            <g id="1-Primary/1-Default/2-Dark" mask="url(#mask-2)">
+                <g id="1-Primary/1-Default/1-Main" fill="#00569C" fill-rule="evenodd">
+                    <rect id="BG" x="0" y="0" width="278" height="165"></rect>
+                </g>
+                <rect id="Rectangle-7" fill="#000000" fill-rule="nonzero" opacity="0.300000012" x="0" y="0" width="278" height="165"></rect>
+            </g>
+            <g id="3-Greyscale/9-Black" opacity="0.25" mask="url(#mask-2)">
+                <g transform="translate(228.000000, 0.000000)">
+                    <rect fill="#FFFFFF" x="0" y="0" width="50" height="165"></rect>
+                    <rect id="Rectangle-7" stroke="none" fill="#000000" fill-rule="nonzero" x="0" y="0" width="50" height="165"></rect>
+                </g>
+            </g>
+            <g id="3-Greyscale/9-Black" opacity="0.149999991" mask="url(#mask-2)">
+                <g transform="translate(178.000000, 0.000000)">
+                    <rect fill="#FFFFFF" x="0" y="0" width="50" height="165"></rect>
+                    <rect id="Rectangle-7" stroke="none" fill="#000000" fill-rule="nonzero" x="0" y="0" width="50" height="165"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

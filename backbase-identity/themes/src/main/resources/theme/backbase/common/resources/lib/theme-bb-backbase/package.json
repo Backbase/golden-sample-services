@@ -1,0 +1,6 @@
+{
+  "name": "theme-bb-backbase",
+  "version": "1.39.0",
+  "main": "styles/theme-bb-backbase.css",
+  "dependencies": {}
+}

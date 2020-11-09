@@ -36,9 +36,9 @@ backbase:
   security:
     mtls:
       enabled: false
-    public:
-      paths:
-        - "/**"
+#    public:
+#      paths:
+#        - "/**"
 
 buildingblocks:
   security:
@@ -46,8 +46,8 @@ buildingblocks:
       autoconfig: true
       enabled: false
 
-security:
-  disabled: true
+#security:
+#  disabled: true
 
 # Spring health monitoring
 management:

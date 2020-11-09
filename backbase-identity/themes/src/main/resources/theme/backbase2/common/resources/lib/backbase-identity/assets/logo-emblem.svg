@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="65px" height="45px" viewBox="0 0 65 45" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
+    <title>Logo / White / Emblem</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M57.7973533,0.0864345738 L20.2606824,0.0864345738 L25.649713,9.88595438 L27.8156888,9.88595438 L28.1265944,9.8967587 L53.330676,9.8967587 C53.9835778,9.8967587 55.5588329,10.2316927 55.5691964,12.42497 L55.5691964,32.7262905 C55.5588329,34.9303721 53.9835778,35.2545018 53.330676,35.2545018 L21.5457589,35.3301321 L21.5250319,27.0108043 L47.6929209,27.0108043 L47.6929209,17.6758703 L20.9654018,17.7082833 L10.8713329,0 L0,0 L12.1875,22.1380552 L12.1771365,44.9891957 L21.2659439,44.9891957 L21.2659439,45 L58.388074,45 C62.5645727,45 65,41.2076831 65,33.5906363 L65,9.92917167 C65,3.41416567 62.5645727,0.0864345738 57.7973533,0.0864345738" id="path-1"></path>
+    </defs>
+    <g id="Logo-/-White-/-Emblem" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <mask id="mask-2" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <use id="Emblem" fill="#C12121" xlink:href="#path-1"></use>
+    </g>
+</svg>

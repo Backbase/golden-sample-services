@@ -1,0 +1,24 @@
+{
+  "name": "backbase-theme",
+  "version": "1.0.0",
+  "description": "Backbase theme",
+  "scripts": {},
+  "keywords": [],
+  "author": "Backbase",
+  "license": "Apache 2.0",
+  "dependencies": {
+    "angular": "1.7.9",
+    "angular-cookies": "1.7.9",
+    "angular-resource": "1.7.9",
+    "angular-route": "1.7.9",
+    "angular-sanitize": "1.7.9",
+    "angular-translate": "2.18.1",
+    "angular-translate-loader-url": "2.18.1",
+    "angular-ui-select2": "0.0.5",
+    "autofill-event": "0.0.1",
+    "jquery": "3.5.1",
+    "select2": "3.5.1",
+    "text-security": "1.0.1"
+  },
+  "repository": {}
+}

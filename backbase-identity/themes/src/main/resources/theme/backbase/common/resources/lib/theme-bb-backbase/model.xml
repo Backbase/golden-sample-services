@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog>
+    <feature>
+        <name>theme-bb-backbase</name>
+        <contextItemName>[BBHOST]</contextItemName>
+        <properties>
+            <property label="Title" name="title" viewHint="text-input,admin">
+                <value type="string">Backbase Theme</value>
+            </property>
+            <property name="version" label="Version" readonly="true" viewHint="text-input,admin,designModeOnly">
+                <value type="string">1.39.0</value>
+            </property>
+            <property name="path" label="Path" readonly="true" viewHint="designModeOnly">
+                <value type="string">$(itemRoot)/styles/theme-bb-backbase.css</value>
+            </property>
+        </properties>
+    </feature>
+</catalog>

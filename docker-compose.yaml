@@ -69,37 +69,87 @@ services:
       <<: *common-variables
       gateway.actuator.user: admin
       gateway.actuator.password: admin
+      ## TODO: check this - not sure why we need it. How do we tell edge to use OIDC token converter rather than BAS?
+      gateway.token.converter.url: http://oidc-token-converter-service:8762/convert
     links:
       - registry
-      - token-converter
+      - oidc-token-converter-service
 
   registry:
     image: repo.backbase.com/backbase-docker-releases/registry:IPS-1.12.0
     ports:
       - "8761:8080"
 
-  token-converter:
-    image: repo.backbase.com/backbase-docker-releases/bb-authentication-token-converter-service:IPS-1.12.0
-    ports:
-      - "7779:8080"
+  oidc-token-converter-service:
+    image: repo.backbase.com/backbase-docker-releases/oidc-token-converter-service:IDENTITY-1.7.2
     environment:
       <<: *common-variables
-    links:
-      - registry
+      BACKBASE_OIDCTOKENCONVERTER_WHITELISTEDDOMAINS_0_ISSUERHOST: "localhost"
+      BACKBASE_OIDCTOKENCONVERTER_WHITELISTEDDOMAINS_0_INTERNALHOST: "identity:8080"
+      #TODO: Enable userinfo verification instead
+      BACKBASE_OIDCTOKENCONVERTER_JWKSVERIFICATION: "true"
+      BACKBASE_OIDCTOKENCONVERTER_USERINFOVERIFICATION: "false"
+      BACKBASE_OIDCTOKENCONVERTER_JWKSUSERNAMECLAIMNAME: "preferred_username"
+      JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,address=*:5006,server=y,suspend=n"
 
-  auth:
-    image: repo.backbase.com/backbase-docker-releases/authentication-dev:IPS-1.12.0-no-production
-    ports:
-      - "7778:8080"
-    environment:
-      <<: *common-variables
-      <<: *message-broker-variables
     links:
       - registry
-      - message-broker
+      - identity
+    ports:
+      - "8762:8080"
+      - '5006:5006'
+    ## TODO: sensible resource limits
+
+  identity:
+    image: repo.backbase.com/backbase-docker-releases/backbase-identity:IDENTITY-1.7.2
+    environment:
+      KEYCLOAK_BACKBASE_OIDC_TOKEN_CONVERTER_URL: "http://oidc-token-converter-service:8762"
+      QUARKUS_DATASOURCE_URL: "jdbc:mysql://mysql:3306/backbase_identity?useSSL=false&createDatabaseIfNotExist=true"
+      QUARKUS_DATASOURCE_USERNAME: "root"
+      QUARKUS_DATASOURCE_PASSWORD: "backbase"
+      QUARKUS_DATASOURCE_DRIVER: "com.mysql.jdbc.Driver"
+      KEYCLOAK_ADMIN: "admin"
+      KEYCLOAK_ADMIN_PASSWORD: "admin"
+      KEYCLOAK_CONNECTIONSJPA_QUARKUS_INITIALIZEEMPTY: "true"
+      KEYCLOAK_CONNECTIONSJPA_QUARKUS_MIGRATIONSTRATEGY: "update"
+      JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,address=*:5005,server=y,suspend=n"
+    ports:
+      - '8180:8080'
+      - '10090:10090'
+      - '5005:5005'
+    volumes:
+      - ./backbase-identity/themes:/opt/bb-identity/themes
+      - ./backbase-identity/providers:/opt/bb-identity/providers
+
+  # token-converter:
+  #   image: repo.backbase.com/backbase-docker-releases/bb-authentication-token-converter-service:IPS-1.12.0
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         memory: 50M
+  #       reservations:
+  #         memory: 20M
+  #   ports:
+  #     - "7779:8080"
+  #   environment:
+  #     <<: *common-variables
+  #   links:
+  #     - registry
+
+  # auth:
+  #   image: repo.backbase.com/backbase-docker-releases/authentication-dev:IPS-1.12.0-no-production
+  #   ports:
+  #     - "7778:8080"
+  #   environment:
+  #     <<: *common-variables
+  #     <<: *message-broker-variables
+  #   links:
+  #     - registry
+  #     - message-broker
 
   product:
-    image: harbor.backbase.eu/experimental/golden-sample/product:latest
+    # image: harbor.backbase.eu/experimental/golden-sample/product:latest
+    image: product:1.0.0
     ports:
       - "9915:8080"
     environment:

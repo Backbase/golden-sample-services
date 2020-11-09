@@ -1,0 +1,5 @@
+
+.bb-terms-container {
+  max-height: 50vh;
+  overflow: scroll;
+}

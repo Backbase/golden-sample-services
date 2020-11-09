@@ -1,0 +1,16 @@
+{
+    "themes": [{
+        "name" : "base",
+        "types": [ "admin", "account", "login", "email" ]
+    }, {
+        "name" : "backbase",
+        "types": [ "admin", "account", "login", "common", "email" ]
+    }, {
+        "name" : "backbase2",
+        "types": [ "admin", "account", "login", "common", "email", "welcome" ]
+    },{
+        "name" : "keycloak",
+        "types": [ "common", "welcome" ]
+    }]
+
+}
