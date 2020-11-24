@@ -147,11 +147,66 @@
               <modelPackage>com.backbase.product.api.service.v2.model</modelPackage>
             </configuration>
           </execution>
+          <execution>
+            <id>bundle-service-specs</id>
+            <!-- bundles the open api specs, and sets the proper version number in the filename -->
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>bundle</goal>
+            </goals>
+            <configuration>
+              <input>${project.basedir}/../../api/product-service-api/src/main/resources</input>
+              <output>${project.build.directory}/specs</output>
+              <versionFileName>false</versionFileName>
+            </configuration>
+          </execution>
+          <execution>
+            <id>bundle-integration-specs</id>
+            <!-- bundles the open api specs, and sets the proper version number in the filename -->
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>bundle</goal>
+            </goals>
+            <configuration>
+              <input>${project.basedir}/../../api/product-integration-api/src/main/resources</input>
+              <output>${project.build.directory}/specs</output>
+              <versionFileName>false</versionFileName>
+            </configuration>
+          </execution>
         </executions>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>versions-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>assemble-api-zip</id>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <phase>package</phase>
+            <configuration>
+              <descriptors>
+                <descriptor>../assembly/api.xml</descriptor>
+              </descriptors>
+            </configuration>
+          </execution>
+          <execution>
+            <id>assemble-sql-zip</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <descriptors>
+                <descriptor>../assembly/sql.xml</descriptor>
+              </descriptors>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
