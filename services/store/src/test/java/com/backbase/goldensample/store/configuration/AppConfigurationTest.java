@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 
+import com.backbase.buildingblocks.backend.communication.http.HttpCommunicationConfiguration;
 import com.backbase.goldensample.store.config.StoreIntegrationConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
@@ -16,6 +17,7 @@ class AppConfigurationTest {
      * methods to populate the context.
      */
     ApplicationContextRunner context = new ApplicationContextRunner()
+         .withUserConfiguration(HttpCommunicationConfiguration.class)
         .withUserConfiguration(StoreIntegrationConfig.class)
         .withPropertyValues("app.product-service.host=localhost"
             , "app.product-service.port=8080"
@@ -34,11 +36,13 @@ class AppConfigurationTest {
              * We can use assertThat to assert on the context
              * and check if the @Beans configured are present
              */
-            assertAll(() -> assertThat(it).hasBean("productServiceImplApi"),
+            assertAll(
+                () -> assertThat(it).hasBean("accessProviderRestTemplate")
+                    .as("RestTemplate bean is required to inject Sleuth headers. Don't use 'new RestTemplate()'"),
+                () -> assertThat(it).hasBean("productServiceImplApi"),
                 () -> assertThat(it).hasBean("reviewServiceImplApi"),
                 () -> assertThat(it).hasBean("apiClient"),
                 () -> assertThat(it).hasBean("apiReviewClient"));
-
         });
     }
 }

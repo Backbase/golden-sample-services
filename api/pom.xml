@@ -3,12 +3,12 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>com.backbase.buildingblocks</groupId>
-    <version>11.1.0</version>
-    <artifactId>backbase-openapi-spec-starter-parent</artifactId>
-    <relativePath/>
-  </parent>
+    <parent>
+        <groupId>com.backbase.buildingblocks</groupId>
+        <version>11.2.1</version>
+        <artifactId>backbase-openapi-spec-starter-parent</artifactId>
+        <relativePath/>
+    </parent>
 
   <groupId>com.backbase</groupId>
   <artifactId>api</artifactId>

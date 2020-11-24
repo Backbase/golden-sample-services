@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
+import com.backbase.buildingblocks.backend.communication.http.HttpCommunicationConfiguration;
 import com.backbase.goldensample.product.api.client.ApiClient;
 import com.backbase.goldensample.product.api.client.v2.ProductServiceApi;
 import com.backbase.goldensample.product.api.client.v2.model.Product;
@@ -20,6 +21,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.web.client.AutoConfigureWebClient;
 import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
 import org.springframework.context.annotation.Import;
@@ -36,7 +38,7 @@ import org.springframework.web.client.RestTemplate;
 
 @RestClientTest(value = {ProductServiceApi.class, ReviewServiceApi.class})
 @AutoConfigureWebClient(registerRestTemplate = true)
-@Import(StoreIntegrationConfig.class)
+@Import({StoreIntegrationConfig.class, HttpCommunicationConfiguration.class})
 public class StoreRestTemplateTest {
 
     @Autowired
@@ -48,7 +50,9 @@ public class StoreRestTemplateTest {
     @Autowired
     private MockRestServiceServer mockRestServiceServer;
 
-    private RestTemplate restTemplate;
+    @Autowired
+    @Qualifier("accessProviderRestTemplate")
+    RestTemplate restTemplate;
 
     private final Product product = new Product().productId(1L).name("Product").weight(20).createDate(LocalDate.now());
     private final Review review =
@@ -56,7 +60,7 @@ public class StoreRestTemplateTest {
 
     @BeforeEach
     void init() {
-        this.restTemplate = new RestTemplate();
+
         ApiClient productApiClient = new ApiClient(this.restTemplate);
         com.backbase.goldensample.review.api.client.ApiClient reviewApiClient =
             new com.backbase.goldensample.review.api.client.ApiClient(this.restTemplate);
