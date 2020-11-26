@@ -27,7 +27,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProductList'
+                $ref: '../schemas/definitions.yaml#/components/schemas/ProductList'
               example:
                 $ref: examples/product-list.json
         '400':
@@ -64,7 +64,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Product'
+              $ref: '../schemas/definitions.yaml#/components/schemas/Product'
             example:
               $ref: examples/create-product-request.json
       responses:
@@ -111,7 +111,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Product'
+              $ref: '../schemas/definitions.yaml#/components/schemas/Product'
             example:
               $ref: examples/update-product-request.json
       responses:
@@ -179,7 +179,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Product'
+                $ref: '../schemas/definitions.yaml#/components/schemas/Product'
               example:
                 $ref: examples/get-product-response.json
         '401':
@@ -282,7 +282,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Product'
+              $ref: '../schemas/definitions.yaml#/components/schemas/Product'
             example:
               $ref: examples/update-product-request.json
       responses:
@@ -322,10 +322,6 @@ paths:
                 $ref: lib/examples/internal-server-error.json
 components:
   schemas:
-    Product:
-      $ref: schemas/product.yaml
-    ProductList:
-      $ref: schemas/product-list.yaml
     ProductId:
       $ref: schemas/product-id.yaml
     BadRequestError:

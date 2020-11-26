@@ -1,0 +1,6 @@
+components:
+  schemas:
+    Product:
+      $ref: ../schemas/product.yaml
+    ProductList:
+      $ref: ../schemas/product-list.yaml
