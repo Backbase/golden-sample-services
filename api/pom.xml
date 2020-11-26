@@ -16,8 +16,7 @@
   <version>0.0.1-SNAPSHOT</version>
 
   <modules>
-    <module>product-integration-api</module>
-    <module>product-service-api</module>
+    <module>product-api</module>
     <module>review-service-api</module>
     <module>store-client-api</module>
   </modules>
@@ -25,6 +24,7 @@
   <properties>
     <frontend-plugin.version>1.8.0</frontend-plugin.version>
     <boat-maven-plugin.version>0.10.0</boat-maven-plugin.version>
+    <lint-rules>219,215,218,166,136,174,235,107,171,224,143,151,129,146,147,172,145,115,132,120,134,183,154,105,104,130,118,110,153,101,176,150,116,M009,H002,M010,H001,M008,S005,S006,S007,M011</lint-rules>
   </properties>
 
   <build>
@@ -49,9 +49,9 @@
                 <goal>bundle</goal>
               </goals>
               <configuration>
-                <input>${project.basedir}/src/main/resources/</input>
+                <input>${project.basedir}/src/main/resources</input>
                 <output>${project.build.directory}</output>
-                <versionFileName>false</versionFileName>
+                <versionFileName>true</versionFileName>
               </configuration>
             </execution>
             <execution>
@@ -76,6 +76,7 @@
                 <inputSpec>${project.build.directory}/openapi.yaml</inputSpec>
                 <output>${project.build.directory}/boat-lint-reports</output>
                 <writeLintReport>true</writeLintReport>
+                <ignoreRules>${lint-rules}</ignoreRules>
               </configuration>
             </execution>
           </executions>

@@ -155,9 +155,9 @@
               <goal>bundle</goal>
             </goals>
             <configuration>
-              <input>${project.basedir}/../../api/product-service-api/src/main/resources</input>
-              <output>${project.build.directory}/specs</output>
-              <versionFileName>false</versionFileName>
+              <input>${project.basedir}/../../api/product-service-api/src/main/resources/openapi.yaml</input>
+              <output>${project.build.directory}/specs/product-service-api-v1.yaml</output>
+              <versionFileName>true</versionFileName>
             </configuration>
           </execution>
           <execution>
@@ -168,9 +168,9 @@
               <goal>bundle</goal>
             </goals>
             <configuration>
-              <input>${project.basedir}/../../api/product-integration-api/src/main/resources</input>
-              <output>${project.build.directory}/specs</output>
-              <versionFileName>false</versionFileName>
+              <input>${project.basedir}/../../api/product-integration-api/src/main/resources/openapi.yaml</input>
+              <output>${project.build.directory}/specs/product-integration-api-v1.yaml</output>
+              <versionFileName>true</versionFileName>
             </configuration>
           </execution>
         </executions>
