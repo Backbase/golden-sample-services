@@ -8,7 +8,7 @@ properties:
   reviews:
     type: array
     items:
-      $ref: '../openapi.yaml#/components/schemas/ReviewSummary'
+      $ref: '../schemas/definitions.yaml#/components/schemas/ReviewSummary'
   weight:
     type: integer
     format: int32

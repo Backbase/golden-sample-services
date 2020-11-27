@@ -1,0 +1,4 @@
+components:
+  schemas:
+    ReviewSummary:
+      $ref: ../schemas/review-summary.yaml

@@ -63,13 +63,26 @@
         <artifactId>boat-maven-plugin</artifactId>
         <executions>
           <execution>
+            <id>bundle-specs</id>
+            <!-- bundles the open api specs, and sets the proper version number in the filename -->
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>bundle</goal>
+            </goals>
+            <configuration>
+              <input>${project.basedir}/../../api/store-client-api/src/main/resources/openapi-v1.yaml</input>
+              <output>${project.build.directory}/specs/client-api-v1.yaml</output>
+              <versionFileName>true</versionFileName>
+            </configuration>
+          </execution>
+          <execution>
             <id>generate-client-api-code</id>
             <goals>
               <goal>generate-spring-boot-embedded</goal>
             </goals>
             <phase>generate-sources</phase>
             <configuration>
-              <inputSpec>${project.basedir}/../../api/store-client-api/src/main/resources/openapi.yaml</inputSpec>
+              <inputSpec>${project.build.directory}/specs/client-api-v1.0.0.yaml</inputSpec>
               <apiPackage>com.backbase.goldensample.store.api.service.v2</apiPackage>
               <modelPackage>com.backbase.goldensample.store.api.service.v2.model</modelPackage>
             </configuration>
@@ -81,7 +94,7 @@
             </goals>
             <phase>generate-sources</phase>
             <configuration>
-              <inputSpec>${project.basedir}/../../api/product-service-api/src/main/resources/openapi.yaml</inputSpec>
+              <inputSpec>${project.basedir}/../../api/product-api/src/main/resources/service-api-v1.yaml</inputSpec>
               <apiPackage>com.backbase.goldensample.product.api.client.v2</apiPackage>
               <modelPackage>com.backbase.goldensample.product.api.client.v2.model</modelPackage>
             </configuration>
@@ -117,22 +130,9 @@
             -->
             <phase>generate-sources</phase>
             <configuration>
-              <inputSpec>${project.basedir}/../../api/review-service-api/src/main/resources/openapi.yaml</inputSpec>
+              <inputSpec>${project.basedir}/../../api/review-service-api/src/main/resources/openapi-v1.yaml</inputSpec>
               <apiPackage>com.backbase.goldensample.review.api.client.v2</apiPackage>
               <modelPackage>com.backbase.goldensample.review.api.client.v2.model</modelPackage>
-            </configuration>
-          </execution>
-          <execution>
-            <id>bundle-specs</id>
-            <!-- bundles the open api specs, and sets the proper version number in the filename -->
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>bundle</goal>
-            </goals>
-            <configuration>
-              <input>${project.basedir}/../../api/store-client-api/src/main/resources</input>
-              <output>${project.build.directory}/specs</output>
-              <versionFileName>false</versionFileName>
             </configuration>
           </execution>
         </executions>

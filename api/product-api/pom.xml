@@ -13,7 +13,7 @@
     <packaging>pom</packaging>
 
     <properties>
-    <boat-maven-plugin.version>0.10.0</boat-maven-plugin.version>
+        <unversioned-filename-spec-dir>${project.build.directory}/spec-unversioned</unversioned-filename-spec-dir>
     </properties>
 
     <build>
@@ -29,6 +29,59 @@
             <plugin>
                 <groupId>com.backbase.oss</groupId>
                 <artifactId>boat-maven-plugin</artifactId>
+                <version>${boat-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>bundle-specs</id>
+                        <!-- Other plugins down the line want to reference the bundled specs using a hard coded filename-->
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>bundle</goal>
+                        </goals>
+                        <configuration>
+                            <input>${project.basedir}/src/main/resources</input>
+                            <output>${project.build.directory}</output>
+                            <versionFileName>true</versionFileName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-integration-api-docs</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.build.directory}/integration-api-v1.0.0.yaml</inputSpec>
+                            <output>${project.build.directory}/generated-docs</output>
+                            <generatorName>boat-docs</generatorName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-service-api-docs</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.build.directory}/service-api-v1.0.0.yaml</inputSpec>
+                            <output>${project.build.directory}/generated-docs</output>
+                            <generatorName>boat-docs</generatorName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>validate-api-specs</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>lint</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.build.directory}/</inputSpec>
+                            <output>${project.build.directory}/boat-lint-reports</output>
+                            <writeLintReport>true</writeLintReport>
+                            <ignoreRules>${lint-rules}</ignoreRules>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

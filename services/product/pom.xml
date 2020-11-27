@@ -101,36 +101,51 @@
         <artifactId>boat-maven-plugin</artifactId>
         <executions>
           <execution>
+            <id>bundle-service-specs</id>
+            <!-- bundles the open api specs, and sets the proper version number in the filename -->
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>bundle</goal>
+            </goals>
+            <configuration>
+              <input>${project.basedir}/../../api/product-api/src/main/resources/</input>
+              <output>${project.build.directory}/specs/</output>
+              <versionFileName>true</versionFileName>
+            </configuration>
+          </execution>
+          <execution>
             <id>generate-service-api-code</id>
             <goals>
               <goal>generate-spring-boot-embedded</goal>
             </goals>
-<!--            With that goal BOAT is using the following defaults
-            <configuration>
-              <output>${project.build.directory}/generated-sources/openapi</output>
-              <generateSupportingFiles>true</generateSupportingFiles>
-              <generatorName>spring</generatorName>
-              <strictSpec>true</strictSpec>
-              <generateApiTests>false</generateApiTests>
-              <generateModelTests>false</generateModelTests>
-              <inputSpec>${project.basedir}/../api/product-service-api/src/main/resources/openapi.yaml</inputSpec>
-              <configOptions>
-                <library>spring-boot</library>
-                <dateLibrary>java8</dateLibrary>
-                <interfaceOnly>true</interfaceOnly>
-                <skipDefaultInterface>true</skipDefaultInterface>
-                <useBeanValidation>true</useBeanValidation>
-                <useClassLevelBeanValidation>false</useClassLevelBeanValidation>
-                <useTags>true</useTags>
-                <java8>true</java8>
-                <useOptional>false</useOptional>
-                <apiPackage>com.backbase.product.api.service.v2</apiPackage>
-                <modelPackage>com.backbase.product.api.service.v2.model</modelPackage>
-              </configOptions>
--->
+            <!--            With that goal BOAT is using the following defaults
+                        <configuration>
+                          <output>${project.build.directory}/generated-sources/openapi</output>
+                          <generateSupportingFiles>true</generateSupportingFiles>
+                          <generatorName>spring</generatorName>
+                          <strictSpec>true</strictSpec>
+                          <generateApiTests>false</generateApiTests>
+                          <generateModelTests>false</generateModelTests>
+                          <inputSpec>${project.basedir}/../api/product-service-api/src/main/resources/openapi.yaml</inputSpec>
+                          <configOptions>
+                            <library>spring-boot</library>
+                            <dateLibrary>java8</dateLibrary>
+                            <interfaceOnly>true</interfaceOnly>
+                            <skipDefaultInterface>true</skipDefaultInterface>
+                            <useBeanValidation>true</useBeanValidation>
+                            <useClassLevelBeanValidation>false</useClassLevelBeanValidation>
+                            <useTags>true</useTags>
+                            <java8>true</java8>
+                            <useOptional>false</useOptional>
+                            <apiPackage>com.backbase.product.api.service.v2</apiPackage>
+                            <modelPackage>com.backbase.product.api.service.v2.model</modelPackage>
+                          </configOptions>
+
+                          https://github.com/Backbase/backbase-openapi-tools/blob/dev/boat-maven-plugin/src/main/java/com/backbase/oss/boat/GenerateSpringBootEmbeddedMojo.java
+            -->
             <phase>generate-sources</phase>
             <configuration>
-              <inputSpec>${project.basedir}/../../api/product-service-api/src/main/resources/openapi.yaml</inputSpec>
+              <inputSpec>${project.build.directory}/specs/service-api-v1.0.0.yaml</inputSpec>
               <apiPackage>com.backbase.product.api.service.v2</apiPackage>
               <modelPackage>com.backbase.product.api.service.v2.model</modelPackage>
             </configuration>
@@ -142,35 +157,9 @@
             </goals>
             <phase>generate-sources</phase>
             <configuration>
-              <inputSpec>${project.basedir}/../../api/product-integration-api/src/main/resources/openapi.yaml</inputSpec>
+              <inputSpec>${project.build.directory}/specs/integration-api-v1.0.0.yaml</inputSpec>
               <apiPackage>com.backbase.product.api.integration.v2</apiPackage>
               <modelPackage>com.backbase.product.api.service.v2.model</modelPackage>
-            </configuration>
-          </execution>
-          <execution>
-            <id>bundle-service-specs</id>
-            <!-- bundles the open api specs, and sets the proper version number in the filename -->
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>bundle</goal>
-            </goals>
-            <configuration>
-              <input>${project.basedir}/../../api/product-service-api/src/main/resources/openapi.yaml</input>
-              <output>${project.build.directory}/specs/product-service-api-v1.yaml</output>
-              <versionFileName>true</versionFileName>
-            </configuration>
-          </execution>
-          <execution>
-            <id>bundle-integration-specs</id>
-            <!-- bundles the open api specs, and sets the proper version number in the filename -->
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>bundle</goal>
-            </goals>
-            <configuration>
-              <input>${project.basedir}/../../api/product-integration-api/src/main/resources/openapi.yaml</input>
-              <output>${project.build.directory}/specs/product-integration-api-v1.yaml</output>
-              <versionFileName>true</versionFileName>
             </configuration>
           </execution>
         </executions>
