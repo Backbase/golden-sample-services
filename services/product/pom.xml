@@ -100,6 +100,24 @@
         <groupId>com.backbase.oss</groupId>
         <artifactId>boat-maven-plugin</artifactId>
         <executions>
+<!--          if you specs are already in repo.backbase.com bundled, you can instead download them abd generate the code from them
+    <plugin>
+      <groupId>org.codehaus.mojo</groupId>
+      <artifactId>wagon-maven-plugin</artifactId>
+      <executions>
+        <execution>
+          <id>download-product-api-spec</id>
+          <goals>
+            <goal>download-single</goal>
+          </goals>
+          <phase>generate-sources</phase>
+          <configuration>
+            <url>${backbase.specs.url}/payment</url>
+            <fromFile>product-service-api-v${product-service-api.version}.yaml</fromFile>
+            <toDir>${open-api-specs-dir}/payment</toDir>
+          </configuration>
+        </execution>
+        -->
           <execution>
             <id>bundle-service-specs</id>
             <!-- bundles the open api specs, and sets the proper version number in the filename -->
