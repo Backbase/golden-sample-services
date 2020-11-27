@@ -109,7 +109,7 @@
             </goals>
             <configuration>
               <input>${project.basedir}/../../api/review-service-api/src/main/resources/openapi-v1.yaml</input>
-              <output>${project.build.directory}/specs/service-api-v1.yaml</output>
+              <output>${project.build.directory}/specs/review-service-api-v1.yaml</output>
               <versionFileName>true</versionFileName>
             </configuration>
           </execution>
@@ -143,7 +143,7 @@
 -->
             <phase>generate-sources</phase>
             <configuration>
-              <inputSpec>${project.build.directory}/specs/service-api-v1.0.0.yaml</inputSpec>
+              <inputSpec>${project.build.directory}/specs/review-service-api-v1.0.0.yaml</inputSpec>
               <apiPackage>com.backbase.reviews.api.service.v2</apiPackage>
               <modelPackage>com.backbase.reviews.api.service.v2.model</modelPackage>
             </configuration>

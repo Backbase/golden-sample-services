@@ -94,7 +94,7 @@
             </goals>
             <phase>generate-sources</phase>
             <configuration>
-              <inputSpec>${project.basedir}/../../api/product-api/src/main/resources/service-api-v1.yaml</inputSpec>
+              <inputSpec>${project.basedir}/../../api/product-api/src/main/resources/product-service-api-v1.yaml</inputSpec>
               <apiPackage>com.backbase.goldensample.product.api.client.v2</apiPackage>
               <modelPackage>com.backbase.goldensample.product.api.client.v2.model</modelPackage>
             </configuration>

@@ -145,7 +145,7 @@
             -->
             <phase>generate-sources</phase>
             <configuration>
-              <inputSpec>${project.build.directory}/specs/service-api-v1.0.0.yaml</inputSpec>
+              <inputSpec>${project.build.directory}/specs/product-service-api-v1.0.0.yaml</inputSpec>
               <apiPackage>com.backbase.product.api.service.v2</apiPackage>
               <modelPackage>com.backbase.product.api.service.v2.model</modelPackage>
             </configuration>
@@ -157,7 +157,7 @@
             </goals>
             <phase>generate-sources</phase>
             <configuration>
-              <inputSpec>${project.build.directory}/specs/integration-api-v1.0.0.yaml</inputSpec>
+              <inputSpec>${project.build.directory}/specs/product-integration-api-v1.0.0.yaml</inputSpec>
               <apiPackage>com.backbase.product.api.integration.v2</apiPackage>
               <modelPackage>com.backbase.product.api.service.v2.model</modelPackage>
             </configuration>

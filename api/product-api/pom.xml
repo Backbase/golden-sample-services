@@ -14,6 +14,7 @@
 
     <properties>
         <unversioned-filename-spec-dir>${project.build.directory}/spec-unversioned</unversioned-filename-spec-dir>
+        <ignored-lint-rules>219,215,218,166,136,174,235,107,171,224,143,151,129,146,147,172,145,115,132,120,134,183,154,105,104,130,118,110,153,101,176,150,116,M009,H002,M010,H001,M008,S005,S006,S007,M011</ignored-lint-rules>
     </properties>
 
     <build>
@@ -51,7 +52,7 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <inputSpec>${project.build.directory}/integration-api-v1.0.0.yaml</inputSpec>
+                            <inputSpec>${project.build.directory}/product-integration-api-v1.0.0.yaml</inputSpec>
                             <output>${project.build.directory}/generated-docs</output>
                             <generatorName>boat-docs</generatorName>
                         </configuration>
@@ -63,7 +64,7 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <inputSpec>${project.build.directory}/service-api-v1.0.0.yaml</inputSpec>
+                            <inputSpec>${project.build.directory}/product-service-api-v1.0.0.yaml</inputSpec>
                             <output>${project.build.directory}/generated-docs</output>
                             <generatorName>boat-docs</generatorName>
                         </configuration>
@@ -78,7 +79,7 @@
                             <inputSpec>${project.build.directory}/</inputSpec>
                             <output>${project.build.directory}/boat-lint-reports</output>
                             <writeLintReport>true</writeLintReport>
-                            <ignoreRules>${lint-rules}</ignoreRules>
+                            <ignoreRules>${ignored-lint-rules}</ignoreRules>
                         </configuration>
                     </execution>
                 </executions>
