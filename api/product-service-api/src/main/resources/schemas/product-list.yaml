@@ -1,4 +1,0 @@
-type: array
-description: An array of products
-items:
-  $ref: '../openapi.yaml#/components/schemas/Product'

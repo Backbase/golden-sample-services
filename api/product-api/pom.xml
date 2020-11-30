@@ -9,8 +9,8 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <name>Backbase :: store-client-api</name>
-    <artifactId>store-client-api</artifactId>
+    <name>Backbase :: product-api</name>
+    <artifactId>product-api</artifactId>
     <packaging>pom</packaging>
 
     <properties>
@@ -33,10 +33,11 @@
             <plugin>
                 <groupId>com.backbase.oss</groupId>
                 <artifactId>boat-maven-plugin</artifactId>
+                <version>${boat-maven-plugin.version}</version>
                 <executions>
                     <execution>
                         <id>bundle-specs</id>
-                        <!-- bundles the open api specs, and sets the proper version number in the filename -->
+                        <!-- Other plugins down the line want to reference the bundled specs using a hard coded filename-->
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>bundle</goal>
@@ -48,19 +49,31 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>generate-docs</id>
+                        <id>generate-integration-api-docs</id>
                         <phase>package</phase>
                         <goals>
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <inputSpec>${unversioned-filename-spec-dir}/openapi-v1.yaml</inputSpec>
+                            <inputSpec>${unversioned-filename-spec-dir}/product-integration-api-v1.yaml</inputSpec>
                             <output>${project.build.directory}/generated-docs</output>
                             <generatorName>boat-docs</generatorName>
                         </configuration>
                     </execution>
                     <execution>
-                        <id>validate-specs</id>
+                        <id>generate-service-api-docs</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${unversioned-filename-spec-dir}/product-service-api-v1.yaml</inputSpec>
+                            <output>${project.build.directory}/generated-docs</output>
+                            <generatorName>boat-docs</generatorName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>validate-api-specs</id>
                         <phase>package</phase>
                         <goals>
                             <goal>lint</goal>

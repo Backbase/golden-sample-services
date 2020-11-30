@@ -1,9 +1,0 @@
-type: object
-description: Object that defines an id attribute only.
-properties:
-  id:
-    description: Internally used unique identification
-    type: integer
-    format: int64
-required:
-  - id

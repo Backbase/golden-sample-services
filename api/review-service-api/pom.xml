@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -11,6 +12,13 @@
     <name>Backbase :: review-service-api</name>
     <artifactId>review-service-api</artifactId>
     <packaging>pom</packaging>
+
+    <properties>
+        <unversioned-filename-spec-dir>${project.build.directory}/spec-unversioned</unversioned-filename-spec-dir>
+        <ignored-lint-rules>
+            219,215,218,166,136,174,235,107,171,224,143,151,129,146,147,172,145,115,132,120,134,183,154,105,104,130,118,110,153,101,176,150,116,M009,H002,M010,H001,M008,S005,S006,S007,M011
+        </ignored-lint-rules>
+    </properties>
 
     <build>
         <plugins>
@@ -25,6 +33,46 @@
             <plugin>
                 <groupId>com.backbase.oss</groupId>
                 <artifactId>boat-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>bundle-specs</id>
+                        <!-- bundles the open api specs, and sets the proper version number in the filename -->
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>bundle</goal>
+                        </goals>
+                        <configuration>
+                            <input>${project.basedir}/src/main/resources</input>
+                            <output>${unversioned-filename-spec-dir}</output>
+                            <versionFileName>false</versionFileName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-docs</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${unversioned-filename-spec-dir}/openapi-v1.yaml</inputSpec>
+                            <output>${project.build.directory}/generated-docs</output>
+                            <generatorName>boat-docs</generatorName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>validate-specs</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>lint</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${unversioned-filename-spec-dir}/</inputSpec>
+                            <output>${project.build.directory}/boat-lint-reports</output>
+                            <writeLintReport>true</writeLintReport>
+                            <ignoreRules>${ignored-lint-rules}</ignoreRules>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

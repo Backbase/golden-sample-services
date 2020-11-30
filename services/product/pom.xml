@@ -1,188 +1,243 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://maven.apache.org/POM/4.0.0"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <parent>
+    <parent>
+        <groupId>com.backbase</groupId>
+        <artifactId>services</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
     <groupId>com.backbase</groupId>
-    <artifactId>services</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-  </parent>
+    <artifactId>product</artifactId>
+    <version>1.0.0</version>
+    <packaging>war</packaging>
+    <name>Backbase :: product-service</name>
 
-  <groupId>com.backbase</groupId>
-  <artifactId>product</artifactId>
-  <version>1.0.0</version>
-  <packaging>war</packaging>
-  <name>Backbase :: product-service</name>
-
-  <dependencies>
-    <dependency>
-      <groupId>com.backbase.buildingblocks</groupId>
-      <artifactId>service-sdk-starter-test</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>com.backbase.buildingblocks</groupId>
-      <artifactId>communication</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>com.backbase.buildingblocks</groupId>
-      <artifactId>persistence</artifactId>
-    </dependency>
-
-
-    <!-- Start - POJO creation made easy -->
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <optional>true</optional>
-    </dependency>
-    <!-- End - POJO creation made easy -->
-    <!-- Start - POJO <-> Entity conversion made easy
-         https://community.backbase.com/documentation/ServiceSDK/latest/service_sdk_ref_service_sdk_starter_mapping -->
-    <dependency>
-      <groupId>com.backbase.buildingblocks</groupId>
-      <artifactId>service-sdk-starter-mapping</artifactId>
-    </dependency>
-    <!-- End - POJO <-> Entity conversion made easy -->
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>testcontainers</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>mysql</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>mssqlserver</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.testcontainers</groupId>
-      <artifactId>mariadb</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.swagger</groupId>
-      <artifactId>swagger-annotations</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.openapitools</groupId>
-      <artifactId>jackson-databind-nullable</artifactId>
-    </dependency>
-    <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
-    <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc -->
-    <dependency>
-      <groupId>com.microsoft.sqlserver</groupId>
-      <artifactId>mssql-jdbc</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.mariadb.jdbc</groupId>
-      <artifactId>mariadb-java-client</artifactId>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>com.backbase.oss</groupId>
-        <artifactId>boat-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>generate-service-api-code</id>
-            <goals>
-              <goal>generate-spring-boot-embedded</goal>
-            </goals>
-<!--            With that goal BOAT is using the following defaults
-            <configuration>
-              <output>${project.build.directory}/generated-sources/openapi</output>
-              <generateSupportingFiles>true</generateSupportingFiles>
-              <generatorName>spring</generatorName>
-              <strictSpec>true</strictSpec>
-              <generateApiTests>false</generateApiTests>
-              <generateModelTests>false</generateModelTests>
-              <inputSpec>${project.basedir}/../api/product-service-api/src/main/resources/openapi.yaml</inputSpec>
-              <configOptions>
-                <library>spring-boot</library>
-                <dateLibrary>java8</dateLibrary>
-                <interfaceOnly>true</interfaceOnly>
-                <skipDefaultInterface>true</skipDefaultInterface>
-                <useBeanValidation>true</useBeanValidation>
-                <useClassLevelBeanValidation>false</useClassLevelBeanValidation>
-                <useTags>true</useTags>
-                <java8>true</java8>
-                <useOptional>false</useOptional>
-                <apiPackage>com.backbase.product.api.service.v2</apiPackage>
-                <modelPackage>com.backbase.product.api.service.v2.model</modelPackage>
-              </configOptions>
--->
-            <phase>generate-sources</phase>
-            <configuration>
-              <inputSpec>${project.basedir}/../../api/product-service-api/src/main/resources/openapi.yaml</inputSpec>
-              <apiPackage>com.backbase.product.api.service.v2</apiPackage>
-              <modelPackage>com.backbase.product.api.service.v2.model</modelPackage>
-            </configuration>
-          </execution>
-          <execution>
-            <id>generate-integration-api-code</id>
-            <goals>
-              <goal>generate-spring-boot-embedded</goal>
-            </goals>
-            <phase>generate-sources</phase>
-            <configuration>
-              <inputSpec>${project.basedir}/../../api/product-integration-api/src/main/resources/openapi.yaml</inputSpec>
-              <apiPackage>com.backbase.product.api.integration.v2</apiPackage>
-              <modelPackage>com.backbase.product.api.service.v2.model</modelPackage>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>versions-maven-plugin</artifactId>
-      </plugin>
-    </plugins>
-  </build>
-
-  <profiles>
-    <!--  to run locally -->
-    <profile>
-      <id>local</id>
-      <dependencies>
+    <dependencies>
         <dependency>
-          <groupId>mysql</groupId>
-          <artifactId>mysql-connector-java</artifactId>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>service-sdk-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
-      </dependencies>
-    </profile>
-<!--    adding a profile with the same name that will override the drivers configuration back to the one that’s
-        in the original docker-image profile in core so mvn clean install -P docker-image is invoked
-        it will include the default drivers as it merges the profiles-->
-    <profile>
-      <id>docker-image</id>
-      <dependencies>
+
         <dependency>
-          <groupId>mysql</groupId>
-          <artifactId>mysql-connector-java</artifactId>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>communication</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>persistence</artifactId>
+        </dependency>
+
+
+        <!-- Start - POJO creation made easy -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!-- End - POJO creation made easy -->
+        <!-- Start - POJO <-> Entity conversion made easy
+             https://community.backbase.com/documentation/ServiceSDK/latest/service_sdk_ref_service_sdk_starter_mapping -->
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>service-sdk-starter-mapping</artifactId>
+        </dependency>
+        <!-- End - POJO <-> Entity conversion made easy -->
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
-          <groupId>com.microsoft.sqlserver</groupId>
-          <artifactId>mssql-jdbc</artifactId>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>mysql</artifactId>
+            <scope>test</scope>
         </dependency>
-      </dependencies>
-    </profile>
-  </profiles>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>mssqlserver</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>mariadb</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>jackson-databind-nullable</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc -->
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.backbase.oss</groupId>
+                <artifactId>boat-maven-plugin</artifactId>
+                <executions>
+                    <!--          if you specs are already in repo.backbase.com bundled, you can instead download them abd generate the code from them.
+                    This can break if you have repo.backbase.com under a different name in your Maven configuration.
+                        <plugin>
+                          <groupId>org.codehaus.mojo</groupId>
+                          <artifactId>wagon-maven-plugin</artifactId>
+                           <version>2.0.0</version>
+                           <configuration>
+                             <serverId>Backbase Artifactory Repository</serverId>
+                           </configuration>
+                          <executions>
+                            <execution>
+                              <id>download-product-api-spec</id>
+                              <goals>
+                                <goal>download-single</goal>
+                              </goals>
+                              <phase>generate-sources</phase>
+                              <configuration>
+                                <url>${backbase.specs.url}/payment</url>
+                                <fromFile>product-service-api-v${product-service-api.version}.yaml</fromFile>
+                                <toDir>${open-api-specs-dir}/payment</toDir>
+                              </configuration>
+                            </execution>
+                            -->
+                    <execution>
+                        <id>bundle-service-specs</id>
+                        <!-- bundles the open api specs, and sets the proper version number in the filename -->
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>bundle</goal>
+                        </goals>
+                        <configuration>
+                            <input>${project.basedir}/../../api/product-api/src/main/resources/</input>
+                            <output>${project.build.directory}/specs/</output>
+                            <versionFileName>true</versionFileName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-service-api-code</id>
+                        <goals>
+                            <goal>generate-spring-boot-embedded</goal>
+                        </goals>
+                        <!--            With that goal BOAT is using the following defaults
+                                    <configuration>
+                                      <output>${project.build.directory}/generated-sources/openapi</output>
+                                      <generateSupportingFiles>true</generateSupportingFiles>
+                                      <generatorName>spring</generatorName>
+                                      <strictSpec>true</strictSpec>
+                                      <generateApiTests>false</generateApiTests>
+                                      <generateModelTests>false</generateModelTests>
+                                      <inputSpec>${project.basedir}/../api/product-service-api/src/main/resources/openapi.yaml</inputSpec>
+                                      <configOptions>
+                                        <library>spring-boot</library>
+                                        <dateLibrary>java8</dateLibrary>
+                                        <interfaceOnly>true</interfaceOnly>
+                                        <skipDefaultInterface>true</skipDefaultInterface>
+                                        <useBeanValidation>true</useBeanValidation>
+                                        <useClassLevelBeanValidation>false</useClassLevelBeanValidation>
+                                        <useTags>true</useTags>
+                                        <java8>true</java8>
+                                        <useOptional>false</useOptional>
+                                        <apiPackage>com.backbase.product.api.service.v2</apiPackage>
+                                        <modelPackage>com.backbase.product.api.service.v2.model</modelPackage>
+                                      </configOptions>
+
+                                      https://github.com/Backbase/backbase-openapi-tools/blob/dev/boat-maven-plugin/src/main/java/com/backbase/oss/boat/GenerateSpringBootEmbeddedMojo.java
+                        -->
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <inputSpec>${project.build.directory}/specs/product-service-api-v1.0.0.yaml</inputSpec>
+                            <apiPackage>com.backbase.product.api.service.v2</apiPackage>
+                            <modelPackage>com.backbase.product.api.service.v2.model</modelPackage>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-integration-api-code</id>
+                        <goals>
+                            <goal>generate-spring-boot-embedded</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <inputSpec>${project.build.directory}/specs/product-integration-api-v1.0.0.yaml</inputSpec>
+                            <apiPackage>com.backbase.product.api.integration.v2</apiPackage>
+                            <modelPackage>com.backbase.product.api.service.v2.model</modelPackage>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>assemble-api-zip</id>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <phase>package</phase>
+                        <configuration>
+                            <descriptors>
+                                <descriptor>../assembly/api.xml</descriptor>
+                            </descriptors>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <!--  to run locally -->
+        <profile>
+            <id>local</id>
+            <dependencies>
+                <dependency>
+                    <groupId>mysql</groupId>
+                    <artifactId>mysql-connector-java</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+        <!--    adding a profile with the same name that will override the drivers configuration back to the one that’s
+                in the original docker-image profile in core so mvn clean install -P docker-image is invoked
+                it will include the default drivers as it merges the profiles-->
+        <profile>
+            <id>docker-image</id>
+            <dependencies>
+                <dependency>
+                    <groupId>mysql</groupId>
+                    <artifactId>mysql-connector-java</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>com.microsoft.sqlserver</groupId>
+                    <artifactId>mssql-jdbc</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 
 </project>

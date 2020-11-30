@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -15,15 +16,14 @@
     <version>0.0.1-SNAPSHOT</version>
 
     <modules>
-        <module>product-integration-api</module>
-        <module>product-service-api</module>
+        <module>product-api</module>
         <module>review-service-api</module>
         <module>store-client-api</module>
     </modules>
 
     <properties>
         <frontend-plugin.version>1.8.0</frontend-plugin.version>
-        <boat-maven-plugin.version>0.2.1</boat-maven-plugin.version>
+        <boat-maven-plugin.version>0.10.0</boat-maven-plugin.version>
     </properties>
 
     <build>
@@ -33,102 +33,12 @@
                     <groupId>com.github.eirslett</groupId>
                     <artifactId>frontend-maven-plugin</artifactId>
                     <version>${frontend-plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <id>install node and yarn</id>
-                            <goals>
-                                <goal>install-node-and-yarn</goal>
-                            </goals>
-                            <configuration>
-                                <nodeVersion>v12.16.3</nodeVersion>
-                                <yarnVersion>v1.22.4</yarnVersion>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>yarn install</id>
-                            <goals>
-                                <goal>yarn</goal>
-                            </goals>
-                            <configuration>
-                                <arguments>install</arguments>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>validate spec</id>
-                            <goals>
-                                <goal>yarn</goal>
-                            </goals>
-                            <configuration>
-                                <arguments>run validate</arguments>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>lint spec</id>
-                            <goals>
-                                <goal>yarn</goal>
-                            </goals>
-                            <configuration>
-                                <arguments>run lint-openapi</arguments>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>lint schemas</id>
-                            <goals>
-                                <goal>yarn</goal>
-                            </goals>
-                            <configuration>
-                                <arguments>run lint-schemas</arguments>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>bundle spec</id>
-                            <goals>
-                                <goal>yarn</goal>
-                            </goals>
-                            <configuration>
-                                <arguments>run bundle</arguments>
-                            </configuration>
-                        </execution>
-                        <!-- execution>
-                            <id>check backwards compatibility</id>
-                            <goals>
-                                <goal>yarn</goal>
-                            </goals>
-                            <configuration>
-                                <arguments>run check-backwards-compatibility</arguments>
-                            </configuration>
-                        </execution -->
-                    </executions>
-                    <configuration>
-                        <installDirectory>target</installDirectory>
-                        <workingDirectory>${project.basedir}/../</workingDirectory>
-                        <environmentVariables>
-                            <BASE_PATH>${project.basedir}</BASE_PATH>
-                            <SPEC_AUTH>${api-backbase-cloud.auth}</SPEC_AUTH>
-                            <!--suppress MavenModelInspection (each module must define this property) -->
-                            <SPEC_NAME>${api-spec.name}</SPEC_NAME>
-                        </environmentVariables>
-                    </configuration>
                 </plugin>
 
                 <plugin>
                     <groupId>com.backbase.oss</groupId>
                     <artifactId>boat-maven-plugin</artifactId>
                     <version>${boat-maven-plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <id>generate-docs</id>
-                            <phase>package</phase>
-                            <goals>
-                                <goal>generate</goal>
-                            </goals>
-                            <configuration>
-                                <inputSpec>${project.build.directory}/openapi.yaml</inputSpec>
-                                <output>${project.build.directory}/generated-docs</output>
-                                <generatorName>html2</generatorName>
-                            </configuration>
-                        </execution>
-                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -142,7 +52,6 @@
                     <plugin>
                         <groupId>com.github.eirslett</groupId>
                         <artifactId>frontend-maven-plugin</artifactId>
-                        <version>${frontend-plugin.version}</version>
                         <executions>
                             <execution>
                                 <id>run prism</id>
@@ -184,6 +93,8 @@
         </profile>
     </profiles>
 
+    <!--  These should be configured globally according to our developer env. guidelines but we need here so GitHub actions
+    can access our private repos and build the project properly -->
     <repositories>
         <repository>
             <id>backbase</id>

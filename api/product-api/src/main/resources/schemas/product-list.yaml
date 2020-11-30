@@ -1,0 +1,4 @@
+type: array
+description: An array of products
+items:
+  $ref: '../schemas/definitions.yaml#/components/schemas/Product'
