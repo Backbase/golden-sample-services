@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>com.backbase.buildingblocks</groupId>
@@ -10,106 +10,106 @@
         <relativePath/>
     </parent>
 
-  <groupId>com.backbase</groupId>
-  <artifactId>api</artifactId>
-  <packaging>pom</packaging>
-  <version>0.0.1-SNAPSHOT</version>
+    <groupId>com.backbase</groupId>
+    <artifactId>api</artifactId>
+    <packaging>pom</packaging>
+    <version>0.0.1-SNAPSHOT</version>
 
-  <modules>
-    <module>product-api</module>
-    <module>review-service-api</module>
-    <module>store-client-api</module>
-  </modules>
+    <modules>
+        <module>product-api</module>
+        <module>review-service-api</module>
+        <module>store-client-api</module>
+    </modules>
 
-  <properties>
-    <frontend-plugin.version>1.8.0</frontend-plugin.version>
-    <boat-maven-plugin.version>0.10.0</boat-maven-plugin.version>
-  </properties>
+    <properties>
+        <frontend-plugin.version>1.8.0</frontend-plugin.version>
+        <boat-maven-plugin.version>0.10.0</boat-maven-plugin.version>
+    </properties>
 
-  <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>com.github.eirslett</groupId>
-          <artifactId>frontend-maven-plugin</artifactId>
-          <version>${frontend-plugin.version}</version>
-        </plugin>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.github.eirslett</groupId>
+                    <artifactId>frontend-maven-plugin</artifactId>
+                    <version>${frontend-plugin.version}</version>
+                </plugin>
 
-        <plugin>
-          <groupId>com.backbase.oss</groupId>
-          <artifactId>boat-maven-plugin</artifactId>
-          <version>${boat-maven-plugin.version}</version>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-  </build>
+                <plugin>
+                    <groupId>com.backbase.oss</groupId>
+                    <artifactId>boat-maven-plugin</artifactId>
+                    <version>${boat-maven-plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
-  <profiles>
-    <profile>
-      <id>static</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>com.github.eirslett</groupId>
-            <artifactId>frontend-maven-plugin</artifactId>
-            <version>${frontend-plugin.version}</version>
-            <executions>
-              <execution>
-                <id>run prism</id>
-                <goals>
-                  <goal>yarn</goal>
-                </goals>
-                <configuration>
-                  <arguments>run prism-static</arguments>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
+    <profiles>
+        <profile>
+            <id>static</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.github.eirslett</groupId>
+                        <artifactId>frontend-maven-plugin</artifactId>
+                        <version>${frontend-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>run prism</id>
+                                <goals>
+                                    <goal>yarn</goal>
+                                </goals>
+                                <configuration>
+                                    <arguments>run prism-static</arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
 
-    <profile>
-      <id>dynamic</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>com.github.eirslett</groupId>
-            <artifactId>frontend-maven-plugin</artifactId>
-            <version>${frontend-plugin.version}</version>
-            <executions>
-              <execution>
-                <id>run prism</id>
-                <goals>
-                  <goal>yarn</goal>
-                </goals>
-                <configuration>
-                  <arguments>run prism-dynamic</arguments>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
+        <profile>
+            <id>dynamic</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.github.eirslett</groupId>
+                        <artifactId>frontend-maven-plugin</artifactId>
+                        <version>${frontend-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>run prism</id>
+                                <goals>
+                                    <goal>yarn</goal>
+                                </goals>
+                                <configuration>
+                                    <arguments>run prism-dynamic</arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
-<!--  These should be configured globally according to our developer env. guidelines but we need here so GitHub actions
-can access our private repos and build the project properly -->
-  <repositories>
-    <repository>
-      <id>backbase</id>
-      <url>https://repo.backbase.com/repo</url>
-      <releases>
-        <updatePolicy>always</updatePolicy>
-      </releases>
-    </repository>
-  </repositories>
-  <pluginRepositories>
-    <pluginRepository>
-      <id>backbase</id>
-      <url>https://repo.backbase.com/repo</url>
-    </pluginRepository>
-  </pluginRepositories>
+    <!--  These should be configured globally according to our developer env. guidelines but we need here so GitHub actions
+    can access our private repos and build the project properly -->
+    <repositories>
+        <repository>
+            <id>backbase</id>
+            <url>https://repo.backbase.com/repo</url>
+            <releases>
+                <updatePolicy>always</updatePolicy>
+            </releases>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>backbase</id>
+            <url>https://repo.backbase.com/repo</url>
+        </pluginRepository>
+    </pluginRepositories>
 
 </project>
