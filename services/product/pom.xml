@@ -100,10 +100,15 @@
         <groupId>com.backbase.oss</groupId>
         <artifactId>boat-maven-plugin</artifactId>
         <executions>
-<!--          if you specs are already in repo.backbase.com bundled, you can instead download them abd generate the code from them
+<!--          if you specs are already in repo.backbase.com bundled, you can instead download them abd generate the code from them.
+This can break if you have repo.backbase.com under a different name in your Maven configuration.
     <plugin>
       <groupId>org.codehaus.mojo</groupId>
       <artifactId>wagon-maven-plugin</artifactId>
+       <version>2.0.0</version>
+       <configuration>
+         <serverId>Backbase Artifactory Repository</serverId>
+       </configuration>
       <executions>
         <execution>
           <id>download-product-api-spec</id>

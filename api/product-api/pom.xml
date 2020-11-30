@@ -41,8 +41,8 @@
                         </goals>
                         <configuration>
                             <input>${project.basedir}/src/main/resources</input>
-                            <output>${project.build.directory}</output>
-                            <versionFileName>true</versionFileName>
+                            <output>${unversioned-filename-spec-dir}</output>
+                            <versionFileName>false</versionFileName>
                         </configuration>
                     </execution>
                     <execution>
@@ -52,7 +52,7 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <inputSpec>${project.build.directory}/product-integration-api-v1.0.0.yaml</inputSpec>
+                            <inputSpec>${unversioned-filename-spec-dir}/product-integration-api-v1.yaml</inputSpec>
                             <output>${project.build.directory}/generated-docs</output>
                             <generatorName>boat-docs</generatorName>
                         </configuration>
@@ -64,7 +64,7 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <inputSpec>${project.build.directory}/product-service-api-v1.0.0.yaml</inputSpec>
+                            <inputSpec>${unversioned-filename-spec-dir}/product-service-api-v1.yaml</inputSpec>
                             <output>${project.build.directory}/generated-docs</output>
                             <generatorName>boat-docs</generatorName>
                         </configuration>
@@ -76,7 +76,7 @@
                             <goal>lint</goal>
                         </goals>
                         <configuration>
-                            <inputSpec>${project.build.directory}/</inputSpec>
+                            <inputSpec>${unversioned-filename-spec-dir}/</inputSpec>
                             <output>${project.build.directory}/boat-lint-reports</output>
                             <writeLintReport>true</writeLintReport>
                             <ignoreRules>${ignored-lint-rules}</ignoreRules>

@@ -94,6 +94,8 @@
     </profile>
   </profiles>
 
+<!--  These should be configured globally according to our developer env. guidelines but we need here so GitHub actions
+can access our private repos and build the project properly -->
   <repositories>
     <repository>
       <id>backbase</id>
