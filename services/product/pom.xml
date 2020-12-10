@@ -46,6 +46,10 @@
             <groupId>com.backbase.buildingblocks</groupId>
             <artifactId>service-sdk-starter-mapping</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>events</artifactId>
+        </dependency>
         <!-- End - POJO <-> Entity conversion made easy -->
         <dependency>
             <groupId>org.testcontainers</groupId>
@@ -208,6 +212,29 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>com.backbase.codegen</groupId>
+                <artifactId>jsonschema-events-maven-plugin</artifactId>
+                <configuration>
+                    <useJavaTime>true</useJavaTime>
+                    <packageVersion>1</packageVersion>
+                    <outputFile>${codegen.generated-sources-dir}</outputFile>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>generate-events-payment-order-persistence-spec</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>events-generation</goal>
+                        </goals>
+                        <configuration>
+                            <packageName>product</packageName>
+                            <inputFile>${project.basedir}/src/main/resources/events</inputFile>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 

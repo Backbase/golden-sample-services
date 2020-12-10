@@ -1,5 +1,8 @@
 package com.backbase.goldensample.product.service;
 
+import com.backbase.buildingblocks.backend.communication.context.OriginatorContextUtil;
+import com.backbase.buildingblocks.backend.communication.event.EnvelopedEvent;
+import com.backbase.buildingblocks.backend.communication.event.proxy.EventBus;
 import com.backbase.buildingblocks.presentation.errors.NotFoundException;
 import com.backbase.goldensample.product.mapper.ProductMapper;
 import com.backbase.goldensample.product.persistence.ProductRepository;
@@ -20,17 +23,33 @@ public class ProductServiceImpl implements ProductService {
     private final ProductMapper mapper;
     private final Random randomNumberGenerator = new Random();
 
+    private final EventBus eventBus;
+    private final OriginatorContextUtil originatorContextUtil;
+
     @Autowired
-    public ProductServiceImpl(ProductRepository repository, ProductMapper mapper) {
+    public ProductServiceImpl(ProductRepository repository, ProductMapper mapper, EventBus eventBus, OriginatorContextUtil originatorContextUtil) {
         this.repository = repository;
         this.mapper = mapper;
+        this.eventBus = eventBus;
+        this.originatorContextUtil = originatorContextUtil;
     }
 
     @Override
     public Product createProduct(Product body) {
         log.debug("Service creating product {}", body);
-        return mapper.entityToApi(repository
+        Product product = mapper.entityToApi(repository
             .save(mapper.apiToEntity(body)));
+        com.backbase.product.event.spec.v1.ProductCreatedEvent event = new com.backbase.product.event.spec.v1.ProductCreatedEvent();
+        event.setName(product.getName());
+        event.setProductId(product.getProductId().toString());
+        event.setWeight(product.getWeight().toString());
+//        event.setCreateDateAsZonedDateTime(product.getCreateDate());
+        EnvelopedEvent<com.backbase.product.event.spec.v1.ProductCreatedEvent> envelopedEvent = new EnvelopedEvent<>();
+        envelopedEvent.setEvent(event);
+//        envelopedEvent.setOriginatorContext(originatorContextUtil.create(internalRequest.getInternalRequestContext()));
+        eventBus.emitEvent(envelopedEvent);
+
+        return product;
     }
 
     @Override
