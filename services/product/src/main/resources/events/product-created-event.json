@@ -10,7 +10,7 @@
     "createDate": {
       "description": "Date indicating when the product was updated",
       "type": "string",
-      "format": "date-time"
+      "format": "date"
     },
     "name": {
       "description": "name of the product",

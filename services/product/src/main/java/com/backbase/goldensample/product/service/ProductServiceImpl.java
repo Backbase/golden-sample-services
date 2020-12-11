@@ -43,10 +43,9 @@ public class ProductServiceImpl implements ProductService {
         event.setName(product.getName());
         event.setProductId(product.getProductId().toString());
         event.setWeight(product.getWeight().toString());
-//        event.setCreateDateAsZonedDateTime(product.getCreateDate());
+        event.setCreateDateAsLocalDate(product.getCreateDate());
         EnvelopedEvent<com.backbase.product.event.spec.v1.ProductCreatedEvent> envelopedEvent = new EnvelopedEvent<>();
         envelopedEvent.setEvent(event);
-//        envelopedEvent.setOriginatorContext(originatorContextUtil.create(internalRequest.getInternalRequestContext()));
         eventBus.emitEvent(envelopedEvent);
 
         return product;

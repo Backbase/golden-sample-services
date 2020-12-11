@@ -212,6 +212,13 @@
                     </execution>
                 </executions>
             </plugin>
+<!--            Using the SSDK plugin we make sure the file com.backbase.product.spring-cloud-stream.v1.properties-->
+<!--            is generated, the content is important to avoid annonymous queues for example.-->
+<!--            #-->
+<!--            #Fri Dec 11 16:38:23 CET 2020-->
+<!--            spring.cloud.stream.bindings[com.backbase.product.event.spec.v1.ProductCreatedEvent].content-type=application/json-->
+<!--            spring.cloud.stream.bindings[com.backbase.product.event.spec.v1.ProductCreatedEvent].destination=queue-destination-custom-name-->
+<!--            spring.cloud.stream.bindings[com.backbase.product.event.spec.v1.ProductCreatedEvent].group=${spring.application.name}.queue-destination-custom-name-->
             <plugin>
                 <groupId>com.backbase.codegen</groupId>
                 <artifactId>jsonschema-events-maven-plugin</artifactId>

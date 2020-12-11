@@ -1,6 +1,6 @@
 package com.backbase.goldensample.product.service;
 
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -106,6 +106,7 @@ class ProductServiceImplTest {
 
     @Test
     void createProductTest() {
+        when(productRepository.save(any(ProductEntity.class))).thenReturn(productEntity);
         productService.createProduct(product);
         verify(productRepository, times(1)).save(any(ProductEntity.class));
     }
@@ -125,7 +126,7 @@ class ProductServiceImplTest {
 
     @Test
     public void testEmitProductEvent() {
-        when(productRepository.save(productEntity)).thenReturn(any(ProductEntity.class));
+        when(productRepository.save(any(ProductEntity.class))).thenReturn(productEntity);
         productService.createProduct(product);
 
         ArgumentCaptor<EnvelopedEvent> captor = ArgumentCaptor.forClass(EnvelopedEvent.class);
@@ -134,9 +135,9 @@ class ProductServiceImplTest {
         EnvelopedEvent envelopedEvent = captor.getValue();
         Object emittedEvent = envelopedEvent.getEvent();
         assertThat(emittedEvent, IsInstanceOf.instanceOf(com.backbase.product.event.spec.v1.ProductCreatedEvent.class));
-//        com.backbase.product.event.spec.v1.ProductCreatedEvent event = (com.backbase.product.event.spec.v1.ProductCreatedEvent) emittedEvent;
-//        assertAll(
-//            () -> assertEquals("Product1", event.getName()),
-//            () -> assertEquals(20, product.getWeight()));
+        com.backbase.product.event.spec.v1.ProductCreatedEvent event = (com.backbase.product.event.spec.v1.ProductCreatedEvent) emittedEvent;
+        assertAll(
+            () -> assertEquals("Product1", event.getName()),
+            () -> assertEquals(20, product.getWeight()));
     }
 }
