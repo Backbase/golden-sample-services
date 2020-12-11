@@ -4,9 +4,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-
 import com.backbase.buildingblocks.backend.communication.http.HttpCommunicationConfiguration;
-import com.backbase.goldensample.product.api.client.ApiClient;
 import com.backbase.goldensample.product.api.client.v2.ProductServiceApi;
 import com.backbase.goldensample.product.api.client.v2.model.Product;
 import com.backbase.goldensample.product.api.client.v2.model.ProductId;
@@ -60,13 +58,7 @@ public class StoreRestTemplateTest {
 
     @BeforeEach
     void init() {
-
-        ApiClient productApiClient = new ApiClient(this.restTemplate);
-        com.backbase.goldensample.review.api.client.ApiClient reviewApiClient =
-            new com.backbase.goldensample.review.api.client.ApiClient(this.restTemplate);
-        productServiceApi.setApiClient(productApiClient);
-        reviewServiceApi.setApiClient(reviewApiClient);
-        this.mockRestServiceServer = MockRestServiceServer.bindTo(restTemplate).build();
+        this.mockRestServiceServer = MockRestServiceServer.bindTo(productServiceApi.getApiClient().getRestTemplate()).build();
     }
 
     @Test
