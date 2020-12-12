@@ -29,7 +29,7 @@
         <java.version>11</java.version>
         <org.lombok.version>1.18.12</org.lombok.version>
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
-        <testcontainers.version>1.15.0</testcontainers.version>
+        <testcontainers.version>1.15.1</testcontainers.version>
         <boat-maven-plugin.version>0.11.3</boat-maven-plugin.version>
         <docker.repo.project>experimental/golden-sample</docker.repo.project>
         <liquibase-maven-plugin.version>3.10.2</liquibase-maven-plugin.version>
