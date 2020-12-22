@@ -4,7 +4,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.backbase.buildingblocks.backend.communication.http.HttpCommunicationConfiguration;
+import com.backbase.buildingblocks.communication.http.HttpCommunicationConfiguration;
+import com.backbase.buildingblocks.test.http.MockTokenResponseClientConfiguration;
 import com.backbase.goldensample.product.api.client.v2.ProductServiceApi;
 import com.backbase.goldensample.product.api.client.v2.model.Product;
 import com.backbase.goldensample.product.api.client.v2.model.ProductId;
@@ -19,7 +20,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.web.client.AutoConfigureWebClient;
 import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
 import org.springframework.context.annotation.Import;
@@ -32,11 +32,10 @@ import org.springframework.test.web.client.match.MockRestRequestMatchers;
 import org.springframework.test.web.client.response.MockRestResponseCreators;
 import org.springframework.web.client.HttpClientErrorException.NotFound;
 import org.springframework.web.client.HttpServerErrorException;
-import org.springframework.web.client.RestTemplate;
 
 @RestClientTest(value = {ProductServiceApi.class, ReviewServiceApi.class})
 @AutoConfigureWebClient(registerRestTemplate = true)
-@Import({StoreIntegrationConfig.class, HttpCommunicationConfiguration.class})
+@Import({StoreIntegrationConfig.class, MockTokenResponseClientConfiguration.class, HttpCommunicationConfiguration.class})
 public class StoreRestTemplateTest {
 
     @Autowired
@@ -47,10 +46,6 @@ public class StoreRestTemplateTest {
 
     @Autowired
     private MockRestServiceServer mockRestServiceServer;
-
-    @Autowired
-    @Qualifier("accessProviderRestTemplate")
-    RestTemplate restTemplate;
 
     private final Product product = new Product().productId(1L).name("Product").weight(20).createDate(LocalDate.now());
     private final Review review =
