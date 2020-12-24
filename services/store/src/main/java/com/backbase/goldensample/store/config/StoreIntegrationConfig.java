@@ -20,7 +20,7 @@ public class StoreIntegrationConfig {
     private final RestTemplate restTemplate;
 
     public StoreIntegrationConfig(
-        @Qualifier("accessProviderRestTemplate") RestTemplate restTemplate) {
+        @Qualifier("interServiceRestTemplate") RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 

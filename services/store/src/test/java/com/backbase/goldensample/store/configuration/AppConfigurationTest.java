@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 
-import com.backbase.buildingblocks.backend.communication.http.HttpCommunicationConfiguration;
+import com.backbase.buildingblocks.communication.http.HttpCommunicationConfiguration;
 import com.backbase.goldensample.store.config.StoreIntegrationConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
@@ -37,8 +37,9 @@ class AppConfigurationTest {
              * and check if the @Beans configured are present
              */
             assertAll(
-                () -> assertThat(it).hasBean("accessProviderRestTemplate")
+                () -> assertThat(it).hasBean("interServiceRestTemplate")
                     .as("RestTemplate bean is required to inject Sleuth headers. Don't use 'new RestTemplate()'"),
+                () -> assertThat(it).hasBean("accessTokenRestTemplate"),
                 () -> assertThat(it).hasBean("productServiceImplApi"),
                 () -> assertThat(it).hasBean("reviewServiceImplApi"),
                 () -> assertThat(it).hasBean("apiClient"),
