@@ -3,15 +3,10 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- The simplest way to build a service with service-sdk-starter-core
-        is to use it as a parent in your project’s POM file, and alternative If you
-        don’t want to use service-sdk-starter-core as your project’s parent, you
-        can declare it as a dependency instead, see pom-as-dependency.xml -->
     <parent>
-        <groupId>com.backbase.buildingblocks</groupId>
-        <version>11.2.1</version>
-        <artifactId>service-sdk-starter-core</artifactId>
-        <relativePath/>
+        <groupId>com.backbase</groupId>
+        <artifactId>backbase-golden-sample</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
     </parent>
 
     <groupId>com.backbase</groupId>
@@ -33,6 +28,7 @@
         <boat-maven-plugin.version>0.11.3</boat-maven-plugin.version>
         <docker.repo.project>experimental/golden-sample</docker.repo.project>
         <liquibase-maven-plugin.version>3.10.2</liquibase-maven-plugin.version>
+        <maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -114,105 +110,11 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-assembly-plugin</artifactId>
-                    <version>3.3.0</version>
+                    <version>${maven-assembly-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
     </build>
-
-    <profiles>
-        <profile>
-            <id>generateSQL</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.liquibase</groupId>
-                        <artifactId>liquibase-maven-plugin</artifactId>
-                        <version>${liquibase-maven-plugin.version}</version>
-                        <executions>
-                            <execution>
-                                <id>mysql</id>
-                                <configuration>
-                                    <changeLogFile>${project.basedir}/src/main/resources/db/db.changelog-master.yaml
-                                    </changeLogFile>
-                                    <url>offline:mysql?outputLiquibaseSql=none&amp;changeLogFile=${project.basedir}/src/main/resources/db/sql/mysql/databasechangelog.csv</url>
-                                    <username>root</username>
-                                    <password>backbase</password>
-                                    <migrationSqlOutputFile>
-                                        ${project.basedir}/src/main/resources/db/sql/mysql/create.sql
-                                    </migrationSqlOutputFile>
-                                </configuration>
-                                <goals>
-                                    <goal>updateSQL</goal>
-                                </goals>
-                                <phase>process-resources</phase>
-                            </execution>
-                            <execution>
-                                <id>mssql</id>
-                                <configuration>
-                                    <changeLogFile>${project.basedir}/src/main/resources/db/db.changelog-master.yaml
-                                    </changeLogFile>
-                                    <url>offline:mssql?outputLiquibaseSql=none&amp;changeLogFile=${project.basedir}/src/main/resources/db/sql/mssql/databasechangelog.csv</url>
-                                    <username>root</username>
-                                    <password>backbase</password>
-                                    <migrationSqlOutputFile>
-                                        ${project.basedir}/src/main/resources/db/sql/mssql/create.sql
-                                    </migrationSqlOutputFile>
-                                </configuration>
-                                <goals>
-                                    <goal>updateSQL</goal>
-                                </goals>
-                                <phase>process-resources</phase>
-                            </execution>
-                            <execution>
-                                <id>oracle</id>
-                                <configuration>
-                                    <changeLogFile>${project.basedir}/src/main/resources/db/db.changelog-master.yaml
-                                    </changeLogFile>
-                                    <url>offline:oracle?outputLiquibaseSql=none&amp;changeLogFile=${project.basedir}/src/main/resources/db/sql/oracle/databasechangelog.csv</url>
-                                    <username>root</username>
-                                    <password>backbase</password>
-                                    <migrationSqlOutputFile>
-                                        ${project.basedir}/src/main/resources/db/sql/oracle/create.sql
-                                    </migrationSqlOutputFile>
-                                </configuration>
-                                <goals>
-                                    <goal>updateSQL</goal>
-                                </goals>
-                                <phase>process-resources</phase>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>generateChangeLog</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.liquibase</groupId>
-                        <artifactId>liquibase-maven-plugin</artifactId>
-                        <version>${liquibase-maven-plugin.version}</version>
-                        <configuration>
-                            <changeLogFile>${basedir}/src/main/resources/db/db.changelog-master.yaml</changeLogFile>
-                            <propertyFile>${basedir}/src/main/resources/liquibase.properties</propertyFile>
-                            <outputChangeLogFile>${basedir}/src/main/resources/db/changelog/000-create.yaml
-                            </outputChangeLogFile>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>generateChangeLog</goal>
-                                </goals>
-                                <phase>generate-resources</phase>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 
     <repositories>
         <repository>

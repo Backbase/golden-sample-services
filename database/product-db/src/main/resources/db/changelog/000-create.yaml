@@ -5,6 +5,7 @@ databaseChangeLog:
       dbms: mysql
   - changeSet:
       id: create-hibernate-sequence
+      context: create-ddl
       author: backbase
       dbms: mssql,oracle,mariadb
       changes:
@@ -14,6 +15,7 @@ databaseChangeLog:
             incrementBy: 5
   - changeSet:
       id: create-product-table
+      context: create-ddl
       author: backbase
       changes:
         - createTable:
@@ -33,15 +35,14 @@ databaseChangeLog:
                   type: VARCHAR(255)
               - column:
                   name: weight
-                  type: INT
+                  type: SMALLINT
             tableName: product
   - changeSet:
-      id:  create-index
+      id:  1.1.0
+      context: upgrade_1_0_0_to_1_1_0
       author:  backbase
       changes:
         -  createIndex:
-             catalogName:  cat
-             clustered:  true
              columns:
                -  column:
                     descending:  true
@@ -49,5 +50,4 @@ databaseChangeLog:
              indexName:  idx_create_date
              schemaName:  public
              tableName:  product
-             tablespace:  A String
              unique:  true
