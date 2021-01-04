@@ -48,6 +48,4 @@ databaseChangeLog:
                     descending:  true
                     name:  create_date
              indexName:  idx_create_date
-             schemaName:  public
              tableName:  product
-             unique:  true

@@ -5,14 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.backbase</groupId>
+        <groupId>com.backbase.golden-sample</groupId>
         <artifactId>database</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.backbase</groupId>
     <artifactId>review-db</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>Backbase :: review-service database scripts</name>
     <packaging>jar</packaging>
 
     <properties>
@@ -75,6 +75,8 @@
                                         ${project.build.directory}/db/sql/mysql/upgrade_1_0_0_to_1_1_0/review.sql
                                     </migrationSqlOutputFile>
                                     <url>offline:mysql?changeLogFile=target/sql/mysql/changelog_1_1_0.csv</url>
+                                    <username>root</username>
+                                    <password>backbase</password>
                                 </configuration>
                             </execution>
                             <execution>
@@ -108,6 +110,8 @@
                                         ${project.build.directory}/db/sql/mssql/upgrade_1_0_0_to_1_1_0/review.sql
                                     </migrationSqlOutputFile>
                                     <url>offline:mssql?changeLogFile=target/sql/mssql/changelog_1_1_0.csv</url>
+                                    <username>root</username>
+                                    <password>backbase</password>
                                 </configuration>
                             </execution>
                             <execution>
@@ -141,6 +145,8 @@
                                         ${project.build.directory}/db/sql/oracle/upgrade_1_0_0_to_1_1_0/review.sql
                                     </migrationSqlOutputFile>
                                     <url>offline:oracle?changeLogFile=target/sql/oracle/changelog_1_1_0.csv</url>
+                                    <username>root</username>
+                                    <password>backbase</password>
                                 </configuration>
                             </execution>
                         </executions>
