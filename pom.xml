@@ -21,11 +21,6 @@
     <description>Demo project for Backbase Backend Best Practices</description>
     <packaging>pom</packaging>
 
-
-    <properties>
-        <java.version>11</java.version>
-    </properties>
-
     <modules>
         <module>api</module>
         <module>database</module>

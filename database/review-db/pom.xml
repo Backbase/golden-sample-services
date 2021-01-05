@@ -16,7 +16,6 @@
     <packaging>jar</packaging>
 
     <properties>
-        <java.version>11</java.version>
         <liquibase-maven-plugin.version>3.10.2</liquibase-maven-plugin.version>
         <maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
     </properties>
@@ -42,17 +41,19 @@
                         <groupId>org.liquibase</groupId>
                         <artifactId>liquibase-maven-plugin</artifactId>
                         <version>${liquibase-maven-plugin.version}</version>
+                        <configuration>
+                            <changeLogFile>${project.basedir}/src/main/resources/db/db.changelog-master.yaml</changeLogFile>
+                            <outputFileEncoding>UTF-8</outputFileEncoding>
+                            <password>backbase</password>
+                            <username>root</username>
+                        </configuration>
                         <executions>
                             <!-- MySQL -->
                             <execution>
                                 <id>mysql</id>
                                 <phase>generate-resources</phase>
                                 <configuration>
-                                    <changeLogFile>${project.basedir}/src/main/resources/db/db.changelog-master.yaml
-                                    </changeLogFile>
                                     <url>offline:mysql?outputLiquibaseSql=none&amp;changeLogFile=target/sql/mysql/databasechangelog.csv</url>
-                                    <username>root</username>
-                                    <password>backbase</password>
                                     <migrationSqlOutputFile>
                                         ${project.build.directory}/db/sql/mysql/create/review.sql
                                     </migrationSqlOutputFile>
@@ -68,25 +69,17 @@
                                     <goal>updateSQL</goal>
                                 </goals>
                                 <configuration>
-                                    <changeLogFile>${project.basedir}/src/main/resources/db/db.changelog-master.yaml
-                                    </changeLogFile>
                                     <contexts>upgrade_1_0_0_to_1_1_0</contexts>
                                     <migrationSqlOutputFile>
                                         ${project.build.directory}/db/sql/mysql/upgrade_1_0_0_to_1_1_0/review.sql
                                     </migrationSqlOutputFile>
                                     <url>offline:mysql?changeLogFile=target/sql/mysql/changelog_1_1_0.csv</url>
-                                    <username>root</username>
-                                    <password>backbase</password>
                                 </configuration>
                             </execution>
                             <execution>
                                 <id>mssql</id>
                                 <configuration>
-                                    <changeLogFile>${project.basedir}/src/main/resources/db/db.changelog-master.yaml
-                                    </changeLogFile>
                                     <url>offline:mssql?outputLiquibaseSql=none&amp;changeLogFile=target/sql/mssql/databasechangelog.csv</url>
-                                    <username>root</username>
-                                    <password>backbase</password>
                                     <migrationSqlOutputFile>
                                         ${project.build.directory}/db/sql/mssql/create/review.sql
                                     </migrationSqlOutputFile>
@@ -103,25 +96,17 @@
                                     <goal>updateSQL</goal>
                                 </goals>
                                 <configuration>
-                                    <changeLogFile>${project.basedir}/src/main/resources/db/db.changelog-master.yaml
-                                    </changeLogFile>
                                     <contexts>upgrade_1_0_0_to_1_1_0</contexts>
                                     <migrationSqlOutputFile>
                                         ${project.build.directory}/db/sql/mssql/upgrade_1_0_0_to_1_1_0/review.sql
                                     </migrationSqlOutputFile>
                                     <url>offline:mssql?changeLogFile=target/sql/mssql/changelog_1_1_0.csv</url>
-                                    <username>root</username>
-                                    <password>backbase</password>
                                 </configuration>
                             </execution>
                             <execution>
                                 <id>oracle</id>
                                 <configuration>
-                                    <changeLogFile>${project.basedir}/src/main/resources/db/db.changelog-master.yaml
-                                    </changeLogFile>
                                     <url>offline:oracle?outputLiquibaseSql=none&amp;changeLogFile=target/sql/oracle/databasechangelog.csv</url>
-                                    <username>root</username>
-                                    <password>backbase</password>
                                     <migrationSqlOutputFile>
                                         ${project.build.directory}/db/sql/oracle/create/review.sql
                                     </migrationSqlOutputFile>
@@ -138,15 +123,11 @@
                                     <goal>updateSQL</goal>
                                 </goals>
                                 <configuration>
-                                    <changeLogFile>${project.basedir}/src/main/resources/db/db.changelog-master.yaml
-                                    </changeLogFile>
                                     <contexts>upgrade_1_0_0_to_1_1_0</contexts>
                                     <migrationSqlOutputFile>
                                         ${project.build.directory}/db/sql/oracle/upgrade_1_0_0_to_1_1_0/review.sql
                                     </migrationSqlOutputFile>
                                     <url>offline:oracle?changeLogFile=target/sql/oracle/changelog_1_1_0.csv</url>
-                                    <username>root</username>
-                                    <password>backbase</password>
                                 </configuration>
                             </execution>
                         </executions>
