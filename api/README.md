@@ -1,12 +1,3 @@
-# Transaction Management APIs specification
-
-OpenAPI specifications for the transaction management services.
-
-## Documentation publishing
-
-The documentation of this API may be found at https://api.backbase.cloud/
-The password is available at: https://backbase.atlassian.net/wiki/spaces/TPS/pages/1495500320/OpenAPI+hub
-
 ## Mock server
 
 The provided [prism](https://stoplight.io/p/docs/gh/stoplightio/prism/README.md) mock server may be executed in two modes:
