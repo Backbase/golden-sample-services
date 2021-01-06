@@ -3,18 +3,31 @@ databaseChangeLog:
       name: autoIncrement
       value: true
       dbms: mysql
+  - property:
+      name: varcharDataType
+      value: NVARCHAR
+      dbms: mssql
+  - property:
+      name: varcharDataType
+      value: VARCHAR
+      dbms: mysql,mariadb
+  - property:
+      name: varcharDataType
+      value: VARCHAR2
   - changeSet:
-      id: create-hibernate-sequence
+      comment: create hibernate sequence for the product table
+      id: 1_0_0_001
       context: create-ddl
       author: backbase
       dbms: mssql,oracle,mariadb
       changes:
         - createSequence:
-            sequenceName: hibernate_sequence
+            sequenceName: product_hibernate_sequence
             startValue: 1
             incrementBy: 5
   - changeSet:
-      id: create-product-table
+      comment: create the product table
+      id: 1_0_0_002
       context: create-ddl
       author: backbase
       changes:
@@ -32,20 +45,8 @@ databaseChangeLog:
                   type: datetime
               - column:
                   name: name
-                  type: VARCHAR(255)
+                  type: ${varcharDataType}(255)
               - column:
                   name: weight
                   type: SMALLINT
             tableName: product
-  - changeSet:
-      id:  1.1.0
-      context: upgrade_1_0_0_to_1_1_0
-      author:  backbase
-      changes:
-        -  createIndex:
-             columns:
-               -  column:
-                    descending:  true
-                    name:  create_date
-             indexName:  idx_create_date
-             tableName:  product

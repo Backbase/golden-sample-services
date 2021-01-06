@@ -55,7 +55,7 @@
                                 <configuration>
                                     <url>offline:mysql?outputLiquibaseSql=none&amp;changeLogFile=target/sql/mysql/databasechangelog.csv</url>
                                     <migrationSqlOutputFile>
-                                        ${project.build.directory}/db/sql/mysql/create/product.sql
+                                        ${project.build.directory}/db/generated-sql/mysql/create/product.sql
                                     </migrationSqlOutputFile>
                                 </configuration>
                                 <goals>
@@ -71,7 +71,7 @@
                                 <configuration>
                                     <contexts>upgrade_1_0_0_to_1_1_0</contexts>
                                     <migrationSqlOutputFile>
-                                        ${project.build.directory}/db/sql/mysql/upgrade_1_0_0_to_1_1_0/product.sql
+                                        ${project.build.directory}/db/generated-sql/mysql/upgrade_1_0_0_to_1_1_0/product.sql
                                     </migrationSqlOutputFile>
                                     <url>offline:mysql?changeLogFile=target/sql/mysql/changelog_1_1_0.csv</url>
                                 </configuration>
@@ -81,7 +81,7 @@
                                 <configuration>
                                     <url>offline:mssql?outputLiquibaseSql=none&amp;changeLogFile=target/sql/mssql/databasechangelog.csv</url>
                                     <migrationSqlOutputFile>
-                                        ${project.build.directory}/db/sql/mssql/create/product.sql
+                                        ${project.build.directory}/db/generated-sql/mssql/create/product.sql
                                     </migrationSqlOutputFile>
                                 </configuration>
                                 <goals>
@@ -98,7 +98,7 @@
                                 <configuration>
                                     <contexts>upgrade_1_0_0_to_1_1_0</contexts>
                                     <migrationSqlOutputFile>
-                                        ${project.build.directory}/db/sql/mssql/upgrade_1_0_0_to_1_1_0/product.sql
+                                        ${project.build.directory}/db/generated-sql/mssql/upgrade_1_0_0_to_1_1_0/product.sql
                                     </migrationSqlOutputFile>
                                     <url>offline:mssql?changeLogFile=target/sql/mssql/changelog_1_1_0.csv</url>
                                 </configuration>
@@ -108,7 +108,7 @@
                                 <configuration>
                                     <url>offline:oracle?outputLiquibaseSql=none&amp;changeLogFile=target/sql/oracle/databasechangelog.csv</url>
                                     <migrationSqlOutputFile>
-                                        ${project.build.directory}/db/sql/oracle/create/product.sql
+                                        ${project.build.directory}/db/generated-sql/oracle/create/product.sql
                                     </migrationSqlOutputFile>
                                 </configuration>
                                 <goals>
@@ -123,9 +123,10 @@
                                     <goal>updateSQL</goal>
                                 </goals>
                                 <configuration>
+<!--                                    <labels></labels>-->
                                     <contexts>upgrade_1_0_0_to_1_1_0</contexts>
                                     <migrationSqlOutputFile>
-                                        ${project.build.directory}/db/sql/oracle/upgrade_1_0_0_to_1_1_0/product.sql
+                                        ${project.build.directory}/db/generated-sql/oracle/upgrade_1_0_0_to_1_1_0/product.sql
                                     </migrationSqlOutputFile>
                                     <url>offline:oracle?changeLogFile=target/sql/oracle/changelog_1_1_0.csv</url>
                                 </configuration>
@@ -143,8 +144,8 @@
                                 </goals>
                                 <configuration>
                                     <target>
-                                        <copy todir="${project.basedir}/src/main/resources/db/sql">
-                                            <fileset dir="${project.build.directory}/db/sql">
+                                        <copy todir="${project.basedir}/src/main/resources/db/generated-sql">
+                                            <fileset dir="${project.build.directory}/db/generated-sql">
                                                 <include name="**/*.sql"/>
                                             </fileset>
                                             <filterchain>

@@ -12,7 +12,7 @@
     <includeBaseDirectory>false</includeBaseDirectory>
     <fileSets>
         <fileSet>
-            <directory>${project.basedir}/src/main/resources/db/sql</directory>
+            <directory>${project.basedir}/src/main/resources/db/generated-sql</directory>
             <outputDirectory>${artifactId}</outputDirectory>
             <includes>
                 <include>**/mssql/**</include>

@@ -3,18 +3,29 @@ databaseChangeLog:
       name: autoIncrement
       value: true
       dbms: mysql
+  - property:
+      name: varcharDataType
+      value: NVARCHAR
+      dbms: mssql
+  - property:
+      name: varcharDataType
+      value: VARCHAR
+      dbms: mysql,mariadb
+  - property:
+      name: varcharDataType
+      value: VARCHAR2
   - changeSet:
-      id: create_hibernate_sequence
+      id: 1_0_0_001
       author: backbase
       context: create-ddl
       dbms: mssql,oracle,mariadb
       changes:
         - createSequence:
-            sequenceName: hibernate_sequence
+            sequenceName: review_hibernate_sequence
             startValue: 1
             incrementBy: 5
   - changeSet:
-      id: create-review-table
+      id: 1_0_0_002
       author: backbase
       context: create-ddl
       changes:
@@ -29,19 +40,19 @@ databaseChangeLog:
                   type: BIGINT
               - column:
                   name: author
-                  type: VARCHAR(50)
+                  type: ${varcharDataType}(50)
               - column:
                   name: content
-                  type: VARCHAR(255)
+                  type: ${varcharDataType}(255)
               - column:
                   name: product_id
                   type: BIGINT
               - column:
                   name: subject
-                  type: VARCHAR(255)
+                  type: ${varcharDataType}(255)
             tableName: review
   - changeSet:
-      id: create-review-index
+      id: 1_0_0_003
       author: backbase (generated)
       context: create-ddl
       changes:
@@ -49,14 +60,3 @@ databaseChangeLog:
             columnNames: product_id, id
             constraintName: review_unique_idx
             tableName: review
-  - changeSet:
-      id: 1.1.0
-      context: upgrade_1_0_0_to_1_1_0
-      author: backbase
-      changes:
-        - addColumn:
-            tableName: review
-            columns:
-              - column:
-                  name: stars
-                  type: TINYINT
