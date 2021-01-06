@@ -70,18 +70,6 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>generate-service-api-v2-docs</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <inputSpec>${unversioned-filename-spec-dir}/product-service-api-v2.yaml</inputSpec>
-                            <output>${project.build.directory}/generated-docs</output>
-                            <generatorName>boat-docs</generatorName>
-                        </configuration>
-                    </execution>
-                    <execution>
                         <id>validate-api-specs</id>
                         <phase>package</phase>
                         <goals>
