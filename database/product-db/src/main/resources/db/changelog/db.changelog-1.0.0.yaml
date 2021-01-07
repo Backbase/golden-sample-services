@@ -43,6 +43,9 @@ databaseChangeLog:
               - column:
                   name: create_date
                   type: datetime
+                  constraints:
+                    nullable: false
+                    primaryKey: true
               - column:
                   name: name
                   type: ${varcharDataType}(255)
@@ -50,3 +53,10 @@ databaseChangeLog:
                   name: weight
                   type: SMALLINT
             tableName: product
+        - modifySql:
+            dbms: mysql
+            append:
+              value: PARTITION BY RANGE COLUMNS (create_date) (
+                PARTITION p0 VALUES LESS THAN ('2019-01-01'),
+                PARTITION p1 VALUES LESS THAN ('2020-01-01'),
+                PARTITION p2 VALUES LESS THAN ('2021-01-01'))
