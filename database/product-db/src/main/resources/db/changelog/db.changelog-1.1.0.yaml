@@ -10,5 +10,5 @@ databaseChangeLog:
                -  column:
                     descending:  true
                     name:  create_date
-             indexName:  idx_create_date
+             indexName:  ix_product_create_date
              tableName:  product

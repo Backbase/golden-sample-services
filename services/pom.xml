@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.backbase.golden-sample</groupId>
+        <groupId>com.backbase.goldensample</groupId>
         <artifactId>backbase-golden-sample</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
@@ -25,7 +25,6 @@
         <testcontainers.version>1.15.1</testcontainers.version>
         <boat-maven-plugin.version>0.12.1</boat-maven-plugin.version>
         <docker.repo.project>experimental/golden-sample</docker.repo.project>
-        <maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -107,7 +106,6 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-assembly-plugin</artifactId>
-                    <version>${maven-assembly-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>

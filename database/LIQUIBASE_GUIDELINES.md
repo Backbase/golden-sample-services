@@ -17,7 +17,7 @@ https://www.liquibase.org/get-started/best-practices
       - property:
           name: varcharDataType
           value: VARCHAR
-          dbms: mysql,mariadb
+          dbms: mysql
       - property:
           name: varcharDataType
           value: VARCHAR2"	

@@ -10,7 +10,7 @@ databaseChangeLog:
   - property:
       name: varcharDataType
       value: VARCHAR
-      dbms: mysql,mariadb
+      dbms: mysql
   - property:
       name: varcharDataType
       value: VARCHAR2
@@ -18,10 +18,10 @@ databaseChangeLog:
       id: 1_0_0_001
       author: backbase
       context: create-ddl
-      dbms: mssql,oracle,mariadb
+      dbms: mssql,oracle
       changes:
         - createSequence:
-            sequenceName: review_hibernate_sequence
+            sequenceName: seq_review
             startValue: 1
             incrementBy: 5
   - changeSet:
@@ -53,7 +53,7 @@ databaseChangeLog:
             tableName: review
   - changeSet:
       id: 1_0_0_003
-      author: backbase (generated)
+      author: backbase
       context: create-ddl
       changes:
         - addUniqueConstraint:

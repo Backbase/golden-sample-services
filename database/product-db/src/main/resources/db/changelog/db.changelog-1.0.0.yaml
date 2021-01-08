@@ -10,7 +10,7 @@ databaseChangeLog:
   - property:
       name: varcharDataType
       value: VARCHAR
-      dbms: mysql,mariadb
+      dbms: mysql
   - property:
       name: varcharDataType
       value: VARCHAR2
@@ -19,10 +19,10 @@ databaseChangeLog:
       id: 1_0_0_001
       context: create-ddl
       author: backbase
-      dbms: mssql,oracle,mariadb
+      dbms: mssql,oracle
       changes:
         - createSequence:
-            sequenceName: product_hibernate_sequence
+            sequenceName: seq_product
             startValue: 1
             incrementBy: 5
   - changeSet:
