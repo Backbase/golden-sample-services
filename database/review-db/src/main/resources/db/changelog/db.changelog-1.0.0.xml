@@ -13,7 +13,7 @@
     <property dbms="oracle" name="varcharDataType" value="VARCHAR2"/>
 
     <changeSet id="1_0_0_001" context="initial" author="backbase" dbms="mssql, oracle">
-        <comment>create hibernate sequence for the review table</comment>
+        <comment>create sequence for the review table</comment>
         <createSequence sequenceName="seq_review" startValue="1" incrementBy="5"/>
     </changeSet>
 
@@ -36,7 +36,7 @@
 
     <changeSet id="1_0_0_003" context="initial" author="backbase">
         <comment>create the review table</comment>
-        <addUniqueConstraint tableName="review" columnNames="review_unique_idx"/>
+        <addUniqueConstraint tableName="review" columnNames="ix_review_unique"/>
     </changeSet>
 
 </databaseChangeLog>

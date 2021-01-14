@@ -13,7 +13,7 @@
     <fileSets>
         <fileSet>
             <directory>${project.basedir}/src/main/resources/db/generated-sql</directory>
-            <outputDirectory>${artifactId}</outputDirectory>
+            <outputDirectory>${output.dir}</outputDirectory>
             <includes>
                 <include>**/mssql/**</include>
                 <include>**/mysql/**</include>

@@ -17,7 +17,7 @@ databaseChangeLog:
   - changeSet:
       id: 1_0_0_001
       author: backbase
-      context: create-ddl
+      context: initial
       dbms: mssql,oracle
       changes:
         - createSequence:
@@ -27,7 +27,7 @@ databaseChangeLog:
   - changeSet:
       id: 1_0_0_002
       author: backbase
-      context: create-ddl
+      context: initial
       changes:
         - createTable:
             columns:
@@ -54,9 +54,9 @@ databaseChangeLog:
   - changeSet:
       id: 1_0_0_003
       author: backbase
-      context: create-ddl
+      context: initial
       changes:
         - addUniqueConstraint:
             columnNames: product_id, id
-            constraintName: review_unique_idx
+            constraintName: ix_review_unique
             tableName: review

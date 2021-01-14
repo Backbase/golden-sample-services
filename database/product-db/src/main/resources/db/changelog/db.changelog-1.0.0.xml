@@ -13,7 +13,7 @@
     <property dbms="oracle" name="varcharDataType" value="VARCHAR2"/>
 
     <changeSet id="1_0_0_001" context="initial" author="backbase" dbms="mssql, oracle">
-        <comment>create hibernate sequence for the product table</comment>
+        <comment>create sequence for the product table</comment>
         <createSequence sequenceName="seq_product" startValue="1" incrementBy="5"/>
     </changeSet>
 

@@ -15,9 +15,9 @@ databaseChangeLog:
       name: varcharDataType
       value: VARCHAR2
   - changeSet:
-      comment: create hibernate sequence for the product table
+      comment: create sequence for the product table
       id: 1_0_0_001
-      context: create-ddl
+      context: initial
       author: backbase
       dbms: mssql,oracle
       changes:
@@ -28,7 +28,7 @@ databaseChangeLog:
   - changeSet:
       comment: create the product table
       id: 1_0_0_002
-      context: create-ddl
+      context: initial
       author: backbase
       changes:
         - createTable:
