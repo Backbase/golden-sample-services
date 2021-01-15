@@ -13,21 +13,22 @@
     <property dbms="oracle" name="varcharDataType" value="VARCHAR2"/>
 
     <changeSet id="1_0_0_001" context="initial" author="backbase" dbms="mssql, oracle">
+
         <comment>create sequence for the product table</comment>
         <createSequence sequenceName="seq_product" startValue="1" incrementBy="5"/>
     </changeSet>
 
     <changeSet id="1_0_0_002" context="initial" author="backbase">
         <comment>create the product table</comment>
-        <createTable tableName="product">
+        <createTable tableName="product" remarks="Table to store the Products from our store">
             <column autoIncrement="${autoIncrement}" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="create_date" type="datetime">
+            <column name="create_date" type="datetime" remarks="The date when the product was created">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="name" type="${varcharDataType}(255)"/>
-            <column name="weight" type="SMALLINT"/>
+            <column name="name" type="${varcharDataType}(255)" remarks="The name of the product"/>
+            <column name="weight" type="SMALLINT" remarks="The weight of the product in kgs"/>
         </createTable>
         <modifySql dbms="mysql">
             <append value="PARTITION BY RANGE COLUMNS (create_date) ( PARTITION p0 VALUES LESS THAN ('2019-01-01'),

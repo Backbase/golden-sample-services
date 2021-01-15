@@ -19,24 +19,20 @@
 
     <changeSet id="1_0_0_002" context="initial" author="backbase">
         <comment>create the review table</comment>
-        <createTable tableName="review">
+        <createTable tableName="review" remarks="Table to store the Reviews of our Products">
             <column autoIncrement="${autoIncrement}" name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="author" type="${varcharDataType}(50)"/>
-            <column name="content" type="${varcharDataType}(255)"/>
-            <column name="subject" type="${varcharDataType}(255)"/>
-            <column name="product_id" type="BIGINT"/>
+            <column name="author" type="${varcharDataType}(50)" remarks="The author of the Review"/>
+            <column name="content" type="${varcharDataType}(255)" remarks="The content of the Review"/>
+            <column name="subject" type="${varcharDataType}(255)" remarks="the Subject of the Review"/>
+            <column name="product_id" type="BIGINT" remarks="The id of product this review belongs to"/>
         </createTable>
-        <modifySql dbms="mysql">
-            <append value="PARTITION BY RANGE COLUMNS (create_date) ( PARTITION p0 VALUES LESS THAN ('2019-01-01'),
-                    PARTITION p1 VALUES LESS THAN ('2020-01-01'), PARTITION p2 VALUES LESS THAN ('2021-01-01'))"/>
-        </modifySql>
     </changeSet>
 
     <changeSet id="1_0_0_003" context="initial" author="backbase">
         <comment>create the review table</comment>
-        <addUniqueConstraint tableName="review" columnNames="ix_review_unique"/>
+        <addUniqueConstraint tableName="review" columnNames="product_id, id"/>
     </changeSet>
 
 </databaseChangeLog>

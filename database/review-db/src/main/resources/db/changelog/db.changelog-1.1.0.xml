@@ -10,7 +10,7 @@
     <changeSet id="1_1_0_001" labels="upgrade_1_0_0_to_1_1_0" author="backbase">
         <comment>add a new column to save the rating in stars</comment>
         <addColumn tableName="review">
-            <column name="stars" type="TINYINT"></column>
+            <column name="stars" type="TINYINT" remarks="number of stars from 1-5 the reviewer gives to the Product"></column>
         </addColumn>
     </changeSet>
 
