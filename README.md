@@ -16,12 +16,22 @@ Backbase Golden Sample --> Parent folder.
 |- config --> All system configuration files 
 |- config-server --> Centralized Configuration server
 |- diagrams --> All docs and diagrams. 
+|-database 
+  |- assembly --> API specification linters. 
+  |- docs  
+  |- product-db
+  |- review-db
 |-api 
-  |- api-linting --> API specification linters. 
-  |- product-integration-api  
-  |- product-service-api 
-  |- review-service-api  
-  |- store-client-api   
+  |- product-api  
+    |- src/main/resources
+       |- product-integration-api-v1.yaml
+       |- product-service-api-v1.yaml
+  |- review-service-api 
+    |- src/main/resources 
+       |- openapi-v1.yaml
+  |- store-client-api  
+    |- src/main/resources 
+       |- openapi-v1.yaml
 |-services 
   |- product --> Product Microservice 
   |- review --> Review Microservice 
