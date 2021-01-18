@@ -35,4 +35,7 @@
         <addUniqueConstraint tableName="review" columnNames="product_id, id"/>
     </changeSet>
 
+    <changeSet id="1_0_0_004" author="backbase">
+        <tagDatabase tag="1.0.0"/>
+    </changeSet>
 </databaseChangeLog>
