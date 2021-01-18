@@ -46,7 +46,7 @@ security:
 
 spring:
   liquibase:
-    change-log: "classpath:/db/db.changelog-master.yaml"
+    change-log: "classpath:/db/db.changelog-master.xml"
     enabled: true
   jpa:
     show-sql: true

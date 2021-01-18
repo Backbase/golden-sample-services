@@ -1,3 +1,5 @@
+![](logo.svg)
+
 # Backbase Golden Sample MicroServices system
 
 - This project is a development of a small set of [Backbase Service SDK](https://community.backbase.com/documentation/ServiceSDK/latest/index) (**Spring Boot** and **Cloud**) based Microservices projects that implement cloud-native intuitive, Microservices design patterns, and coding best practices.

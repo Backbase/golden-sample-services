@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1_1_0_001
+      context: upgrade_1_0_0_to_1_1_0
+      author: backbase
+      changes:
+        - addColumn:
+            tableName: review
+            columns:
+              - column:
+                  name: stars
+                  type: TINYINT

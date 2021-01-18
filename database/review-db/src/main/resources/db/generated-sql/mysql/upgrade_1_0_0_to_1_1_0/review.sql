@@ -1,0 +1,3 @@
+
+ALTER TABLE review ADD stars TINYINT NULL;
+

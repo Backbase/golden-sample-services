@@ -4,9 +4,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.backbase</groupId>
+        <groupId>com.backbase.goldensample</groupId>
         <artifactId>api</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
 
     <name>Backbase :: store-client-api</name>
@@ -15,9 +15,6 @@
 
     <properties>
         <unversioned-filename-spec-dir>${project.build.directory}/spec-unversioned</unversioned-filename-spec-dir>
-        <ignored-lint-rules>
-            219,215,218,166,136,174,235,107,171,224,143,151,129,146,147,172,145,115,132,120,134,183,154,105,104,130,118,110,153,101,176,150,116,M009,H002,M010,H001,M008,S005,S006,S007,M011
-        </ignored-lint-rules>
     </properties>
 
     <build>

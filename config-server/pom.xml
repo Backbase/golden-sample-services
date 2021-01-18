@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>com.backbase</groupId>
+	<groupId>com.backbase.goldensample</groupId>
 	<artifactId>config-server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Config Server</name>

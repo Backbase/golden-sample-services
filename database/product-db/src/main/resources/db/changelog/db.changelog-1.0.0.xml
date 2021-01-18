@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <property dbms="mysql" name="autoIncrement" value="true"/>
+    <property dbms="mssql" name="varcharDataType" value="NVARCHAR"/>
+    <property dbms="mysql" name="varcharDataType" value="VARCHAR"/>
+    <property dbms="oracle" name="varcharDataType" value="VARCHAR2"/>
+
+    <changeSet id="1_0_0_001" context="initial" author="backbase" dbms="mssql, oracle">
+
+        <comment>create sequence for the product table</comment>
+        <createSequence sequenceName="seq_product" startValue="1" incrementBy="5"/>
+    </changeSet>
+
+    <changeSet id="1_0_0_002" context="initial" author="backbase">
+        <comment>create the product table</comment>
+        <createTable tableName="product" remarks="Table to store the Products from our store">
+            <column autoIncrement="${autoIncrement}" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="create_date" type="datetime" remarks="The date when the product was created">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="${varcharDataType}(255)" remarks="The name of the product"/>
+            <column name="weight" type="SMALLINT" remarks="The weight of the product in kgs"/>
+        </createTable>
+        <modifySql dbms="mysql">
+            <append value="PARTITION BY RANGE COLUMNS (create_date) ( PARTITION p0 VALUES LESS THAN ('2019-01-01'),
+                    PARTITION p1 VALUES LESS THAN ('2020-01-01'), PARTITION p2 VALUES LESS THAN ('2021-01-01'))"/>
+        </modifySql>
+    </changeSet>
+</databaseChangeLog>

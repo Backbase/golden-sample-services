@@ -10,10 +10,10 @@
         <relativePath/>
     </parent>
 
-    <groupId>com.backbase</groupId>
+    <groupId>com.backbase.goldensample</groupId>
     <artifactId>api</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
 
     <modules>
         <module>product-api</module>
@@ -23,7 +23,7 @@
 
     <properties>
         <frontend-plugin.version>1.8.0</frontend-plugin.version>
-        <boat-maven-plugin.version>0.11.3</boat-maven-plugin.version>
+        <boat-maven-plugin.version>0.13.0</boat-maven-plugin.version>
     </properties>
 
     <build>

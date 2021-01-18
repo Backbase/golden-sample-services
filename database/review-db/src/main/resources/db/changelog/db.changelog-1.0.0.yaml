@@ -1,0 +1,62 @@
+databaseChangeLog:
+  - property:
+      name: autoIncrement
+      value: true
+      dbms: mysql
+  - property:
+      name: varcharDataType
+      value: NVARCHAR
+      dbms: mssql
+  - property:
+      name: varcharDataType
+      value: VARCHAR
+      dbms: mysql
+  - property:
+      name: varcharDataType
+      value: VARCHAR2
+  - changeSet:
+      id: 1_0_0_001
+      author: backbase
+      context: initial
+      dbms: mssql,oracle
+      changes:
+        - createSequence:
+            sequenceName: seq_review
+            startValue: 1
+            incrementBy: 5
+  - changeSet:
+      id: 1_0_0_002
+      author: backbase
+      context: initial
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: ${autoIncrement}
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: author
+                  type: ${varcharDataType}(50)
+              - column:
+                  name: content
+                  type: ${varcharDataType}(255)
+              - column:
+                  name: product_id
+                  type: BIGINT
+              - column:
+                  name: subject
+                  type: ${varcharDataType}(255)
+            tableName: review
+  - changeSet:
+      id: 1_0_0_003
+      author: backbase
+      context: initial
+      changes:
+        - addUniqueConstraint:
+            columnNames: product_id, id
+            constraintName: ix_review_unique
+            tableName: review
