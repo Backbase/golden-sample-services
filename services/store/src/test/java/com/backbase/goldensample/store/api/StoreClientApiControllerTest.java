@@ -14,7 +14,7 @@ import com.backbase.goldensample.product.api.client.v2.model.Product;
 import com.backbase.goldensample.product.api.client.v2.model.ProductId;
 import com.backbase.goldensample.review.api.client.v2.model.Review;
 import com.backbase.goldensample.review.api.client.v2.model.ReviewId;
-import com.backbase.goldensample.store.service.ProductCompositeService;
+import com.backbase.goldensample.store.service.ProductCompositeServiceImpl;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
@@ -33,7 +33,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 class StoreClientApiControllerTest {
 
     @MockBean
-    private ProductCompositeService productCompositeService;
+    private ProductCompositeServiceImpl productCompositeService;
 
     @Autowired
     private MockMvc mockMvc;
@@ -42,8 +42,10 @@ class StoreClientApiControllerTest {
     @DisplayName("Should get empty array when no Reviews")
     void shouldGetEmptyArrayWhenNoReviews() throws Exception {
 
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/client-api/v1/product-composite/{productId}", 1L)
-            .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON))
+        mockMvc
+            .perform(MockMvcRequestBuilders
+                .get("/client-api/v1/product-composite/{productId}", 1L)
+                .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON))
             .andExpect(status().isNotFound())
             .andReturn();
 
@@ -52,18 +54,18 @@ class StoreClientApiControllerTest {
     @Test
     @DisplayName("Should get Reviews when the Service returns Reviews of a Product")
     void shouldGetReviewsWhenServiceReturnsReviewsOfAProduct() throws Exception {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-        LocalDate createDate = LocalDate.of(2011, 10, 16);
+        final LocalDate createDate = LocalDate.of(2011, 10, 16);
 
-        Review reviewOne = createReview(1L, 1L, "author", "subject", "long content");
-        Review reviewTwo = createReview(2L, 1L, "another author", "another subject", "super long content");
-        Product productOne = createProduct(1L, "Product 1", 23, createDate);
+        final Review reviewOne = createReview(1L, 1L, "author", "subject", "long content");
+        final Review reviewTwo = createReview(2L, 1L, "another author", "another subject", "super long content");
+        final Product productOne = createProduct(1L, "Product 1", 23, createDate);
 
         when(productCompositeService.getProduct(1L)).thenReturn((productOne));
         when(productCompositeService.getReviews(1L)).thenReturn((List.of(reviewOne, reviewTwo)));
 
-        this.mockMvc
+        mockMvc
             .perform(get("/client-api/v1/product-composite/{productId}/", 1L)
                 .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON))
             .andExpect(status().is(200))
@@ -75,7 +77,7 @@ class StoreClientApiControllerTest {
             .andExpect(jsonPath("$.reviews[0].content", is("long content")))
             .andExpect(jsonPath("$.weight", is(23)))
             //TODO revisit this test
-//            .andExpect(jsonPath("$.createDate", is(dateFormat.format(dateInUTC))))
+            //            .andExpect(jsonPath("$.createDate", is(dateFormat.format(dateInUTC))))
             .andExpect(content().json("{'createDate': '2011-10-16'}"))
             .andExpect(jsonPath("$.name", is("Product 1")));
 
@@ -86,9 +88,9 @@ class StoreClientApiControllerTest {
     @Test
     @DisplayName("Should Create a Product and its Reviews")
     void shouldCreateAProductAndItsReviews() throws Exception {
-        ProductId productOne = new ProductId().id(1L);
+        final ProductId productOne = new ProductId().id(1L);
 
-        String requestBody = "{\n" +
+        final String requestBody = "{\n" +
             "  \"name\": \"Product 1\",\n" +
             "  \"weight\": \"23\",\n" +
             "  \"createDate\": \"2020-12-01\",\n" +
@@ -106,23 +108,32 @@ class StoreClientApiControllerTest {
         when(productCompositeService.createProduct(any(Product.class))).thenReturn(productOne);
         when(productCompositeService.createReview(any(Review.class))).thenReturn(new ReviewId().id(1L));
 
-        this
-            .mockMvc
+        mockMvc
             .perform(post("/client-api/v1/product-composite")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody))
-            .andExpect(status().isOk());
+            .andExpect(status().isCreated())
+        ;
     }
 
-
-    private Product createProduct(Long id, String name, Integer weight, LocalDate createDate) {
-        Product result = new Product().productId(id).name(name).weight(weight).createDate(createDate);
+    private Product createProduct(final Long id, final String name, final Integer weight, final LocalDate createDate) {
+        final Product result = new Product()
+            .productId(id)
+            .name(name)
+            .weight(weight)
+            .createDate(createDate);
         return result;
     }
 
-    private Review createReview(Long reviewId, Long productId, String author, String subject, String content) {
-        Review result =
-            new Review().reviewId(reviewId).productId(productId).author(author).subject(subject).content(content);
+    private Review createReview(final Long reviewId, final Long productId, final String author, final String subject,
+        final String content) {
+        final Review result =
+            new Review()
+                .reviewId(reviewId)
+                .productId(productId)
+                .author(author)
+                .subject(subject)
+                .content(content);
         return result;
     }
 

@@ -1,6 +1,6 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns="http://maven.apache.org/POM/4.0.0"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -30,6 +30,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>1.18.16</version>
             <optional>true</optional>
         </dependency>
         <!-- End - POJO creation made easy -->
@@ -78,13 +79,23 @@
                     <execution>
                         <id>generate-client-api-code</id>
                         <goals>
-                            <goal>generate-spring-boot-embedded</goal>
+                            <goal>generate</goal>
                         </goals>
                         <phase>generate-sources</phase>
                         <configuration>
+                            <generatorName>spring</generatorName>
                             <inputSpec>${project.build.directory}/specs/client-api-v1.0.0.yaml</inputSpec>
                             <apiPackage>com.backbase.goldensample.store.api.service.v2</apiPackage>
                             <modelPackage>com.backbase.goldensample.store.api.service.v2.model</modelPackage>
+                            <configOptions>
+                                <hideGenerationTimestamp>true</hideGenerationTimestamp>
+                                <dateLibrary>java8</dateLibrary>
+                                <interfaceOnly>true</interfaceOnly>
+                                <skipDefaultInterface>true</skipDefaultInterface>
+                                <useBeanValidation>true</useBeanValidation>
+                                <useTags>true</useTags>
+                                <addServletRequest>true</addServletRequest>
+                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
@@ -137,6 +148,9 @@
                             </inputSpec>
                             <apiPackage>com.backbase.goldensample.review.api.client.v2</apiPackage>
                             <modelPackage>com.backbase.goldensample.review.api.client.v2.model</modelPackage>
+                            <configOptions>
+                                <addServletRequest>true</addServletRequest>
+                            </configOptions>
                         </configuration>
                     </execution>
                 </executions>

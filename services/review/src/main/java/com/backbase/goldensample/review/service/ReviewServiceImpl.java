@@ -6,12 +6,12 @@ import com.backbase.goldensample.review.persistence.ReviewEntity;
 import com.backbase.goldensample.review.persistence.ReviewRepository;
 import com.backbase.reviews.api.service.v2.model.Review;
 import java.util.List;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-@Slf4j
+@Log4j2
 public class ReviewServiceImpl implements ReviewService {
 
     private final ReviewRepository repository;
@@ -56,7 +56,6 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public List<Review> getReviewsByProductId(final long productId) {
-
         if (log.isDebugEnabled()) {
             log.debug("get reviews by product id {}", productId);
         }

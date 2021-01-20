@@ -4,12 +4,19 @@ import com.backbase.buildingblocks.presentation.errors.NotFoundException;
 import com.backbase.goldensample.product.mapper.ProductMapper;
 import com.backbase.goldensample.product.persistence.ProductRepository;
 import com.backbase.product.api.service.v2.model.Product;
-import java.time.Duration;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Service
 @Slf4j
@@ -46,18 +53,18 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product getProduct(final long productId, final int delay, final int faultPercent) {
-        if (delay > 0) {
+        if (GREATER_THAN_ZERO.test(delay)) {
             if (log.isDebugEnabled()) {
                 log.debug("Simulating delay of {}", delay);
             }
-            simulateDelay(delay);
+            simulateDelay().accept(delay);
         }
 
-        if (faultPercent > 0) {
+        if (GREATER_THAN_ZERO.test(faultPercent)) {
             if (log.isDebugEnabled()) {
                 log.debug("Introducing error in a %{}", faultPercent);
             }
-            throwErrorIfBadLuck(faultPercent);
+            errorInCaseOfBadLuck().accept(faultPercent);
         }
 
         return repository
@@ -66,10 +73,19 @@ public class ProductServiceImpl implements ProductService {
             .orElseThrow(() -> new NotFoundException(String.format("Item is not found with id : '%s'", productId)));
     }
 
+    private static final Predicate<Integer> GREATER_THAN_ZERO = value -> value > 0;
+
     @Override
     public List<Product> getAllProducts() {
         //TODO add pagination
         return mapper.entityListToApiList(repository.findAll());
+    }
+
+    // paginated version
+    @Override public List<Product> getAllProducts(
+        final int page, final int size, final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
+        
+        return null;
     }
 
     /*
@@ -88,45 +104,50 @@ public class ProductServiceImpl implements ProductService {
             .ifPresent(repository::delete);
     }
 
-    private void simulateDelay(final int delay) {
-        if (log.isDebugEnabled()) {
-            log.debug("Sleeping for {} seconds...", delay);
-        }
-        try {
-            Thread.sleep(Duration
-                .ofSeconds(delay)
-                .toMillis());
-        }
-        catch (final InterruptedException ignored) {
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("Moving on...");
-        }
-    }
-
-    private void throwErrorIfBadLuck(final int faultPercent) {
-        final int randomThreshold = getRandomNumber(1, 100);
-        if (faultPercent < randomThreshold) {
+    private Consumer<Integer> simulateDelay() {
+        return delay -> {
+            final CountDownLatch waiter = new CountDownLatch(1);
             if (log.isDebugEnabled()) {
-                log.debug("We got lucky, no error occurred, {} < {}", faultPercent, randomThreshold);
+                log.debug("Sleeping for {} seconds...", delay);
             }
-        } else {
+            try {
+                waiter.await(delay, TimeUnit.SECONDS);
+            }
+            catch (final InterruptedException ignored) {
+            }
             if (log.isDebugEnabled()) {
-                log.debug("Bad luck, an error occurred, {} >= {}", faultPercent, randomThreshold);
+                log.debug("Moving on...");
             }
-            throw new RuntimeException("Something went wrong...");
-        }
+        };
     }
 
-    private int getRandomNumber(final int min, final int max) {
-
-        if (max < min) {
-            if (log.isWarnEnabled()) {
-                log.warn("Max value {} show be greater than min {}", max, min);
+    private Consumer<Integer> errorInCaseOfBadLuck() {
+        return faultPercent -> {
+            final int randomThreshold = randomNumber().apply(1, 100);
+            if (faultPercent < randomThreshold) {
+                if (log.isDebugEnabled()) {
+                    log.debug("We got lucky, no error occurred, {} < {}", faultPercent, randomThreshold);
+                }
+            } else {
+                if (log.isDebugEnabled()) {
+                    log.debug("Bad luck, an error occurred, {} >= {}", faultPercent, randomThreshold);
+                }
+                throw new RuntimeException("Something went wrong...");
             }
-            throw new RuntimeException("Max must be greater than min");
-        }
-
-        return randomNumberGenerator.nextInt((max - min) + 1) + min;
+        };
     }
+
+    private BiFunction<Integer, Integer, Integer> randomNumber() {
+        return (min, max) -> {
+            if (MAX_SMALLER_THAN_MIN.test(min, max)) {
+                if (log.isDebugEnabled()) {
+                    log.warn("Max value {} show be greater than min {}", max, min);
+                }
+                throw new RuntimeException("Max must be greater than min");
+            }
+            return randomNumberGenerator.nextInt((max - min) + 1) + min;
+        };
+    }
+
+    private static final BiPredicate<Integer, Integer> MAX_SMALLER_THAN_MIN = (min, max) -> max < min;
 }

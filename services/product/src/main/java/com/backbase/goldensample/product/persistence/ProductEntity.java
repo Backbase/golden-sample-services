@@ -9,14 +9,18 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "product")
 @Getter
 @Setter
+@EqualsAndHashCode
+@ToString
 @Builder
 @AllArgsConstructor
 public class ProductEntity {
@@ -76,10 +80,10 @@ public class ProductEntity {
     public ProductEntity() {
     }
 
-  public ProductEntity(String name, Integer weight, LocalDate createDate) {
-    this.name = name;
-    this.weight = weight;
-    this.createDate = createDate;
-  }
+    public ProductEntity(final String name, final Integer weight, final LocalDate createDate) {
+        this.name = name;
+        this.weight = weight;
+        this.createDate = createDate;
+    }
 
 }

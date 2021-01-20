@@ -2,10 +2,10 @@ package com.backbase.goldensample.store.service;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
 
 import com.backbase.goldensample.product.api.client.ApiClient;
 import com.backbase.goldensample.product.api.client.v2.ProductServiceApi;
@@ -30,7 +30,7 @@ import org.springframework.web.client.HttpClientErrorException;
 @ExtendWith(MockitoExtension.class)
 class ProductCompositeServiceTest {
 
-    private ProductCompositeService productCompositeService;
+    private ProductCompositeServiceImpl productCompositeService;
 
     @Mock
     private ProductServiceApi productServiceApi;
@@ -43,13 +43,27 @@ class ProductCompositeServiceTest {
 
     private static final LocalDate TODAY = LocalDate.of(2020, 1, 28);
 
-    private final Product product = new Product().productId(1L).name("Product").weight(20).createDate(TODAY);
-    private final Review review = new Review().productId(1L).reviewId(1L).author("author").content("content").subject("subject");
-    private final Review review2 = new Review().productId(1L).reviewId(2L).author("author").content("long content").subject("long subject");
+    private final Product product = new Product()
+        .productId(1L)
+        .name("Product")
+        .weight(20)
+        .createDate(TODAY);
+    private final Review  review  = new Review()
+        .productId(1L)
+        .reviewId(1L)
+        .author("author")
+        .content("content")
+        .subject("subject");
+    private final Review  review2 = new Review()
+        .productId(1L)
+        .reviewId(2L)
+        .author("author")
+        .content("long content")
+        .subject("long subject");
 
     @BeforeEach
     public void init() {
-        productCompositeService = new ProductCompositeService(productServiceApi, reviewServiceApi, objectMapper);
+        productCompositeService = new ProductCompositeServiceImpl(productServiceApi, reviewServiceApi, objectMapper);
     }
 
     @Test
@@ -59,7 +73,7 @@ class ProductCompositeServiceTest {
         when(productServiceApi.getApiClient()).thenReturn(new ApiClient());
 
         //test
-        Product product1 = productCompositeService.getProduct(1L);
+        final Product product1 = productCompositeService.getProduct(1L);
 
         assertAll(
             () -> assertEquals("Product", product1.getName()),
@@ -75,7 +89,7 @@ class ProductCompositeServiceTest {
         when(productServiceApi.getApiClient()).thenReturn(new ApiClient());
 
         //test
-        Product product1 = productCompositeService.getProduct(1L);
+        final Product product1 = productCompositeService.getProduct(1L);
 
         assertEquals(null, product1);
         verify(productServiceApi, times(1)).getProductById(1L);
@@ -87,7 +101,9 @@ class ProductCompositeServiceTest {
         when(productServiceApi.getProductById(1L)).thenThrow(new HttpClientErrorException(HttpStatus.BAD_REQUEST));
         when(productServiceApi.getApiClient()).thenReturn(new ApiClient());
 
-        Assertions.assertThrows(HttpClientErrorException.class, () -> {productCompositeService.getProduct(1L);});
+        Assertions.assertThrows(HttpClientErrorException.class, () -> {
+            productCompositeService.getProduct(1L);
+        });
         verify(productServiceApi, times(1)).getProductById(1L);
     }
 
@@ -96,8 +112,8 @@ class ProductCompositeServiceTest {
     void getReviews() {
         when(reviewServiceApi.getReviewListByProductId(1L)).thenReturn(List.of(review, review2));
         when(reviewServiceApi.getApiClient()).thenReturn(new com.backbase.goldensample.review.api.client.ApiClient());
-        
-        List<Review> reviews = productCompositeService.getReviews(1L);
+
+        final List<Review> reviews = productCompositeService.getReviews(1L);
 
         assertEquals(2, reviews.size());
         verify(reviewServiceApi, times(1)).getReviewListByProductId(1L);
@@ -108,17 +124,12 @@ class ProductCompositeServiceTest {
     void getReviewsException() {
         when(reviewServiceApi.getReviewListByProductId(1L)).thenThrow(new HttpClientErrorException(HttpStatus.BAD_REQUEST));
         when(reviewServiceApi.getApiClient()).thenReturn(new com.backbase.goldensample.review.api.client.ApiClient());
-
-        List<Review> reviews = productCompositeService.getReviews(1L);
-
-        assertEquals(0, reviews.size());
-
-        verify(reviewServiceApi, times(1)).getReviewListByProductId(1L);
+        assertThrows(HttpClientErrorException.class, () -> productCompositeService.getReviews(1L));
     }
-    
+
     @Test
     @DisplayName("should create a Product")
-    void shouldCreateAProduct () {
+    void shouldCreateAProduct() {
         when(productServiceApi.postProduct(product)).thenReturn(new ProductId().id(1L));
         when(productServiceApi.getApiClient()).thenReturn(new ApiClient());
         productCompositeService.createProduct(product);
@@ -127,16 +138,18 @@ class ProductCompositeServiceTest {
 
     @Test
     @DisplayName("should create a Product with Exception")
-    void shouldCreateAProductException () {
+    void shouldCreateAProductException() {
         when(productServiceApi.postProduct(product)).thenThrow(new HttpClientErrorException(HttpStatus.BAD_REQUEST));
         when(productServiceApi.getApiClient()).thenReturn(new ApiClient());
-        Assertions.assertThrows(HttpClientErrorException.class, () -> {productCompositeService.createProduct(product);});
+        Assertions.assertThrows(HttpClientErrorException.class, () -> {
+            productCompositeService.createProduct(product);
+        });
         verify(productServiceApi, times(1)).postProduct(product);
     }
 
     @Test
     @DisplayName("should create a Review")
-    void shouldCreateTwoReviews () {
+    void shouldCreateTwoReviews() {
         when(reviewServiceApi.postReview(review)).thenReturn(new ReviewId().id(1L));
         when(reviewServiceApi.getApiClient()).thenReturn(new com.backbase.goldensample.review.api.client.ApiClient());
         productCompositeService.createReview(review);
@@ -145,10 +158,12 @@ class ProductCompositeServiceTest {
 
     @Test
     @DisplayName("should create a Review with Exception")
-    void shouldCreateAReviewsWithException () {
+    void shouldCreateAReviewsWithException() {
         when(reviewServiceApi.postReview(review)).thenThrow(new HttpClientErrorException(HttpStatus.BAD_REQUEST));
         when(reviewServiceApi.getApiClient()).thenReturn(new com.backbase.goldensample.review.api.client.ApiClient());
-        Assertions.assertThrows(HttpClientErrorException.class, () -> {productCompositeService.createReview(review);});
+        Assertions.assertThrows(HttpClientErrorException.class, () -> {
+            productCompositeService.createReview(review);
+        });
         verify(reviewServiceApi, times(1)).postReview(review);
     }
 

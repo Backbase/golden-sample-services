@@ -6,7 +6,7 @@ import com.backbase.reviews.api.service.v2.model.Review;
 import com.backbase.reviews.api.service.v2.model.ReviewId;
 import java.util.List;
 import javax.validation.Valid;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @see ReviewServiceApi
  */
 @RestController
-@Slf4j
+@Log4j2
 public class ReviewServiceApiController implements ReviewServiceApi {
 
     /**

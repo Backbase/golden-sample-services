@@ -26,57 +26,41 @@ public class ProductIntegrationApiController implements ProductIntegrationApi {
     private final ProductService prodService;
 
     @Autowired
-    public ProductIntegrationApiController(final ProductService prodService) {
+    public ProductIntegrationApiController(ProductService prodService) {
         this.prodService = prodService;
     }
 
-    @Override
-    public ResponseEntity<Void> deleteProduct(final Long productId) {
-        if (log.isDebugEnabled()) {
-            log.debug("Delete product id {}", productId);
-        }
-        prodService.deleteProduct(productId);
-        if (log.isDebugEnabled()) {
-            log.debug("Product id {} deleted", productId);
-        }
-        return ResponseEntity
-            .noContent()
-            .build();
-    }
 
     @Override
-    public ResponseEntity<Product> getProductById(final Long productId) {
-        if (log.isDebugEnabled()) {
-            log.debug("Get product by id {}", productId);
-        }
+    public ResponseEntity<Void> deleteProduct(Long productId) {
+        log.debug("Delete product id {}", productId);
+        prodService.deleteProduct(productId);
+        log.debug("Product id {} deleted", productId);
+        return ResponseEntity.noContent().build();
+    }
+
+
+    @Override
+    public ResponseEntity<Product> getProductById(Long productId) {
+        log.debug("Get product by id {}", productId);
         return ResponseEntity.ok(prodService.getProduct(productId, 0, 0));
     }
 
     @Override
-    public ResponseEntity<ProductId> postProduct(@Valid final Product product) {
-        if (log.isDebugEnabled()) {
-            log.debug("Create a product {}", product);
-        }
-        final Product productWithId = prodService.createProduct(product);
-        final ProductId productId = new ProductId();
+    public ResponseEntity<ProductId> postProduct(@Valid Product product) {
+        log.debug("Create a product {}", product);
+        Product productWithId = prodService.createProduct(product);
+        ProductId productId = new ProductId();
         productId.setId(productWithId.getProductId());
-        if (log.isDebugEnabled()) {
-            log.debug("Product {} created", productId);
-        }
+        log.debug("Product {} created", productId);
         return ResponseEntity.ok(productId);
     }
 
     @Override
-    public ResponseEntity<Void> putProduct(@Valid final Product product) {
-        if (log.isDebugEnabled()) {
-            log.debug("Update a product {}", product);
-        }
-        final Product productWithId = prodService.updateProduct(product);
-        if (log.isDebugEnabled()) {
-            log.debug("product with {} updated.", productWithId.getProductId());
-        }
-        return ResponseEntity
-            .noContent()
-            .build();
+    public ResponseEntity<Void> putProduct(@Valid Product product) {
+        log.debug("Update a product {}", product);
+        Product productWithId = prodService.updateProduct(product);
+        log.debug("product with {} updated.", productWithId.getProductId());
+        return ResponseEntity.noContent().build();
     }
 }
