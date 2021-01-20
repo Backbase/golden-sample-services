@@ -13,7 +13,9 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 public class Application extends SpringBootServletInitializer {
 
     public static void main(final String[] args) {
-        log.debug("Starting application with parameters {}", Arrays.toString(args));
+        if (log.isDebugEnabled()) {
+            log.debug("Starting application with parameters {}", Arrays.toString(args));
+        }
         SpringApplication.run(Application.class, args);
     }
 
