@@ -6,6 +6,7 @@ info:
   license:
     name: License
     url: http://atorres.es
+  x-icon: credit_card
 servers:
   - description: Prism mock server
     url: http://localhost:4010
