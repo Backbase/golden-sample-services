@@ -6,6 +6,7 @@ info:
   license:
     name: Copyright Backbase
     url: https://www.backbase.com/legal
+  x-icon: credit_card
 servers:
   - description: Prism mock server
     url: http://localhost:4010
