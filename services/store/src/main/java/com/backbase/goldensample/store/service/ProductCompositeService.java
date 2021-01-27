@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.springframework.web.client.HttpClientErrorException;
 
 public interface ProductCompositeService {
+
     ObjectMapper getMapper();
 
     Logger getLogger();
@@ -30,9 +31,7 @@ public interface ProductCompositeService {
         return t -> {
             try {
                 return fn.apply(t);
-            }
-            catch (final HttpClientErrorException e) {
-                getLogger().info("EXCEPTION IS {}!!!!", e);
+            } catch (final HttpClientErrorException e) {
                 throw handleHttpClientException(e);
             }
         };
@@ -43,8 +42,7 @@ public interface ProductCompositeService {
             return getMapper()
                 .readValue(ex.getResponseBodyAsString(), HttpErrorInfo.class)
                 .getMessage();
-        }
-        catch (final IOException ioex) {
+        } catch (final IOException ioex) {
             return ex.getMessage();
         }
     }
