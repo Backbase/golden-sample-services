@@ -24,6 +24,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import reactor.util.function.Tuple2;
 import reactor.util.function.Tuples;
 
@@ -33,13 +35,17 @@ public class StoreClientApiController implements ProductCompositeClientApi {
 
     private final ProductCompositeServiceImpl productCompositeService;
 
+    private final NativeWebRequest nativeWebRequest;
+
     @Autowired
-    public StoreClientApiController(final ProductCompositeServiceImpl productCompositeService) {
+    public StoreClientApiController(final ProductCompositeServiceImpl productCompositeService,
+        final NativeWebRequest nativeWebRequest) {
         this.productCompositeService = productCompositeService;
+        this.nativeWebRequest = nativeWebRequest;
     }
 
     @Override
-    public ResponseEntity<ProductAggregate> getProductById(final Long productId, final HttpServletRequest request) {
+    public ResponseEntity<ProductAggregate> getProductById(final Long productId) {
         if (log.isDebugEnabled()) {
             log.debug("getCompositeProduct: lookup a product aggregate for productId: {}", productId);
         }
@@ -47,14 +53,15 @@ public class StoreClientApiController implements ProductCompositeClientApi {
             .ofNullable(productCompositeService.getProduct(productId))
             .map(product -> {
                 log.debug("getCompositeProduct: aggregate entity found for productId: {}", productId);
-                return createProductAggregate().apply(Tuples.of(product, productCompositeService.getReviews(productId)));
+                return createProductAggregate()
+                    .apply(Tuples.of(product, productCompositeService.getReviews(productId)));
             })
             .map(ResponseEntity::ok)
             .orElseThrow(() -> new NotFoundException("No product found for productId: " + productId));
     }
 
     @Override
-    public ResponseEntity<ProductAggregate> postProduct(@Valid final ProductAggregate productAggregate, final HttpServletRequest request) {
+    public ResponseEntity<ProductAggregate> postProduct(@Valid final ProductAggregate productAggregate) {
         log.debug("createCompositeProduct: creates a new composite entity for productId: {}",
             productAggregate.getProductId());
 
@@ -65,9 +72,18 @@ public class StoreClientApiController implements ProductCompositeClientApi {
         log.debug("createCompositeProduct: composite entities created for productId: {}",
             productAggregate.getProductId());
 
-        return created(URI.create(request.getContextPath() + "/" + product
-            .getT1()
-            .getProductId()))
+        ServletUriComponentsBuilder.fromCurrentRequest()
+            .pathSegment(product
+                .getT1()
+                .getProductId().toString())
+            .build()
+            .toUri()
+            .getPath();
+
+        return created(
+            URI.create(nativeWebRequest.getNativeRequest(HttpServletRequest.class).getRequestURI() + "/" + product
+                .getT1()
+                .getProductId()))
             .body(createProductAggregate().apply(product));
     }
 
