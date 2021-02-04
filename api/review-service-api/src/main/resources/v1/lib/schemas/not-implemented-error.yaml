@@ -1,0 +1,8 @@
+title: NotImplementedError
+type: object
+properties:
+  message:
+    type: string
+    description: Further Information
+required:
+  - message

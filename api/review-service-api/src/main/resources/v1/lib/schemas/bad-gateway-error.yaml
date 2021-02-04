@@ -1,0 +1,13 @@
+title: BadGatewayError
+type: object
+properties:
+  message:
+    type: string
+    description: Further Information
+  errors:
+    type: array
+    description: Detailed error information
+    items:
+      $ref: error-item.yaml
+required:
+  - message
