@@ -33,13 +33,26 @@
                 <executions>
                     <execution>
                         <id>bundle-specs</id>
-                        <!-- bundles the open api specs, and sets the proper version number in the filename -->
+                        <!-- bundles the open api specs-->
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>bundle</goal>
                         </goals>
                         <configuration>
-                            <input>${project.basedir}/src/main/resources</input>
+                            <input>${project.basedir}/src/main/resources/v1</input>
+                            <output>${unversioned-filename-spec-dir}</output>
+                            <versionFileName>false</versionFileName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>bundle-specs-v2</id>
+                        <!-- bundles the open api specs-->
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>bundle</goal>
+                        </goals>
+                        <configuration>
+                            <input>${project.basedir}/src/main/resources/v2</input>
                             <output>${unversioned-filename-spec-dir}</output>
                             <versionFileName>false</versionFileName>
                         </configuration>
@@ -57,6 +70,18 @@
                         </configuration>
                     </execution>
                     <execution>
+                        <id>generate-docs-v2</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${unversioned-filename-spec-dir}/openapi-v2.yaml</inputSpec>
+                            <output>${project.build.directory}/generated-docs</output>
+                            <generatorName>boat-docs</generatorName>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>validate-specs</id>
                         <phase>package</phase>
                         <goals>
@@ -66,7 +91,6 @@
                             <inputSpec>${unversioned-filename-spec-dir}/</inputSpec>
                             <output>${project.build.directory}/boat-lint-reports</output>
                             <writeLintReport>true</writeLintReport>
-                            <ignoreRules>${ignored-lint-rules}</ignoreRules>
                         </configuration>
                     </execution>
                 </executions>

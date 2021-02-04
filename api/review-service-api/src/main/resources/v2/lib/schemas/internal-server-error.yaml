@@ -1,0 +1,7 @@
+title: InternalServerError
+type: object
+description: Represents HTTP 500 Internal Server Error
+properties:
+  message:
+    description: Further Information
+    type: string

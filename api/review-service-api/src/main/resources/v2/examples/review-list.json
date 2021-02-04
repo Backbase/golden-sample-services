@@ -1,0 +1,18 @@
+[
+  {
+    "reviewId": 1,
+    "productId": 1,
+    "author": "John Doe",
+    "content": "I have no words for it",
+    "subject": "Very nice!",
+    "stars": 4
+  },
+  {
+    "reviewId": 2,
+    "productId": 1,
+    "author": "Mike Mars",
+    "content": "I'll never buy it again",
+    "subject": "Terrible!",
+    "stars": 1
+  }
+]

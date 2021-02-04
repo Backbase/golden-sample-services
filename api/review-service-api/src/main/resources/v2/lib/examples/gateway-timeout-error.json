@@ -1,0 +1,9 @@
+{
+	"message": "Gateway Timeout",
+	"errors": [
+		{
+			"message": "API provider unavailable.",
+			"key": "common.api.providerUnavailable"
+		}
+	]
+}

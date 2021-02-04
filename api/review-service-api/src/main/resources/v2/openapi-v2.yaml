@@ -1,0 +1,425 @@
+openapi: 3.0.3
+info:
+  title: Review Service API
+  version: 2.0.0
+  description: Description of the API...
+  license:
+    name: Copyright Backbase
+    url: https://www.backbase.com/legal
+  x-icon: credit_card
+servers:
+  - description: Prism mock server
+    url: http://localhost:4010
+  - description: Service running locally
+    url: http://localhost:9916
+tags:
+  - name: review-service
+paths:
+  /service-api/v1/products/{productId}/reviews:
+    get:
+      tags:
+        - review-service
+      summary: List reviews by product
+      description: Returns a list of reviews for the specified product
+      operationId: getReviewListByProductId
+      parameters:
+        - name: productId
+          in: path
+          description: productId
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Reviews matching the search criteria
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReviewList'
+              example:
+                $ref: examples/review-list.json
+        '400':
+          description: If one or more request parameters don't comply with the specification
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+              example:
+                $ref: lib/examples/bad-request-validation-error.json
+        '401':
+          description: If the authentication credentials provided are invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+              example:
+                $ref: lib/examples/unauthorized-error.json
+        '500':
+          description: If a runtime error occurs while processing the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+              example:
+                $ref: lib/examples/internal-server-error.json
+    delete:
+      tags:
+        - review-service
+      summary: Delete all product reviews
+      description: Deletes all reviews for the specified product
+      operationId: deleteReviewsByProductId
+      parameters:
+        - name: productId
+          in: path
+          description: productId
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: If the reviews have been deleted successfully
+        '400':
+          description: If one or more request parameters don't comply with the specification
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+              example:
+                $ref: lib/examples/bad-request-validation-error.json
+        '401':
+          description: If the authentication credentials provided are invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+              example:
+                $ref: lib/examples/unauthorized-error.json
+        '403':
+          description: If the current user doesn't have authorization to delete the reviews
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+              example:
+                $ref: lib/examples/forbidden-error.json
+        '500':
+          description: If a runtime error occurs while processing the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+              example:
+                $ref: lib/examples/internal-server-error.json
+  /service-api/v1/reviews:
+    post:
+      tags:
+        - review-service
+      summary: Create a review
+      description: Creates a new review for the specified product
+      operationId: postReview
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Review'
+            example:
+              $ref: examples/create-review-request.json
+      responses:
+        '204':
+          description: If the review has been created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReviewId'
+              example:
+                $ref: examples/review-id.json
+        '400':
+          description: If one or more request parameters don't comply with the specification
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+              example:
+                $ref: lib/examples/bad-request-validation-error.json
+        '401':
+          description: If the authentication credentials provided are invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+              example:
+                $ref: lib/examples/unauthorized-error.json
+        '403':
+          description: If the current user doesn't have authorization to create reviews
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+              example:
+                $ref: lib/examples/forbidden-error.json
+        '500':
+          description: If a runtime error occurs while processing the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+              example:
+                $ref: lib/examples/internal-server-error.json
+    put:
+      tags:
+        - review-service
+      summary: Update a review
+      description: Updates an existing review
+      operationId: putReview
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Review'
+            example:
+              $ref: examples/update-review-request.json
+      responses:
+        '204':
+          description: If the review has been updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReviewId'
+              example:
+                $ref: examples/review-id.json
+        '400':
+          description: If one or more request parameters don't comply with the specification
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+              example:
+                $ref: lib/examples/bad-request-validation-error.json
+        '401':
+          description: If the authentication credentials provided are invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+              example:
+                $ref: lib/examples/unauthorized-error.json
+        '403':
+          description: If the current user doesn't have authorization to update reviews
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+              example:
+                $ref: lib/examples/forbidden-error.json
+        '500':
+          description: If a runtime error occurs while processing the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+              example:
+                $ref: lib/examples/internal-server-error.json
+  /service-api/v2/reviews/{reviewId}:
+    put:
+      tags:
+        - review-service
+      summary: Update a review
+      description: Updates an existing review
+      operationId: putReviewById
+      parameters:
+        - name: reviewId
+          in: path
+          description: reviewId
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Review'
+            example:
+              $ref: examples/update-review-request.json
+      responses:
+        '204':
+          description: If the review has been updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReviewId'
+              example:
+                $ref: examples/review-id.json
+        '400':
+          description: If one or more request parameters don't comply with the specification
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+              example:
+                $ref: lib/examples/bad-request-validation-error.json
+        '401':
+          description: If the authentication credentials provided are invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+              example:
+                $ref: lib/examples/unauthorized-error.json
+        '403':
+          description: If the current user doesn't have authorization to update reviews
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+              example:
+                $ref: lib/examples/forbidden-error.json
+        '500':
+          description: If a runtime error occurs while processing the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+              example:
+                $ref: lib/examples/internal-server-error.json
+  /service-api/v1/reviews/{reviewId}:
+    get:
+      tags:
+        - review-service
+      summary: Retrieve review by ID
+      description: Returns a view of the specified review ID
+      operationId: getReviewById
+      parameters:
+        - name: reviewId
+          in: path
+          description: reviewId
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: If the review is found successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review'
+              example:
+                $ref: examples/get-review-response.json
+        '400':
+          description: If one or more request parameters don't comply with the specification
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+              example:
+                $ref: lib/examples/bad-request-validation-error.json
+        '401':
+          description: If the authentication credentials provided are invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+              example:
+                $ref: lib/examples/unauthorized-error.json
+        '403':
+          description: If the current user doesn't have authorization to view the review
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+              example:
+                $ref: lib/examples/forbidden-error.json
+        '404':
+          description: If the review cannot be found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+              example:
+                $ref: lib/examples/not-found-error.json
+        '500':
+          description: If a runtime error occurs while processing the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+              example:
+                $ref: lib/examples/internal-server-error.json
+    delete:
+      tags:
+        - review-service
+      summary: Delete a review by ID
+      description: Deletes an existing review
+      operationId: deleteReview
+      parameters:
+        - name: reviewId
+          in: path
+          description: reviewId
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: If the review has been deleted successfully
+        '400':
+          description: If one or more request parameters don't comply with the specification
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+              example:
+                $ref: lib/examples/bad-request-validation-error.json
+        '401':
+          description: If the authentication credentials provided are invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+              example:
+                $ref: lib/examples/unauthorized-error.json
+        '403':
+          description: If the current user doesn't have authorization to delete reviews
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+              example:
+                $ref: lib/examples/forbidden-error.json
+        '500':
+          description: If a runtime error occurs while processing the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+              example:
+                $ref: lib/examples/internal-server-error.json
+components:
+  schemas:
+    Review:
+      $ref: schemas/review.yaml
+    ReviewList:
+      $ref: schemas/review-list.yaml
+    ReviewId:
+      $ref: schemas/review-id.yaml
+    BadRequestError:
+      $ref: 'lib/schemas/bad-request-error.yaml'
+    ConflictError:
+      $ref: 'lib/schemas/conflict-error.yaml'
+    Currency:
+      $ref: 'lib/schemas/currency.yaml'
+    ErrorItem:
+      $ref: 'lib/schemas/error-item.yaml'
+    ForbiddenError:
+      $ref: 'lib/schemas/forbidden-error.yaml'
+    InternalServerError:
+      $ref: 'lib/schemas/internal-server-error.yaml'
+    NotFoundError:
+      $ref: 'lib/schemas/not-found-error.yaml'
+    NotAcceptableError:
+      $ref: 'lib/schemas/not-acceptable-error.yaml'
+    UnauthorizedError:
+      $ref: 'lib/schemas/unauthorized-error.yaml'
