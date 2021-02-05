@@ -39,20 +39,7 @@
                             <goal>bundle</goal>
                         </goals>
                         <configuration>
-                            <input>${project.basedir}/src/main/resources/v1</input>
-                            <output>${unversioned-filename-spec-dir}</output>
-                            <versionFileName>false</versionFileName>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>bundle-specs-v2</id>
-                        <!-- bundles the open api specs-->
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>bundle</goal>
-                        </goals>
-                        <configuration>
-                            <input>${project.basedir}/src/main/resources/v2</input>
+                            <input>${project.basedir}/src/main/resources</input>
                             <output>${unversioned-filename-spec-dir}</output>
                             <versionFileName>false</versionFileName>
                         </configuration>

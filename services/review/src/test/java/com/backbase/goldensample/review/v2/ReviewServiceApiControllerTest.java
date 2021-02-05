@@ -1,4 +1,4 @@
-package com.backbase.goldensample.review.api;
+package com.backbase.goldensample.review.v2;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
@@ -13,10 +13,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.backbase.goldensample.review.mapper.ReviewMapper;
 import com.backbase.goldensample.review.persistence.ReviewEntity;
 import com.backbase.goldensample.review.service.ReviewService;
-import com.backbase.reviews.api.service.v1.model.Review;
+import com.backbase.goldensample.review.v2.api.ReviewServiceApiController;
+import com.backbase.goldensample.review.v2.mapper.ReviewMapperV2;
+import com.backbase.reviews.api.service.v2.model.Review;
 import java.util.List;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -34,19 +35,19 @@ class ReviewServiceApiControllerTest {
     @MockBean
     private ReviewService reviewService;
 
-    @MockBean
-    private ReviewMapper reviewMapper;
-
     @Autowired
     private MockMvc mockMvc;
 
-    private final Review reviewOne = createReview(1L, 1L, "author", "subject", "long content");
+    @MockBean
+    ReviewMapperV2 reviewMapper;
+
+    private final Review reviewOne = createReview(1L, 1L, "author", "subject", "long content", 4);
     private final ReviewEntity reviewEntity = createEntity();
 
     @Test
     void shouldGetEmptyArrayWhenNoReviews() throws Exception {
 
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/service-api/v1/products/{productId}/reviews", 99L)
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/service-api/v2/products/{productId}/reviews", 99L)
             .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -58,12 +59,12 @@ class ReviewServiceApiControllerTest {
 
     @Test
     void shouldGetReviewsWhenServiceReturnsReviewsOfAProduct() throws Exception {
-        Review reviewTwo = createReview(2L, 1L, "another author", "another subject", "super long content");
+        Review reviewTwo = createReview(2L, 1L, "another author", "another subject", "super long content", 5);
 
         when(reviewMapper.entityListToApiList(any(List.class))).thenReturn((List.of(reviewOne, reviewTwo)));
 
         this.mockMvc
-            .perform(get("/service-api/v1/products/{productId}/reviews", 1L)
+            .perform(get("/service-api/v2/products/{productId}/reviews", 1L)
                 .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON))
             .andExpect(status().is(200))
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -73,10 +74,12 @@ class ReviewServiceApiControllerTest {
             .andExpect(jsonPath("$[0].author", is("author")))
             .andExpect(jsonPath("$[0].subject", is("subject")))
             .andExpect(jsonPath("$[0].content", is("long content")))
+            .andExpect(jsonPath("$[0].stars", is(4)))
             .andExpect(jsonPath("$[1].productId", is(1)))
             .andExpect(jsonPath("$[1].reviewId", is(2)))
             .andExpect(jsonPath("$[1].author", is("another author")))
             .andExpect(jsonPath("$[1].subject", is("another subject")))
+            .andExpect(jsonPath("$[1].stars", is(5)))
             .andExpect(jsonPath("$[1].content", is("super long content")));
     }
 
@@ -86,7 +89,7 @@ class ReviewServiceApiControllerTest {
         when(reviewService.getReview(1)).thenReturn(reviewEntity);
 
         this.mockMvc
-            .perform(get("/service-api/v1/reviews/{reviewId}", 1L)
+            .perform(get("/service-api/v2/reviews/{reviewId}", 1L)
                 .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON))
             .andExpect(status().is(200))
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -94,7 +97,8 @@ class ReviewServiceApiControllerTest {
             .andExpect(jsonPath("$.reviewId", is(1)))
             .andExpect(jsonPath("$.author", is("author")))
             .andExpect(jsonPath("$.subject", is("subject")))
-            .andExpect(jsonPath("$.content", is("long content")));
+            .andExpect(jsonPath("$.content", is("long content")))
+            .andExpect(jsonPath("$.stars", is(4)));
 
         verify(reviewService).getReview(1L);
     }
@@ -111,7 +115,7 @@ class ReviewServiceApiControllerTest {
 
         this
             .mockMvc
-            .perform(post("/service-api/v1/reviews")
+            .perform(post("/service-api/v2/reviews")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody))
             .andExpect(status().isBadRequest());
@@ -123,7 +127,8 @@ class ReviewServiceApiControllerTest {
             "  \"productId\": \"1\",\n" +
             "  \"author\": \"author\",\n" +
             "  \"subject\": \"subject\",\n" +
-            "  \"content\": \"long content\"\n" +
+            "  \"content\": \"long content\",\n" +
+            "  \"stars\": \"4\"\n" +
             "}";
 
         when(reviewMapper.apiToEntity(any(Review.class))).thenReturn(reviewEntity);
@@ -131,7 +136,7 @@ class ReviewServiceApiControllerTest {
 
         this
             .mockMvc
-            .perform(post("/service-api/v1/reviews")
+            .perform(post("/service-api/v2/reviews")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody))
             .andExpect(status().isOk());
@@ -144,7 +149,8 @@ class ReviewServiceApiControllerTest {
             "  \"productId\": \"1\",\n" +
             "  \"author\": \"author\",\n" +
             "  \"subject\": \"subject\",\n" +
-            "  \"content\": \"long content\"\n" +
+            "  \"content\": \"long content\",\n" +
+            "  \"stars\": \"4\"\n" +
             "}";
 
         when(reviewMapper.apiToEntity(any(Review.class))).thenReturn(reviewEntity);
@@ -152,7 +158,7 @@ class ReviewServiceApiControllerTest {
 
         this
             .mockMvc
-            .perform(put("/service-api/v1/reviews/")
+            .perform(put("/service-api/v2/reviews/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody))
             .andExpect(status().isNoContent());
@@ -162,7 +168,7 @@ class ReviewServiceApiControllerTest {
     @Test
     void shouldAllowDeletingReviewsByProductId() throws Exception {
         this.mockMvc
-            .perform(delete("/service-api/v1/products/{productId}/reviews", 1L)
+            .perform(delete("/service-api/v2/products/{productId}/reviews", 1L)
             )
             .andExpect(status().isNoContent());
 
@@ -172,16 +178,16 @@ class ReviewServiceApiControllerTest {
     @Test
     void shouldAllowDeletingOneReviewById() throws Exception {
         this.mockMvc
-            .perform(delete("/service-api/v1/reviews/{reviewId}", 1L)
+            .perform(delete("/service-api/v2/reviews/{reviewId}", 1L)
             )
             .andExpect(status().isNoContent());
 
         verify(reviewService).deleteReview(1L);
     }
 
-    private Review createReview(Long reviewId, Long productId, String author, String subject, String content) {
-        Review result = new Review().reviewId(reviewId).productId(productId).author(author).subject(subject)
-            .content(content);
+
+    private Review createReview(Long reviewId, Long productId, String author, String subject, String content, Integer stars) {
+        Review result = new Review().reviewId(reviewId).productId(productId).author(author).subject(subject).content(content).stars(stars);
         return result;
     }
 

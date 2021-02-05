@@ -264,63 +264,6 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
               example:
                 $ref: lib/examples/internal-server-error.json
-  /service-api/v2/products/{productId}:
-    put:
-      tags:
-        - product-service
-      summary:  Update a product
-      description: Updates an existing product
-      operationId: putProductById
-      parameters:
-        - name: productId
-          in: path
-          description: productId
-          required: true
-          schema:
-            type: integer
-            format: int64
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '../schemas/definitions.yaml#/components/schemas/Product'
-            example:
-              $ref: examples/update-product-request.json
-      responses:
-        '204':
-          description: If the product has been updated successfully
-        '401':
-          description: If the authentication credentials provided are invalid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedError'
-              example:
-                $ref: lib/examples/unauthorized-error.json
-        '403':
-          description: If the current user doesn't have authorization to update the requested product
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-              example:
-                $ref: lib/examples/forbidden-error.json
-        '404':
-          description: If the product cannot be found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-              example:
-                $ref: lib/examples/not-found-error.json
-        '500':
-          description: If a runtime error occurs while processing the request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/InternalServerError'
-              example:
-                $ref: lib/examples/internal-server-error.json
 components:
   schemas:
     ProductId:

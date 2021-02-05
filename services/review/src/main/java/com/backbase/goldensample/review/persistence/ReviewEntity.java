@@ -11,9 +11,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -24,6 +26,8 @@ import org.hibernate.annotations.GenericGenerator;
     })
 @Getter
 @Setter
+@EqualsAndHashCode
+@ToString
 @Builder
 @AllArgsConstructor
 public class ReviewEntity {
@@ -76,15 +80,17 @@ public class ReviewEntity {
     @NonNull
     @NotBlank
     private String content;
+    private Integer stars;
 
     //No-Op
     public ReviewEntity() {
     }
 
-    public ReviewEntity(Long productId, String author, String subject, String content) {
+    public ReviewEntity(Long productId, String author, String subject, String content, Integer stars) {
         this.productId = productId;
         this.author = author;
         this.subject = subject;
         this.content = content;
+        this.stars = stars;
     }
 }

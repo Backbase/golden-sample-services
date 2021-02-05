@@ -1,9 +1,9 @@
 package com.backbase.goldensample.product.api;
 
 import com.backbase.goldensample.product.service.ProductService;
-import com.backbase.product.api.integration.v2.ProductIntegrationApi;
-import com.backbase.product.api.service.v2.model.Product;
-import com.backbase.product.api.service.v2.model.ProductId;
+import com.backbase.product.api.integration.v1.ProductIntegrationApi;
+import com.backbase.product.api.service.v1.model.Product;
+import com.backbase.product.api.service.v1.model.ProductId;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

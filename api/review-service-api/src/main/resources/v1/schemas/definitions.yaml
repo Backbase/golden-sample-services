@@ -1,6 +1,6 @@
 components:
   schemas:
     Review:
-      $ref: ../schemas/review.yaml
+      $ref: ../v1/schemas/review.yaml
     ReviewList:
-      $ref: ../schemas/review-list.yaml
+      $ref: ../v1/schemas/review-list.yaml
