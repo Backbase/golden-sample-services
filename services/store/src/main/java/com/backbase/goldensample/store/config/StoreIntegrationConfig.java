@@ -1,8 +1,8 @@
 package com.backbase.goldensample.store.config;
 
 import com.backbase.goldensample.product.api.client.ApiClient;
-import com.backbase.goldensample.product.api.client.v2.ProductServiceApi;
-import com.backbase.goldensample.review.api.client.v2.ReviewServiceApi;
+import com.backbase.goldensample.product.api.client.v1.ProductServiceApi;
+import com.backbase.goldensample.review.api.client.v1.ReviewServiceApi;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

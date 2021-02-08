@@ -8,12 +8,12 @@ import static org.mockito.Mockito.when;
 
 
 import com.backbase.goldensample.product.api.client.ApiClient;
-import com.backbase.goldensample.product.api.client.v2.ProductServiceApi;
-import com.backbase.goldensample.product.api.client.v2.model.Product;
-import com.backbase.goldensample.product.api.client.v2.model.ProductId;
-import com.backbase.goldensample.review.api.client.v2.ReviewServiceApi;
-import com.backbase.goldensample.review.api.client.v2.model.Review;
-import com.backbase.goldensample.review.api.client.v2.model.ReviewId;
+import com.backbase.goldensample.product.api.client.v1.ProductServiceApi;
+import com.backbase.goldensample.product.api.client.v1.model.Product;
+import com.backbase.goldensample.product.api.client.v1.model.ProductId;
+import com.backbase.goldensample.review.api.client.v1.ReviewServiceApi;
+import com.backbase.goldensample.review.api.client.v1.model.Review;
+import com.backbase.goldensample.review.api.client.v1.model.ReviewId;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDate;
 import java.util.List;

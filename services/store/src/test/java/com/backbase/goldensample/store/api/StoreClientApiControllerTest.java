@@ -10,10 +10,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.backbase.goldensample.product.api.client.v2.model.Product;
-import com.backbase.goldensample.product.api.client.v2.model.ProductId;
-import com.backbase.goldensample.review.api.client.v2.model.Review;
-import com.backbase.goldensample.review.api.client.v2.model.ReviewId;
+import com.backbase.goldensample.product.api.client.v1.model.Product;
+import com.backbase.goldensample.product.api.client.v1.model.ProductId;
+import com.backbase.goldensample.review.api.client.v1.model.Review;
+import com.backbase.goldensample.review.api.client.v1.model.ReviewId;
 import com.backbase.goldensample.store.service.ProductCompositeService;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
