@@ -32,37 +32,13 @@ paths:
             format: int64
       responses:
         '200':
-          description: Reviews matching the search criteria
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ReviewList'
-              example:
-                $ref: examples/review-list.json
+          $ref: 'schemas/definitions.yaml#/components/responses/200ReviewList'
         '400':
-          description: If one or more request parameters don't comply with the specification
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequestError'
-              example:
-                $ref: lib/examples/bad-request-validation-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/400BadRequest'
         '401':
-          description: If the authentication credentials provided are invalid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedError'
-              example:
-                $ref: lib/examples/unauthorized-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/401Unauthorized'
         '500':
-          description: If a runtime error occurs while processing the request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/InternalServerError'
-              example:
-                $ref: lib/examples/internal-server-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/500InternalServerError'
     delete:
       tags:
         - review-service
@@ -81,37 +57,14 @@ paths:
         '204':
           description: If the reviews have been deleted successfully
         '400':
-          description: If one or more request parameters don't comply with the specification
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequestError'
-              example:
-                $ref: lib/examples/bad-request-validation-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/400BadRequest'
         '401':
-          description: If the authentication credentials provided are invalid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedError'
-              example:
-                $ref: lib/examples/unauthorized-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/401Unauthorized'
         '403':
-          description: If the current user doesn't have authorization to delete the reviews
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-              example:
-                $ref: lib/examples/forbidden-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/403Forbidden'
         '500':
-          description: If a runtime error occurs while processing the request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/InternalServerError'
-              example:
-                $ref: lib/examples/internal-server-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/500InternalServerError'
+
   /service-api/v1/reviews:
     post:
       tags:
@@ -123,50 +76,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Review'
+              $ref: 'schemas/definitions.yaml#/components/schemas/Review'
             example:
               $ref: examples/create-review-request.json
       responses:
         '204':
-          description: If the review has been created successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ReviewId'
-              example:
-                $ref: examples/review-id.json
+          $ref: 'schemas/definitions.yaml#/components/responses/204ReviewId'
         '400':
-          description: If one or more request parameters don't comply with the specification
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequestError'
-              example:
-                $ref: lib/examples/bad-request-validation-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/400BadRequest'
         '401':
-          description: If the authentication credentials provided are invalid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedError'
-              example:
-                $ref: lib/examples/unauthorized-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/401Unauthorized'
         '403':
-          description: If the current user doesn't have authorization to create reviews
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-              example:
-                $ref: lib/examples/forbidden-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/403Forbidden'
         '500':
-          description: If a runtime error occurs while processing the request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/InternalServerError'
-              example:
-                $ref: lib/examples/internal-server-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/500InternalServerError'
     put:
       tags:
         - review-service
@@ -177,50 +100,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Review'
+              $ref: 'schemas/definitions.yaml#/components/schemas/Review'
             example:
               $ref: examples/update-review-request.json
       responses:
         '204':
-          description: If the review has been updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ReviewId'
-              example:
-                $ref: examples/review-id.json
+          $ref: 'schemas/definitions.yaml#/components/responses/204ReviewId'
         '400':
-          description: If one or more request parameters don't comply with the specification
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequestError'
-              example:
-                $ref: lib/examples/bad-request-validation-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/400BadRequest'
         '401':
-          description: If the authentication credentials provided are invalid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedError'
-              example:
-                $ref: lib/examples/unauthorized-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/401Unauthorized'
         '403':
-          description: If the current user doesn't have authorization to update reviews
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-              example:
-                $ref: lib/examples/forbidden-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/403Forbidden'
         '500':
-          description: If a runtime error occurs while processing the request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/InternalServerError'
-              example:
-                $ref: lib/examples/internal-server-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/500InternalServerError'
+
   /service-api/v1/reviews/{reviewId}:
     get:
       tags:
@@ -242,49 +136,19 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Review'
+                $ref: 'schemas/definitions.yaml#/components/schemas/Review'
               example:
                 $ref: examples/get-review-response.json
         '400':
-          description: If one or more request parameters don't comply with the specification
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequestError'
-              example:
-                $ref: lib/examples/bad-request-validation-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/400BadRequest'
         '401':
-          description: If the authentication credentials provided are invalid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedError'
-              example:
-                $ref: lib/examples/unauthorized-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/401Unauthorized'
         '403':
-          description: If the current user doesn't have authorization to view the review
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-              example:
-                $ref: lib/examples/forbidden-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/403Forbidden'
         '404':
-          description: If the review cannot be found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-              example:
-                $ref: lib/examples/not-found-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/404NotFound'
         '500':
-          description: If a runtime error occurs while processing the request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/InternalServerError'
-              example:
-                $ref: lib/examples/internal-server-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/500InternalServerError'
     delete:
       tags:
         - review-service
@@ -303,60 +167,10 @@ paths:
         '204':
           description: If the review has been deleted successfully
         '400':
-          description: If one or more request parameters don't comply with the specification
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequestError'
-              example:
-                $ref: lib/examples/bad-request-validation-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/400BadRequest'
         '401':
-          description: If the authentication credentials provided are invalid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedError'
-              example:
-                $ref: lib/examples/unauthorized-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/401Unauthorized'
         '403':
-          description: If the current user doesn't have authorization to delete reviews
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-              example:
-                $ref: lib/examples/forbidden-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/403Forbidden'
         '500':
-          description: If a runtime error occurs while processing the request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/InternalServerError'
-              example:
-                $ref: lib/examples/internal-server-error.json
-components:
-  schemas:
-    Review:
-      $ref: schemas/review.yaml
-    ReviewList:
-      $ref: schemas/review-list.yaml
-    ReviewId:
-      $ref: schemas/review-id.yaml
-    BadRequestError:
-      $ref: 'lib/schemas/bad-request-error.yaml'
-    ConflictError:
-      $ref: 'lib/schemas/conflict-error.yaml'
-    Currency:
-      $ref: 'lib/schemas/currency.yaml'
-    ErrorItem:
-      $ref: 'lib/schemas/error-item.yaml'
-    ForbiddenError:
-      $ref: 'lib/schemas/forbidden-error.yaml'
-    InternalServerError:
-      $ref: 'lib/schemas/internal-server-error.yaml'
-    NotFoundError:
-      $ref: 'lib/schemas/not-found-error.yaml'
-    NotAcceptableError:
-      $ref: 'lib/schemas/not-acceptable-error.yaml'
-    UnauthorizedError:
-      $ref: 'lib/schemas/unauthorized-error.yaml'
+          $ref: 'lib/common-types.yaml#/components/responses/500InternalServerError'

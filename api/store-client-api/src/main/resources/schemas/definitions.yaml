@@ -2,3 +2,17 @@ components:
   schemas:
     ReviewSummary:
       $ref: ../schemas/review-summary.yaml
+    ProductAggregate:
+      $ref: ../schemas/product-aggregate.yaml
+    Additions:
+      $ref: ../lib/schemas/additions.yaml
+
+  responses:
+    200ProductAggregate:
+      description: If the product is retrieved successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProductAggregate'
+          example:
+            $ref: ../examples/product-aggregate.json

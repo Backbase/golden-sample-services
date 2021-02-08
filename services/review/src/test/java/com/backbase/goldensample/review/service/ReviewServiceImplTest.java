@@ -32,7 +32,7 @@ class ReviewServiceImplTest {
     ReviewMapper reviewMapper = Mappers.getMapper(ReviewMapper.class);
 
     private final Review review = new Review().reviewId(1L).productId(1L).author("author").subject("subject").content("long content");
-    private final ReviewEntity reviewEntity = new ReviewEntity(1L,1L, "author", "subject", "long content");
+    private final ReviewEntity reviewEntity = new ReviewEntity(1L,1L, "author", "subject", "long content", null);
 
     @BeforeEach
     public void init() {
@@ -42,8 +42,8 @@ class ReviewServiceImplTest {
     @Test
     void getAllReviewsByProductTest() {
         List<ReviewEntity> list = new ArrayList<ReviewEntity>();
-        ReviewEntity reviewEntity1 = new ReviewEntity(1L, "author", "subject", "content");
-        ReviewEntity reviewEntity2 = new ReviewEntity(1L, "angryauthor", "angry subject", "worst product ever");
+        ReviewEntity reviewEntity1 = new ReviewEntity(1L, "author", "subject", "content", null);
+        ReviewEntity reviewEntity2 = new ReviewEntity(1L, "angryauthor", "angry subject", "worst product ever", null);
 
         list.add(reviewEntity1);
         list.add(reviewEntity2);

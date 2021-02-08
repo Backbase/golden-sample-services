@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
+import java.util.Collections;
 import org.junit.jupiter.api.Test;
 
 class ReviewEntityTest {
@@ -14,10 +15,10 @@ class ReviewEntityTest {
 
         assertAll(
             () -> assertThrows(NullPointerException.class,
-                () -> new ReviewEntity(1L, null, "author", "subject", "content")),
-            () -> assertThrows(NullPointerException.class, () -> new ReviewEntity(1L, 1L, null, "subject", "content")),
-            () -> assertThrows(NullPointerException.class, () -> new ReviewEntity(1L, 1L, "author", null, "content")),
-            () -> assertThrows(NullPointerException.class, () -> new ReviewEntity(1L, 1L, "author", "subject", null)),
+                () -> new ReviewEntity(1L, null, "author", "subject", "content", Collections.singletonMap("verified","true"))),
+            () -> assertThrows(NullPointerException.class, () -> new ReviewEntity(1L, 1L, null, "subject", "content", Collections.singletonMap("verified","true"))),
+            () -> assertThrows(NullPointerException.class, () -> new ReviewEntity(1L, 1L, "author", null, "content", Collections.singletonMap("verified","true"))),
+            () -> assertThrows(NullPointerException.class, () -> new ReviewEntity(1L, 1L, "author", "subject", null, Collections.singletonMap("verified","true"))),
             () -> assertThrows(NullPointerException.class, () -> new ReviewEntity().setProductId(null)),
             () -> assertThrows(NullPointerException.class, () -> new ReviewEntity().setAuthor(null)),
             () -> assertThrows(NullPointerException.class, () -> new ReviewEntity().setSubject(null)),

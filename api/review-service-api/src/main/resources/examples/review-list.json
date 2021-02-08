@@ -4,13 +4,19 @@
     "productId": 1,
     "author": "John Doe",
     "content": "I have no words for it",
-    "subject": "Very nice!"
+    "subject": "Very nice!",
+    "additions": {
+      "rating": "5"
+    }
   },
   {
     "reviewId": 2,
     "productId": 1,
     "author": "Mike Mars",
     "content": "I'll never buy it again",
-    "subject": "Terrible!"
+    "subject": "Terrible!",
+    "additions": {
+      "rating": "1"
+    }
   }
 ]

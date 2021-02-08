@@ -2,10 +2,18 @@ package com.backbase.goldensample.product.persistence;
 
 import com.backbase.goldensample.product.config.IdentityStrategyOverrideConfiguration;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -72,14 +80,21 @@ public class ProductEntity {
 
     private LocalDate createDate;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @MapKeyColumn(name = "property_key")
+    @Column(name = "property_value")
+    @CollectionTable(name = "product_additions", joinColumns = @JoinColumn(name = "product_additions_id"))
+    private Map<String, String> additions = new HashMap<>();
+
     //No-Op
     public ProductEntity() {
     }
 
-  public ProductEntity(String name, Integer weight, LocalDate createDate) {
+  public ProductEntity(String name, Integer weight, LocalDate createDate, Map<String, String> additions) {
     this.name = name;
     this.weight = weight;
     this.createDate = createDate;
+    this.additions = additions;
   }
 
 }

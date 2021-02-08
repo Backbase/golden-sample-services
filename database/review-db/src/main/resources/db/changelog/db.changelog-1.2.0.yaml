@@ -1,0 +1,34 @@
+databaseChangeLog:
+  - property:
+      name: varcharDataType
+      value: NVARCHAR
+      dbms: mssql
+  - property:
+      name: varcharDataType
+      value: VARCHAR
+      dbms: mysql
+  - property:
+      name: varcharDataType
+      value: VARCHAR2
+  - changeSet:
+      comment: create the review additions table
+      id: 1_2_0_001
+      context: upgrade_1_1_0_to_1_2_0
+      author: backbase
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  name: review_additions_id
+                  type: BIGINT
+              - column:
+                  name: property_value
+                  type: ${varcharDataType}(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: property_key
+                  type: ${varcharDataType}(50)
+            tableName: review_additions

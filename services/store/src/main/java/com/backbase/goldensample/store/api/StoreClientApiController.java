@@ -12,6 +12,7 @@ import com.backbase.goldensample.store.service.ProductCompositeService;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -85,15 +86,16 @@ public class StoreClientApiController implements ProductCompositeClientApi {
         String name = product.getName();
         int weight = product.getWeight();
         LocalDate createDate = product.getCreateDate();
+        Map<String, String> additions = product.getAdditions();
 
         // 2. Copy summary review info, if available
         List<ReviewSummary> reviewSummaries = (reviews == null) ? null :
             reviews.stream()
                 .map(r -> new ReviewSummary().reviewId(r.getReviewId()).author(r.getAuthor()).subject(r.getSubject())
-                    .content(r.getContent()))
+                    .content(r.getContent()).additions(r.getAdditions()))
                 .collect(Collectors.toList());
 
         return new ProductAggregate().productId(productId).name(name).weight(weight).reviews(reviewSummaries)
-            .createDate(createDate);
+            .createDate(createDate).additions(additions);
     }
 }

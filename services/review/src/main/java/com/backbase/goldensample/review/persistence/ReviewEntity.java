@@ -1,11 +1,19 @@
 package com.backbase.goldensample.review.persistence;
 
 import com.backbase.goldensample.review.config.IdentityStrategyOverrideConfiguration;
+import java.util.HashMap;
+import java.util.Map;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -77,14 +85,21 @@ public class ReviewEntity {
     @NotBlank
     private String content;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @MapKeyColumn(name = "property_key")
+    @Column(name = "property_value")
+    @CollectionTable(name = "review_additions", joinColumns = @JoinColumn(name = "review_additions_id"))
+    private Map<String, String> additions = new HashMap<>();
+
     //No-Op
     public ReviewEntity() {
     }
 
-    public ReviewEntity(Long productId, String author, String subject, String content) {
+    public ReviewEntity(Long productId, String author, String subject, String content, Map<String, String> additions) {
         this.productId = productId;
         this.author = author;
         this.subject = subject;
         this.content = content;
+        this.additions = additions;
     }
 }

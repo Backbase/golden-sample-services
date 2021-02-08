@@ -3,12 +3,18 @@
     "productId": 1,
     "name": "Coke",
     "weight": 100,
-    "createDate": "2020-09-01"
+    "createDate": "2020-09-01",
+    "additions": {
+      "description": "refreshing beverage"
+    }
   },
   {
     "productId": 2,
     "name": "Pepsi",
     "weight": 90,
-    "createDate": "2020-09-02"
+    "createDate": "2020-09-02",
+    "additions": {
+      "description": "alternative refreshing beverage"
+    }
   }
 ]
