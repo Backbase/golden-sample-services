@@ -22,6 +22,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>charts</module>
         <module>api</module>
         <module>database</module>
         <module>services</module>

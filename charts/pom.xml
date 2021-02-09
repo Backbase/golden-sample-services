@@ -3,24 +3,55 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.backbase.goldensample</groupId>
-    <artifactId>backbase-golden-sample-charts</artifactId>
+    <parent>
+        <groupId>com.backbase.goldensample</groupId>
+        <artifactId>backbase-golden-sample</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>charts</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <name>backbase-golden-sample-chart</name>
     <description>Demo project for Backbase Backend Best Practices</description>
-    <packaging>pom</packaging>
+    <packaging>helm</packaging>
+
+    <properties>
+        <helm.maven.plugin.version>5.7</helm.maven.plugin.version>
+        <helm.version>3.4.2</helm.version>
+        <spring-boot.repackage.skip>true</spring-boot.repackage.skip>
+    </properties>
 
     <build>
         <plugins>
             <plugin>
                 <groupId>com.kiwigrid</groupId>
                 <artifactId>helm-maven-plugin</artifactId>
-                <version>5.6</version>
+                <!-- Mandatory when you use a custom lifecycle -->
+                <extensions>true</extensions>
+                <version>${helm.maven.plugin.version}</version>
                 <configuration>
                     <chartDirectory>${project.basedir}</chartDirectory>
                     <chartVersion>${project.version}</chartVersion>
-                    <helmVersion>3.4.2</helmVersion>
+                    <helmVersion>${helm.version}</helmVersion>
                     <addDefaultRepo>false</addDefaultRepo>
+                    <!-- Lint with strict mode -->
+                    <lintStrict>false</lintStrict>
+                    <uploadRepoStable>
+                        <name>stable-repo</name>
+                        <url>https://repo.backbase.com/backbase-helm-charts</url>
+                        <!-- Artifactory requires basic authentication -->
+                        <!-- which is supported from HELM version >= 2.9 -->
+                        <type>ARTIFACTORY</type>
+                        <username>foo</username>
+                        <password>bar</password>
+                    </uploadRepoStable>
+<!--                    <uploadRepoSnapshot>-->
+<!--                        <name>experimental</name>-->
+<!--                        <url>https://harbor.backbase.eu/api/chartrepo/experimental/charts</url>-->
+<!--                        <username>foo</username>-->
+<!--                        <password>bar</password>-->
+<!--                        <type>HARBOR</type>-->
+<!--                    </uploadRepoSnapshot>-->
                 </configuration>
             </plugin>
         </plugins>
