@@ -28,7 +28,7 @@ global:
   activemq:
     # global.activemq.enabled is true by default. If enabled, it will set automatically these environment variables:
     # SPRING_ACTIVEMQ_BROKER_URL, SPRING_ACTIVEMQ_USER, SPRING_ACTIVEMQ_PASSWORD
-    enabled: true
+    enabled: false
 
   # global.database sets the Database init container health-checks and configure the deployment SPRING_DATASOURCE environment variables.
   database:
