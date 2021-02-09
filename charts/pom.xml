@@ -13,10 +13,13 @@
     <version>1.0.0-SNAPSHOT</version>
     <name>backbase-golden-sample-chart</name>
     <description>Demo project for Backbase Backend Best Practices</description>
-    <packaging>helm</packaging>
+    <packaging>pom</packaging>
+<!-- Using the custom lifecycle fails if the charts has dependencies
+ https://github.com/kiwigrid/helm-maven-plugin/pull/112 -->
+<!--    <packaging>helm</packaging>-->
 
     <properties>
-        <helm.maven.plugin.version>5.7</helm.maven.plugin.version>
+        <helm.maven.plugin.version>5.8-SNAPSHOT</helm.maven.plugin.version>
         <helm.version>3.4.2</helm.version>
         <spring-boot.repackage.skip>true</spring-boot.repackage.skip>
     </properties>
@@ -36,23 +39,37 @@
                     <addDefaultRepo>false</addDefaultRepo>
                     <!-- Lint with strict mode -->
                     <lintStrict>false</lintStrict>
-                    <uploadRepoStable>
-                        <name>stable-repo</name>
-                        <url>https://repo.backbase.com/backbase-helm-charts</url>
-                        <!-- Artifactory requires basic authentication -->
-                        <!-- which is supported from HELM version >= 2.9 -->
-                        <type>ARTIFACTORY</type>
-                        <username>foo</username>
-                        <password>bar</password>
-                    </uploadRepoStable>
+<!--                    <uploadRepoStable>-->
+<!--                        <name>Backbase Artifact Repository</name>-->
+<!--                        <url>https://repo.backbase.com/backbase-charts</url>-->
+<!--                        &lt;!&ndash; Artifactory requires basic authentication &ndash;&gt;-->
+<!--                        &lt;!&ndash; which is supported from HELM version >= 2.9 &ndash;&gt;-->
+<!--                        <type>ARTIFACTORY</type>-->
+<!--                    </uploadRepoStable>-->
 <!--                    <uploadRepoSnapshot>-->
-<!--                        <name>experimental</name>-->
-<!--                        <url>https://harbor.backbase.eu/api/chartrepo/experimental/charts</url>-->
-<!--                        <username>foo</username>-->
-<!--                        <password>bar</password>-->
+<!--                        <name>harbor-experimental</name>-->
+<!--                        <url>https://harbor.com/api/chartrepo/experimental/charts</url>-->
 <!--                        <type>HARBOR</type>-->
 <!--                    </uploadRepoSnapshot>-->
+                    <helmExtraRepos>
+                        <helmRepo>
+                            <name>repo-charts</name>
+                            <url>https://repo.backbase.com/backbase-charts</url>
+                        </helmRepo>
+                    </helmExtraRepos>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>helm</id>
+                        <goals>
+                            <goal>init</goal>
+                            <goal>dependency-build</goal>
+                            <goal>lint</goal>
+                            <goal>package</goal>
+<!--                            <goal>upload</goal>-->
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
