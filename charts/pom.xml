@@ -19,7 +19,7 @@
 <!--    <packaging>helm</packaging>-->
 
     <properties>
-        <helm.maven.plugin.version>5.8-SNAPSHOT</helm.maven.plugin.version>
+        <helm.maven.plugin.version>5.7</helm.maven.plugin.version>
         <helm.version>3.4.2</helm.version>
         <spring-boot.repackage.skip>true</spring-boot.repackage.skip>
     </properties>

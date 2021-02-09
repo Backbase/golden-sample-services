@@ -50,8 +50,8 @@ jobs:
         server-id: repo-charts # Value of the distributionManagement/repository/id field of the pom.xml
         server-username: MAVEN_USERNAME # env variable for username in deploy
         server-password: MAVEN_PASSWORD # env variable for token in deploy
-    - name: Build and test project
-      run: mvn clean verify --file charts/pom.xml
+    - name: Build and test charts module
+      run: mvn clean package --file charts/pom.xml
       env:
         MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
         MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
