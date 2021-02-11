@@ -52,7 +52,7 @@
                         </goals>
                         <configuration>
                             <inputSpec>${unversioned-filename-spec-dir}/openapi-v1.yaml</inputSpec>
-                            <output>${project.build.directory}/generated-docs</output>
+                            <output>${project.build.directory}/generated-docs/v1</output>
                             <generatorName>boat-docs</generatorName>
                         </configuration>
                     </execution>
@@ -64,7 +64,7 @@
                         </goals>
                         <configuration>
                             <inputSpec>${unversioned-filename-spec-dir}/openapi-v2.yaml</inputSpec>
-                            <output>${project.build.directory}/generated-docs</output>
+                            <output>${project.build.directory}/generated-docs/v2</output>
                             <generatorName>boat-docs</generatorName>
                         </configuration>
                     </execution>

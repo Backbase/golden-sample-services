@@ -7,6 +7,7 @@ info:
     name: Copyright Backbase
     url: https://www.backbase.com/legal
   x-icon: credit_card
+  x-deprecated: true
 servers:
   - description: Prism mock server
     url: http://localhost:4010
@@ -47,7 +48,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/BadRequestError'
               example:
-                $ref: v1/lib/examples/bad-request-validation-error.json
+                $ref: lib/examples/bad-request-validation-error.json
         '401':
           description: If the authentication credentials provided are invalid
           content:
@@ -55,7 +56,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnauthorizedError'
               example:
-                $ref: v1/lib/examples/unauthorized-error.json
+                $ref: lib/examples/unauthorized-error.json
         '500':
           description: If a runtime error occurs while processing the request
           content:
@@ -63,7 +64,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/InternalServerError'
               example:
-                $ref: v1/lib/examples/internal-server-error.json
+                $ref: lib/examples/internal-server-error.json
     delete:
       deprecated: true
       tags:
@@ -89,7 +90,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/BadRequestError'
               example:
-                $ref: v1/lib/examples/bad-request-validation-error.json
+                $ref: lib/examples/bad-request-validation-error.json
         '401':
           description: If the authentication credentials provided are invalid
           content:
@@ -97,7 +98,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnauthorizedError'
               example:
-                $ref: v1/lib/examples/unauthorized-error.json
+                $ref: lib/examples/unauthorized-error.json
         '403':
           description: If the current user doesn't have authorization to delete the reviews
           content:
@@ -105,7 +106,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
               example:
-                $ref: v1/lib/examples/forbidden-error.json
+                $ref: lib/examples/forbidden-error.json
         '500':
           description: If a runtime error occurs while processing the request
           content:
@@ -113,7 +114,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/InternalServerError'
               example:
-                $ref: v1/lib/examples/internal-server-error.json
+                $ref: lib/examples/internal-server-error.json
   /service-api/v1/reviews:
     post:
       deprecated: true
@@ -145,7 +146,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/BadRequestError'
               example:
-                $ref: v1/lib/examples/bad-request-validation-error.json
+                $ref: lib/examples/bad-request-validation-error.json
         '401':
           description: If the authentication credentials provided are invalid
           content:
@@ -153,7 +154,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnauthorizedError'
               example:
-                $ref: v1/lib/examples/unauthorized-error.json
+                $ref: lib/examples/unauthorized-error.json
         '403':
           description: If the current user doesn't have authorization to create reviews
           content:
@@ -161,7 +162,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
               example:
-                $ref: v1/lib/examples/forbidden-error.json
+                $ref: lib/examples/forbidden-error.json
         '500':
           description: If a runtime error occurs while processing the request
           content:
@@ -169,7 +170,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/InternalServerError'
               example:
-                $ref: v1/lib/examples/internal-server-error.json
+                $ref: lib/examples/internal-server-error.json
     put:
       deprecated: true
       tags:
@@ -200,7 +201,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/BadRequestError'
               example:
-                $ref: v1/lib/examples/bad-request-validation-error.json
+                $ref: lib/examples/bad-request-validation-error.json
         '401':
           description: If the authentication credentials provided are invalid
           content:
@@ -208,7 +209,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnauthorizedError'
               example:
-                $ref: v1/lib/examples/unauthorized-error.json
+                $ref: lib/examples/unauthorized-error.json
         '403':
           description: If the current user doesn't have authorization to update reviews
           content:
@@ -216,7 +217,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
               example:
-                $ref: v1/lib/examples/forbidden-error.json
+                $ref: lib/examples/forbidden-error.json
         '500':
           description: If a runtime error occurs while processing the request
           content:
@@ -224,7 +225,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/InternalServerError'
               example:
-                $ref: v1/lib/examples/internal-server-error.json
+                $ref: lib/examples/internal-server-error.json
   /service-api/v1/reviews/{reviewId}:
     get:
       deprecated: true
@@ -257,7 +258,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/BadRequestError'
               example:
-                $ref: v1/lib/examples/bad-request-validation-error.json
+                $ref: lib/examples/bad-request-validation-error.json
         '401':
           description: If the authentication credentials provided are invalid
           content:
@@ -265,7 +266,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnauthorizedError'
               example:
-                $ref: v1/lib/examples/unauthorized-error.json
+                $ref: lib/examples/unauthorized-error.json
         '403':
           description: If the current user doesn't have authorization to view the review
           content:
@@ -273,7 +274,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
               example:
-                $ref: v1/lib/examples/forbidden-error.json
+                $ref: lib/examples/forbidden-error.json
         '404':
           description: If the review cannot be found
           content:
@@ -281,7 +282,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
               example:
-                $ref: v1/lib/examples/not-found-error.json
+                $ref: lib/examples/not-found-error.json
         '500':
           description: If a runtime error occurs while processing the request
           content:
@@ -289,7 +290,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/InternalServerError'
               example:
-                $ref: v1/lib/examples/internal-server-error.json
+                $ref: lib/examples/internal-server-error.json
     delete:
       deprecated: true
       tags:
@@ -315,7 +316,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/BadRequestError'
               example:
-                $ref: v1/lib/examples/bad-request-validation-error.json
+                $ref: lib/examples/bad-request-validation-error.json
         '401':
           description: If the authentication credentials provided are invalid
           content:
@@ -323,7 +324,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnauthorizedError'
               example:
-                $ref: v1/lib/examples/unauthorized-error.json
+                $ref: lib/examples/unauthorized-error.json
         '403':
           description: If the current user doesn't have authorization to delete reviews
           content:
@@ -331,7 +332,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ForbiddenError'
               example:
-                $ref: v1/lib/examples/forbidden-error.json
+                $ref: lib/examples/forbidden-error.json
         '500':
           description: If a runtime error occurs while processing the request
           content:
@@ -339,7 +340,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/InternalServerError'
               example:
-                $ref: v1/lib/examples/internal-server-error.json
+                $ref: lib/examples/internal-server-error.json
 components:
   schemas:
     Review:
