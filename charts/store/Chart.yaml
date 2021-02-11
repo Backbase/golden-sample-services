@@ -5,7 +5,7 @@ version: 0.1.0
 # https://helm.sh/docs/topics/charts/#the-appversion-field
 appVersion: ">= 1.0.0"
 # https://helm.sh/docs/topics/charts/#the-kubeversion-field
-kubeVersion: 1.18.x
+kubeVersion: ">= 1.18.0"
 # This chart is deprecated and no longer maintained.
 # deprecated: true
 keywords:
