@@ -8,6 +8,7 @@ import com.backbase.goldensample.review.api.client.v2.model.ReviewId;
 import com.backbase.goldensample.store.api.service.v2.ProductCompositeClientApi;
 import com.backbase.goldensample.store.api.service.v2.model.ProductAggregate;
 import com.backbase.goldensample.store.api.service.v2.model.ReviewSummary;
+import com.backbase.goldensample.store.config.StoreViewConfig;
 import com.backbase.goldensample.store.service.ProductCompositeService;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,8 +17,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,10 +28,12 @@ public class StoreClientApiController implements ProductCompositeClientApi {
     private ProductCompositeService productCompositeService;
 
     @Autowired
+    private StoreViewConfig storeViewConfig;
+
+    @Autowired
     public StoreClientApiController(ProductCompositeService productCompositeService) {
         this.productCompositeService = productCompositeService;
     }
-
 
     @Override
     public ResponseEntity<ProductAggregate> getProductById(Long productId) {
@@ -48,8 +49,9 @@ public class StoreClientApiController implements ProductCompositeClientApi {
 
         log.debug("getCompositeProduct: aggregate entity found for productId: {}", productId);
 
-        return ResponseEntity.ok(createProductAggregate(product, reviews));
+        return createResponse(product, reviews);
     }
+
 
     @Override
     public ResponseEntity<ProductAggregate> postProduct(@Valid ProductAggregate productAggregate) {
@@ -57,7 +59,7 @@ public class StoreClientApiController implements ProductCompositeClientApi {
         log.debug("createCompositeProduct: creates a new composite entity for productId: {}",
             productAggregate.getProductId());
 
-        Product product = new Product().name(productAggregate.getName()).weight(productAggregate.getWeight()).createDate(productAggregate.getCreateDate());
+        Product product = new Product().name(productAggregate.getName()).weight(productAggregate.getWeight()).createDate(productAggregate.getCreateDate()).additions(productAggregate.getAdditions());
         ProductId productId = productCompositeService.createProduct(product);
         product.productId(productId.getId());
 
@@ -66,7 +68,7 @@ public class StoreClientApiController implements ProductCompositeClientApi {
             productAggregate.getReviews().forEach(r -> {
                 Review review =
                     new Review().productId(productId.getId()).author(r.getAuthor()).subject(r.getSubject())
-                        .content(r.getContent());
+                        .content(r.getContent()).additions(r.getAdditions());
                 ReviewId reviewId = productCompositeService.createReview(review);
                 review.reviewId(reviewId.getId());
                 reviews.add(review);
@@ -75,8 +77,14 @@ public class StoreClientApiController implements ProductCompositeClientApi {
         log.debug("createCompositeProduct: composite entities created for productId: {}",
             productAggregate.getProductId());
 
-        return ResponseEntity.ok(createProductAggregate(product, reviews));
+        return createResponse(product, reviews);
+    }
 
+    private ResponseEntity<ProductAggregate> createResponse(Product product, List<Review> reviews) {
+
+        return ResponseEntity.ok()
+            .header(StoreViewConfig.STORE_THEME_RESPONSE_HEADER_NAME, storeViewConfig.getTheme())
+            .body(createProductAggregate(product, reviews));
     }
 
     private ProductAggregate createProductAggregate(Product product, List<Review> reviews) {
@@ -98,4 +106,5 @@ public class StoreClientApiController implements ProductCompositeClientApi {
         return new ProductAggregate().productId(productId).name(name).weight(weight).reviews(reviewSummaries)
             .createDate(createDate).additions(additions);
     }
+
 }

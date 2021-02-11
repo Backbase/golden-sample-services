@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -74,6 +75,7 @@ class StoreClientApiControllerTest {
             .perform(get("/client-api/v1/product-composite/{productId}/", 1L)
                 .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON))
             .andExpect(status().is(200))
+            .andExpect(header().string("x-store-theme", "original"))
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.productId", is(1)))
             .andExpect(jsonPath("$.reviews[0].reviewId", is(1)))

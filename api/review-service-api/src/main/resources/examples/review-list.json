@@ -6,7 +6,7 @@
     "content": "I have no words for it",
     "subject": "Very nice!",
     "additions": {
-      "rating": "5"
+      "verified": "true"
     }
   },
   {
@@ -16,7 +16,7 @@
     "content": "I'll never buy it again",
     "subject": "Terrible!",
     "additions": {
-      "rating": "1"
+      "verified": "false"
     }
   }
 ]

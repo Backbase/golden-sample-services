@@ -4,18 +4,18 @@ backbase:
     tenants:
       - id: org_shop
         datasource:
-          url: jdbc:mysql://${db.host:localhost}:3306/review?useSSL=false&serverTimezone=UTC
-          username: review_user
-          password: review_user
+          url: jdbc:tc:mysql:5.7:///databasename
+          username: test
+          password: test
       - id: rebrand_shop
         datasource:
-          url: jdbc:mysql://${db.host:localhost}:3306/rebrand_review?useSSL=false&serverTimezone=UTC
-          username: rebrand_review_user
-          password: rebrand_review_user
+          url: jdbc:tc:mysql:5.7:///databasename
+          username: test
+          password: test
     datasource:
       strategy: SWITCH_DATASOURCE
       defaults:
-        driver-class-name: com.mysql.cj.jdbc.Driver
+        driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
   api:
     extensions:
       classes:

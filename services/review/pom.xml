@@ -17,6 +17,11 @@
     <dependencies>
         <dependency>
             <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>auth-security</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
             <artifactId>api</artifactId>
         </dependency>
 

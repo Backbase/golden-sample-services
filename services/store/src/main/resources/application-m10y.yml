@@ -12,9 +12,7 @@ backbase:
         com.backbase.goldensample.store.api.service.v2.model.ProductAggregate: ext-product
         com.backbase.goldensample.store.api.service.v2.model.ReviewSummary: ext-review
       property-sets:
-        ext-product:
-          properties:
-            - property-name: popularity
-        ext-review:
-          properties:
-            - property-name: verified
+        ext-product: popularity
+        ext-product@tid(rebrand_shop): popularity,description
+        ext-review: verified
+        ext-review@tid(rebrand_shop): verified,purchaseDate

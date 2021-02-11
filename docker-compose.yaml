@@ -28,7 +28,7 @@ x-database-variables: &database-variables
   spring.jpa.hibernate.ddl-auto: none
   spring.datasource.username: root
   spring.datasource.password: backbase
-  spring.datasource.driver-class-name: com.mysql.jdbc.Driver
+  spring.datasource.driver-class-name: com.mysql.cj.jdbc.Driver
   spring.jpa.database-platform: org.hibernate.dialect.MySQL5Dialect
   spring.jpa.properties.hibernate.dialect: org.hibernate.dialect.MySQL5Dialect
 
@@ -143,6 +143,7 @@ services:
       app.review-service.host: review
       app.review-service.port: 8080
       SPRING_PROFILES_ACTIVE: ${COMPOSE_APP_PROFILE}
+      JAVA_TOOL_OPTIONS: -Dlogging.level.com.backbase.buildingblocks.communication.http.InterServiceLogger=DEBUG
     links:
       - registry
 

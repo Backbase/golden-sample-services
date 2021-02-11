@@ -17,7 +17,7 @@ In this example we will generate liquibase changelog from existing database.
 url=jdbc:mysql://localhost:3306/product?useSSL=false&serverTimezone=UTC&createDatabaseIfNotExist=true
 username=root
 password=backbase
-driver=com.mysql.jdbc.Driver
+driver=com.mysql.cj.jdbc.Driver
 ```
 
 #### Plugin Configuration
