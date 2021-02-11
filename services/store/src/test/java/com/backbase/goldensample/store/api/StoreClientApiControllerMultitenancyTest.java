@@ -30,7 +30,7 @@ import org.springframework.test.web.servlet.MvcResult;
 
 @SpringBootTest(classes = {Application.class})
 @AutoConfigureMockMvc
-@ActiveProfiles({"m10y"})
+@ActiveProfiles({"it","m10y"})
 class StoreClientApiControllerMultitenancyTest {
 
     @MockBean
