@@ -83,8 +83,8 @@
                         <phase>generate-sources</phase>
                         <configuration>
                             <inputSpec>${project.build.directory}/specs/client-api-v1.0.0.yaml</inputSpec>
-                            <apiPackage>com.backbase.goldensample.store.api.service.v2</apiPackage>
-                            <modelPackage>com.backbase.goldensample.store.api.service.v2.model</modelPackage>
+                            <apiPackage>com.backbase.goldensample.store.api.service.v1</apiPackage>
+                            <modelPackage>com.backbase.goldensample.store.api.service.v1.model</modelPackage>
                         </configuration>
                     </execution>
                     <execution>
@@ -97,8 +97,8 @@
                             <inputSpec>
                                 ${project.basedir}/../../api/product-api/src/main/resources/product-service-api-v1.yaml
                             </inputSpec>
-                            <apiPackage>com.backbase.goldensample.product.api.client.v2</apiPackage>
-                            <modelPackage>com.backbase.goldensample.product.api.client.v2.model</modelPackage>
+                            <apiPackage>com.backbase.goldensample.product.api.client.v1</apiPackage>
+                            <modelPackage>com.backbase.goldensample.product.api.client.v1.model</modelPackage>
                         </configuration>
                     </execution>
                     <execution>
@@ -125,8 +125,8 @@
                             <useTags>true</useTags>
                             <java8>true</java8>
                             <useOptional>false</useOptional>
-                            <apiPackage>com.backbase.goldensample.product.api.client.v2</apiPackage>
-                            <modelPackage>com.backbase.goldensample.product.api.client.v2.model</modelPackage>
+                            <apiPackage>com.backbase.goldensample.product.api.client.v1</apiPackage>
+                            <modelPackage>com.backbase.goldensample.product.api.client.v1.model</modelPackage>
                           </configOptions>
                         </configuration>
                         -->
@@ -135,8 +135,8 @@
                             <inputSpec>
                                 ${project.basedir}/../../api/review-service-api/src/main/resources/openapi-v1.yaml
                             </inputSpec>
-                            <apiPackage>com.backbase.goldensample.review.api.client.v2</apiPackage>
-                            <modelPackage>com.backbase.goldensample.review.api.client.v2.model</modelPackage>
+                            <apiPackage>com.backbase.goldensample.review.api.client.v1</apiPackage>
+                            <modelPackage>com.backbase.goldensample.review.api.client.v1.model</modelPackage>
                         </configuration>
                     </execution>
                 </executions>

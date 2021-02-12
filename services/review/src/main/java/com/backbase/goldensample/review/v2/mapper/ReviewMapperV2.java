@@ -1,15 +1,14 @@
-package com.backbase.goldensample.review.mapper;
+package com.backbase.goldensample.review.v2.mapper;
 
 
 import com.backbase.goldensample.review.persistence.ReviewEntity;
-import com.backbase.reviews.api.service.v1.model.Review;
+import com.backbase.reviews.api.service.v2.model.Review;
 import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Deprecated
 @Mapper(componentModel = "spring")
-public interface ReviewMapper {
+public interface ReviewMapperV2 {
 
   @Mapping(source = "id", target = "reviewId")
   Review entityToApi(ReviewEntity entity);

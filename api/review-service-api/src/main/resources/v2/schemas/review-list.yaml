@@ -1,0 +1,4 @@
+description: An array of reviews
+type: array
+items:
+  $ref: '../schemas/definitions.yaml#/components/schemas/Review'

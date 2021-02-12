@@ -53,7 +53,7 @@
                         </goals>
                         <configuration>
                             <inputSpec>${unversioned-filename-spec-dir}/product-integration-api-v1.yaml</inputSpec>
-                            <output>${project.build.directory}/generated-docs</output>
+                            <output>${project.build.directory}/generated-docs/integration-api</output>
                             <generatorName>boat-docs</generatorName>
                         </configuration>
                     </execution>
@@ -65,7 +65,7 @@
                         </goals>
                         <configuration>
                             <inputSpec>${unversioned-filename-spec-dir}/product-service-api-v1.yaml</inputSpec>
-                            <output>${project.build.directory}/generated-docs</output>
+                            <output>${project.build.directory}/generated-docs/service-api</output>
                             <generatorName>boat-docs</generatorName>
                         </configuration>
                     </execution>

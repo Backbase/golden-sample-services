@@ -1,0 +1,6 @@
+components:
+  schemas:
+    Review:
+      $ref: ../v1/schemas/review.yaml
+    ReviewList:
+      $ref: ../v1/schemas/review-list.yaml

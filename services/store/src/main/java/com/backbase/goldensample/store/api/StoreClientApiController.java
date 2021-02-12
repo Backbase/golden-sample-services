@@ -1,13 +1,13 @@
 package com.backbase.goldensample.store.api;
 
 import com.backbase.buildingblocks.presentation.errors.NotFoundException;
-import com.backbase.goldensample.product.api.client.v2.model.Product;
-import com.backbase.goldensample.product.api.client.v2.model.ProductId;
-import com.backbase.goldensample.review.api.client.v2.model.Review;
-import com.backbase.goldensample.review.api.client.v2.model.ReviewId;
-import com.backbase.goldensample.store.api.service.v2.ProductCompositeClientApi;
-import com.backbase.goldensample.store.api.service.v2.model.ProductAggregate;
-import com.backbase.goldensample.store.api.service.v2.model.ReviewSummary;
+import com.backbase.goldensample.product.api.client.v1.model.Product;
+import com.backbase.goldensample.product.api.client.v1.model.ProductId;
+import com.backbase.goldensample.review.api.client.v1.model.Review;
+import com.backbase.goldensample.review.api.client.v1.model.ReviewId;
+import com.backbase.goldensample.store.api.service.v1.ProductCompositeClientApi;
+import com.backbase.goldensample.store.api.service.v1.model.ProductAggregate;
+import com.backbase.goldensample.store.api.service.v1.model.ReviewSummary;
 import com.backbase.goldensample.store.service.ProductCompositeService;
 import java.time.LocalDate;
 import java.util.ArrayList;

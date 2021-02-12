@@ -1,13 +1,12 @@
 openapi: 3.0.3
 info:
   title: Review Service API
-  version: 1.0.0
-  description: DEPRECATED use V2 - Description of the API...
+  version: 2.0.0
+  description: Description of the API...
   license:
     name: Copyright Backbase
     url: https://www.backbase.com/legal
   x-icon: credit_card
-  x-deprecated: true
 servers:
   - description: Prism mock server
     url: http://localhost:4010
@@ -16,9 +15,8 @@ servers:
 tags:
   - name: review-service
 paths:
-  /service-api/v1/products/{productId}/reviews:
+  /service-api/v2/products/{productId}/reviews:
     get:
-      deprecated: true
       tags:
         - review-service
       summary: List reviews by product
@@ -40,7 +38,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ReviewList'
               example:
-                $ref: v1/examples/review-list.json
+                $ref: v2/examples/review-list.json
         '400':
           description: If one or more request parameters don't comply with the specification
           content:
@@ -66,7 +64,6 @@ paths:
               example:
                 $ref: lib/examples/internal-server-error.json
     delete:
-      deprecated: true
       tags:
         - review-service
       summary: Delete all product reviews
@@ -115,9 +112,8 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
               example:
                 $ref: lib/examples/internal-server-error.json
-  /service-api/v1/reviews:
+  /service-api/v2/reviews:
     post:
-      deprecated: true
       tags:
         - review-service
       summary: Create a review
@@ -129,7 +125,7 @@ paths:
             schema:
               $ref: '#/components/schemas/Review'
             example:
-              $ref: v1/examples/create-review-request.json
+              $ref: v2/examples/create-review-request.json
       responses:
         '204':
           description: If the review has been created successfully
@@ -138,7 +134,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ReviewId'
               example:
-                $ref: v1/examples/review-id.json
+                $ref: v2/examples/review-id.json
         '400':
           description: If one or more request parameters don't comply with the specification
           content:
@@ -172,7 +168,6 @@ paths:
               example:
                 $ref: lib/examples/internal-server-error.json
     put:
-      deprecated: true
       tags:
         - review-service
       summary: Update a review
@@ -184,7 +179,7 @@ paths:
             schema:
               $ref: '#/components/schemas/Review'
             example:
-              $ref: v1/examples/update-review-request.json
+              $ref: v2/examples/update-review-request.json
       responses:
         '204':
           description: If the review has been updated successfully
@@ -193,7 +188,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ReviewId'
               example:
-                $ref: v1/examples/review-id.json
+                $ref: v2/examples/review-id.json
         '400':
           description: If one or more request parameters don't comply with the specification
           content:
@@ -226,9 +221,70 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
               example:
                 $ref: lib/examples/internal-server-error.json
-  /service-api/v1/reviews/{reviewId}:
+  /service-api/v2/reviews/{reviewId}:
+    put:
+      tags:
+        - review-service
+      summary: Update a review
+      description: Updates an existing review
+      operationId: putReviewById
+      parameters:
+        - name: reviewId
+          in: path
+          description: reviewId
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Review'
+            example:
+              $ref: v2/examples/update-review-request.json
+      responses:
+        '204':
+          description: If the review has been updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReviewId'
+              example:
+                $ref: v2/examples/review-id.json
+        '400':
+          description: If one or more request parameters don't comply with the specification
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+              example:
+                $ref: lib/examples/bad-request-validation-error.json
+        '401':
+          description: If the authentication credentials provided are invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+              example:
+                $ref: lib/examples/unauthorized-error.json
+        '403':
+          description: If the current user doesn't have authorization to update reviews
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+              example:
+                $ref: lib/examples/forbidden-error.json
+        '500':
+          description: If a runtime error occurs while processing the request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+              example:
+                $ref: lib/examples/internal-server-error.json
     get:
-      deprecated: true
       tags:
         - review-service
       summary: Retrieve review by ID
@@ -250,7 +306,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Review'
               example:
-                $ref: v1/examples/get-review-response.json
+                $ref: v2/examples/get-review-response.json
         '400':
           description: If one or more request parameters don't comply with the specification
           content:
@@ -292,7 +348,6 @@ paths:
               example:
                 $ref: lib/examples/internal-server-error.json
     delete:
-      deprecated: true
       tags:
         - review-service
       summary: Delete a review by ID
@@ -344,11 +399,11 @@ paths:
 components:
   schemas:
     Review:
-      $ref: v1/schemas/review.yaml
+      $ref: v2/schemas/review.yaml
     ReviewList:
-      $ref: v1/schemas/review-list.yaml
+      $ref: v2/schemas/review-list.yaml
     ReviewId:
-      $ref: v1/schemas/review-id.yaml
+      $ref: v2/schemas/review-id.yaml
     BadRequestError:
       $ref: 'lib/schemas/bad-request-error.yaml'
     ConflictError:

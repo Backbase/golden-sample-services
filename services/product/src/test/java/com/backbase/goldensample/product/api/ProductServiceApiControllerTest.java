@@ -14,7 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-import com.backbase.product.api.service.v2.model.Product;
+import com.backbase.product.api.service.v1.model.Product;
 import java.time.LocalDate;
 import java.util.List;
 import org.hamcrest.Matchers;
@@ -93,28 +93,6 @@ class ProductServiceApiControllerTest extends ProductApiController {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody))
             .andExpect(status().isOk());
-    }
-
-    @Test
-    void shouldUpdateAProductWithValidPayloadAndId() throws Exception {
-
-        String requestBody = "{\n" +
-            "  \"productId\": \"1\",\n" +
-            "  \"name\": \"Product 1\",\n" +
-            "  \"weight\": \"5\",\n" +
-            "  \"createDate\": \"2020-12-01\"\n" +
-            "}";
-
-        when(productService.updateProduct(any(Product.class)))
-            .thenReturn(productOne);
-
-        this
-            .mockMvc
-            .perform(put("/service-api/v2/products/{productId}", 1L)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(requestBody))
-            .andExpect(status().isNoContent());
-
     }
 
     @Test
