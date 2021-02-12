@@ -2,20 +2,19 @@ package com.backbase.goldensample.store.service;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-
-import com.backbase.goldensample.product.api.client.ApiClient;
-import com.backbase.goldensample.product.api.client.v1.ProductServiceApi;
-import com.backbase.goldensample.product.api.client.v1.model.Product;
-import com.backbase.goldensample.product.api.client.v1.model.ProductId;
-import com.backbase.goldensample.review.api.client.v1.ReviewServiceApi;
-import com.backbase.goldensample.review.api.client.v1.model.Review;
-import com.backbase.goldensample.review.api.client.v1.model.ReviewId;
+import com.backbase.buildingblocks.presentation.errors.InternalServerErrorException;
+import com.backbase.goldensample.store.domain.Product;
+import com.backbase.goldensample.store.domain.Review;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,123 +32,156 @@ class ProductCompositeServiceTest {
     private ProductCompositeService productCompositeService;
 
     @Mock
-    private ProductServiceApi productServiceApi;
+    private ProductClient productClient;
 
     @Mock
-    private ReviewServiceApi reviewServiceApi;
+    private ReviewClient reviewClient;
 
     @Mock
     ObjectMapper objectMapper;
 
     private static final LocalDate TODAY = LocalDate.of(2020, 1, 28);
 
-    private final Product product = new Product().productId(1L).name("Product").weight(20).createDate(TODAY);
-    private final Review review = new Review().productId(1L).reviewId(1L).author("author").content("content").subject("subject");
-    private final Review review2 = new Review().productId(1L).reviewId(2L).author("author").content("long content").subject("long subject");
+    private final Product product = createProduct(1L, "Product", 20, TODAY);
+    private final Review review = createReview(1L, 1L, "author", "content", "subject");
+    private final Review review2 = createReview(2L, 1L, "author", "long content", "long subject");
 
     @BeforeEach
     public void init() {
-        productCompositeService = new ProductCompositeService(productServiceApi, reviewServiceApi, objectMapper);
+        productCompositeService = new ProductCompositeService(productClient, reviewClient, objectMapper);
     }
 
     @Test
     @DisplayName("should retrieve a Product by Id")
     void getProduct() {
-        when(productServiceApi.getProductById(1L)).thenReturn(product);
-        when(productServiceApi.getApiClient()).thenReturn(new ApiClient());
+        when(productClient.getProductById(1L)).thenReturn(product);
+        when(reviewClient.getReviewListByProductId(1L)).thenReturn(List.of(review, review2));
 
         //test
-        Product product1 = productCompositeService.getProduct(1L);
+        Product product1 = productCompositeService.retrieveProductWithReviews(1L);
 
         assertAll(
             () -> assertEquals("Product", product1.getName()),
             () -> assertEquals(20, product1.getWeight()),
             () -> assertEquals(TODAY, product1.getCreateDate()));
-        verify(productServiceApi, times(1)).getProductById(1L);
+        assertEquals(2, product.getReviews().size());
+
+        verify(productClient, times(1)).getProductById(1L);
+        verify(reviewClient, times(1)).getReviewListByProductId(1L);
     }
 
     @Test
     @DisplayName("should retrieve a Product null")
     void getProductNull() {
-        when(productServiceApi.getProductById(1L)).thenReturn(null);
-        when(productServiceApi.getApiClient()).thenReturn(new ApiClient());
+        when(productClient.getProductById(1L)).thenReturn(null);
 
         //test
-        Product product1 = productCompositeService.getProduct(1L);
+        Product product1 = productCompositeService.retrieveProductWithReviews(1L);
 
-        assertEquals(null, product1);
-        verify(productServiceApi, times(1)).getProductById(1L);
+        assertNull(product1);
+        verify(productClient, times(1)).getProductById(1L);
+        verify(reviewClient, times(0)).getReviewListByProductId(1L);
     }
 
     @Test
     @DisplayName("should retrieve a HttpClientErrorException")
     void getProductHttpClientErrorException() {
-        when(productServiceApi.getProductById(1L)).thenThrow(new HttpClientErrorException(HttpStatus.BAD_REQUEST));
-        when(productServiceApi.getApiClient()).thenReturn(new ApiClient());
+        when(productClient.getProductById(1L)).thenThrow(new HttpClientErrorException(HttpStatus.BAD_REQUEST));
 
-        Assertions.assertThrows(HttpClientErrorException.class, () -> {productCompositeService.getProduct(1L);});
-        verify(productServiceApi, times(1)).getProductById(1L);
+        Assertions.assertThrows(InternalServerErrorException.class, () -> {
+            productCompositeService.retrieveProductWithReviews(1L);
+        });
+        verify(productClient, times(1)).getProductById(1L);
     }
 
     @Test
-    @DisplayName("should retrieve all the reviews from a Product")
-    void getReviews() {
-        when(reviewServiceApi.getReviewListByProductId(1L)).thenReturn(List.of(review, review2));
-        when(reviewServiceApi.getApiClient()).thenReturn(new com.backbase.goldensample.review.api.client.ApiClient());
-        
-        List<Review> reviews = productCompositeService.getReviews(1L);
-
-        assertEquals(2, reviews.size());
-        verify(reviewServiceApi, times(1)).getReviewListByProductId(1L);
-    }
-
-    @Test
-    @DisplayName("should retrieve an Exception")
+    @DisplayName("Should still retrieve the product when review retrieval fails")
     void getReviewsException() {
-        when(reviewServiceApi.getReviewListByProductId(1L)).thenThrow(new HttpClientErrorException(HttpStatus.BAD_REQUEST));
-        when(reviewServiceApi.getApiClient()).thenReturn(new com.backbase.goldensample.review.api.client.ApiClient());
+        when(productClient.getProductById(1L)).thenReturn(product);
+        when(reviewClient.getReviewListByProductId(1L)).thenThrow(new HttpClientErrorException(HttpStatus.BAD_REQUEST));
 
-        List<Review> reviews = productCompositeService.getReviews(1L);
+        Product myProduct = productCompositeService.retrieveProductWithReviews(1L);
+        assertNotNull(myProduct);
+        List<Review> reviews = myProduct.getReviews();
 
         assertEquals(0, reviews.size());
 
-        verify(reviewServiceApi, times(1)).getReviewListByProductId(1L);
+        verify(reviewClient, times(1)).getReviewListByProductId(1L);
     }
     
     @Test
     @DisplayName("should create a Product")
     void shouldCreateAProduct () {
-        when(productServiceApi.postProduct(product)).thenReturn(new ProductId().id(1L));
-        when(productServiceApi.getApiClient()).thenReturn(new ApiClient());
-        productCompositeService.createProduct(product);
-        verify(productServiceApi, times(1)).postProduct(product);
+        when(productClient.postProduct(product)).thenReturn(1L);
+
+        productCompositeService.createProductWithReviews(product);
+        verify(productClient, times(1)).postProduct(product);
+        verify(reviewClient, times(0)).postReview(any());
     }
 
     @Test
-    @DisplayName("should create a Product with Exception")
+    @DisplayName("should not create a Product with Exception")
     void shouldCreateAProductException () {
-        when(productServiceApi.postProduct(product)).thenThrow(new HttpClientErrorException(HttpStatus.BAD_REQUEST));
-        when(productServiceApi.getApiClient()).thenReturn(new ApiClient());
-        Assertions.assertThrows(HttpClientErrorException.class, () -> {productCompositeService.createProduct(product);});
-        verify(productServiceApi, times(1)).postProduct(product);
+        when(productClient.postProduct(product)).thenThrow(new HttpClientErrorException(HttpStatus.BAD_REQUEST));
+
+        Assertions.assertThrows(InternalServerErrorException.class, () -> {
+            productCompositeService.createProductWithReviews(product);
+        });
+        verify(productClient, times(1)).postProduct(product);
     }
 
     @Test
-    @DisplayName("should create a Review")
+    @DisplayName("should create a product with two reviews")
     void shouldCreateTwoReviews () {
-        when(reviewServiceApi.postReview(review)).thenReturn(new ReviewId().id(1L));
-        when(reviewServiceApi.getApiClient()).thenReturn(new com.backbase.goldensample.review.api.client.ApiClient());
-        productCompositeService.createReview(review);
-        verify(reviewServiceApi, times(1)).postReview(review);
+        Product myProduct = createProduct(1L, "name", 2, TODAY);
+        myProduct.setReviews(List.of(
+            createReview(1L, 1L, "me", "very good", "I like ;-) ;-) ;-)"),
+            createReview(1L, 1L, "me", "not so good", "Fails on startup")
+        ));
+        when(productClient.postProduct(myProduct)).thenReturn(1L);
+        when(reviewClient.postReview(any(Review.class))).thenAnswer(a -> a.getArgument(0, Review.class).getReviewId());
+
+        productCompositeService.createProductWithReviews(myProduct);
+        verify(productClient, times(1)).postProduct(myProduct);
+        verify(reviewClient, times(2)).postReview(any(Review.class));
     }
 
     @Test
     @DisplayName("should create a Review with Exception")
     void shouldCreateAReviewsWithException () {
-        when(reviewServiceApi.postReview(review)).thenThrow(new HttpClientErrorException(HttpStatus.BAD_REQUEST));
-        when(reviewServiceApi.getApiClient()).thenReturn(new com.backbase.goldensample.review.api.client.ApiClient());
-        Assertions.assertThrows(HttpClientErrorException.class, () -> {productCompositeService.createReview(review);});
-        verify(reviewServiceApi, times(1)).postReview(review);
+        when(productClient.postProduct(any())).thenReturn(1L);
+        when(reviewClient.postReview(review)).thenThrow(new HttpClientErrorException(HttpStatus.BAD_REQUEST));
+
+        Product myNewProduct = createProduct(1L, "new", 1, TODAY);
+        myNewProduct.setReviews(Collections.singletonList(review));
+
+        Assertions.assertThrows(InternalServerErrorException.class, () -> {
+            productCompositeService.createProductWithReviews(myNewProduct);
+        });
+        verify(reviewClient, times(1)).postReview(review);
+    }
+
+    private com.backbase.goldensample.store.domain.Product createProduct(
+            Long id, String name, Integer weight, LocalDate createDate) {
+
+        com.backbase.goldensample.store.domain.Product product = new com.backbase.goldensample.store.domain.Product();
+        product.setProductId(id);
+        product.setName(name);
+        product.setWeight(weight);
+        product.setCreateDate(createDate);
+        return product;
+    }
+
+    private com.backbase.goldensample.store.domain.Review createReview(
+            Long reviewId, Long productId, String author, String subject, String content) {
+
+        com.backbase.goldensample.store.domain.Review review = new com.backbase.goldensample.store.domain.Review();
+        review.setReviewId(reviewId);
+        review.setProductId(productId);
+        review.setAuthor(author);
+        review.setSubject(subject);
+        review.setContent(content);
+        return review;
     }
 
 }
