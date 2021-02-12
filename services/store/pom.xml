@@ -53,6 +53,11 @@
             <artifactId>jsr305</artifactId>
             <version>3.0.2</version>
         </dependency>
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>3.2.2</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -102,7 +107,7 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>generate-review-client-api-code</id>
+                        <id>generate-review-client-api-code-v1</id>
                         <goals>
                             <goal>generate-rest-template-embedded</goal>
                         </goals>
@@ -137,6 +142,20 @@
                             </inputSpec>
                             <apiPackage>com.backbase.goldensample.review.api.client.v1</apiPackage>
                             <modelPackage>com.backbase.goldensample.review.api.client.v1.model</modelPackage>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-review-client-api-code-v2</id>
+                        <goals>
+                            <goal>generate-rest-template-embedded</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <inputSpec>
+                                ${project.basedir}/../../api/review-service-api/src/main/resources/openapi-v2.yaml
+                            </inputSpec>
+                            <apiPackage>com.backbase.goldensample.review.api.client.v2</apiPackage>
+                            <modelPackage>com.backbase.goldensample.review.api.client.v2.model</modelPackage>
                         </configuration>
                     </execution>
                 </executions>
