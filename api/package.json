@@ -3,18 +3,10 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
-    "prism-static": "prism mock $BASE_PATH/src/main/resources/openapi.yaml",
-    "prism-dynamic": "prism mock -d $BASE_PATH/src/main/resources/openapi.yaml",
-    "validate": "swagger-cli validate $BASE_PATH/src/main/resources/openapi.yaml",
-    "lint-openapi": "spectral lint $BASE_PATH/src/main/resources/openapi.yaml --ruleset $BASE_PATH/../api-linting/openapi-rules.yaml",
-    "lint-schemas": "spectral lint $BASE_PATH/src/main/resources/schemas/**/*.yaml --ruleset $BASE_PATH/../api-linting/schema-rules.yaml",
-    "check-backwards-compatibility": "curl -sL -H \"${SPEC_AUTH}\" https://api.backbase.cloud/doc/$SPEC_NAME -o $BASE_PATH/target/$SPEC_NAME && openapi-diff $BASE_PATH/target/$SPEC_NAME $BASE_PATH/target/openapi.yaml",
-    "bundle": "swagger-cli bundle -t yaml -o $BASE_PATH/target/openapi.yaml $BASE_PATH/src/main/resources/openapi.yaml"
+    "prism-static": "prism mock $BASE_PATH/${SPEC_NAME}",
+    "prism-dynamic": "prism mock -d $BASE_PATH/${SPEC_NAME}"
   },
   "dependencies": {
-    "@stoplight/prism-cli": "3.3.6",
-    "@stoplight/spectral": "5.5.0",
-    "openapi-diff": "0.23.2",
-    "swagger-cli": "4.0.4"
+    "@stoplight/prism-cli": "4.0.1"
   }
 }
