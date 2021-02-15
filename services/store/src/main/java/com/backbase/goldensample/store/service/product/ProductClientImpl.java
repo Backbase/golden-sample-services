@@ -2,6 +2,7 @@ package com.backbase.goldensample.store.service.product;
 
 import com.backbase.goldensample.product.api.client.v1.ProductServiceApi;
 import com.backbase.goldensample.store.domain.Product;
+import com.backbase.goldensample.store.service.ProductClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -11,7 +12,7 @@ import org.springframework.web.client.HttpClientErrorException;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class ProductClient implements com.backbase.goldensample.store.service.ProductClient {
+public class ProductClientImpl implements ProductClient {
 
     private final ProductServiceApi productServiceApi;
     private final ProductMapper productMapper;
