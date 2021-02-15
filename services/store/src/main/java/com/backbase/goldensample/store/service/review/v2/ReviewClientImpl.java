@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Slf4j
 @ConditionalOnProperty(name = "api-version", prefix = "app.review-service", havingValue = "v2")
-public class ReviewClient implements com.backbase.goldensample.store.service.ReviewClient {
+public class ReviewClientImpl implements com.backbase.goldensample.store.service.ReviewClient {
 
     private final ReviewServiceApi reviewServiceApi;
     private final ReviewMapper reviewMapper;
