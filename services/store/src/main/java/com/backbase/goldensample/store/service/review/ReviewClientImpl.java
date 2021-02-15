@@ -2,6 +2,7 @@ package com.backbase.goldensample.store.service.review;
 
 import com.backbase.goldensample.review.api.client.v1.ReviewServiceApi;
 import com.backbase.goldensample.store.domain.Review;
+import com.backbase.goldensample.store.service.ReviewClient;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,12 +11,15 @@ import org.springframework.stereotype.Component;
 
 /**
  * Adapts the internal domain to the model of the v1 Review api.
+ *
+ * @Deprecated. This class wraps the Deprecated v1 ReviewServiceApi. It will be replaced by the v2 ReviewServiceApi.
  */
 @Component
 @RequiredArgsConstructor
 @Slf4j
 @ConditionalOnProperty(name = "api-version", prefix = "app.review-service", havingValue = "v1", matchIfMissing = true)
-public class ReviewClient implements com.backbase.goldensample.store.service.ReviewClient {
+@Deprecated
+public class ReviewClientImpl implements ReviewClient {
 
     private final ReviewServiceApi reviewServiceApi;
     private final ReviewMapper reviewMapper;
