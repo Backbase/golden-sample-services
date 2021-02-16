@@ -12,10 +12,10 @@ public class ProductClientConfig extends AbstractClientConfig {
 
     @Bean
     public ProductServiceApi productServiceImplApi() {
-        return new ProductServiceApi(createaApiClient());
+        return new ProductServiceApi(createApiClient());
     }
 
-    private ApiClient createaApiClient() {
+    private ApiClient createApiClient() {
         return new ApiClient(restTemplate).setBasePath(basePath());
     }
 
