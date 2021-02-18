@@ -14,8 +14,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.backbase.buildingblocks.testutils.TestTokenUtil;
 import com.backbase.goldensample.review.Application;
+import com.backbase.goldensample.review.mapper.ReviewMapper;
+import com.backbase.goldensample.review.persistence.ReviewEntity;
 import com.backbase.goldensample.review.service.ReviewService;
-import com.backbase.reviews.api.service.v2.model.Review;
+import com.backbase.reviews.api.service.v1.model.Review;
 import java.util.List;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -38,10 +40,14 @@ class ReviewServiceApiControllerMultitenancyTest {
     @MockBean
     private ReviewService reviewService;
 
+    @MockBean
+    private ReviewMapper reviewMapper;
+
     @Autowired
     private MockMvc mockMvc;
 
     private final Review reviewOne = createReview(1L, 1L, "author", "subject", "long content");
+    private final ReviewEntity reviewEntity = createEntity();
 
     @Test
     void shouldGetEmptyArrayWhenNoReviews() throws Exception {
@@ -62,7 +68,7 @@ class ReviewServiceApiControllerMultitenancyTest {
     void shouldGetReviewsWhenServiceReturnsReviewsOfAProduct() throws Exception {
         Review reviewTwo = createReview(2L, 1L, "another author", "another subject", "super long content");
 
-        when(reviewService.getReviewsByProductId(1L)).thenReturn(List.of(reviewOne, reviewTwo));
+        when(reviewMapper.entityListToApiList(any(List.class))).thenReturn((List.of(reviewOne, reviewTwo)));
 
         this.mockMvc
             .perform(get("/service-api/v1/products/{productId}/reviews", 1L)
@@ -84,7 +90,6 @@ class ReviewServiceApiControllerMultitenancyTest {
             .andExpect(jsonPath("$[1].content", is("super long content")));
     }
 
-
     @Test
     void shouldFailWithUnrecognisedAdditionsForTenant1() throws Exception {
         String requestBody = "{\n" +
@@ -96,8 +101,8 @@ class ReviewServiceApiControllerMultitenancyTest {
             "    \"purchaseDate\": \"today\"}\n" +
             "}";
 
-        when(reviewService.createReview(any(Review.class)))
-            .thenReturn(reviewOne);
+        when(reviewMapper.entityToApi(any(ReviewEntity.class))).thenReturn(reviewOne);
+        when(reviewService.getReview(1)).thenReturn(reviewEntity);
 
         MvcResult result = this.mockMvc
             .perform(post("/service-api/v1/reviews")
@@ -126,8 +131,8 @@ class ReviewServiceApiControllerMultitenancyTest {
             "    \"purchaseDate\": \"today\"}\n" +
             "}";
 
-        when(reviewService.createReview(any(Review.class)))
-            .thenReturn(reviewOne);
+        when(reviewMapper.apiToEntity(any(Review.class))).thenReturn(reviewEntity);
+        when(reviewService.createReview(any(ReviewEntity.class))).thenReturn(reviewEntity);
 
         this.mockMvc
             .perform(post("/service-api/v1/reviews")
@@ -142,6 +147,12 @@ class ReviewServiceApiControllerMultitenancyTest {
     private Review createReview(Long reviewId, Long productId, String author, String subject, String content) {
         Review result = new Review().reviewId(reviewId).productId(productId).author(author).subject(subject).content(content);
         return result;
+    }
+
+    private ReviewEntity createEntity(){
+        ReviewEntity reviewIdentity = new ReviewEntity();
+        reviewIdentity.setId(1L);
+        return reviewIdentity;
     }
 
 }

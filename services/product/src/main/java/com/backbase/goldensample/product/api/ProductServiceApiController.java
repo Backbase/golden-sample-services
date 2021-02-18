@@ -1,9 +1,9 @@
 package com.backbase.goldensample.product.api;
 
 import com.backbase.goldensample.product.service.ProductService;
-import com.backbase.product.api.service.v2.ProductServiceApi;
-import com.backbase.product.api.service.v2.model.Product;
-import com.backbase.product.api.service.v2.model.ProductId;
+import com.backbase.product.api.service.v1.ProductServiceApi;
+import com.backbase.product.api.service.v1.model.Product;
+import com.backbase.product.api.service.v1.model.ProductId;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -66,15 +66,6 @@ public class ProductServiceApiController implements ProductServiceApi {
     @Override
     public ResponseEntity<Void> putProduct(@Valid Product product) {
         log.debug("Update a product {}", product);
-        Product productWithId = prodService.updateProduct(product);
-        log.debug("product with id {} updated", productWithId.getProductId());
-        return ResponseEntity.noContent().build();
-    }
-
-    @Override
-    public ResponseEntity<Void> putProductById(Long productId, @Valid Product product) {
-        log.debug("Update a product {} with values {}", productId, product);
-        product.setProductId(productId);
         Product productWithId = prodService.updateProduct(product);
         log.debug("product with id {} updated", productWithId.getProductId());
         return ResponseEntity.noContent().build();

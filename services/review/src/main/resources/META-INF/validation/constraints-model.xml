@@ -3,6 +3,12 @@
     xsi:schemaLocation="http://jboss.org/xml/ns/javax/validation/mapping validation-mapping-1.1.xsd"
     xmlns="http://jboss.org/xml/ns/javax/validation/mapping" version="1.1">
 
+    <bean class="com.backbase.reviews.api.service.v1.model.Review" ignore-annotations="false">
+        <class>
+            <constraint annotation="com.backbase.buildingblocks.backend.validation.AdditionalProperties"/>
+        </class>
+    </bean>
+
     <bean class="com.backbase.reviews.api.service.v2.model.Review" ignore-annotations="false">
         <class>
             <constraint annotation="com.backbase.buildingblocks.backend.validation.AdditionalProperties"/>

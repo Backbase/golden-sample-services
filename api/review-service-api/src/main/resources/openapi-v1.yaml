@@ -2,11 +2,12 @@ openapi: 3.0.3
 info:
   title: Review Service API
   version: 1.0.0
-  description: Description of the API...
+  description: DEPRECATED use V2 - Description of the API...
   license:
     name: Copyright Backbase
     url: https://www.backbase.com/legal
   x-icon: credit_card
+  x-deprecated: true
 servers:
   - description: Prism mock server
     url: http://localhost:4010
@@ -17,6 +18,7 @@ tags:
 paths:
   /service-api/v1/products/{productId}/reviews:
     get:
+      deprecated: true
       tags:
         - review-service
       summary: List reviews by product
@@ -32,7 +34,7 @@ paths:
             format: int64
       responses:
         '200':
-          $ref: 'schemas/definitions.yaml#/components/responses/200ReviewList'
+          $ref: 'v1/schemas/definitions.yaml#/components/responses/200ReviewList'
         '400':
           $ref: 'lib/common-types.yaml#/components/responses/400BadRequest'
         '401':
@@ -40,6 +42,7 @@ paths:
         '500':
           $ref: 'lib/common-types.yaml#/components/responses/500InternalServerError'
     delete:
+      deprecated: true
       tags:
         - review-service
       summary: Delete all product reviews
@@ -67,6 +70,7 @@ paths:
 
   /service-api/v1/reviews:
     post:
+      deprecated: true
       tags:
         - review-service
       summary: Create a review
@@ -76,12 +80,12 @@ paths:
         content:
           application/json:
             schema:
-              $ref: 'schemas/definitions.yaml#/components/schemas/Review'
+              $ref: 'v1/schemas/definitions.yaml#/components/schemas/Review'
             example:
-              $ref: examples/create-review-request.json
+              $ref: v1/examples/create-review-request.json
       responses:
         '204':
-          $ref: 'schemas/definitions.yaml#/components/responses/204ReviewId'
+          $ref: 'v1/schemas/definitions.yaml#/components/responses/204ReviewId'
         '400':
           $ref: 'lib/common-types.yaml#/components/responses/400BadRequest'
         '401':
@@ -91,6 +95,7 @@ paths:
         '500':
           $ref: 'lib/common-types.yaml#/components/responses/500InternalServerError'
     put:
+      deprecated: true
       tags:
         - review-service
       summary: Update a review
@@ -100,12 +105,12 @@ paths:
         content:
           application/json:
             schema:
-              $ref: 'schemas/definitions.yaml#/components/schemas/Review'
+              $ref: 'v1/schemas/definitions.yaml#/components/schemas/Review'
             example:
-              $ref: examples/update-review-request.json
+              $ref: v1/examples/update-review-request.json
       responses:
         '204':
-          $ref: 'schemas/definitions.yaml#/components/responses/204ReviewId'
+          $ref: 'v1/schemas/definitions.yaml#/components/responses/204ReviewId'
         '400':
           $ref: 'lib/common-types.yaml#/components/responses/400BadRequest'
         '401':
@@ -117,6 +122,7 @@ paths:
 
   /service-api/v1/reviews/{reviewId}:
     get:
+      deprecated: true
       tags:
         - review-service
       summary: Retrieve review by ID
@@ -136,9 +142,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'schemas/definitions.yaml#/components/schemas/Review'
+                $ref: 'v1/schemas/definitions.yaml#/components/schemas/Review'
               example:
-                $ref: examples/get-review-response.json
+                $ref: v1/examples/get-review-response.json
         '400':
           $ref: 'lib/common-types.yaml#/components/responses/400BadRequest'
         '401':
@@ -150,6 +156,7 @@ paths:
         '500':
           $ref: 'lib/common-types.yaml#/components/responses/500InternalServerError'
     delete:
+      deprecated: true
       tags:
         - review-service
       summary: Delete a review by ID

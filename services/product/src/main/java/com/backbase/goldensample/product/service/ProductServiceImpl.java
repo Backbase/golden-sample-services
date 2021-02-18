@@ -3,7 +3,7 @@ package com.backbase.goldensample.product.service;
 import com.backbase.buildingblocks.presentation.errors.NotFoundException;
 import com.backbase.goldensample.product.mapper.ProductMapper;
 import com.backbase.goldensample.product.persistence.ProductRepository;
-import com.backbase.product.api.service.v2.model.Product;
+import com.backbase.product.api.service.v1.model.Product;
 import java.time.Duration;
 import java.util.List;
 import java.util.Random;

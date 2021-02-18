@@ -36,7 +36,18 @@ import org.hibernate.annotations.GenericGenerator;
 @AllArgsConstructor
 public class ReviewEntity {
 
+    /*
+     * IMPORTANT:
+     * Set toString, equals, and hashCode as described in these
+     * documents:
+     * - https://vladmihalcea.com/the-best-way-to-implement-equals-hashcode-and-tostring-with-jpa-and-hibernate/
+     * - https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+     * - https://vladmihalcea.com/hibernate-facts-equals-and-hashcode/
+     */
+
     /**
+     *
+     *
      * <p>Primary key is generated with {@link GenerationType#SEQUENCE} for every database except MySql which does not
      * support sequences.</p> <p>For MySql the generation strategy is overridden to be {@link
      * GenerationType#IDENTITY}.</p>
@@ -84,6 +95,7 @@ public class ReviewEntity {
     @NonNull
     @NotBlank
     private String content;
+    private Integer stars;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @MapKeyColumn(name = "property_key")
@@ -95,11 +107,12 @@ public class ReviewEntity {
     public ReviewEntity() {
     }
 
-    public ReviewEntity(Long productId, String author, String subject, String content, Map<String, String> additions) {
+    public ReviewEntity(Long productId, String author, String subject, String content, Integer stars, Map<String, String> additions) {
         this.productId = productId;
         this.author = author;
         this.subject = subject;
         this.content = content;
+        this.stars = stars;
         this.additions = additions;
     }
 }

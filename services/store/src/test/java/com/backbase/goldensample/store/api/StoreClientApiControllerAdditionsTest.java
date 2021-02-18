@@ -8,10 +8,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.backbase.goldensample.product.api.client.v2.model.Product;
-import com.backbase.goldensample.product.api.client.v2.model.ProductId;
-import com.backbase.goldensample.review.api.client.v2.model.Review;
-import com.backbase.goldensample.review.api.client.v2.model.ReviewId;
+import com.backbase.goldensample.product.api.client.v1.model.Product;
+import com.backbase.goldensample.product.api.client.v1.model.ProductId;
+import com.backbase.goldensample.review.api.client.v1.model.Review;
+import com.backbase.goldensample.review.api.client.v1.model.ReviewId;
 import com.backbase.goldensample.store.Application;
 import com.backbase.goldensample.store.service.ProductCompositeService;
 import org.junit.jupiter.api.DisplayName;
@@ -30,8 +30,8 @@ import org.springframework.test.web.servlet.MvcResult;
 @AutoConfigureMockMvc
 @ActiveProfiles({"it"})
 @TestPropertySource(properties = {
-    "backbase.api.extensions.classes.com.backbase.goldensample.store.api.service.v2.model.ProductAggregate=prod-set",
-    "backbase.api.extensions.classes.com.backbase.goldensample.store.api.service.v2.model.ReviewSummary=rev-set",
+    "backbase.api.extensions.classes.com.backbase.goldensample.store.api.service.v1.model.ProductAggregate=prod-set",
+    "backbase.api.extensions.classes.com.backbase.goldensample.store.api.service.v1.model.ReviewSummary=rev-set",
     "backbase.api.extensions.property-sets.prod-set.properties[0].property-name=param-prod1",
     "backbase.api.extensions.property-sets.rev-set.properties[0].property-name=param-rev1"})
 class StoreClientApiControllerAdditionsTest {

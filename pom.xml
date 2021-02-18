@@ -35,6 +35,10 @@
                 <updatePolicy>always</updatePolicy>
             </releases>
         </repository>
+        <repository>
+            <id>repo-charts</id>
+            <url>https://repo.backbase.com/backbase-charts</url>
+        </repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>

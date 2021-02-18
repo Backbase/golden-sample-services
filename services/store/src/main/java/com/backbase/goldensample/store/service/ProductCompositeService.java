@@ -1,12 +1,12 @@
 package com.backbase.goldensample.store.service;
 
 import com.backbase.buildingblocks.presentation.errors.NotFoundException;
-import com.backbase.goldensample.product.api.client.v2.ProductServiceApi;
-import com.backbase.goldensample.product.api.client.v2.model.Product;
-import com.backbase.goldensample.product.api.client.v2.model.ProductId;
-import com.backbase.goldensample.review.api.client.v2.ReviewServiceApi;
-import com.backbase.goldensample.review.api.client.v2.model.Review;
-import com.backbase.goldensample.review.api.client.v2.model.ReviewId;
+import com.backbase.goldensample.product.api.client.v1.ProductServiceApi;
+import com.backbase.goldensample.product.api.client.v1.model.Product;
+import com.backbase.goldensample.product.api.client.v1.model.ProductId;
+import com.backbase.goldensample.review.api.client.v1.ReviewServiceApi;
+import com.backbase.goldensample.review.api.client.v1.model.Review;
+import com.backbase.goldensample.review.api.client.v1.model.ReviewId;
 import com.backbase.goldensample.store.HttpErrorInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;

@@ -1,11 +1,11 @@
 components:
   schemas:
     Review:
-      $ref: ../schemas/review.yaml
+      $ref: ../v2/schemas/review.yaml
     ReviewList:
-      $ref: ../schemas/review-list.yaml
+      $ref: ../v2/schemas/review-list.yaml
     ReviewId:
-      $ref: ../schemas/review-id.yaml
+      $ref: ../v2/schemas/review-id.yaml
     Additions:
       $ref: ../lib/schemas/additions.yaml
 

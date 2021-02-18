@@ -19,6 +19,7 @@ backbase:
   api:
     extensions:
       classes:
+        com.backbase.reviews.api.service.v1.model.Review: ext-review
         com.backbase.reviews.api.service.v2.model.Review: ext-review
       property-sets:
         ext-review: verified

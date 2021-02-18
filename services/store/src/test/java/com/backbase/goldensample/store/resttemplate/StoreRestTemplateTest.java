@@ -6,12 +6,12 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.backbase.buildingblocks.communication.http.HttpCommunicationConfiguration;
 import com.backbase.buildingblocks.test.http.MockTokenResponseClientConfiguration;
-import com.backbase.goldensample.product.api.client.v2.ProductServiceApi;
-import com.backbase.goldensample.product.api.client.v2.model.Product;
-import com.backbase.goldensample.product.api.client.v2.model.ProductId;
-import com.backbase.goldensample.review.api.client.v2.ReviewServiceApi;
-import com.backbase.goldensample.review.api.client.v2.model.Review;
-import com.backbase.goldensample.review.api.client.v2.model.ReviewId;
+import com.backbase.goldensample.product.api.client.v1.ProductServiceApi;
+import com.backbase.goldensample.product.api.client.v1.model.Product;
+import com.backbase.goldensample.product.api.client.v1.model.ProductId;
+import com.backbase.goldensample.review.api.client.v1.ReviewServiceApi;
+import com.backbase.goldensample.review.api.client.v1.model.Review;
+import com.backbase.goldensample.review.api.client.v1.model.ReviewId;
 import com.backbase.goldensample.store.config.StoreIntegrationConfig;
 import java.time.LocalDate;
 import java.util.List;

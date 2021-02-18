@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.backbase.goldensample.product.persistence.ProductEntity;
-import com.backbase.product.api.service.v2.model.Product;
+import com.backbase.product.api.service.v1.model.Product;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
@@ -25,16 +25,16 @@ class MapperTests {
 
         ProductEntity entity = mapper.apiToEntity(api);
 
-        assertAll(() -> assertEquals(api.getProductId(), entity.getId()),
-            () -> assertEquals(api.getName(), entity.getName()),
-            () -> assertEquals(api.getWeight(), entity.getWeight()),
-            () -> assertEquals(api.getCreateDate(), entity.getCreateDate()));
+        assertAll(() -> assertEquals(api.getProductId(), entity.getId(), "Product ID is different"),
+            () -> assertEquals(api.getName(), entity.getName(), "Name is different"),
+            () -> assertEquals(api.getWeight(), entity.getWeight(), "Weight is different"),
+            () -> assertEquals(api.getCreateDate(), entity.getCreateDate(), "Create Date is different"));
 
         Product api2 = mapper.entityToApi(entity);
 
-        assertAll(() -> assertEquals(api.getProductId(), api2.getProductId()),
-            () -> assertEquals(api.getName(), api2.getName()),
-            () -> assertEquals(api.getWeight(), api2.getWeight()),
-            () -> assertEquals(api.getCreateDate(), api2.getCreateDate()));
+        assertAll(() -> assertEquals(api.getProductId(), api2.getProductId(), "Product ID is different"),
+            () -> assertEquals(api.getName(), api2.getName(), "Name is different"),
+            () -> assertEquals(api.getWeight(), api2.getWeight(), "Weight is different"),
+            () -> assertEquals(api.getCreateDate(), api2.getCreateDate(), "Create Date is different"));
     }
 }

@@ -42,7 +42,7 @@ class PersistenceIT {
 
     repository.deleteAll();
 
-    ReviewEntity entity = new ReviewEntity(1L, "author", "subject", "content", Collections.singletonMap("verified","true"));
+    ReviewEntity entity = new ReviewEntity(1L, "author", "subject", "content", 5, Collections.singletonMap("verified","true"));
     savedEntity = repository.save(entity);
 
     assertEquals(entity, savedEntity);
@@ -50,7 +50,7 @@ class PersistenceIT {
 
   @Test
   void create() {
-    ReviewEntity newEntity = new ReviewEntity(1L, "author", "subject", "content", Collections.singletonMap("verified","true"));
+    ReviewEntity newEntity = new ReviewEntity(1L, "author", "subject", "content", 5, Collections.singletonMap("verified","true"));
     repository.save(newEntity);
 
     ReviewEntity foundEntity = repository.findById(newEntity.getId()).get();

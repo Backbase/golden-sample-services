@@ -14,7 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.backbase.buildingblocks.testutils.TestTokenUtil;
 import com.backbase.goldensample.product.Application;
-import com.backbase.product.api.service.v2.model.Product;
+import com.backbase.product.api.service.v1.model.Product;
 import java.time.LocalDate;
 import java.util.List;
 import org.hamcrest.Matchers;

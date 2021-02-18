@@ -1,7 +1,7 @@
 package com.backbase.goldensample.product.api;
 
 import com.backbase.goldensample.product.service.ProductService;
-import com.backbase.product.api.service.v2.model.Product;
+import com.backbase.product.api.service.v1.model.Product;
 import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
