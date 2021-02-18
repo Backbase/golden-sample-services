@@ -2,8 +2,7 @@ package com.backbase.goldensample.store.service;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -16,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -58,7 +58,7 @@ class ProductCompositeServiceTest {
         when(reviewClient.getReviewListByProductId(1L)).thenReturn(List.of(review, review2));
 
         //test
-        Product product1 = productCompositeService.retrieveProductWithReviews(1L);
+        Product product1 = productCompositeService.retrieveProductWithReviews(1L).get();
 
         assertAll(
             () -> assertEquals("Product", product1.getName()),
@@ -76,9 +76,9 @@ class ProductCompositeServiceTest {
         when(productClient.getProductById(1L)).thenReturn(null);
 
         //test
-        Product product1 = productCompositeService.retrieveProductWithReviews(1L);
+        Optional<Product> product1 = productCompositeService.retrieveProductWithReviews(1L);
 
-        assertNull(product1);
+        assertTrue(product1.isEmpty());
         verify(productClient, times(1)).getProductById(1L);
         verify(reviewClient, times(0)).getReviewListByProductId(1L);
     }
@@ -100,9 +100,9 @@ class ProductCompositeServiceTest {
         when(productClient.getProductById(1L)).thenReturn(product);
         when(reviewClient.getReviewListByProductId(1L)).thenThrow(new HttpClientErrorException(HttpStatus.BAD_REQUEST));
 
-        Product myProduct = productCompositeService.retrieveProductWithReviews(1L);
-        assertNotNull(myProduct);
-        List<Review> reviews = myProduct.getReviews();
+        Optional<Product> myProduct = productCompositeService.retrieveProductWithReviews(1L);
+        assertTrue(myProduct.isPresent());
+        List<Review> reviews = myProduct.get().getReviews();
 
         assertEquals(0, reviews.size());
 

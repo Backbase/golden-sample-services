@@ -7,7 +7,9 @@ import com.backbase.goldensample.store.config.StoreViewConfig;
 import com.backbase.goldensample.store.domain.Product;
 import com.backbase.goldensample.store.mapper.StoreMapper;
 import com.backbase.goldensample.store.service.ProductCompositeService;
+import java.util.Optional;
 import javax.validation.Valid;
+import javax.ws.rs.HEAD;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -27,13 +29,13 @@ public class StoreClientApiController implements ProductCompositeClientApi {
     public ResponseEntity<ProductAggregate> getProductById(Long productId) {
         log.debug("getCompositeProduct: lookup a product aggregate for productId: {}", productId);
 
-        Product product = productCompositeService.retrieveProductWithReviews(productId);
-        if (product == null) {
+        Optional<Product> product = productCompositeService.retrieveProductWithReviews(productId);
+        if (product.isEmpty()) {
             log.debug("No product was found for id {}", productId);
             throw new NotFoundException("No product found for productId: " + productId);
         }
 
-        return withThemeHeader(ResponseEntity.ok()).body(storeMapper.map(product));
+        return withThemeHeader(ResponseEntity.ok()).body(storeMapper.map(product.get()));
     }
 
 
@@ -56,6 +58,5 @@ public class StoreClientApiController implements ProductCompositeClientApi {
     private BodyBuilder withThemeHeader(BodyBuilder responseEntity) {
         return responseEntity.header(StoreViewConfig.STORE_THEME_RESPONSE_HEADER_NAME, storeViewConfig.getTheme());
     }
-
 
 }

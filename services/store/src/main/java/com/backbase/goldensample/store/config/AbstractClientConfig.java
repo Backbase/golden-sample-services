@@ -3,9 +3,11 @@ package com.backbase.goldensample.store.config;
 import javax.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -13,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
  */
 @Getter
 @Setter
+@Validated
 public abstract class AbstractClientConfig {
 
     @Autowired
@@ -26,6 +29,14 @@ public abstract class AbstractClientConfig {
     private String serviceId;
 
     private Integer servicePort;
+
+    protected AbstractClientConfig(String defaultServiceId) {
+        super();
+        if (StringUtils.isBlank(defaultServiceId)) {
+            throw new IllegalArgumentException("Default service id should not be blank.");
+        }
+        serviceId = defaultServiceId;
+    }
 
 
     String basePath() {

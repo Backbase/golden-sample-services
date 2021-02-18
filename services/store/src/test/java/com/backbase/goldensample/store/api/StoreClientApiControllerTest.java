@@ -22,6 +22,7 @@ import com.backbase.goldensample.store.service.ProductCompositeService;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.TimeZone;
 import javax.annotation.PostConstruct;
 import org.junit.jupiter.api.DisplayName;
@@ -85,7 +86,7 @@ class StoreClientApiControllerTest {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
-        when(productCompositeService.retrieveProductWithReviews(1L)).thenReturn((productOne));
+        when(productCompositeService.retrieveProductWithReviews(1L)).thenReturn(Optional.of(productOne));
 
         this.mockMvc
             .perform(get("/client-api/v1/product-composite/{productId}/", 1L)
