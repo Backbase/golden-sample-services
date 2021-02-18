@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -34,20 +35,20 @@ public class ProductCompositeService {
      * @param productId
      * @return
      */
-    public Product retrieveProductWithReviews(long productId) {
+    public Optional<Product> retrieveProductWithReviews(long productId) {
 
         try {
 
             Product product = productClient.getProductById(productId);
             if (product == null) {
-                return null;
+                return Optional.empty();
             }
             log.debug("Found a product with id: {}", product.getProductId());
 
             List<Review> reviews = retrieveReviews(productId);
             product.setReviews(reviews);
 
-            return product;
+            return Optional.of(product);
         } catch (HttpClientErrorException ex) {
             throw handleHttpClientException(ex);
         }

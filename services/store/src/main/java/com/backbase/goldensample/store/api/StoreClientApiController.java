@@ -24,13 +24,9 @@ public class StoreClientApiController implements ProductCompositeClientApi {
     public ResponseEntity<ProductAggregate> getProductById(Long productId) {
         log.debug("getCompositeProduct: lookup a product aggregate for productId: {}", productId);
 
-        Product product = productCompositeService.retrieveProductWithReviews(productId);
-        if (product == null) {
-            log.debug("No product was found for id {}", productId);
-            throw new NotFoundException("No product found for productId: " + productId);
-        }
-
-        return ResponseEntity.ok(storeMapper.map(product));
+        return productCompositeService.retrieveProductWithReviews(productId)
+            .map(p -> ResponseEntity.ok(storeMapper.map(p)))
+            .orElseThrow(() -> new NotFoundException("No product found for productId: " + productId));
     }
 
     @Override

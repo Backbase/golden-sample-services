@@ -14,6 +14,10 @@
     <packaging>war</packaging>
     <name>Backbase :: store-service</name>
 
+    <properties>
+        <jsr305.version>3.0.2</jsr305.version>
+        <commons-collections.version>3.2.2</commons-collections.version>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>com.backbase.buildingblocks</groupId>
@@ -51,12 +55,12 @@
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>jsr305</artifactId>
-            <version>3.0.2</version>
+            <version>${jsr305.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
-            <version>3.2.2</version>
+            <version>${commons-collections.version}</version>
         </dependency>
     </dependencies>
 
