@@ -41,7 +41,7 @@ class StoreClientApiControllerMultitenancyTest {
 
     @Test
     @DisplayName("Should Create a Product and its Reviews with tenant specific additions and receive different header")
-    void shouldCreateAProductAndItsReviewsWithAdditions() throws Exception {
+    void shouldCreateAProductAndItsReviewsWithRebrandShopSpecificAdditions() throws Exception {
 
         ProductId productOne = new ProductId().id(1L);
 

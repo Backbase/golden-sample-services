@@ -1,19 +1,17 @@
 package com.backbase.goldensample.product.persistence;
 
 import com.backbase.goldensample.product.config.IdentityStrategyOverrideConfiguration;
+import com.backbase.goldensample.product.mapper.MapToJsonConverter;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapKeyColumn;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -80,10 +78,9 @@ public class ProductEntity {
 
     private LocalDate createDate;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @MapKeyColumn(name = "property_key")
-    @Column(name = "property_value")
-    @CollectionTable(name = "product_additions", joinColumns = @JoinColumn(name = "product_additions_id"))
+    @Lob
+    @Column(name = "additions", columnDefinition = "CLOB")
+    @Convert(converter = MapToJsonConverter.class)
     private Map<String, String> additions = new HashMap<>();
 
     //No-Op

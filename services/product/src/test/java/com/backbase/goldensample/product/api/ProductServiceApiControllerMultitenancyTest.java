@@ -73,7 +73,7 @@ class ProductServiceApiControllerMultitenancyTest extends ProductApiController {
 
 
     @Test
-    void shouldFailWithUnrecognisedAdditionsForTenant1() throws Exception {
+    void shouldFailWithUnrecognisedAdditionsForTenantOrgShop() throws Exception {
         String requestBody = "{\n" +
             "  \"name\": \"Product 1\",\n" +
             "  \"weight\": \"23\",\n" +
@@ -103,7 +103,7 @@ class ProductServiceApiControllerMultitenancyTest extends ProductApiController {
     }
 
     @Test
-    void shouldCreateNewProductWithRecognisedAdditionsForTenant2() throws Exception {
+    void shouldCreateNewProductWithRecognisedAdditionsForTenantRebrandShop() throws Exception {
         String requestBody = "{\n" +
             "  \"name\": \"Product 1\",\n" +
             "  \"weight\": \"23\",\n" +

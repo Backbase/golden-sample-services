@@ -4,12 +4,12 @@ backbase:
     tenants:
       - id: org_shop
         datasource:
-          url: jdbc:tc:mysql:5.7:///test
+          url: jdbc:tc:mysql:5.7:///testdb1
           username: test
           password: test
       - id: rebrand_shop
         datasource:
-          url: jdbc:tc:mysql:5.7:///test
+          url: jdbc:tc:mysql:5.7:///testdb2
           username: test
           password: test
     datasource:

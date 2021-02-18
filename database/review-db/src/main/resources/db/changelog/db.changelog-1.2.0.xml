@@ -7,24 +7,13 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    <property dbms="mssql" name="varcharDataType" value="NVARCHAR"/>
-    <property dbms="mysql" name="varcharDataType" value="VARCHAR"/>
-    <property dbms="oracle" name="varcharDataType" value="VARCHAR2"/>
-
     <changeSet id="1_2_0_001" context="upgrade_1_1_0_to_1_2_0" author="backbase">
-        <comment>create the review additions table</comment>
-        <createTable tableName="review_additions" remarks="Table to store additional review info">
-            <column name="review_additions_id" type="BIGINT" remarks="related review id">
-                <constraints nullable="false"/>
-            </column>
-            <column name="property_value" type="${varcharDataType}(255)" remarks="value of the property"/>
-            <column name="property_key" type="${varcharDataType}(50)" remarks="key of the property">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
+        <addColumn tableName="review" >
+            <column name="additions" type="CLOB"/>
+        </addColumn>
     </changeSet>
 
-    <changeSet id="1_0_0_002" author="backbase" context="upgrade_1_1_0_to_1_2_0">
+    <changeSet id="1_2_0_002" author="backbase" context="upgrade_1_1_0_to_1_2_0">
         <tagDatabase tag="1.2.0"/>
     </changeSet>
 </databaseChangeLog>

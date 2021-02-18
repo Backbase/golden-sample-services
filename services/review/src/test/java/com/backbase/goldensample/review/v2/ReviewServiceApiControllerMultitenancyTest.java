@@ -1,4 +1,4 @@
-package com.backbase.goldensample.review.api;
+package com.backbase.goldensample.review.v2;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -14,10 +14,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.backbase.buildingblocks.testutils.TestTokenUtil;
 import com.backbase.goldensample.review.Application;
-import com.backbase.goldensample.review.mapper.ReviewMapper;
 import com.backbase.goldensample.review.persistence.ReviewEntity;
 import com.backbase.goldensample.review.service.ReviewService;
-import com.backbase.reviews.api.service.v1.model.Review;
+import com.backbase.goldensample.review.v2.mapper.ReviewMapperV2;
+import com.backbase.reviews.api.service.v2.model.Review;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -37,24 +37,23 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 @SpringBootTest(classes = {Application.class})
 @AutoConfigureMockMvc
 @ActiveProfiles({"it","m10y"})
-class ReviewServiceApiControllerMultitenancyTest {
-
+public class ReviewServiceApiControllerMultitenancyTest {
     @MockBean
     private ReviewService reviewService;
-
-    @MockBean
-    private ReviewMapper reviewMapper;
 
     @Autowired
     private MockMvc mockMvc;
 
-    private final Review reviewOne = createReview(1L, 1L, "author", "subject", "long content", Collections.singletonMap("verified", "true"));
+    @MockBean
+    ReviewMapperV2 reviewMapper;
+
+    private final Review reviewOne = createReview(1L, 1L, "author", "subject", "long content", 4, Collections.singletonMap("verified", "true"));
     private final ReviewEntity reviewEntity = createEntity();
 
     @Test
     void shouldGetEmptyArrayWhenNoReviews() throws Exception {
 
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/service-api/v1/products/{productId}/reviews", 99L)
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/service-api/v2/products/{productId}/reviews", 99L)
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " +
                     TestTokenUtil.encode(TestTokenUtil.serviceClaimSet()))
                 .header("X-TID", "org_shop"))
@@ -68,12 +67,12 @@ class ReviewServiceApiControllerMultitenancyTest {
 
     @Test
     void shouldGetReviewsWhenServiceReturnsReviewsOfAProductWithAdditions() throws Exception {
-        Review reviewTwo = createReview(2L, 1L, "another author", "another subject", "super long content", Collections.singletonMap("verified", "false"));
+        Review reviewTwo = createReview(2L, 1L, "another author", "another subject", "super long content", 5, Collections.singletonMap("verified", "false"));
 
         when(reviewMapper.entityListToApiList(any(List.class))).thenReturn((List.of(reviewOne, reviewTwo)));
 
         this.mockMvc
-            .perform(get("/service-api/v1/products/{productId}/reviews", 1L)
+            .perform(get("/service-api/v2/products/{productId}/reviews", 1L)
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " +
                     TestTokenUtil.encode(TestTokenUtil.serviceClaimSet()))
                 .header("X-TID", "org_shop"))
@@ -86,12 +85,14 @@ class ReviewServiceApiControllerMultitenancyTest {
             .andExpect(jsonPath("$[0].author", is("author")))
             .andExpect(jsonPath("$[0].subject", is("subject")))
             .andExpect(jsonPath("$[0].content", is("long content")))
+            .andExpect(jsonPath("$[0].stars", is(4)))
             .andExpect(jsonPath("$[0].additions.verified", is("true")))
             .andExpect(jsonPath("$[1].productId", is(1)))
             .andExpect(jsonPath("$[1].reviewId", is(2)))
             .andExpect(jsonPath("$[1].author", is("another author")))
             .andExpect(jsonPath("$[1].subject", is("another subject")))
             .andExpect(jsonPath("$[1].content", is("super long content")))
+            .andExpect(jsonPath("$[1].stars", is(5)))
             .andExpect(jsonPath("$[1].additions.verified", is("false")));
     }
 
@@ -102,6 +103,7 @@ class ReviewServiceApiControllerMultitenancyTest {
             "  \"author\": \"author\",\n" +
             "  \"subject\": \"subject\",\n" +
             "  \"content\": \"long content\",\n" +
+            "  \"stars\": \"4\",\n" +
             "  \"additions\": {\n" +
             "    \"purchaseDate\": \"today\"}\n" +
             "}";
@@ -110,7 +112,7 @@ class ReviewServiceApiControllerMultitenancyTest {
         when(reviewService.getReview(1)).thenReturn(reviewEntity);
 
         MvcResult result = this.mockMvc
-            .perform(post("/service-api/v1/reviews")
+            .perform(post("/service-api/v2/reviews")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " +
                     TestTokenUtil.encode(TestTokenUtil.serviceClaimSet()))
                 .header("X-TID", "org_shop")
@@ -132,6 +134,7 @@ class ReviewServiceApiControllerMultitenancyTest {
             "  \"author\": \"author\",\n" +
             "  \"subject\": \"subject\",\n" +
             "  \"content\": \"long content\",\n" +
+            "  \"stars\": \"4\",\n" +
             "  \"additions\": {\n" +
             "    \"purchaseDate\": \"today\"}\n" +
             "}";
@@ -140,7 +143,7 @@ class ReviewServiceApiControllerMultitenancyTest {
         when(reviewService.createReview(any(ReviewEntity.class))).thenReturn(reviewEntity);
 
         this.mockMvc
-            .perform(post("/service-api/v1/reviews")
+            .perform(post("/service-api/v2/reviews")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " +
                     TestTokenUtil.encode(TestTokenUtil.serviceClaimSet()))
                 .header("X-TID", "rebrand_shop")
@@ -150,8 +153,8 @@ class ReviewServiceApiControllerMultitenancyTest {
             .andExpect(status().isOk());
     }
 
-    private Review createReview(Long reviewId, Long productId, String author, String subject, String content, Map<String, String> additions) {
-        Review result = new Review().reviewId(reviewId).productId(productId).author(author).subject(subject).content(content).additions(additions);
+    private Review createReview(Long reviewId, Long productId, String author, String subject, String content, Integer stars, Map<String, String> additions) {
+        Review result = new Review().reviewId(reviewId).productId(productId).author(author).subject(subject).content(content).stars(stars).additions(additions);
         return result;
     }
 
@@ -160,5 +163,4 @@ class ReviewServiceApiControllerMultitenancyTest {
         reviewIdentity.setId(1L);
         return reviewIdentity;
     }
-
 }

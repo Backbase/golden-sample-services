@@ -14,7 +14,7 @@
         </addColumn>
     </changeSet>
 
-    <changeSet id="1_0_0_002" author="backbase" context="upgrade_1_0_0_to_1_1_0">
+    <changeSet id="1_1_0_002" author="backbase" context="upgrade_1_0_0_to_1_1_0">
         <tagDatabase tag="1.1.0"/>
     </changeSet>
 </databaseChangeLog>

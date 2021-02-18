@@ -143,7 +143,7 @@ services:
       app.review-service.host: review
       app.review-service.port: 8080
       SPRING_PROFILES_ACTIVE: ${COMPOSE_APP_PROFILE}
-      JAVA_TOOL_OPTIONS: -Dlogging.level.com.backbase.buildingblocks.communication.http.InterServiceLogger=DEBUG
+      logging.level.com.backbase.buildingblocks.communication.http.InterServiceLogger: DEBUG
     links:
       - registry
 

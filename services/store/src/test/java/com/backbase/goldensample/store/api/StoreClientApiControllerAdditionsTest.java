@@ -22,18 +22,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 @SpringBootTest(classes = {Application.class})
 @AutoConfigureMockMvc
-@ActiveProfiles({"it"})
-@TestPropertySource(properties = {
-    "backbase.api.extensions.classes.com.backbase.goldensample.store.api.service.v1.model.ProductAggregate=prod-set",
-    "backbase.api.extensions.classes.com.backbase.goldensample.store.api.service.v1.model.ReviewSummary=rev-set",
-    "backbase.api.extensions.property-sets.prod-set.properties[0].property-name=param-prod1",
-    "backbase.api.extensions.property-sets.rev-set.properties[0].property-name=param-rev1"})
+@ActiveProfiles({"it", "extensions"})
 class StoreClientApiControllerAdditionsTest {
 
     @MockBean

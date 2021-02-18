@@ -71,7 +71,7 @@ class PersistenceIT {
     ReviewEntity foundEntity = repository.findById(savedEntity.getId()).get();
 
     assertEquals("amazon 2", foundEntity.getAuthor());
-    assertEquals(Collections.EMPTY_MAP, foundEntity.getAdditions());
+    assertEquals(null, foundEntity.getAdditions());
   }
 
   @Test

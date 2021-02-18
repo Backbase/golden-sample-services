@@ -1,19 +1,17 @@
 package com.backbase.goldensample.review.persistence;
 
 import com.backbase.goldensample.review.config.IdentityStrategyOverrideConfiguration;
+import com.backbase.goldensample.review.mapper.MapToJsonConverter;
 import java.util.HashMap;
 import java.util.Map;
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapKeyColumn;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -97,10 +95,9 @@ public class ReviewEntity {
     private String content;
     private Integer stars;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @MapKeyColumn(name = "property_key")
-    @Column(name = "property_value")
-    @CollectionTable(name = "review_additions", joinColumns = @JoinColumn(name = "review_additions_id"))
+    @Lob
+    @Column(name = "additions", columnDefinition = "CLOB")
+    @Convert(converter = MapToJsonConverter.class)
     private Map<String, String> additions = new HashMap<>();
 
     //No-Op
