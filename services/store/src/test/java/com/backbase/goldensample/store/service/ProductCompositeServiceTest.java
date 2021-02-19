@@ -54,7 +54,7 @@ class ProductCompositeServiceTest {
     @Test
     @DisplayName("should retrieve a Product by Id")
     void getProduct() {
-        when(productClient.getProductById(1L)).thenReturn(product);
+        when(productClient.getProductById(1L)).thenReturn(Optional.of(product));
         when(reviewClient.getReviewListByProductId(1L)).thenReturn(List.of(review, review2));
 
         //test
@@ -73,7 +73,7 @@ class ProductCompositeServiceTest {
     @Test
     @DisplayName("should retrieve a Product null")
     void getProductNull() {
-        when(productClient.getProductById(1L)).thenReturn(null);
+        when(productClient.getProductById(1L)).thenReturn(Optional.empty());
 
         //test
         Optional<Product> product1 = productCompositeService.retrieveProductWithReviews(1L);
@@ -97,7 +97,7 @@ class ProductCompositeServiceTest {
     @Test
     @DisplayName("Should still retrieve the product when review retrieval fails")
     void getReviewsException() {
-        when(productClient.getProductById(1L)).thenReturn(product);
+        when(productClient.getProductById(1L)).thenReturn(Optional.of(product));
         when(reviewClient.getReviewListByProductId(1L)).thenThrow(new HttpClientErrorException(HttpStatus.BAD_REQUEST));
 
         Optional<Product> myProduct = productCompositeService.retrieveProductWithReviews(1L);
