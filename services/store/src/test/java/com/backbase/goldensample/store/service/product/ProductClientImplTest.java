@@ -3,6 +3,7 @@ package com.backbase.goldensample.store.service.product;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -11,6 +12,7 @@ import com.backbase.goldensample.product.api.client.ApiClient;
 import com.backbase.goldensample.product.api.client.v1.ProductServiceApi;
 import com.backbase.goldensample.product.api.client.v1.model.ProductId;
 import com.backbase.goldensample.store.domain.Product;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -47,7 +49,7 @@ class ProductClientImplTest {
         when(productServiceApi.getProductById(PRODUCT_ID)).thenReturn(MODEL_PRODUCT);
         when(productMapper.map(MODEL_PRODUCT)).thenReturn(DOMAIN_PRODUCT);
 
-        Product product = productClientImpl.getProductById(PRODUCT_ID);
+        Optional<Product> product = productClientImpl.getProductById(PRODUCT_ID);
         verify(productServiceApi, times(1)).getProductById(PRODUCT_ID);
         verify(productMapper, times(1)).map(MODEL_PRODUCT);
     }
@@ -57,8 +59,8 @@ class ProductClientImplTest {
         when(productServiceApi.getProductById(PRODUCT_ID))
             .thenThrow(new HttpClientErrorException(HttpStatus.NOT_FOUND));
 
-        Product product = productClientImpl.getProductById(PRODUCT_ID);
-        assertNull(product);
+        Optional<Product> product = productClientImpl.getProductById(PRODUCT_ID);
+        assertTrue(product.isEmpty());
         verify(productServiceApi, times(1)).getProductById(PRODUCT_ID);
         verify(productMapper, times(0)).map(MODEL_PRODUCT);
     }
