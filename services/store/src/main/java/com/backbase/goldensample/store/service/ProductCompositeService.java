@@ -36,35 +36,23 @@ public class ProductCompositeService {
      * @return
      */
     public Optional<Product> retrieveProductWithReviews(long productId) {
-
         try {
-
-            Product product = productClient.getProductById(productId);
-            if (product == null) {
-                return Optional.empty();
-            }
-            log.debug("Found a product with id: {}", product.getProductId());
-
-            List<Review> reviews = retrieveReviews(productId);
-            product.setReviews(reviews);
-
-            return Optional.of(product);
+            Optional<Product> product = productClient.getProductById(productId);
+            product.ifPresent(this::addReviews);
+            return product;
         } catch (HttpClientErrorException ex) {
             throw handleHttpClientException(ex);
         }
     }
 
-    private List<Review> retrieveReviews(long productId) {
-
+    private void addReviews(Product product) {
         try {
-            List<Review> reviews = reviewClient.getReviewListByProductId(productId);
+            List<Review> reviews = reviewClient.getReviewListByProductId(product.getProductId());
 
-            log.debug("Found {} reviews for a product with id: {}", reviews.size(), productId);
-            return reviews;
-
+            log.debug("Found {} reviews for a product with id: {}", reviews.size(), product.getProductId());
+            product.setReviews(reviews);
         } catch (HttpClientErrorException ex) {
             log.warn("Got an exception while requesting reviews, return zero reviews: {}", ex.getMessage());
-            return new ArrayList<>();
         }
     }
 

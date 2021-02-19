@@ -7,7 +7,6 @@ import org.mapstruct.Mapping;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 
 @Mapper(componentModel = "spring", implementationName = "ReviewMapperV1")
-@ConditionalOnProperty(name = "api-version", prefix = "app.review-service", havingValue = "v1", matchIfMissing = true)
 public interface ReviewMapper {
 
     @Mapping(target = "stars", ignore = true)

@@ -1,5 +1,7 @@
 package com.backbase.goldensample.store.domain;
 
+import static java.util.Collections.emptyList;
+
 import java.time.LocalDate;
 import java.util.List;
 import lombok.Getter;
@@ -17,5 +19,5 @@ public class Product {
 
     private LocalDate createDate;
 
-    private List<Review> reviews;
+    private List<Review> reviews = emptyList();
 }

@@ -30,6 +30,11 @@
             <artifactId>communication</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>multi-tenancy</artifactId>
+        </dependency>
+
         <!-- Start - POJO creation made easy -->
         <dependency>
             <groupId>org.projectlombok</groupId>
