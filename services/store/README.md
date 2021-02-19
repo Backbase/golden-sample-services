@@ -5,7 +5,7 @@ presents information about a product as follows:
 * Product information, as described in the *product* service 
 * A list of product reviews for the specified product, as described in the *review* service 
 
-#Getting Started
+# Getting Started
 * [Extend and build](https://community.backbase.com/documentation/ServiceSDK/latest/extend_and_build)
 
 ## Dependencies

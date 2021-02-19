@@ -1,9 +1,0 @@
-{
-	"message": "Bad Gateway",
-	"errors": [
-		{
-			"message": "Internal error calling API provider",
-			"key": "common.api.providerInternalError"
-		}
-	]
-}

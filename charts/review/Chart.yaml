@@ -1,0 +1,15 @@
+apiVersion: v1
+name: review
+description: A Helm chart for the Review service
+version: 0.1.0
+# https://helm.sh/docs/topics/charts/#the-appversion-field
+appVersion: ">= 1.0.0"
+# https://helm.sh/docs/topics/charts/#the-kubeversion-field
+kubeVersion: ">= 1.18.0"
+keywords:
+  - golden-sample
+  - review
+maintainers:
+  - name: backbase
+    email: backbase@backbase.com
+icon: https://start.backbase.com/favicon.png

@@ -11,11 +11,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -26,13 +24,22 @@ import org.hibernate.annotations.GenericGenerator;
     })
 @Getter
 @Setter
-@EqualsAndHashCode
-@ToString
 @Builder
 @AllArgsConstructor
 public class ReviewEntity {
 
+    /*
+     * IMPORTANT:
+     * Set toString, equals, and hashCode as described in these
+     * documents:
+     * - https://vladmihalcea.com/the-best-way-to-implement-equals-hashcode-and-tostring-with-jpa-and-hibernate/
+     * - https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+     * - https://vladmihalcea.com/hibernate-facts-equals-and-hashcode/
+     */
+
     /**
+     *
+     *
      * <p>Primary key is generated with {@link GenerationType#SEQUENCE} for every database except MySql which does not
      * support sequences.</p> <p>For MySql the generation strategy is overridden to be {@link
      * GenerationType#IDENTITY}.</p>

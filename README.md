@@ -16,8 +16,12 @@ Backbase Golden Sample --> Parent folder.
 |- config --> All system configuration files 
 |- config-server --> Centralized Configuration server
 |- diagrams --> All docs and diagrams. 
+|-charts --> Helm Charts for easy deployment in k8s
+  |- product
+  |- review
+  |- store
 |-database 
-  |- assembly --> API specification linters. 
+  |- assembly 
   |- docs  
   |- product-db
   |- review-db
