@@ -1,6 +1,7 @@
 package com.backbase.goldensample.store.service;
 
 import com.backbase.goldensample.store.domain.Product;
+import java.util.Optional;
 
 /**
  * Adapts the internal domain to the model of the Product api.
@@ -8,12 +9,12 @@ import com.backbase.goldensample.store.domain.Product;
 public interface ProductClient {
 
     /**
-     * Return a product by its id, null when not found.
+     * Return a product by its id.
      *
      * @param productId
      * @return
      */
-    Product getProductById(long productId);
+    Optional<Product> getProductById(long productId);
 
     /**
      * Create a new product.

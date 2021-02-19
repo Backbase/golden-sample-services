@@ -3,6 +3,7 @@ package com.backbase.goldensample.store.service.product;
 import com.backbase.goldensample.product.api.client.v1.ProductServiceApi;
 import com.backbase.goldensample.store.domain.Product;
 import com.backbase.goldensample.store.service.ProductClient;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -18,13 +19,13 @@ public class ProductClientImpl implements ProductClient {
     private final ProductMapper productMapper;
 
     @Override
-    public Product getProductById(long productId) {
+    public Optional<Product> getProductById(long productId) {
         log.debug("Will call the getProduct API on URL: {}", productServiceApi.getApiClient().getBasePath());
         try {
-            return productMapper.map(productServiceApi.getProductById(productId));
+            return Optional.of(productMapper.map(productServiceApi.getProductById(productId)));
         } catch (HttpClientErrorException e) {
             if (e.getStatusCode().equals(HttpStatus.NOT_FOUND)) {
-                return null;
+                return Optional.empty();
             }
             throw e;
         }
