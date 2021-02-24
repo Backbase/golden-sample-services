@@ -19,7 +19,7 @@
     <!--    <packaging>helm</packaging>-->
 
     <properties>
-        <helm.maven.plugin.version>5.8-BB</helm.maven.plugin.version>
+        <helm-maven-plugin.version>5.8-BB</helm-maven-plugin.version>
         <helm.version>3.4.2</helm.version>
         <spring-boot.repackage.skip>true</spring-boot.repackage.skip>
     </properties>
@@ -31,7 +31,7 @@
                 <artifactId>helm-maven-plugin</artifactId>
                 <!-- Mandatory when you use a custom lifecycle -->
                 <extensions>true</extensions>
-                <version>${helm.maven.plugin.version}</version>
+                <version>${helm-maven-plugin.version}</version>
                 <configuration>
                     <chartDirectory>${project.basedir}</chartDirectory>
                     <chartVersion>${project.version}</chartVersion>
@@ -51,7 +51,7 @@
                     </uploadRepoSnapshot>
                     <helmExtraRepos>
                         <helmRepo>
-                            <name>repo-charts</name>
+                            <name>backbase-charts</name>
                             <url>https://repo.backbase.com/backbase-charts</url>
                         </helmRepo>
                     </helmExtraRepos>
