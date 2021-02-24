@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -14,12 +14,12 @@
     <name>backbase-golden-sample-chart</name>
     <description>Demo project for Backbase Backend Best Practices</description>
     <packaging>pom</packaging>
-<!-- Using the custom lifecycle fails if the charts has dependencies
- https://github.com/kiwigrid/helm-maven-plugin/pull/112 -->
-<!--    <packaging>helm</packaging>-->
+    <!-- Using the custom lifecycle fails if the charts has dependencies
+    https://github.com/kiwigrid/helm-maven-plugin/pull/112 -->
+    <!--    <packaging>helm</packaging>-->
 
     <properties>
-        <helm.maven.plugin.version>5.7</helm.maven.plugin.version>
+        <helm.maven.plugin.version>5.8-PR113</helm.maven.plugin.version>
         <helm.version>3.4.2</helm.version>
         <spring-boot.repackage.skip>true</spring-boot.repackage.skip>
     </properties>
@@ -39,18 +39,16 @@
                     <addDefaultRepo>false</addDefaultRepo>
                     <!-- Lint with strict mode -->
                     <lintStrict>false</lintStrict>
-<!--                    <uploadRepoStable>-->
-<!--                        <name>Backbase Artifact Repository</name>-->
-<!--                        <url>https://repo.backbase.com/backbase-charts</url>-->
-<!--                        &lt;!&ndash; Artifactory requires basic authentication &ndash;&gt;-->
-<!--                        &lt;!&ndash; which is supported from HELM version >= 2.9 &ndash;&gt;-->
-<!--                        <type>ARTIFACTORY</type>-->
-<!--                    </uploadRepoStable>-->
-<!--                    <uploadRepoSnapshot>-->
-<!--                        <name>harbor-experimental</name>-->
-<!--                        <url>https://harbor.com/api/chartrepo/experimental/charts</url>-->
-<!--                        <type>HARBOR</type>-->
-<!--                    </uploadRepoSnapshot>-->
+                    <uploadRepoStable>
+                        <name>Backbase Artifact Repository</name>
+                        <url>https://repo.backbase.com/backbase-charts</url>
+                        <type>ARTIFACTORY</type>
+                    </uploadRepoStable>
+                    <uploadRepoSnapshot>
+                        <name>harbor-experimental</name>
+                        <url>https://harbor.com/api/chartrepo/experimental/charts</url>
+                        <type>HARBOR</type>
+                    </uploadRepoSnapshot>
                     <helmExtraRepos>
                         <helmRepo>
                             <name>repo-charts</name>
@@ -66,7 +64,7 @@
                             <goal>dependency-build</goal>
                             <goal>lint</goal>
                             <goal>package</goal>
-<!--                            <goal>upload</goal>-->
+                            <!--                            <goal>upload</goal>-->
                         </goals>
                     </execution>
                 </executions>
