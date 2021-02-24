@@ -49,12 +49,12 @@
                         <url>https://harbor.com/api/chartrepo/experimental/charts</url>
                         <type>HARBOR</type>
                     </uploadRepoSnapshot>
-                    <helmExtraRepos>
-                        <helmRepo>
-                            <name>backbase-charts</name>
-                            <url>https://repo.backbase.com/backbase-charts</url>
-                        </helmRepo>
-                    </helmExtraRepos>
+<!--                    <helmExtraRepos>-->
+<!--                        <helmRepo>-->
+<!--                            <name>backbase-charts</name>-->
+<!--                            <url>https://repo.backbase.com/backbase-charts</url>-->
+<!--                        </helmRepo>-->
+<!--                    </helmExtraRepos>-->
                 </configuration>
                 <executions>
                     <execution>
