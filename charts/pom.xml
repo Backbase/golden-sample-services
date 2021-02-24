@@ -46,15 +46,9 @@
                     </uploadRepoStable>
                     <uploadRepoSnapshot>
                         <name>harbor-experimental</name>
-                        <url>https://harbor.com/api/chartrepo/experimental/charts</url>
+                        <url>https://harbor.backbase.eu/api/chartrepo/experimental/charts</url>
                         <type>HARBOR</type>
                     </uploadRepoSnapshot>
-<!--                    <helmExtraRepos>-->
-<!--                        <helmRepo>-->
-<!--                            <name>backbase-charts</name>-->
-<!--                            <url>https://repo.backbase.com/backbase-charts</url>-->
-<!--                        </helmRepo>-->
-<!--                    </helmExtraRepos>-->
                 </configuration>
                 <executions>
                     <execution>
@@ -64,12 +58,13 @@
                             <goal>dependency-build</goal>
                             <goal>lint</goal>
                             <goal>package</goal>
-                            <!--                            <goal>upload</goal>-->
                         </goals>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
     </build>
+
+
 
 </project>
