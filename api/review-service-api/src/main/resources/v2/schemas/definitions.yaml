@@ -4,3 +4,25 @@ components:
       $ref: ../v2/schemas/review.yaml
     ReviewList:
       $ref: ../v2/schemas/review-list.yaml
+    ReviewId:
+      $ref: ../v2/schemas/review-id.yaml
+    Additions:
+      $ref: ../lib/schemas/additions.yaml
+
+  responses:
+    200ReviewList:
+      description: Reviews matching the search criteria
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReviewList'
+          example:
+            $ref: ../examples/review-list.json
+    204ReviewId:
+      description: If the review has been created successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReviewId'
+          example:
+            $ref: ../examples/review-id.json

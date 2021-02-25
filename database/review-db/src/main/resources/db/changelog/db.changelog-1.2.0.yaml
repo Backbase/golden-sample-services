@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      comment: add additions column to reviews table
+      id: 1_2_0_001
+      context: upgrade_1_1_0_to_1_2_0
+      author: backbase
+      changes:
+        - addColumn:
+            tableName: review
+            columns:
+              - column:
+                  name: additions
+                  type: CLOB

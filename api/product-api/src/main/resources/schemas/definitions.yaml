@@ -4,3 +4,33 @@ components:
       $ref: ../schemas/product.yaml
     ProductList:
       $ref: ../schemas/product-list.yaml
+    ProductId:
+      $ref: ../schemas/product-id.yaml
+    Additions:
+      $ref: ../lib/schemas/additions.yaml
+
+  responses:
+    200ProductId:
+      description: If the product has been created successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProductId'
+          example:
+            $ref: ../examples/create-product-response.json
+    200Product:
+      description: If the product is found successfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Product'
+          example:
+            $ref: ../examples/get-product-response.json
+    200ProductList:
+      description: Products matching the search criteria
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProductList'
+          example:
+            $ref: ../examples/product-list.json

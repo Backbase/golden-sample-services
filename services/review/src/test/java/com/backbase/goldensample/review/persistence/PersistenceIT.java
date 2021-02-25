@@ -6,6 +6,7 @@ import static org.springframework.transaction.annotation.Propagation.NOT_SUPPORT
 
 
 import com.backbase.goldensample.review.config.IdentityStrategyOverrideConfiguration;
+import java.util.Collections;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,7 +42,7 @@ class PersistenceIT {
 
     repository.deleteAll();
 
-    ReviewEntity entity = new ReviewEntity(1L, "author", "subject", "content", 5);
+    ReviewEntity entity = new ReviewEntity(1L, "author", "subject", "content", 5, Collections.singletonMap("verified","true"));
     savedEntity = repository.save(entity);
 
     assertEquals(entity, savedEntity);
@@ -49,7 +50,7 @@ class PersistenceIT {
 
   @Test
   void create() {
-    ReviewEntity newEntity = new ReviewEntity(1L, "author", "subject", "content", 5);
+    ReviewEntity newEntity = new ReviewEntity(1L, "author", "subject", "content", 5, Collections.singletonMap("verified","true"));
     repository.save(newEntity);
 
     ReviewEntity foundEntity = repository.findById(newEntity.getId()).get();
@@ -64,11 +65,13 @@ class PersistenceIT {
   void update() {
 
     savedEntity.setAuthor("amazon 2");
+    savedEntity.setAdditions(null);
     repository.save(savedEntity);
 
     ReviewEntity foundEntity = repository.findById(savedEntity.getId()).get();
 
     assertEquals("amazon 2", foundEntity.getAuthor());
+    assertEquals(null, foundEntity.getAdditions());
   }
 
   @Test

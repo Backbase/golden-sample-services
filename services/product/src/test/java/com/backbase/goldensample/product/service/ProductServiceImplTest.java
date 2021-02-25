@@ -15,6 +15,7 @@ import com.backbase.goldensample.product.persistence.ProductRepository;
 import com.backbase.product.api.service.v1.model.Product;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,7 +37,7 @@ class ProductServiceImplTest {
     private static final LocalDate TODAY = LocalDate.of(2020, 1, 28);
 
     private final Product product = new Product().productId(1L).name("Product").weight(20).createDate(TODAY);
-    private final ProductEntity productEntity = new ProductEntity(1L, "Product1", 20, TODAY);
+    private final ProductEntity productEntity = new ProductEntity(1L, "Product1", 20, TODAY, Collections.singletonMap("popularity","29%"));
 
     @BeforeEach
     public void init() {
@@ -46,9 +47,9 @@ class ProductServiceImplTest {
     @Test
     void getAllProductsTest() {
         List<ProductEntity> list = new ArrayList<>();
-        ProductEntity productOne = new ProductEntity(1L, "Product1", 20, TODAY);
-        ProductEntity productTwo = new ProductEntity(2L, "Product2", 21, TODAY);
-        ProductEntity productThree = new ProductEntity(3L, "Product3", 22, TODAY);
+        ProductEntity productOne = new ProductEntity(1L, "Product1", 20, TODAY, null);
+        ProductEntity productTwo = new ProductEntity(2L, "Product2", 21, TODAY, null);
+        ProductEntity productThree = new ProductEntity(3L, "Product3", 22, TODAY, null);
 
         list.add(productOne);
         list.add(productTwo);

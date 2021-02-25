@@ -1,0 +1,25 @@
+backbase:
+  multi-tenancy:
+    enabled: true
+    tenants:
+      - id: org_shop
+        datasource:
+          url: jdbc:mysql://${db.host:localhost}:3306/product?useSSL=false&serverTimezone=UTC
+          username: product_user
+          password: product_user
+      - id: rebrand_shop
+        datasource:
+          url: jdbc:mysql://${db.host:localhost}:3306/rebrand_product?useSSL=false&serverTimezone=UTC
+          username: rebrand_product_user
+          password: rebrand_product_user
+    datasource:
+      strategy: SWITCH_DATASOURCE
+      defaults:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+  api:
+    extensions:
+      classes:
+        com.backbase.product.api.service.v1.model.Product: ext-product
+      property-sets:
+        ext-product: popularity
+        ext-product@tid(rebrand_shop): popularity,description

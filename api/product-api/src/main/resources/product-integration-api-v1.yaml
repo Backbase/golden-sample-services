@@ -26,42 +26,18 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Product'
+              $ref: 'schemas/definitions.yaml#/components/schemas/Product'
             example:
               $ref: examples/create-product-request.json
       responses:
         '200':
-          description: If the product has been created successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProductId'
-              example:
-                $ref: examples/create-product-response.json
+          $ref: 'schemas/definitions.yaml#/components/responses/200ProductId'
         '400':
-          description: If one or more request parameters don't comply with the specification
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequestError'
-              example:
-                $ref: lib/examples/bad-request-validation-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/400BadRequest'
         '401':
-          description: If the authentication credentials provided are invalid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedError'
-              example:
-                $ref: lib/examples/unauthorized-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/401Unauthorized'
         '500':
-          description: If a runtime error occurs while processing the request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/InternalServerError'
-              example:
-                $ref: lib/examples/internal-server-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/500InternalServerError'
     put:
       tags:
         - product-integration
@@ -72,36 +48,19 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Product'
+              $ref: 'schemas/definitions.yaml#/components/schemas/Product'
             example:
               $ref: examples/update-product-request.json
       responses:
         '204':
           description: If the product has been updated successfully
         '400':
-          description: If one or more request parameters don't comply with the specification
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequestError'
-              example:
-                $ref: lib/examples/bad-request-validation-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/400BadRequest'
         '401':
-          description: If the authentication credentials provided are invalid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedError'
-              example:
-                $ref: lib/examples/unauthorized-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/401Unauthorized'
         '500':
-          description: If a runtime error occurs while processing the request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/InternalServerError'
-              example:
-                $ref: lib/examples/internal-server-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/500InternalServerError'
+
   /integration-api/v1/products/{productId}:
     get:
       tags:
@@ -119,53 +78,17 @@ paths:
             format: int64
       responses:
         '200':
-          description: If the product is found successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Product'
-              example:
-                $ref: examples/get-product-response.json
+          $ref: 'schemas/definitions.yaml#/components/responses/200Product'
         '400':
-          description: If one or more request parameters don't comply with the specification
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequestError'
-              example:
-                $ref: lib/examples/bad-request-validation-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/400BadRequest'
         '401':
-          description: If the authentication credentials provided are invalid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedError'
-              example:
-                $ref: lib/examples/unauthorized-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/401Unauthorized'
         '403':
-          description: If the current user doesn't have authorization to view the requested product
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-              example:
-                $ref: lib/examples/forbidden-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/403Forbidden'
         '404':
-          description: If the product cannot be found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-              example:
-                $ref: lib/examples/not-found-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/404NotFound'
         '500':
-          description: If a runtime error occurs while processing the request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/InternalServerError'
-              example:
-                $ref: lib/examples/internal-server-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/500InternalServerError'
     delete:
       tags:
         - product-integration
@@ -184,66 +107,12 @@ paths:
         '204':
           description: If the product has been deleted successfully
         '400':
-          description: If one or more request parameters don't comply with the specification
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequestError'
-              example:
-                $ref: lib/examples/bad-request-validation-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/400BadRequest'
         '401':
-          description: If the authentication credentials provided are invalid
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedError'
-              example:
-                $ref: lib/examples/unauthorized-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/401Unauthorized'
         '403':
-          description: If the current user doesn't have authorization to delete the requested product
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ForbiddenError'
-              example:
-                $ref: lib/examples/forbidden-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/403Forbidden'
         '404':
-          description: If the product cannot be found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NotFoundError'
-              example:
-                $ref: lib/examples/not-found-error.json
+          $ref: 'lib/common-types.yaml#/components/responses/404NotFound'
         '500':
-          description: If a runtime error occurs while processing the request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/InternalServerError'
-              example:
-                $ref: lib/examples/internal-server-error.json
-components:
-  schemas:
-    Product:
-      $ref: schemas/product.yaml
-    ProductId:
-      $ref: schemas/product-id.yaml
-    BadRequestError:
-      $ref: 'lib/schemas/bad-request-error.yaml'
-    ConflictError:
-      $ref: 'lib/schemas/conflict-error.yaml'
-    Currency:
-      $ref: 'lib/schemas/currency.yaml'
-    ErrorItem:
-      $ref: 'lib/schemas/error-item.yaml'
-    ForbiddenError:
-      $ref: 'lib/schemas/forbidden-error.yaml'
-    InternalServerError:
-      $ref: 'lib/schemas/internal-server-error.yaml'
-    NotFoundError:
-      $ref: 'lib/schemas/not-found-error.yaml'
-    NotAcceptableError:
-      $ref: 'lib/schemas/not-acceptable-error.yaml'
-    UnauthorizedError:
-      $ref: 'lib/schemas/unauthorized-error.yaml'
+          $ref: 'lib/common-types.yaml#/components/responses/500InternalServerError'

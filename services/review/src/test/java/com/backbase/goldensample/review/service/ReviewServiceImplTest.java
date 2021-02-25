@@ -28,7 +28,7 @@ class ReviewServiceImplTest {
 
     private final Review review = new Review().reviewId(1L).productId(1L).author("author").subject("subject")
         .content("long content").stars(5);
-    private final ReviewEntity reviewEntity = new ReviewEntity(1L, 1L, "author", "subject", "long content", 5);
+    private final ReviewEntity reviewEntity = new ReviewEntity(1L, 1L, "author", "subject", "long content", 5, null);
 
     @BeforeEach
     public void init() {
@@ -38,8 +38,8 @@ class ReviewServiceImplTest {
     @Test
     void getAllReviewsByProductTest() {
         List<ReviewEntity> list = new ArrayList<ReviewEntity>();
-        ReviewEntity reviewEntity1 = new ReviewEntity(1L, "author", "subject", "content", 5);
-        ReviewEntity reviewEntity2 = new ReviewEntity(1L, "angryauthor", "angry subject", "worst product ever", 1);
+        ReviewEntity reviewEntity1 = new ReviewEntity(1L, "author", "subject", "content", 5, null);
+        ReviewEntity reviewEntity2 = new ReviewEntity(1L, "angryauthor", "angry subject", "worst product ever", 1, null);
 
         list.add(reviewEntity1);
         list.add(reviewEntity2);

@@ -59,3 +59,7 @@ logging:
   level:
     root: INFO
     com.backbase.goldensample: DEBUG
+
+store:
+  theme: original
+  theme@tid(rebrand_shop): rebranded

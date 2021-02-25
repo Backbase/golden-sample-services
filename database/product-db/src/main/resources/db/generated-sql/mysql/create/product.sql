@@ -5,3 +5,5 @@ ALTER TABLE product COMMENT = 'Table to store the Products from our store'PARTIT
 
 CREATE INDEX ix_product_create_date ON product(create_date DESC);
 
+ALTER TABLE product ADD additions LONGTEXT NULL;
+

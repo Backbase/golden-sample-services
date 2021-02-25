@@ -5,7 +5,10 @@
     "author": "John Doe",
     "content": "I have no words for it",
     "subject": "Very nice!",
-    "stars": 4
+    "stars": 4,
+    "additions": {
+      "verified": "true"
+    }
   },
   {
     "reviewId": 2,
@@ -13,6 +16,9 @@
     "author": "Mike Mars",
     "content": "I'll never buy it again",
     "subject": "Terrible!",
-    "stars": 1
+    "stars": 1,
+    "additions": {
+      "verified": "true"
+    }
   }
 ]

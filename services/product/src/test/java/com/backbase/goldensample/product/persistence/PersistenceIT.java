@@ -8,6 +8,7 @@ import static org.springframework.transaction.annotation.Propagation.NOT_SUPPORT
 import com.backbase.goldensample.product.DockerizedTest;
 import com.backbase.goldensample.product.config.IdentityStrategyOverrideConfiguration;
 import java.time.LocalDate;
+import java.util.Collections;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,7 +46,7 @@ class PersistenceIT extends DockerizedTest {
 
     repository.deleteAll();
 
-    ProductEntity entity = new ProductEntity("amazon", 1, TODAY);
+    ProductEntity entity = new ProductEntity("amazon", 1, TODAY, Collections.singletonMap("popularity","87%"));
     savedEntity = repository.save(entity);
 
     assertEquals(entity, savedEntity);
@@ -53,7 +54,7 @@ class PersistenceIT extends DockerizedTest {
 
   @Test
   void create() {
-    ProductEntity newEntity = new ProductEntity("n", 2, TODAY);
+    ProductEntity newEntity = new ProductEntity("n", 2, TODAY, Collections.singletonMap("popularity","15%"));
     repository.save(newEntity);
 
     ProductEntity foundEntity = repository.findById(newEntity.getId()).get();
@@ -93,5 +94,6 @@ class PersistenceIT extends DockerizedTest {
     Assert.assertEquals(expectedEntity.getName(),    actualEntity.getName());
     Assert.assertEquals(expectedEntity.getWeight(),   actualEntity.getWeight());
     Assert.assertEquals(expectedEntity.getCreateDate(),   actualEntity.getCreateDate());
+    Assert.assertEquals(expectedEntity.getAdditions(),   actualEntity.getAdditions());
   }
 }

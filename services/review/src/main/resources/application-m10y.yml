@@ -1,0 +1,26 @@
+backbase:
+  multi-tenancy:
+    enabled: true
+    tenants:
+      - id: org_shop
+        datasource:
+          url: jdbc:mysql://${db.host:localhost}:3306/review?useSSL=false&serverTimezone=UTC
+          username: review_user
+          password: review_user
+      - id: rebrand_shop
+        datasource:
+          url: jdbc:mysql://${db.host:localhost}:3306/rebrand_review?useSSL=false&serverTimezone=UTC
+          username: rebrand_review_user
+          password: rebrand_review_user
+    datasource:
+      strategy: SWITCH_DATASOURCE
+      defaults:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+  api:
+    extensions:
+      classes:
+        com.backbase.reviews.api.service.v1.model.Review: ext-review
+        com.backbase.reviews.api.service.v2.model.Review: ext-review
+      property-sets:
+        ext-review: verified
+        ext-review@tid(rebrand_shop): verified,purchaseDate
