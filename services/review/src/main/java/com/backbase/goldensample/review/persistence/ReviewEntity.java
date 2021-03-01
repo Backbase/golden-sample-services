@@ -4,6 +4,7 @@ import com.backbase.goldensample.review.config.IdentityStrategyOverrideConfigura
 import com.backbase.goldensample.review.mapper.MapToJsonConverter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -20,6 +21,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -33,15 +35,6 @@ import org.hibernate.annotations.GenericGenerator;
 @Builder
 @AllArgsConstructor
 public class ReviewEntity {
-
-    /*
-     * IMPORTANT:
-     * Set toString, equals, and hashCode as described in these
-     * documents:
-     * - https://vladmihalcea.com/the-best-way-to-implement-equals-hashcode-and-tostring-with-jpa-and-hibernate/
-     * - https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
-     * - https://vladmihalcea.com/hibernate-facts-equals-and-hashcode/
-     */
 
     /**
      *
@@ -111,5 +104,35 @@ public class ReviewEntity {
         this.content = content;
         this.stars = stars;
         this.additions = additions;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ReviewEntity that = (ReviewEntity) o;
+        return getId() != null && Objects.equals(getId(), that.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+            .append("id", id)
+            .append("productId", productId)
+            .append("author", author)
+            .append("subject", subject)
+            .append("content", content)
+            .append("stars", stars)
+            .append("additions", additions)
+            .toString();
     }
 }

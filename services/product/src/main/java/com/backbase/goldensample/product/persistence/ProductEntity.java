@@ -5,6 +5,7 @@ import com.backbase.goldensample.product.mapper.MapToJsonConverter;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -17,6 +18,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -26,15 +28,6 @@ import org.hibernate.annotations.GenericGenerator;
 @Builder
 @AllArgsConstructor
 public class ProductEntity {
-
-    /*
-     * IMPORTANT:
-     * Set toString, equals, and hashCode as described in these
-     * documents:
-     * - https://vladmihalcea.com/the-best-way-to-implement-equals-hashcode-and-tostring-with-jpa-and-hibernate/
-     * - https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
-     * - https://vladmihalcea.com/hibernate-facts-equals-and-hashcode/
-     */
 
     /**
      * <p>Primary key is generated with {@link GenerationType#SEQUENCE} for every database except MySql which does not
@@ -87,11 +80,38 @@ public class ProductEntity {
     public ProductEntity() {
     }
 
-  public ProductEntity(String name, Integer weight, LocalDate createDate, Map<String, String> additions) {
-    this.name = name;
-    this.weight = weight;
-    this.createDate = createDate;
-    this.additions = additions;
-  }
+    public ProductEntity(String name, Integer weight, LocalDate createDate, Map<String, String> additions) {
+        this.name = name;
+        this.weight = weight;
+        this.createDate = createDate;
+        this.additions = additions;
+    }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ProductEntity that = (ProductEntity) o;
+        return getId() != null && Objects.equals(getId(), that.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+            .append("id", id)
+            .append("name", name)
+            .append("weight", weight)
+            .append("createDate", createDate)
+            .append("additions", additions)
+            .toString();
+    }
 }
