@@ -8,7 +8,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-
 import com.backbase.goldensample.product.mapper.ProductMapper;
 import com.backbase.goldensample.product.persistence.ProductEntity;
 import com.backbase.goldensample.product.persistence.ProductRepository;

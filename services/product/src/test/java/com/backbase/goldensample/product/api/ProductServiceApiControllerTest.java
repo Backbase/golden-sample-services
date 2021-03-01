@@ -18,6 +18,7 @@ import com.backbase.product.api.service.v1.model.Product;
 import java.time.LocalDate;
 import java.util.List;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.HttpHeaders;
@@ -77,12 +78,22 @@ class ProductServiceApiControllerTest extends ProductApiController {
     }
 
     @Test
+    @DisplayName("should create a new Product with a valid a payload")
     void shouldCreateNewProductWithValidPayload() throws Exception {
-        String requestBody = "{\n" +
-            "  \"name\": \"Product 1\",\n" +
-            "  \"weight\": \"23\",\n" +
-            "  \"createDate\": \"2020-12-01\"\n" +
-            "}";
+//        String requestBody = "{\n" +
+//            "  \"name\": \"Product 1\",\n" +
+//            "  \"weight\": \"23\",\n" +
+//            "  \"createDate\": \"2020-12-01\"\n" +
+//            "}";
+
+        String requestBody = """
+                {
+                "productId" : "1",
+                  "name": "Product 1",
+                  "weight":  "23",
+                  "createDate":  "2020-12-01"
+                  }
+            """;
 
         when(productService.createProduct(any(Product.class)))
             .thenReturn(productOne);
@@ -98,12 +109,13 @@ class ProductServiceApiControllerTest extends ProductApiController {
     @Test
     void shouldUpdateAProductWithValidPayload() throws Exception {
 
-        String requestBody = "{\n" +
-            "  \"productId\": \"1\",\n" +
-            "  \"name\": \"Product 1\",\n" +
-            "  \"weight\": \"5\",\n" +
-            "  \"createDate\": \"2020-12-01\"\n" +
-            "}";
+        String requestBody = """
+            {
+              "productId": "1",
+              "name": "Product 1",
+              "weight": "5",
+              "createDate": "2020-12-01"
+            }""";
 
         when(productService.updateProduct(any(Product.class)))
             .thenReturn(productOne);

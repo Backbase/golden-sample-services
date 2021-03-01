@@ -12,7 +12,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
 import com.backbase.product.api.service.v1.model.Product;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -40,11 +39,12 @@ class ProductIntegrationApiControllerTest extends ProductApiController {
 
     @Test
     void shouldCreateNewProductWithValidPayload() throws Exception {
-        String requestBody = "{\n" +
-            "  \"name\": \"Product 1\",\n" +
-            "  \"weight\": \"23\",\n" +
-            "  \"createDate\": \"2020-12-01\"\n" +
-            "}";
+        String requestBody = """
+            {
+              "name": "Product 1",
+              "weight": "23",
+              "createDate": "2020-12-01"
+            }""";
 
         when(productService.createProduct(any(Product.class)))
             .thenReturn(productOne);
@@ -60,12 +60,13 @@ class ProductIntegrationApiControllerTest extends ProductApiController {
     @Test
     void shouldUpdateAProductWithValidPayload() throws Exception {
 
-        String requestBody = "{\n" +
-            "  \"productId\": \"1\",\n" +
-            "  \"name\": \"Product 1\",\n" +
-            "  \"weight\": \"5\",\n" +
-            "  \"createDate\": \"2020-12-01\"\n" +
-            "}";
+        String requestBody = """
+            {
+              "productId": "1",
+              "name": "Product 1",
+              "weight": "5",
+              "createDate": "2020-12-01"
+            }""";
 
         when(productService.updateProduct(any(Product.class)))
             .thenReturn(productOne);
