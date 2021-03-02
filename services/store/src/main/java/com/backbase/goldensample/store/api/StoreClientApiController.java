@@ -9,7 +9,6 @@ import com.backbase.goldensample.store.mapper.StoreMapper;
 import com.backbase.goldensample.store.service.ProductCompositeService;
 import java.util.Optional;
 import javax.validation.Valid;
-import javax.ws.rs.HEAD;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class StoreClientApiController implements ProductCompositeClientApi {
 
-    private ProductCompositeService productCompositeService;
-    private StoreViewConfig storeViewConfig;
+    private final ProductCompositeService productCompositeService;
+    private final StoreViewConfig storeViewConfig;
     private final StoreMapper storeMapper;
 
     @Override

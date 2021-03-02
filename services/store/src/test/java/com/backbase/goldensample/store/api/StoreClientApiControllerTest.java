@@ -4,9 +4,9 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -14,60 +14,25 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.backbase.goldensample.product.api.client.v1.model.ProductId;
 import com.backbase.goldensample.store.Application;
-import com.backbase.goldensample.store.api.service.v1.model.ProductAggregate;
-import com.backbase.goldensample.store.mapper.StoreMapper;
-import com.backbase.goldensample.store.service.ProductCompositeService;
+import com.backbase.goldensample.store.domain.Product;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 import java.util.TimeZone;
-import javax.annotation.PostConstruct;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mapstruct.factory.Mappers;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 @SpringBootTest(classes = {Application.class})
 @AutoConfigureMockMvc
 @ActiveProfiles({"it"})
-class StoreClientApiControllerTest {
-
-    @MockBean
-    private ProductCompositeService productCompositeService;
-
-    @MockBean
-    private StoreMapper storeMapper;
-
-    @Autowired
-    private MockMvc mockMvc;
-
-    private Product productOne;
-
-    @PostConstruct
-    public void setup() {
-        Review reviewOne = createReview(1L, 1L, "author", "subject", "long content");
-        Review reviewTwo = createReview(2L, 1L, "another author", "another subject", "super long content");
-        productOne = createProduct(1L, "Product 1", 23, LocalDate.of(2011, 10, 16));
-        productOne.setReviews(List.of(reviewOne, reviewTwo));
-
-        StoreMapper realMapper = Mappers.getMapper(StoreMapper.class);
-        doAnswer(a -> realMapper.map(a.getArgument(0, Product.class)))
-            .when(storeMapper).map(any(Product.class));
-        doAnswer(a -> realMapper.map(a.getArgument(0, ProductAggregate.class)))
-            .when(storeMapper).map(any(ProductAggregate.class));
-    }
+class StoreClientApiControllerTest extends StoreClientApiControllerTestHelper {
 
     @Test
     @DisplayName("Should get empty array when no Reviews")
@@ -140,7 +105,7 @@ class StoreClientApiControllerTest {
     @DisplayName("Should Fail with BadRequest due to unexpected additions")
     void fail400UnexpectedAdditions() throws Exception {
 
-        ProductId productOne = new ProductId().id(1L);
+        Product productOne = new Product();
 
         String requestBody = "{\n" +
             "  \"name\": \"Product 1\",\n" +
@@ -161,8 +126,7 @@ class StoreClientApiControllerTest {
                 "}\n" +
             "}";
 
-        when(productCompositeService.createProduct(any(Product.class))).thenReturn(productOne);
-        when(productCompositeService.createReview(any(Review.class))).thenReturn(new ReviewId().id(1L));
+        when(productCompositeService.createProductWithReviews(any(Product.class))).thenReturn(productOne);
 
         MvcResult result = this.mockMvc
             .perform(post("/client-api/v1/product-composite")
@@ -178,26 +142,6 @@ class StoreClientApiControllerTest {
             "{\"message\":\"The key is unexpected\",\"key\":\"api.AdditionalProperties.additions[param-prod1]\",\"context\":{\"rejectedValue\":\"valp1\"}}"));
         assertThat(content, containsString(
             "{\"message\":\"The key is unexpected\",\"key\":\"api.AdditionalProperties.reviews[0].additions[param-rev1]\",\"context\":{\"rejectedValue\":\"valr1\"}}"));
-    }
-
-
-    private Product createProduct(Long id, String name, Integer weight, LocalDate createDate) {
-        Product product = new Product();
-        product.setProductId(id);
-        product.setName(name);
-        product.setWeight(weight);
-        product.setCreateDate(createDate);
-        return product;
-    }
-
-    private Review createReview(Long reviewId, Long productId, String author, String subject, String content) {
-        Review review = new Review();
-        review.setReviewId(reviewId);
-        review.setProductId(productId);
-        review.setAuthor(author);
-        review.setSubject(subject);
-        review.setContent(content);
-        return review;
     }
 
 }
