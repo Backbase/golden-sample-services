@@ -1,0 +1,10 @@
+store:
+  app:
+    image:
+      # app.image.registry is the docker repository tag for this deployment.
+      registry: "harbor.backbase.eu/experimental/golden-sample"
+      # app.image.repository is the docker repository tag for this deployment.
+      repository: "store"
+  # product.env allows to override environment variables in the pod
+  env:
+    "SERVER_PORT": "8080"

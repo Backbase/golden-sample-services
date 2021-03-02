@@ -1,5 +1,6 @@
-apiVersion: v1
+apiVersion: v2
 name: review
+public: true
 description: A Helm chart for the Review service
 version: 0.1.0
 # https://helm.sh/docs/topics/charts/#the-appversion-field
@@ -9,6 +10,11 @@ kubeVersion: ">= 1.18.0"
 keywords:
   - golden-sample
   - review
+dependencies:
+  - name: backbase-app
+    repository: https://repo.backbase.com/backbase-charts
+    version: 0.18.3
+    alias: review
 maintainers:
   - name: backbase
     email: backbase@backbase.com
