@@ -14,39 +14,25 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.backbase.goldensample.product.api.client.v1.model.Product;
-import com.backbase.goldensample.product.api.client.v1.model.ProductId;
-import com.backbase.goldensample.review.api.client.v1.model.Review;
-import com.backbase.goldensample.review.api.client.v1.model.ReviewId;
 import com.backbase.goldensample.store.Application;
-import com.backbase.goldensample.store.service.ProductCompositeService;
+import com.backbase.goldensample.store.domain.Product;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.List;
+import java.util.Optional;
 import java.util.TimeZone;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 @SpringBootTest(classes = {Application.class})
 @AutoConfigureMockMvc
 @ActiveProfiles({"it"})
-class StoreClientApiControllerTest {
-
-    @MockBean
-    private ProductCompositeService productCompositeService;
-
-    @Autowired
-    private MockMvc mockMvc;
+class StoreClientApiControllerTest extends StoreClientApiControllerTestHelper {
 
     @Test
     @DisplayName("Should get empty array when no Reviews")
@@ -64,14 +50,8 @@ class StoreClientApiControllerTest {
     void shouldGetReviewsWhenServiceReturnsReviewsOfAProduct() throws Exception {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-        LocalDate createDate = LocalDate.of(2011, 10, 16);
 
-        Review reviewOne = createReview(1L, 1L, "author", "subject", "long content");
-        Review reviewTwo = createReview(2L, 1L, "another author", "another subject", "super long content");
-        Product productOne = createProduct(1L, "Product 1", 23, createDate);
-
-        when(productCompositeService.getProduct(1L)).thenReturn((productOne));
-        when(productCompositeService.getReviews(1L)).thenReturn((List.of(reviewOne, reviewTwo)));
+        when(productCompositeService.retrieveProductWithReviews(1L)).thenReturn(Optional.of(productOne));
 
         this.mockMvc
             .perform(get("/client-api/v1/product-composite/{productId}/", 1L)
@@ -90,14 +70,12 @@ class StoreClientApiControllerTest {
             .andExpect(content().json("{'createDate': '2011-10-16'}"))
             .andExpect(jsonPath("$.name", is("Product 1")));
 
-        verify(productCompositeService).getProduct(1L);
-        verify(productCompositeService).getReviews(1L);
+        verify(productCompositeService).retrieveProductWithReviews(1L);
     }
 
     @Test
     @DisplayName("Should Create a Product and its Reviews")
     void shouldCreateAProductAndItsReviews() throws Exception {
-        ProductId productOne = new ProductId().id(1L);
 
         String requestBody = "{\n" +
             "  \"name\": \"Product 1\",\n" +
@@ -112,8 +90,7 @@ class StoreClientApiControllerTest {
             "]\n" +
             "}";
 
-        when(productCompositeService.createProduct(any(Product.class))).thenReturn(productOne);
-        when(productCompositeService.createReview(any(Review.class))).thenReturn(new ReviewId().id(1L));
+        when(productCompositeService.createProductWithReviews(any())).thenReturn(productOne);
 
         this
             .mockMvc
@@ -128,7 +105,7 @@ class StoreClientApiControllerTest {
     @DisplayName("Should Fail with BadRequest due to unexpected additions")
     void fail400UnexpectedAdditions() throws Exception {
 
-        ProductId productOne = new ProductId().id(1L);
+        Product productOne = new Product();
 
         String requestBody = "{\n" +
             "  \"name\": \"Product 1\",\n" +
@@ -149,8 +126,7 @@ class StoreClientApiControllerTest {
                 "}\n" +
             "}";
 
-        when(productCompositeService.createProduct(any(Product.class))).thenReturn(productOne);
-        when(productCompositeService.createReview(any(Review.class))).thenReturn(new ReviewId().id(1L));
+        when(productCompositeService.createProductWithReviews(any(Product.class))).thenReturn(productOne);
 
         MvcResult result = this.mockMvc
             .perform(post("/client-api/v1/product-composite")
@@ -166,18 +142,6 @@ class StoreClientApiControllerTest {
             "{\"message\":\"The key is unexpected\",\"key\":\"api.AdditionalProperties.additions[param-prod1]\",\"context\":{\"rejectedValue\":\"valp1\"}}"));
         assertThat(content, containsString(
             "{\"message\":\"The key is unexpected\",\"key\":\"api.AdditionalProperties.reviews[0].additions[param-rev1]\",\"context\":{\"rejectedValue\":\"valr1\"}}"));
-    }
-
-
-    private Product createProduct(Long id, String name, Integer weight, LocalDate createDate) {
-        Product result = new Product().productId(id).name(name).weight(weight).createDate(createDate);
-        return result;
-    }
-
-    private Review createReview(Long reviewId, Long productId, String author, String subject, String content) {
-        Review result =
-            new Review().reviewId(reviewId).productId(productId).author(author).subject(subject).content(content);
-        return result;
     }
 
 }
