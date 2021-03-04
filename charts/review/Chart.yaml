@@ -1,5 +1,7 @@
 apiVersion: v2
 name: review
+# Custom property used by Backbase internal tooling. If the field is not present (= default),
+# or value public=true means it’s a public Chart, it should be released to customers. If false, it should not go outside and keep it only internal
 public: true
 description: A Helm chart for the Review service
 version: 0.1.0

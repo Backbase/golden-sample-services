@@ -43,7 +43,7 @@ review:
       # app.image.repository is the docker repository tag for this deployment.
       repository: "review"
       # app.image.tag is the docker image tag for this deployment.
-      tag: "latest"
+      tag: ""
 
     # review.app.resources configures the kubernetes resource requests and limits for the deployment.
     resources:
@@ -73,4 +73,4 @@ review:
     "SPRING_CLOUD_KUBERNETES_ENABLED": "true"
     "SPRING_CLOUD_KUBERNETES_RELOAD_ENABLED": "true"
     "SPRING_CLOUD_KUBERNETES_LOADBALANCER_MODE": "SERVICE"
-    "SPRING_AUTOCONFIGURE_EXCLUDE": "org.springframework.cloud.function.context.config.ContextFunctionCatalogAutoConfiguration,org.springframework.cloud.netflix.eureka.loadbalancer.LoadBalancerEurekaAutoConfiguration"
+    "SPRING_AUTOCONFIGURE_EXCLUDE": "org.springframework.cloud.function.context.config.ContextFunctionCatalogAutoConfiguration"
