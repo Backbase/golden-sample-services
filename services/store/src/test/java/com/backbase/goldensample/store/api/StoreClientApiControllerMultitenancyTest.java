@@ -10,40 +10,28 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.backbase.buildingblocks.testutils.TestTokenUtil;
-import com.backbase.goldensample.product.api.client.v1.model.Product;
-import com.backbase.goldensample.product.api.client.v1.model.ProductId;
-import com.backbase.goldensample.review.api.client.v1.model.Review;
-import com.backbase.goldensample.review.api.client.v1.model.ReviewId;
 import com.backbase.goldensample.store.Application;
-import com.backbase.goldensample.store.service.ProductCompositeService;
+import com.backbase.goldensample.store.domain.Product;
+import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 @SpringBootTest(classes = {Application.class})
 @AutoConfigureMockMvc
 @ActiveProfiles({"it","m10y"})
-class StoreClientApiControllerMultitenancyTest {
-
-    @MockBean
-    private ProductCompositeService productCompositeService;
-
-    @Autowired
-    private MockMvc mockMvc;
+class StoreClientApiControllerMultitenancyTest extends StoreClientApiControllerTestHelper {
 
     @Test
     @DisplayName("Should Create a Product and its Reviews with tenant specific additions and receive different header")
     void shouldCreateAProductAndItsReviewsWithRebrandShopSpecificAdditions() throws Exception {
 
-        ProductId productOne = new ProductId().id(1L);
+        when(productCompositeService.createProductWithReviews(any(Product.class))).thenReturn(productOne);
 
         String requestBody = "{\n" +
             "  \"name\": \"Product 1\",\n" +
@@ -63,9 +51,6 @@ class StoreClientApiControllerMultitenancyTest {
                 "  \"description\": \"desc1\"\n" +
                 "}\n" +
             "}";
-
-        when(productCompositeService.createProduct(any(Product.class))).thenReturn(productOne);
-        when(productCompositeService.createReview(any(Review.class))).thenReturn(new ReviewId().id(1L));
 
         MvcResult result = this.mockMvc
             .perform(post("/client-api/v1/product-composite")
