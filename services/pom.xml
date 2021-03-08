@@ -24,6 +24,7 @@
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
         <testcontainers.version>1.15.1</testcontainers.version>
         <boat-maven-plugin.version>0.13.0</boat-maven-plugin.version>
+        <jqno.equalsverifier.version>3.4.3</jqno.equalsverifier.version>
         <docker.repo.project>experimental/golden-sample</docker.repo.project>
     </properties>
 
@@ -44,6 +45,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+            <dependency>
+                <groupId>nl.jqno.equalsverifier</groupId>
+                <artifactId>equalsverifier</artifactId>
+                <version>${jqno.equalsverifier.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>io.swagger</groupId>
                 <artifactId>swagger-annotations</artifactId>
