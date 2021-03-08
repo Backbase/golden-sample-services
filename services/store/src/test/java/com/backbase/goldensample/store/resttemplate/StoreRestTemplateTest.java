@@ -12,7 +12,8 @@ import com.backbase.goldensample.product.api.client.v1.model.ProductId;
 import com.backbase.goldensample.review.api.client.v1.ReviewServiceApi;
 import com.backbase.goldensample.review.api.client.v1.model.Review;
 import com.backbase.goldensample.review.api.client.v1.model.ReviewId;
-import com.backbase.goldensample.store.config.StoreIntegrationConfig;
+import com.backbase.goldensample.store.config.ProductClientConfig;
+import com.backbase.goldensample.store.config.ReviewClientConfig;
 import java.time.LocalDate;
 import java.util.List;
 import org.hamcrest.Matchers;
@@ -35,7 +36,8 @@ import org.springframework.web.client.HttpServerErrorException;
 
 @RestClientTest(value = {ProductServiceApi.class, ReviewServiceApi.class})
 @AutoConfigureWebClient(registerRestTemplate = true)
-@Import({StoreIntegrationConfig.class, MockTokenResponseClientConfiguration.class, HttpCommunicationConfiguration.class})
+@Import({ProductClientConfig.class, ReviewClientConfig.class, MockTokenResponseClientConfiguration.class,
+    HttpCommunicationConfiguration.class})
 public class StoreRestTemplateTest {
 
     @Autowired
