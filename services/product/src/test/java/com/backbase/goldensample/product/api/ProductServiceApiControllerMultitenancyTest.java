@@ -18,7 +18,6 @@ import com.backbase.product.api.service.v1.model.Product;
 import java.time.LocalDate;
 import java.util.List;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -75,14 +74,13 @@ class ProductServiceApiControllerMultitenancyTest extends ProductApiController {
 
     @Test
     void shouldFailWithUnrecognisedAdditionsForTenantOrgShop() throws Exception {
-        String requestBody = """
-            {
-              "name": "Product 1",
-              "weight": "23",
-              "createDate": "2020-12-01",
-              "additions": {
-                "description": "long desc"}
-            }""";
+        String requestBody = "{\n" +
+            "  \"name\": \"Product 1\",\n" +
+            "  \"weight\": \"23\",\n" +
+            "  \"createDate\": \"2020-12-01\",\n" +
+            "  \"additions\": {\n" +
+            "    \"description\": \"long desc\"}\n" +
+            "}";
 
         when(productService.createProduct(any(Product.class)))
             .thenReturn(productOne);
@@ -106,14 +104,13 @@ class ProductServiceApiControllerMultitenancyTest extends ProductApiController {
 
     @Test
     void shouldCreateNewProductWithRecognisedAdditionsForTenantRebrandShop() throws Exception {
-        String requestBody = """
-            {
-              "name": "Product 1",
-              "weight": "23",
-              "createDate": "2020-12-01",
-              "additions": {
-                "description": "long desc"}
-            }""";
+        String requestBody = "{\n" +
+            "  \"name\": \"Product 1\",\n" +
+            "  \"weight\": \"23\",\n" +
+            "  \"createDate\": \"2020-12-01\",\n" +
+            "  \"additions\": {\n" +
+            "    \"description\": \"long desc\"}\n" +
+            "}";
 
         when(productService.createProduct(any(Product.class)))
             .thenReturn(productOne);

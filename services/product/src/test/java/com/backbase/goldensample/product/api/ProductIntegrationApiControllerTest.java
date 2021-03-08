@@ -39,12 +39,11 @@ class ProductIntegrationApiControllerTest extends ProductApiController {
 
     @Test
     void shouldCreateNewProductWithValidPayload() throws Exception {
-        String requestBody = """
-            {
-              "name": "Product 1",
-              "weight": "23",
-              "createDate": "2020-12-01"
-            }""";
+        String requestBody = "{\n" +
+            "  \"name\": \"Product 1\",\n" +
+            "  \"weight\": \"23\",\n" +
+            "  \"createDate\": \"2020-12-01\"\n" +
+            "}";
 
         when(productService.createProduct(any(Product.class)))
             .thenReturn(productOne);
@@ -60,13 +59,12 @@ class ProductIntegrationApiControllerTest extends ProductApiController {
     @Test
     void shouldUpdateAProductWithValidPayload() throws Exception {
 
-        String requestBody = """
-            {
-              "productId": "1",
-              "name": "Product 1",
-              "weight": "5",
-              "createDate": "2020-12-01"
-            }""";
+        String requestBody = "{\n" +
+            "  \"productId\": \"1\",\n" +
+            "  \"name\": \"Product 1\",\n" +
+            "  \"weight\": \"5\",\n" +
+            "  \"createDate\": \"2020-12-01\"\n" +
+            "}";
 
         when(productService.updateProduct(any(Product.class)))
             .thenReturn(productOne);

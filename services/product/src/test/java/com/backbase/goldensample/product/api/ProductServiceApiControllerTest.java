@@ -13,7 +13,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
 import com.backbase.product.api.service.v1.model.Product;
 import java.time.LocalDate;
 import java.util.List;
@@ -80,20 +79,11 @@ class ProductServiceApiControllerTest extends ProductApiController {
     @Test
     @DisplayName("should create a new Product with a valid a payload")
     void shouldCreateNewProductWithValidPayload() throws Exception {
-//        String requestBody = "{\n" +
-//            "  \"name\": \"Product 1\",\n" +
-//            "  \"weight\": \"23\",\n" +
-//            "  \"createDate\": \"2020-12-01\"\n" +
-//            "}";
-
-        String requestBody = """
-                {
-                "productId" : "1",
-                  "name": "Product 1",
-                  "weight":  "23",
-                  "createDate":  "2020-12-01"
-                  }
-            """;
+        String requestBody = "{\n" +
+            "  \"name\": \"Product 1\",\n" +
+            "  \"weight\": \"23\",\n" +
+            "  \"createDate\": \"2020-12-01\"\n" +
+            "}";
 
         when(productService.createProduct(any(Product.class)))
             .thenReturn(productOne);
@@ -109,13 +99,12 @@ class ProductServiceApiControllerTest extends ProductApiController {
     @Test
     void shouldUpdateAProductWithValidPayload() throws Exception {
 
-        String requestBody = """
-            {
-              "productId": "1",
-              "name": "Product 1",
-              "weight": "5",
-              "createDate": "2020-12-01"
-            }""";
+        String requestBody = "{\n" +
+            "  \"productId\": \"1\",\n" +
+            "  \"name\": \"Product 1\",\n" +
+            "  \"weight\": \"5\",\n" +
+            "  \"createDate\": \"2020-12-01\"\n" +
+            "}";
 
         when(productService.updateProduct(any(Product.class)))
             .thenReturn(productOne);
