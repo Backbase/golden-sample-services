@@ -15,6 +15,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import lombok.extern.slf4j.Slf4j;
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 import org.assertj.core.api.Assertions;
 import org.hibernate.Session;
 import org.junit.jupiter.api.BeforeAll;
@@ -37,8 +39,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Import(IdentityStrategyOverrideConfiguration.class)
 class PersistenceIT {
 
-    @Autowired
-    EntityManagerFactory entityManagerFactory;
     @Autowired
     private ReviewRepository repository;
     private ReviewEntity savedEntity;
@@ -101,58 +101,17 @@ class PersistenceIT {
         assertEqualsReview(savedEntity, foundEntity);
     }
 
+    /**
+     * Validates the equality of this Entity class in different states and with different data. Due to the definition of
+     * our Entity, 2 suppress warnings are required in order to validate it as explained in <a
+     * href="https://jqno.nl/equalsverifier/manual/jpa-entities/">here</a>.
+     */
     @Test
     void validateEntityEqualityAmongStates() {
-
-        // Generates Entity to validate
-        ReviewEntity entity = new ReviewEntity(1L, "author", "subject", "content", 5,
-            Collections.singletonMap("verified", "true"));
-
-        // HashSet bucket
-        Set<ReviewEntity> set = new HashSet<>();
-
-        assertFalse(set.contains(entity));
-        set.add(entity);
-        assertTrue(set.contains(entity));
-
-        // The Entity is considered equal before persisting/flushing (i.e. generating the primary key) and afterwards
-        runTransaction(em -> {
-            em.persist(entity);
-            em.flush();
-            assertTrue(set.contains(entity));
-        });
-
-        // The Entity is considered equal after reattaching it to a new Persistence Context
-        runTransaction(em -> {
-            ReviewEntity merged = em.merge(entity);
-            assertTrue(set.contains(merged));
-        });
-
-        // The Entity is considered equal after updating the persistent instance with the identifier of the given detached entity
-        runTransaction(em -> {
-            em.unwrap(Session.class).update(entity);
-            assertTrue(set.contains(entity));
-        });
-
-        // The Entity is considered equal after it's loaded in a different persistence context
-        runTransaction(em -> {
-            ReviewEntity found = em.find(ReviewEntity.class, entity.getId());
-            assertTrue(set.contains(found));
-        });
-
-        // The Entity is considered equal after it's loaded as a proxy in a different persistence context
-        runTransaction(em -> {
-            ReviewEntity proxyEntity = em.getReference(ReviewEntity.class, entity.getId());
-            assertTrue(set.contains(proxyEntity));
-            Assertions.assertThat(proxyEntity).isEqualTo(entity);
-        });
-
-        // The Entity is considered equal after it's deleted
-        runTransaction(em -> {
-            ReviewEntity toDelete = em.getReference(ReviewEntity.class, entity.getId());
-            em.remove(toDelete);
-            assertTrue(set.contains(toDelete));
-        });
+        EqualsVerifier.forClass(ReviewEntity.class)
+            .suppress(Warning.IDENTICAL_COPY_FOR_VERSIONED_ENTITY)
+            .suppress(Warning.STRICT_HASHCODE)
+            .verify();
     }
 
     private void assertEqualsReview(ReviewEntity expectedEntity, ReviewEntity actualEntity) {
@@ -161,38 +120,6 @@ class PersistenceIT {
         assertEquals(expectedEntity.getAuthor(), actualEntity.getAuthor());
         assertEquals(expectedEntity.getContent(), actualEntity.getContent());
         assertEquals(expectedEntity.getSubject(), actualEntity.getSubject());
-    }
-
-    private void runTransaction(Consumer<EntityManager> consumer) {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        EntityTransaction txn = null;
-        try {
-            txn = entityManager.getTransaction();
-            txn.begin();
-            consumer.accept(entityManager);
-            if (!txn.getRollbackOnly()) {
-                txn.commit();
-            } else {
-                try {
-                    txn.rollback();
-                } catch (Exception e) {
-                    log.error("Rollback failure", e);
-                }
-            }
-        } catch (Throwable t) {
-            if (txn != null && txn.isActive()) {
-                try {
-                    txn.rollback();
-                } catch (Exception e) {
-                    log.error("Rollback failure", e);
-                }
-            }
-            throw t;
-        } finally {
-            if (entityManager != null) {
-                entityManager.close();
-            }
-        }
     }
 
 }

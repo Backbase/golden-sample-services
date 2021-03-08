@@ -2,22 +2,15 @@ package com.backbase.goldensample.product.persistence;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.transaction.annotation.Propagation.NOT_SUPPORTED;
 
 import com.backbase.goldensample.product.DockerizedTest;
 import com.backbase.goldensample.product.config.IdentityStrategyOverrideConfiguration;
 import java.time.LocalDate;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.function.Consumer;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
 import lombok.extern.slf4j.Slf4j;
-import org.assertj.core.api.Assertions;
-import org.hibernate.Session;
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,8 +32,6 @@ import org.springframework.transaction.annotation.Transactional;
 class PersistenceIT extends DockerizedTest {
 
     private static final LocalDate TODAY = LocalDate.of(2020, 1, 28);
-    @Autowired
-    EntityManagerFactory entityManagerFactory;
     @Autowired
     private ProductRepository repository;
     private ProductEntity savedEntity;
@@ -99,57 +90,17 @@ class PersistenceIT extends DockerizedTest {
         assertEqualsReview(savedEntity, foundEntity);
     }
 
+    /**
+     * Validates the equality of this Entity class in different states and with different data. Due to the definition of
+     * our Entity, 2 suppress warnings are required in order to validate it as explained in <a
+     * href="https://jqno.nl/equalsverifier/manual/jpa-entities/">here</a>.
+     */
     @Test
     void validateEntityEqualityAmongStates() {
-
-        // Generates Entity to validate
-      ProductEntity entity = new ProductEntity("amazon", 1, TODAY, Collections.singletonMap("popularity", "87%"));
-
-        // HashSet bucket
-        Set<ProductEntity> set = new HashSet<>();
-
-        assertFalse(set.contains(entity));
-        set.add(entity);
-        assertTrue(set.contains(entity));
-
-        // The Entity is considered equal before persisting/flushing (i.e. generating the primary key) and afterwards
-        runTransaction(em -> {
-            em.persist(entity);
-            em.flush();
-            assertTrue(set.contains(entity));
-        });
-
-        // The Entity is considered equal after reattaching it to a new Persistence Context
-        runTransaction(em -> {
-            ProductEntity merged = em.merge(entity);
-            assertTrue(set.contains(merged));
-        });
-
-        // The Entity is considered equal after updating the persistent instance with the identifier of the given detached entity
-        runTransaction(em -> {
-            em.unwrap(Session.class).update(entity);
-            assertTrue(set.contains(entity));
-        });
-
-        // The Entity is considered equal after it's loaded in a different persistence context
-        runTransaction(em -> {
-            ProductEntity found = em.find(ProductEntity.class, entity.getId());
-            assertTrue(set.contains(found));
-        });
-
-        // The Entity is considered equal after it's loaded as a proxy in a different persistence context
-        runTransaction(em -> {
-            ProductEntity proxyEntity = em.getReference(ProductEntity.class, entity.getId());
-            assertTrue(set.contains(proxyEntity));
-            Assertions.assertThat(proxyEntity).isEqualTo(entity);
-        });
-
-        // The Entity is considered equal after it's deleted
-        runTransaction(em -> {
-            ProductEntity toDelete = em.getReference(ProductEntity.class, entity.getId());
-            em.remove(toDelete);
-            assertTrue(set.contains(toDelete));
-        });
+        EqualsVerifier.forClass(ProductEntity.class)
+            .suppress(Warning.IDENTICAL_COPY_FOR_VERSIONED_ENTITY)
+            .suppress(Warning.STRICT_HASHCODE)
+            .verify();
     }
 
     private void assertEqualsReview(ProductEntity expectedEntity, ProductEntity actualEntity) {
@@ -160,35 +111,4 @@ class PersistenceIT extends DockerizedTest {
         assertEquals(expectedEntity.getAdditions(), actualEntity.getAdditions());
     }
 
-    private void runTransaction(Consumer<EntityManager> consumer) {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        EntityTransaction txn = null;
-        try {
-            txn = entityManager.getTransaction();
-            txn.begin();
-            consumer.accept(entityManager);
-            if (!txn.getRollbackOnly()) {
-                txn.commit();
-            } else {
-                try {
-                    txn.rollback();
-                } catch (Exception e) {
-                    log.error("Rollback failure", e);
-                }
-            }
-        } catch (Throwable t) {
-            if (txn != null && txn.isActive()) {
-                try {
-                    txn.rollback();
-                } catch (Exception e) {
-                    log.error("Rollback failure", e);
-                }
-            }
-            throw t;
-        } finally {
-            if (entityManager != null) {
-                entityManager.close();
-            }
-        }
-    }
 }
