@@ -38,7 +38,7 @@
                     <helmVersion>${helm.version}</helmVersion>
                     <addDefaultRepo>false</addDefaultRepo>
                     <!-- Lint with strict mode -->
-                    <lintStrict>false</lintStrict>
+                    <lintStrict>true</lintStrict>
 <!--                    <uploadRepoStable>-->
 <!--                        <name>Backbase Artifact Repository</name>-->
 <!--                        <url>https://repo.backbase.com/backbase-charts</url>-->
@@ -53,7 +53,7 @@
 <!--                    </uploadRepoSnapshot>-->
                     <helmExtraRepos>
                         <helmRepo>
-                            <name>repo-charts</name>
+                            <name>backbase</name>
                             <url>https://repo.backbase.com/backbase-charts</url>
                         </helmRepo>
                     </helmExtraRepos>
