@@ -53,7 +53,7 @@
 <!--                    </uploadRepoSnapshot>-->
                     <helmExtraRepos>
                         <helmRepo>
-                            <name>backbase</name>
+                            <name>repo-charts</name>
                             <url>https://repo.backbase.com/backbase-charts</url>
                         </helmRepo>
                     </helmExtraRepos>
