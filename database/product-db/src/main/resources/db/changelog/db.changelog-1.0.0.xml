@@ -97,7 +97,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="last_update_date" type="${dateTimeDataType}(3)" remarks="The date when the customer was modified last time"/>
-            <column name="additions" type="${clobDataType}" remarks="Data model extention for customer"/>
+            <column name="additions" type="${clobDataType}" remarks="Data model extension for customer"/>
         </createTable>
     </changeSet>
     <changeSet id="1_0_0_006" context="initial_1_0_0" author="backbase">
@@ -155,7 +155,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="last_update_date" type="${dateTimeDataType}(3)" remarks="The date when the account was modified last time"/>
-            <column name="additions" type="${clobDataType}" remarks="Data model extention for account"/>
+            <column name="additions" type="${clobDataType}" remarks="Data model extension for account"/>
         </createTable>
     </changeSet>
     <changeSet id="1_0_0_011" context="initial_1_0_0" author="backbase">
@@ -214,7 +214,7 @@
             <column name="transaction_date" type="${dateTimeDataType}(3)" remarks="Transaction datetime">
                 <constraints nullable="false"/>
             </column>
-            <column name="additions" type="${clobDataType}" remarks="Data model extention for transaction"/>
+            <column name="additions" type="${clobDataType}" remarks="Data model extension for transaction"/>
         </createTable>
     </changeSet>
     <changeSet id="1_0_0_018" context="initial_1_0_0" author="backbase">

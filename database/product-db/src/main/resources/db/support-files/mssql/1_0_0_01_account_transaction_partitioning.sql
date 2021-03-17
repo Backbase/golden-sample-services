@@ -1,4 +1,4 @@
--- Audit partitioning for SQL Server
+-- Account Transaction partitioning for SQL Server
 
 DROP INDEX [ix_account_transaction_01] ON [account_transaction]
 GO

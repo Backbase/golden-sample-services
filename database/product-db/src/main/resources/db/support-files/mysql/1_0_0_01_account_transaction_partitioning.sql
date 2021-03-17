@@ -1,4 +1,4 @@
--- Audit partitioning for MySQL
+-- Account Transaction partitioning for MySQL
 
 -- Additional index is required for autoincrement ID column. So we can build complex Primary Key later
 CREATE INDEX ix_account_transaction_id ON account_transaction (id);

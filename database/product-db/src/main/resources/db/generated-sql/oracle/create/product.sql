@@ -32,7 +32,7 @@ COMMENT ON COLUMN customer.create_date IS 'The date when the customer was create
 
 COMMENT ON COLUMN customer.last_update_date IS 'The date when the customer was modified last time';
 
-COMMENT ON COLUMN customer.additions IS 'Data model extention for customer';
+COMMENT ON COLUMN customer.additions IS 'Data model extension for customer';
 
 ALTER TABLE customer ADD CONSTRAINT uq_customer_internal_id UNIQUE (internal_id);
 
@@ -66,7 +66,7 @@ COMMENT ON COLUMN account.create_date IS 'The date when the account was created'
 
 COMMENT ON COLUMN account.last_update_date IS 'The date when the account was modified last time';
 
-COMMENT ON COLUMN account.additions IS 'Data model extention for account';
+COMMENT ON COLUMN account.additions IS 'Data model extension for account';
 
 ALTER TABLE account ADD CONSTRAINT uq_account_internal_id UNIQUE (internal_id);
 
@@ -96,7 +96,7 @@ COMMENT ON COLUMN account_transaction.booking_date IS 'Transaction booking date'
 
 COMMENT ON COLUMN account_transaction.transaction_date IS 'Transaction datetime';
 
-COMMENT ON COLUMN account_transaction.additions IS 'Data model extention for transaction';
+COMMENT ON COLUMN account_transaction.additions IS 'Data model extension for transaction';
 
 CREATE INDEX ix_account_transaction_01 ON account_transaction(account_id, transaction_date);
 
