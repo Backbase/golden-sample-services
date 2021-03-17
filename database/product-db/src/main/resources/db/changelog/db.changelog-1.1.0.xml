@@ -13,8 +13,50 @@
             <column name="create_date" descending="true"></column>
         </createIndex>
     </changeSet>
-
     <changeSet id="1_1_0_002" author="backbase" context="upgrade_1_0_0_to_1_1_0">
+        <comment>add address column to customer table</comment>
+        <addColumn tableName="customer">
+            <column name="address" 
+                type="${varcharDataType}(255)">
+            </column>  
+        </addColumn>  
+    </changeSet>
+    <changeSet id="1_1_0_003" context="upgrade_1_0_0_to_1_1_0" author="backbase">
+        <comment>Add computed column UPPER(external_id) for customer table</comment>
+        <sqlFile dbms="mysql,mssql,oracle"
+            encoding="UTF-8"
+            path="support-files/${db.type}/1_1_0_02_customer_table_upper_external_id.sql"
+            relativeToChangelogFile="false"
+            splitStatements="true"
+            stripComments="true"/>
+        <rollback>
+            <sql>
+                alter table customer drop column external_id_upper
+            </sql>
+        </rollback>     
+    </changeSet>
+    <changeSet id="1_1_0_004" author="backbase" context="upgrade_1_0_0_to_1_1_0">
+        <comment>create index in the customer table for the external_id_upper column</comment>
+        <createIndex tableName="customer" indexName="ix_customer_external_id_upper">
+            <column name="external_id_upper"></column>
+        </createIndex>
+    </changeSet>
+    <changeSet id="1_1_0_005" context="upgrade_1_0_0_to_1_1_0" author="backbase">
+        <comment>Add savings product</comment>
+        <sqlFile dbms="mysql,mssql,oracle"
+            encoding="UTF-8"
+            path="support-files/${db.type}/1_1_0_01_product_table_data.sql"
+            relativeToChangelogFile="false"
+            splitStatements="true"
+            stripComments="true"/>
+        <rollback>
+            <sql>
+                delete from product where name = 'Savings Account'
+            </sql>
+        </rollback>     
+    </changeSet>
+
+    <changeSet id="1_1_0_006" author="backbase" context="upgrade_1_0_0_to_1_1_0">
         <tagDatabase tag="1.1.0"/>
     </changeSet>
 </databaseChangeLog>

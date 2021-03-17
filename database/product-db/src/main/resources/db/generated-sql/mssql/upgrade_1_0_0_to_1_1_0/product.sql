@@ -1,15 +1,20 @@
--- *********************************************************************
--- Update Database Script
--- *********************************************************************
--- Change Log: db.changelog-master.xml
--- Ran at: 2/16/21 9:26 AM
--- Against: admin@offline:mssql
--- Liquibase version: 3.7.0
--- *********************************************************************
-
--- Changeset changelog/db.changelog-1.1.0.xml::1_1_0_001::backbase
--- create index in the product table for the create date column
 CREATE NONCLUSTERED INDEX ix_product_create_date ON product(create_date DESC)
 GO
 
--- Changeset changelog/db.changelog-1.1.0.xml::1_1_0_002::backbase
+ALTER TABLE customer ADD address nvarchar(255)
+GO
+
+ALTER TABLE [customer] ADD [external_id_upper] AS (UPPER([external_id]))
+GO
+
+CREATE NONCLUSTERED INDEX ix_customer_external_id_upper ON customer(external_id_upper)
+GO
+
+BEGIN TRANSACTION
+GO
+
+INSERT INTO product(id, name, create_date) VALUES (next value for seq_product, N'Savings Account', Convert(nvarchar(30),N'1/1/2021',102))
+GO
+
+COMMIT
+GO

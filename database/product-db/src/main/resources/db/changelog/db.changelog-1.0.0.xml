@@ -55,17 +55,21 @@
             <column name="create_date" type="${dateTimeDataType}" remarks="The date when the product was created">
                 <constraints nullable="false"/>
             </column>
-            <column name="name" type="${varcharDataType}(255)" remarks="The name of the product"/>
+            <column name="name" type="${varcharDataType}(255)" remarks="The name of the product">
+                <constraints nullable="false"/>
+            </column>    
             <column name="weight" type="SMALLINT" remarks="The weight of the product in kgs"/>
         </createTable>
     </changeSet>
-
-    <changeSet id="1_0_0_003" context="initial_1_0_0" author="backbase" dbms="mssql, oracle">
-        <comment>create sequence for the customer table</comment>
-        <createSequence sequenceName="seq_customer" startValue="1" incrementBy="1"/>
+    <changeSet id="1_0_0_003" context="initial_1_0_0" author="backbase">
+        <comment>add unique constraint for product table name column</comment>
+        <addUniqueConstraint columnNames="name" constraintName="uq_product_name"  tableName="product"/>
     </changeSet>
-
-    <changeSet id="1_0_0_004" context="initial_1_0_0" author="backbase">
+    <changeSet id="1_0_0_004" context="initial_1_0_0" author="backbase" dbms="mssql, oracle">
+        <comment>create sequence for the customer table</comment>
+        <createSequence sequenceName="seq_customer" startValue="1" incrementBy="5"/>
+    </changeSet>
+    <changeSet id="1_0_0_005" context="initial_1_0_0" author="backbase">
         <comment>create customer table</comment>
         <createTable tableName="customer">
             <column name="id" type="BIGINT" autoIncrement="${autoIncrement}">
@@ -95,20 +99,26 @@
             <column name="last_update_date" type="${dateTimeDataType}(3)" remarks="The date when the customer was modified last time"/>
             <column name="additions" type="${clobDataType}" remarks="Data model extention for customer"/>
         </createTable>
-        <addUniqueConstraint columnNames="name,surname" constraintName="uk_customer_01"  tableName="customer"/>
-        <addUniqueConstraint columnNames="internal_id" constraintName="uk_customer_02"  tableName="customer"/>
-        <addUniqueConstraint columnNames="external_id" constraintName="uk_customer_03"  tableName="customer"/>
-        <createIndex indexName="ix_customer_04" tableName="customer">
+    </changeSet>
+    <changeSet id="1_0_0_006" context="initial_1_0_0" author="backbase">
+        <comment>add unique constraint for customer table internal_id column</comment>
+        <addUniqueConstraint columnNames="internal_id" constraintName="uq_customer_internal_id"  tableName="customer"/>
+    </changeSet>
+    <changeSet id="1_0_0_007" context="initial_1_0_0" author="backbase">
+        <comment>add unique constraint for customer table external_id column</comment>
+        <addUniqueConstraint columnNames="external_id" constraintName="uq_customer_external_id"  tableName="customer"/>
+    </changeSet>
+    <changeSet id="1_0_0_008" context="initial_1_0_0" author="backbase">
+        <comment>add index for customer table on surname column</comment>
+        <createIndex indexName="ix_customer_surname" tableName="customer">
             <column name="surname"/>
         </createIndex>
     </changeSet>
-
-    <changeSet id="1_0_0_005" context="initial_1_0_0" author="backbase" dbms="mssql, oracle">
+    <changeSet id="1_0_0_009" context="initial_1_0_0" author="backbase" dbms="mssql, oracle">
         <comment>create sequence for the account table</comment>
-        <createSequence sequenceName="seq_account" startValue="1" incrementBy="1"/>
+        <createSequence sequenceName="seq_account" startValue="1" incrementBy="5"/>
     </changeSet>
-
-    <changeSet id="1_0_0_006" context="initial_1_0_0" author="backbase">
+    <changeSet id="1_0_0_010" context="initial_1_0_0" author="backbase">
         <comment>create account table</comment>
         <createTable tableName="account">
             <column name="id" type="BIGINT" autoIncrement="${autoIncrement}">
@@ -147,27 +157,40 @@
             <column name="last_update_date" type="${dateTimeDataType}(3)" remarks="The date when the account was modified last time"/>
             <column name="additions" type="${clobDataType}" remarks="Data model extention for account"/>
         </createTable>
-        <addUniqueConstraint columnNames="internal_id" constraintName="uk_account_01"  tableName="account"/>
-        <addUniqueConstraint columnNames="external_id" constraintName="uk_account_02"  tableName="account"/>
+    </changeSet>
+    <changeSet id="1_0_0_011" context="initial_1_0_0" author="backbase">
+        <comment>add unique constraint for account table internal_id column</comment>
+        <addUniqueConstraint columnNames="internal_id" constraintName="uq_account_internal_id"  tableName="account"/>
+    </changeSet>
+    <changeSet id="1_0_0_012" context="initial_1_0_0" author="backbase">
+        <comment>add unique constraint for account table external_id column</comment>
+        <addUniqueConstraint columnNames="external_id" constraintName="uq_account_external_id"  tableName="account"/>
+    </changeSet>
+    <changeSet id="1_0_0_013" context="initial_1_0_0" author="backbase">
+        <comment>add index for account table on customer_id column</comment>
         <createIndex indexName="ix_account_03" tableName="account">
             <column name="customer_id"/>
         </createIndex>
-        <createIndex indexName="ix_account_04" tableName="account">
+    </changeSet>
+    <changeSet id="1_0_0_014" context="initial_1_0_0" author="backbase">
+        <comment>add index for account table on iban column</comment>
+        <createIndex indexName="ix_account_iban" tableName="account">
             <column name="iban"/>
         </createIndex>
+    </changeSet>
+    <changeSet id="1_0_0_015" context="initial_1_0_0" author="backbase">
+        <comment>add foreign key constraint to reference customer table id column</comment>
         <addForeignKeyConstraint baseColumnNames="customer_id" baseTableName="account" constraintName="fk_account2customer_01" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="customer" validate="true"/>
     </changeSet>
-
-    <changeSet id="1_0_0_007" context="initial_1_0_0" author="backbase" dbms="mssql, oracle">
+    <changeSet id="1_0_0_016" context="initial_1_0_0" author="backbase" dbms="mssql, oracle">
         <comment>create sequence for the account_transaction table</comment>
-        <createSequence sequenceName="seq_account_transaction" startValue="1" incrementBy="1"/>
+        <createSequence sequenceName="seq_account_transaction" startValue="1" incrementBy="100"/>
     </changeSet>
-
-    <changeSet id="1_0_0_008" context="initial_1_0_0" author="backbase">
+    <changeSet id="1_0_0_017" context="initial_1_0_0" author="backbase">
         <comment>create account_transaction table</comment>
         <createTable tableName="account_transaction">
             <column name="id" type="BIGINT" autoIncrement="${autoIncrement}">
-            <constraints primaryKey="true" primaryKeyName="pk_account_transaction" />
+            <constraints primaryKey="true" primaryKeyName="pk_account_transaction"/>
             </column>
             <column name="internal_id" type="${uuidDataType}" remarks="Internal transaction identifier - GUID">
                 <constraints nullable="false"/>
@@ -193,23 +216,24 @@
             </column>
             <column name="additions" type="${clobDataType}" remarks="Data model extention for transaction"/>
         </createTable>
+    </changeSet>
+    <changeSet id="1_0_0_018" context="initial_1_0_0" author="backbase">
+        <comment>add index for account_transaction table on (account_id, transaction_date) columns</comment>
         <createIndex indexName="ix_account_transaction_01" tableName="account_transaction">
             <column name="account_id"/>
             <column name="transaction_date"/>
         </createIndex>
-    </changeSet>
-
-    <changeSet id="1_0_0_009" context="initial_1_0_0" author="backbase">
+    </changeSet>    
+    <changeSet id="1_0_0_019" context="initial_1_0_0" author="backbase">
         <comment>Partition account_transaction table for mysql mssql</comment>
         <sqlFile dbms="mysql,mssql"
             encoding="UTF-8"
-            path="support-files/${db.type}/1_0_0_account_transaction_partitioning.sql"
+            path="support-files/${db.type}/1_0_0_01_account_transaction_partitioning.sql"
             relativeToChangelogFile="false"
             splitStatements="true"
             stripComments="true"/>
     </changeSet>
-    
-    <changeSet  id="1_0_0_010" context="initial_1_0_0" author="backbase">
+    <changeSet  id="1_0_0_020" context="initial_1_0_0" author="backbase">
         <preConditions  onFail="MARK_RAN">
             <dbms  type="oracle"  />
             <sqlCheck  expectedResult="1">select count(1) from v$option where parameter = 'Partitioning' and value='TRUE'</sqlCheck>
@@ -217,13 +241,22 @@
         <comment>Partition account_transaction table for oracle if partitioning is enabled</comment>
         <sqlFile dbms="oracle"
             encoding="UTF-8"
-            path="support-files/${db.type}/1_0_0_account_transaction_partitioning.sql"
+            path="support-files/${db.type}/1_0_0_01_account_transaction_partitioning.sql"
+            relativeToChangelogFile="false"
+            splitStatements="true"
+            stripComments="true"/>
+    </changeSet>
+    <changeSet id="1_0_0_021" context="initial_1_0_0" author="backbase">
+        <comment>Creating products</comment>
+        <sqlFile dbms="mysql,mssql,oracle"
+            encoding="UTF-8"
+            path="support-files/${db.type}/1_0_0_02_product_table_data.sql"
             relativeToChangelogFile="false"
             splitStatements="true"
             stripComments="true"/>
     </changeSet>
 
-    <changeSet id="1_0_0_011" author="backbase" context="initial_1_0_0">
+    <changeSet id="1_0_0_022" context="initial_1_0_0" author="backbase" >
         <tagDatabase tag="1.0.0"/>
     </changeSet>
 </databaseChangeLog>

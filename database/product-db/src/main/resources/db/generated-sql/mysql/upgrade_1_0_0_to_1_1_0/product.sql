@@ -1,14 +1,11 @@
---  *********************************************************************
---  Update Database Script
---  *********************************************************************
---  Change Log: db.changelog-master.xml
---  Ran at: 2/16/21 9:26 AM
---  Against: admin@offline:mysql
---  Liquibase version: 3.7.0
---  *********************************************************************
-
---  Changeset changelog/db.changelog-1.1.0.xml::1_1_0_001::backbase
---  create index in the product table for the create date column
 CREATE INDEX ix_product_create_date ON product(create_date DESC);
 
---  Changeset changelog/db.changelog-1.1.0.xml::1_1_0_002::backbase
+ALTER TABLE customer ADD address VARCHAR(255) NULL;
+
+ALTER TABLE customer ADD COLUMN external_id_upper VARCHAR(36) AS (UPPER(EXTERNAL_ID));
+
+CREATE INDEX ix_customer_external_id_upper ON customer(external_id_upper);
+
+INSERT INTO product (name, create_date) VALUES ('Savings Account', str_to_date('01/01/2021','%d/%m/%Y'));
+
+COMMIT;

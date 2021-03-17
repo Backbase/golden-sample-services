@@ -1,20 +1,8 @@
--- *********************************************************************
--- Update Database Script
--- *********************************************************************
--- Change Log: db.changelog-master.xml
--- Ran at: 2/16/21 9:16 AM
--- Against: admin@offline:mssql
--- Liquibase version: 3.7.0
--- *********************************************************************
 
--- Changeset changelog/db.changelog-1.0.0.xml::1_0_0_001::backbase
--- create sequence for the product table
 CREATE SEQUENCE seq_product START WITH 1 INCREMENT BY 5
 GO
 
--- Changeset changelog/db.changelog-1.0.0.xml::1_0_0_002::backbase
--- create the product table
-CREATE TABLE product (id bigint NOT NULL, create_date datetime2 NOT NULL, name nvarchar(255), weight smallint, CONSTRAINT pk_product PRIMARY KEY (id))
+CREATE TABLE product (id bigint NOT NULL, create_date datetime2 NOT NULL, name nvarchar(255) NOT NULL, weight smallint, CONSTRAINT pk_product PRIMARY KEY (id))
 GO
 
 DECLARE @TableName SYSNAME set @TableName = N'product'; DECLARE @FullTableName SYSNAME; SET @FullTableName = N'dbo.product';DECLARE @MS_DescriptionValue NVARCHAR(3749); SET @MS_DescriptionValue = N'Table to store the Products from our store';DECLARE @MS_Description NVARCHAR(3749) set @MS_Description = NULL; SET @MS_Description = (SELECT CAST(Value AS NVARCHAR(3749)) AS [MS_Description] FROM sys.extended_properties AS ep WHERE ep.major_id = OBJECT_ID(@FullTableName) AND ep.name = N'MS_Description' AND ep.minor_id=0); IF @MS_Description IS NULL BEGIN EXEC sys.sp_addextendedproperty @name  = N'MS_Description', @value = @MS_DescriptionValue, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'TABLE', @level1name = @TableName; END ELSE BEGIN EXEC sys.sp_updateextendedproperty @name  = N'MS_Description', @value = @MS_DescriptionValue, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'TABLE', @level1name = @TableName; END
@@ -29,13 +17,12 @@ GO
 DECLARE @TableName SYSNAME set @TableName = N'product'; DECLARE @FullTableName SYSNAME set @FullTableName = N'dbo.product'; DECLARE @ColumnName SYSNAME set @ColumnName = N'weight'; DECLARE @MS_DescriptionValue NVARCHAR(3749); SET @MS_DescriptionValue = N'The weight of the product in kgs';DECLARE @MS_Description NVARCHAR(3749) set @MS_Description = NULL; SET @MS_Description = (SELECT CAST(Value AS NVARCHAR(3749)) AS [MS_Description] FROM sys.extended_properties AS ep WHERE ep.major_id = OBJECT_ID(@FullTableName) AND ep.minor_id=COLUMNPROPERTY(ep.major_id, @ColumnName, 'ColumnId') AND ep.name = N'MS_Description'); IF @MS_Description IS NULL BEGIN EXEC sys.sp_addextendedproperty @name  = N'MS_Description', @value = @MS_DescriptionValue, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'TABLE', @level1name = @TableName, @level2type = N'COLUMN', @level2name = @ColumnName; END ELSE BEGIN EXEC sys.sp_updateextendedproperty @name  = N'MS_Description', @value = @MS_DescriptionValue, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'TABLE', @level1name = @TableName, @level2type = N'COLUMN', @level2name = @ColumnName; END
 GO
 
--- Changeset changelog/db.changelog-1.0.0.xml::1_0_0_003::backbase
--- create sequence for the customer table
-CREATE SEQUENCE seq_customer START WITH 1 INCREMENT BY 1
+ALTER TABLE product ADD CONSTRAINT uq_product_name UNIQUE (name)
 GO
 
--- Changeset changelog/db.changelog-1.0.0.xml::1_0_0_004::backbase
--- create customer table
+CREATE SEQUENCE seq_customer START WITH 1 INCREMENT BY 5
+GO
+
 CREATE TABLE customer (id bigint NOT NULL, internal_id uniqueidentifier NOT NULL, external_id nvarchar(36) NOT NULL, name nvarchar(128) NOT NULL, surname nvarchar(128) NOT NULL, birthdate date NOT NULL, is_active bit CONSTRAINT DF_customer_is_active DEFAULT 1 NOT NULL, create_date datetime2(3) NOT NULL, last_update_date datetime2(3), additions nvarchar(MAX), CONSTRAINT pk_customer PRIMARY KEY (id))
 GO
 
@@ -66,25 +53,18 @@ GO
 DECLARE @TableName SYSNAME set @TableName = N'customer'; DECLARE @FullTableName SYSNAME set @FullTableName = N'dbo.customer'; DECLARE @ColumnName SYSNAME set @ColumnName = N'additions'; DECLARE @MS_DescriptionValue NVARCHAR(3749); SET @MS_DescriptionValue = N'Data model extention for customer';DECLARE @MS_Description NVARCHAR(3749) set @MS_Description = NULL; SET @MS_Description = (SELECT CAST(Value AS NVARCHAR(3749)) AS [MS_Description] FROM sys.extended_properties AS ep WHERE ep.major_id = OBJECT_ID(@FullTableName) AND ep.minor_id=COLUMNPROPERTY(ep.major_id, @ColumnName, 'ColumnId') AND ep.name = N'MS_Description'); IF @MS_Description IS NULL BEGIN EXEC sys.sp_addextendedproperty @name  = N'MS_Description', @value = @MS_DescriptionValue, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'TABLE', @level1name = @TableName, @level2type = N'COLUMN', @level2name = @ColumnName; END ELSE BEGIN EXEC sys.sp_updateextendedproperty @name  = N'MS_Description', @value = @MS_DescriptionValue, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'TABLE', @level1name = @TableName, @level2type = N'COLUMN', @level2name = @ColumnName; END
 GO
 
-ALTER TABLE customer ADD CONSTRAINT uk_customer_01 UNIQUE (name, surname)
+ALTER TABLE customer ADD CONSTRAINT uq_customer_internal_id UNIQUE (internal_id)
 GO
 
-ALTER TABLE customer ADD CONSTRAINT uk_customer_02 UNIQUE (internal_id)
+ALTER TABLE customer ADD CONSTRAINT uq_customer_external_id UNIQUE (external_id)
 GO
 
-ALTER TABLE customer ADD CONSTRAINT uk_customer_03 UNIQUE (external_id)
+CREATE NONCLUSTERED INDEX ix_customer_surname ON customer(surname)
 GO
 
-CREATE NONCLUSTERED INDEX ix_customer_04 ON customer(surname)
+CREATE SEQUENCE seq_account START WITH 1 INCREMENT BY 5
 GO
 
--- Changeset changelog/db.changelog-1.0.0.xml::1_0_0_005::backbase
--- create sequence for the account table
-CREATE SEQUENCE seq_account START WITH 1 INCREMENT BY 1
-GO
-
--- Changeset changelog/db.changelog-1.0.0.xml::1_0_0_006::backbase
--- create account table
 CREATE TABLE account (id bigint NOT NULL, internal_id uniqueidentifier NOT NULL, external_id nvarchar(36) NOT NULL, customer_id bigint NOT NULL, name nvarchar(128) NOT NULL, iban nvarchar(128) NOT NULL, currency nchar(3) NOT NULL, balance decimal(23, 5) NOT NULL, available_balance decimal(23, 5) NOT NULL, is_active bit CONSTRAINT DF_account_is_active DEFAULT 1 NOT NULL, create_date datetime2(3) NOT NULL, last_update_date datetime2(3), additions nvarchar(MAX), CONSTRAINT pk_account PRIMARY KEY (id))
 GO
 
@@ -124,28 +104,24 @@ GO
 DECLARE @TableName SYSNAME set @TableName = N'account'; DECLARE @FullTableName SYSNAME set @FullTableName = N'dbo.account'; DECLARE @ColumnName SYSNAME set @ColumnName = N'additions'; DECLARE @MS_DescriptionValue NVARCHAR(3749); SET @MS_DescriptionValue = N'Data model extention for account';DECLARE @MS_Description NVARCHAR(3749) set @MS_Description = NULL; SET @MS_Description = (SELECT CAST(Value AS NVARCHAR(3749)) AS [MS_Description] FROM sys.extended_properties AS ep WHERE ep.major_id = OBJECT_ID(@FullTableName) AND ep.minor_id=COLUMNPROPERTY(ep.major_id, @ColumnName, 'ColumnId') AND ep.name = N'MS_Description'); IF @MS_Description IS NULL BEGIN EXEC sys.sp_addextendedproperty @name  = N'MS_Description', @value = @MS_DescriptionValue, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'TABLE', @level1name = @TableName, @level2type = N'COLUMN', @level2name = @ColumnName; END ELSE BEGIN EXEC sys.sp_updateextendedproperty @name  = N'MS_Description', @value = @MS_DescriptionValue, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'TABLE', @level1name = @TableName, @level2type = N'COLUMN', @level2name = @ColumnName; END
 GO
 
-ALTER TABLE account ADD CONSTRAINT uk_account_01 UNIQUE (internal_id)
+ALTER TABLE account ADD CONSTRAINT uq_account_internal_id UNIQUE (internal_id)
 GO
 
-ALTER TABLE account ADD CONSTRAINT uk_account_02 UNIQUE (external_id)
+ALTER TABLE account ADD CONSTRAINT uq_account_external_id UNIQUE (external_id)
 GO
 
 CREATE NONCLUSTERED INDEX ix_account_03 ON account(customer_id)
 GO
 
-CREATE NONCLUSTERED INDEX ix_account_04 ON account(iban)
+CREATE NONCLUSTERED INDEX ix_account_iban ON account(iban)
 GO
 
 ALTER TABLE account ADD CONSTRAINT fk_account2customer_01 FOREIGN KEY (customer_id) REFERENCES customer (id) ON UPDATE NO ACTION ON DELETE NO ACTION
 GO
 
--- Changeset changelog/db.changelog-1.0.0.xml::1_0_0_007::backbase
--- create sequence for the account_transaction table
-CREATE SEQUENCE seq_account_transaction START WITH 1 INCREMENT BY 1
+CREATE SEQUENCE seq_account_transaction START WITH 1 INCREMENT BY 100
 GO
 
--- Changeset changelog/db.changelog-1.0.0.xml::1_0_0_008::backbase
--- create account_transaction table
 CREATE TABLE account_transaction (id bigint NOT NULL, internal_id uniqueidentifier NOT NULL, external_id nvarchar(36) NOT NULL, account_id bigint NOT NULL, description nvarchar(128) NOT NULL, is_debit bit NOT NULL, amount decimal(23, 5) NOT NULL, booking_date date, transaction_date datetime2(3) NOT NULL, additions nvarchar(MAX), CONSTRAINT pk_account_transaction PRIMARY KEY (id))
 GO
 
@@ -176,8 +152,6 @@ GO
 CREATE NONCLUSTERED INDEX ix_account_transaction_01 ON account_transaction(account_id, transaction_date)
 GO
 
--- Changeset changelog/db.changelog-1.0.0.xml::1_0_0_009::backbase
--- Partition account_transaction table for mysql mssql
 DROP INDEX [ix_account_transaction_01] ON [account_transaction]
 GO
 
@@ -200,12 +174,32 @@ GO
 CREATE NONCLUSTERED INDEX [ix_account_transaction_01] ON [account_transaction]([account_id],[transaction_date])
 GO
 
--- Changeset changelog/db.changelog-1.0.0.xml::1_0_0_010::backbase
--- Partition account_transaction table for oracle if partitioning is enabled
--- Changeset changelog/db.changelog-1.0.0.xml::1_0_0_011::backbase
--- Changeset changelog/db.changelog-1.1.0.xml::1_1_0_001::backbase
--- create index in the product table for the create date column
+BEGIN TRANSACTION
+GO
+
+INSERT INTO product(id, name, create_date) VALUES (next value for seq_product, N'Current Account', Convert(nvarchar(30),N'1/1/2021',102))
+GO
+
+COMMIT
+GO
+
 CREATE NONCLUSTERED INDEX ix_product_create_date ON product(create_date DESC)
 GO
 
--- Changeset changelog/db.changelog-1.1.0.xml::1_1_0_002::backbase
+ALTER TABLE customer ADD address nvarchar(255)
+GO
+
+ALTER TABLE [customer] ADD [external_id_upper] AS (UPPER([external_id]))
+GO
+
+CREATE NONCLUSTERED INDEX ix_customer_external_id_upper ON customer(external_id_upper)
+GO
+
+BEGIN TRANSACTION
+GO
+
+INSERT INTO product(id, name, create_date) VALUES (next value for seq_product, N'Savings Account', Convert(nvarchar(30),N'1/1/2021',102))
+GO
+
+COMMIT
+GO
