@@ -7,13 +7,13 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    <changeSet id="1_2_0_001" context="upgrade_1_1_0_to_1_2_0" author="backbase">
+    <changeSet id="1_2_0_001" context="upgrade_1_1_0_to_1_2_0" author="backbase,prod">
         <addColumn tableName="product" >
             <column name="additions" type="CLOB"/>
         </addColumn>
     </changeSet>
 
-    <changeSet id="1_2_0_002" author="backbase" context="upgrade_1_1_0_to_1_2_0">
+    <changeSet id="1_2_0_002" author="backbase" context="upgrade_1_1_0_to_1_2_0,prod">
         <tagDatabase tag="1.2.0"/>
     </changeSet>
 

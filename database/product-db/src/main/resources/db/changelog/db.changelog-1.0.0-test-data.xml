@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+	  http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet author="backbase" id="1.0.0-test-data" context="test">
+        <insert tableName="product">
+            <column name="id" value="1"/>
+            <column name="name" value="product"/>
+            <column name="weight" value="20"/>
+            <column name="create_date" value="2019-12-02 15:10:33"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

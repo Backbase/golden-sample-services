@@ -1,4 +1,4 @@
 
-ALTER TABLE review ADD additions nvarchar(MAX)
+ALTER TABLE review ADD additions varchar(MAX)
 GO
 

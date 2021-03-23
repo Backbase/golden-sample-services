@@ -7,14 +7,14 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    <changeSet id="1_1_0_001" author="backbase" context="upgrade_1_0_0_to_1_1_0">
+    <changeSet id="1_1_0_001" author="backbase" context="upgrade_1_0_0_to_1_1_0,prod">
         <comment>create index in the product table for the create date column</comment>
         <createIndex tableName="product" indexName="ix_product_create_date">
             <column name="create_date" descending="true"></column>
         </createIndex>
     </changeSet>
 
-    <changeSet id="1_1_0_002" author="backbase" context="upgrade_1_0_0_to_1_1_0">
+    <changeSet id="1_1_0_002" author="backbase" context="upgrade_1_0_0_to_1_1_0,prod">
         <tagDatabase tag="1.1.0"/>
     </changeSet>
 </databaseChangeLog>

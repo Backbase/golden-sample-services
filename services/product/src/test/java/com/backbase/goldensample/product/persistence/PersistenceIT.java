@@ -45,8 +45,6 @@ class PersistenceIT extends DockerizedTest {
     @BeforeEach
     public void setupDb() {
 
-        repository.deleteAll();
-
         ProductEntity entity = new ProductEntity("amazon", 1, TODAY, Collections.singletonMap("popularity", "87%"));
         savedEntity = repository.save(entity);
 
@@ -62,8 +60,7 @@ class PersistenceIT extends DockerizedTest {
 
         assertEqualsReview(newEntity, foundEntity);
 
-        assertEquals(2, repository.count());
-
+        assertEquals(3, repository.count());
     }
 
     @Test

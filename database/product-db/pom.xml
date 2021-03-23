@@ -20,6 +20,66 @@
         <spring-boot.repackage.skip>true</spring-boot.repackage.skip>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>mysql</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>mssqlserver</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>oracle-xe</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc -->
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.oracle.ojdbc</groupId>
+            <artifactId>ojdbc8</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>3.4.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>service-sdk-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
     <profiles>
         <profile>
             <id>generateSQL</id>
@@ -30,7 +90,7 @@
                         <artifactId>liquibase-maven-plugin</artifactId>
                         <version>${liquibase-maven-plugin.version}</version>
                         <configuration>
-                            <changeLogFile>${project.basedir}/src/main/resources/db/db.changelog-master.xml</changeLogFile>
+                            <changeLogFile>${project.basedir}/src/main/resources/db/changelog/db.changelog-persistence.xml</changeLogFile>
                             <outputFileEncoding>UTF-8</outputFileEncoding>
                             <password>backbase</password>
                             <username>root</username>
@@ -42,8 +102,37 @@
                                 <phase>generate-resources</phase>
                                 <configuration>
                                     <url>offline:mysql?outputLiquibaseSql=none&amp;changeLogFile=target/sql/mysql/databasechangelog.csv</url>
+                                    <contexts>prod</contexts>
                                     <migrationSqlOutputFile>
                                         ${project.build.directory}/db/generated-sql/mysql/create/product.sql
+                                    </migrationSqlOutputFile>
+                                </configuration>
+                                <goals>
+                                    <goal>updateSQL</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>mysql-create-1.0.0</id>
+                                <phase>generate-resources</phase>
+                                <configuration>
+                                    <url>offline:mysql?outputLiquibaseSql=none&amp;changeLogFile=target/sql/mysql/databasechangelog.csv</url>
+                                    <contexts>initial</contexts>
+                                    <migrationSqlOutputFile>
+                                        ${project.build.directory}/db/generated-sql/mysql/create/product-1.0.0.sql
+                                    </migrationSqlOutputFile>
+                                </configuration>
+                                <goals>
+                                    <goal>updateSQL</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>mysql-create-1.1.0</id>
+                                <phase>generate-resources</phase>
+                                <configuration>
+                                    <url>offline:mysql?outputLiquibaseSql=none&amp;changeLogFile=target/sql/mysql/databasechangelog.csv</url>
+                                    <contexts>initial,upgrade_1_0_0_to_1_1_0</contexts>
+                                    <migrationSqlOutputFile>
+                                        ${project.build.directory}/db/generated-sql/mysql/create/product-1.1.0.sql
                                     </migrationSqlOutputFile>
                                 </configuration>
                                 <goals>
@@ -81,6 +170,7 @@
                             <execution>
                                 <id>mssql</id>
                                 <configuration>
+                                    <contexts>prod</contexts>
                                     <url>offline:mssql?outputLiquibaseSql=none&amp;changeLogFile=target/sql/mssql/databasechangelog.csv</url>
                                     <migrationSqlOutputFile>
                                         ${project.build.directory}/db/generated-sql/mssql/create/product.sql
@@ -90,6 +180,20 @@
                                     <goal>updateSQL</goal>
                                 </goals>
                                 <phase>process-resources</phase>
+                            </execution>
+                            <execution>
+                                <id>mssql-create-db-1.1.0</id>
+                                <phase>generate-resources</phase>
+                                <goals>
+                                    <goal>updateSQL</goal>
+                                </goals>
+                                <configuration>
+                                    <contexts>initial,upgrade_1_0_0_to_1_1_0</contexts>
+                                    <migrationSqlOutputFile>
+                                        ${project.build.directory}/db/generated-sql/mssql/create/product-1.1.0.sql
+                                    </migrationSqlOutputFile>
+                                    <url>offline:mssql?changeLogFile=target/sql/mssql/changelog_1_1_0.csv</url>
+                                </configuration>
                             </execution>
                             <execution>
                                 <id>mssql-db-1.1.0</id>
@@ -122,6 +226,7 @@
                             <execution>
                                 <id>oracle</id>
                                 <configuration>
+                                    <contexts>prod</contexts>
                                     <url>offline:oracle?outputLiquibaseSql=none&amp;changeLogFile=target/sql/oracle/databasechangelog.csv</url>
                                     <migrationSqlOutputFile>
                                         ${project.build.directory}/db/generated-sql/oracle/create/product.sql
@@ -131,6 +236,20 @@
                                     <goal>updateSQL</goal>
                                 </goals>
                                 <phase>process-resources</phase>
+                            </execution>
+                            <execution>
+                                <id>oracle-create-db-1.1.0</id>
+                                <phase>generate-resources</phase>
+                                <goals>
+                                    <goal>updateSQL</goal>
+                                </goals>
+                                <configuration>
+                                    <contexts>initial,upgrade_1_0_0_to_1_1_0</contexts>
+                                    <migrationSqlOutputFile>
+                                        ${project.build.directory}/db/generated-sql/oracle/create/product-1.1.0.sql
+                                    </migrationSqlOutputFile>
+                                    <url>offline:oracle?changeLogFile=target/sql/oracle/changelog_1_1_0.csv</url>
+                                </configuration>
                             </execution>
                             <execution>
                                 <id>oracle-db-1.1.0</id>
@@ -221,7 +340,7 @@
                         <artifactId>liquibase-maven-plugin</artifactId>
                         <version>${liquibase-maven-plugin.version}</version>
                         <configuration>
-                            <changeLogFile>${basedir}/src/main/resources/db/db.changelog-master.xml</changeLogFile>
+                            <changeLogFile>${basedir}/src/main/resources/db/changelog/db.changelog-persistence.xml</changeLogFile>
                             <propertyFile>${basedir}/src/main/resources/liquibase.properties</propertyFile>
                             <outputChangeLogFile>${basedir}/src/main/resources/db/changelog/db.changelog-1.0.0.xml
                             </outputChangeLogFile>
@@ -238,6 +357,7 @@
                 </plugins>
             </build>
         </profile>
+
     </profiles>
 
 </project>
