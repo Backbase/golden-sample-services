@@ -48,7 +48,7 @@ spring:
   liquibase:
     change-log: "classpath:/db/changelog/db.changelog-persistence.xml"
     enabled: true
-    contexts: !test
+    contexts: prod
   jpa:
     show-sql: true
     open-in-view: false
