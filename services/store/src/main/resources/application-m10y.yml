@@ -16,3 +16,11 @@ backbase:
         ext-product@tid(rebrand_shop): popularity,description
         ext-review: verified
         ext-review@tid(rebrand_shop): verified,purchaseDate
+
+app:
+  product-service:
+    serviceId@tid(rebrand_shop): rs-product
+    servicePort@tid(rebrand_shop): 8815
+  review-service:
+    serviceId@tid(rebrand_shop): rs-review
+    servicePort@tid(rebrand_shop): 8816

@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.backbase.buildingblocks.communication.http.HttpCommunicationConfiguration;
+import com.backbase.buildingblocks.context.ContextScopeAutoConfiguration;
 import com.backbase.buildingblocks.test.http.MockTokenResponseClientConfiguration;
 import com.backbase.goldensample.product.api.client.v1.ProductServiceApi;
 import com.backbase.goldensample.product.api.client.v1.model.Product;
@@ -36,7 +37,11 @@ import org.springframework.web.client.HttpServerErrorException;
 
 @RestClientTest(value = {ProductServiceApi.class, ReviewServiceApi.class})
 @AutoConfigureWebClient(registerRestTemplate = true)
-@Import({ProductClientConfig.class, ReviewClientConfig.class, MockTokenResponseClientConfiguration.class,
+@Import({
+    ContextScopeAutoConfiguration.class,
+    ProductClientConfig.class,
+    ReviewClientConfig.class,
+    MockTokenResponseClientConfiguration.class,
     HttpCommunicationConfiguration.class})
 public class StoreRestTemplateTest {
 
