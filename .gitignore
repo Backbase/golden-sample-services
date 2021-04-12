@@ -34,6 +34,13 @@ build/
 .vscode/
 node_modules/
 
+### Theia ###
+.theia
+.classpath
+.factorypath
+.project
+.settings
+
 ##### JEnv
 # JEnv local Java version configuration file
 .java-version

@@ -103,6 +103,8 @@ We recommend that you work with your Java code using an IDE that supports the de
 
 All that you want to do is just fire up your IDE **->** open or import the parent folder `backbase-golden-sample,` and everything will be ready for you.
 
+Lombok plugin is required for your IDE: https://projectlombok.org/setup/overview
+
 ## Playing With Backbase Golden Sample Project
 
 ### Cloning It
