@@ -30,7 +30,7 @@
                 <groupId>com.kiwigrid</groupId>
                 <artifactId>helm-maven-plugin</artifactId>
                 <!-- Mandatory when you use a custom lifecycle -->
-                <extensions>true</extensions>
+                <extensions>false</extensions>
                 <version>${helm.maven.plugin.version}</version>
                 <configuration>
                     <chartDirectory>${project.basedir}</chartDirectory>
@@ -38,7 +38,7 @@
                     <helmVersion>${helm.version}</helmVersion>
                     <addDefaultRepo>false</addDefaultRepo>
                     <!-- Lint with strict mode -->
-                    <lintStrict>false</lintStrict>
+                    <lintStrict>true</lintStrict>
 <!--                    <uploadRepoStable>-->
 <!--                        <name>Backbase Artifact Repository</name>-->
 <!--                        <url>https://repo.backbase.com/backbase-charts</url>-->
@@ -64,9 +64,14 @@
                         <goals>
                             <goal>init</goal>
                             <goal>dependency-build</goal>
+                        </goals>
+                        <phase>initialize</phase>
+                    </execution>
+                    <execution>
+                        <id>helm-lint</id>
+                        <goals>
                             <goal>lint</goal>
                             <goal>package</goal>
-<!--                            <goal>upload</goal>-->
                         </goals>
                     </execution>
                 </executions>

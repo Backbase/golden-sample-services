@@ -19,3 +19,5 @@ properties:
     format: int32
     min: 0
     max: 5
+  additions:
+    $ref: '../schemas/definitions.yaml#/components/schemas/Additions'

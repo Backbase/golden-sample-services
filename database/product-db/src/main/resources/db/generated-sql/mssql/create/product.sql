@@ -203,3 +203,7 @@ GO
 
 COMMIT
 GO
+
+ALTER TABLE product ADD additions varchar(MAX)
+GO
+

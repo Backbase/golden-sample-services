@@ -14,6 +14,10 @@
     <packaging>war</packaging>
     <name>Backbase :: store-service</name>
 
+    <properties>
+        <jsr305.version>3.0.2</jsr305.version>
+        <commons-collections.version>3.2.2</commons-collections.version>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>com.backbase.buildingblocks</groupId>
@@ -25,7 +29,18 @@
             <groupId>com.backbase.buildingblocks</groupId>
             <artifactId>communication</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>validation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>multi-tenancy</artifactId>
+        </dependency>
         <!-- Start - POJO creation made easy -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -51,7 +66,12 @@
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>jsr305</artifactId>
-            <version>3.0.2</version>
+            <version>${jsr305.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>${commons-collections.version}</version>
         </dependency>
     </dependencies>
 
@@ -102,7 +122,7 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>generate-review-client-api-code</id>
+                        <id>generate-review-client-api-code-v1</id>
                         <goals>
                             <goal>generate-rest-template-embedded</goal>
                         </goals>
@@ -137,6 +157,20 @@
                             </inputSpec>
                             <apiPackage>com.backbase.goldensample.review.api.client.v1</apiPackage>
                             <modelPackage>com.backbase.goldensample.review.api.client.v1.model</modelPackage>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-review-client-api-code-v2</id>
+                        <goals>
+                            <goal>generate-rest-template-embedded</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <inputSpec>
+                                ${project.basedir}/../../api/review-service-api/src/main/resources/openapi-v2.yaml
+                            </inputSpec>
+                            <apiPackage>com.backbase.goldensample.review.api.client.v2</apiPackage>
+                            <modelPackage>com.backbase.goldensample.review.api.client.v2.model</modelPackage>
                         </configuration>
                     </execution>
                 </executions>

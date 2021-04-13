@@ -13,11 +13,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
 import com.backbase.product.api.service.v1.model.Product;
 import java.time.LocalDate;
 import java.util.List;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.HttpHeaders;
@@ -77,6 +77,7 @@ class ProductServiceApiControllerTest extends ProductApiController {
     }
 
     @Test
+    @DisplayName("should create a new Product with a valid a payload")
     void shouldCreateNewProductWithValidPayload() throws Exception {
         String requestBody = "{\n" +
             "  \"name\": \"Product 1\",\n" +

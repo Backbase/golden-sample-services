@@ -228,8 +228,8 @@
         <comment>Partition account_transaction table for mysql mssql</comment>
         <sqlFile dbms="mysql,mssql"
             encoding="UTF-8"
-            path="support-files/${db.type}/1_0_0_01_account_transaction_partitioning.sql"
-            relativeToChangelogFile="false"
+            path="../support-files/${db.type}/1_0_0_01_account_transaction_partitioning.sql"
+            relativeToChangelogFile="true"
             splitStatements="true"
             stripComments="true"/>
     </changeSet>
@@ -241,8 +241,8 @@
         <comment>Partition account_transaction table for oracle if partitioning is enabled</comment>
         <sqlFile dbms="oracle"
             encoding="UTF-8"
-            path="support-files/${db.type}/1_0_0_01_account_transaction_partitioning.sql"
-            relativeToChangelogFile="false"
+            path="../support-files/${db.type}/1_0_0_01_account_transaction_partitioning.sql"
+            relativeToChangelogFile="true"
             splitStatements="true"
             stripComments="true"/>
     </changeSet>
@@ -250,8 +250,8 @@
         <comment>Creating products</comment>
         <sqlFile dbms="mysql,mssql,oracle"
             encoding="UTF-8"
-            path="support-files/${db.type}/1_0_0_02_product_table_data.sql"
-            relativeToChangelogFile="false"
+            path="../support-files/${db.type}/1_0_0_02_product_table_data.sql"
+            relativeToChangelogFile="true"
             splitStatements="true"
             stripComments="true"/>
     </changeSet>

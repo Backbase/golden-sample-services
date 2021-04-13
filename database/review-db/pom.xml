@@ -30,7 +30,7 @@
                         <artifactId>liquibase-maven-plugin</artifactId>
                         <version>${liquibase-maven-plugin.version}</version>
                         <configuration>
-                            <changeLogFile>${project.basedir}/src/main/resources/db/db.changelog-master.xml</changeLogFile>
+                            <changeLogFile>${project.basedir}/src/main/resources/db/changelog/db.changelog-persistence.xml</changeLogFile>
                             <outputFileEncoding>UTF-8</outputFileEncoding>
                             <password>backbase</password>
                             <username>root</username>
@@ -65,6 +65,20 @@
                                 </configuration>
                             </execution>
                             <execution>
+                                <id>mysql-db-1.2.0</id>
+                                <phase>generate-resources</phase>
+                                <goals>
+                                    <goal>updateSQL</goal>
+                                </goals>
+                                <configuration>
+                                    <contexts>upgrade_1_1_0_to_1_2_0</contexts>
+                                    <migrationSqlOutputFile>
+                                        ${project.build.directory}/db/generated-sql/mysql/upgrade_1_1_0_to_1_2_0/review_additions.sql
+                                    </migrationSqlOutputFile>
+                                    <url>offline:mysql?changeLogFile=target/sql/mysql/changelog_1_2_0.csv</url>
+                                </configuration>
+                            </execution>
+                            <execution>
                                 <id>mssql</id>
                                 <configuration>
                                     <url>offline:mssql?outputLiquibaseSql=none&amp;changeLogFile=target/sql/mssql/databasechangelog.csv</url>
@@ -92,6 +106,20 @@
                                 </configuration>
                             </execution>
                             <execution>
+                                <id>mssql-db-1.2.0</id>
+                                <phase>generate-resources</phase>
+                                <goals>
+                                    <goal>updateSQL</goal>
+                                </goals>
+                                <configuration>
+                                    <contexts>upgrade_1_1_0_to_1_2_0</contexts>
+                                    <migrationSqlOutputFile>
+                                        ${project.build.directory}/db/generated-sql/mssql/upgrade_1_1_0_to_1_2_0/review_additions.sql
+                                    </migrationSqlOutputFile>
+                                    <url>offline:mssql?changeLogFile=target/sql/mssql/changelog_1_2_0.csv</url>
+                                </configuration>
+                            </execution>
+                            <execution>
                                 <id>oracle</id>
                                 <configuration>
                                     <url>offline:oracle?outputLiquibaseSql=none&amp;changeLogFile=target/sql/oracle/databasechangelog.csv</url>
@@ -116,6 +144,20 @@
                                         ${project.build.directory}/db/generated-sql/oracle/upgrade_1_0_0_to_1_1_0/review.sql
                                     </migrationSqlOutputFile>
                                     <url>offline:oracle?changeLogFile=target/sql/oracle/changelog_1_1_0.csv</url>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>oracle-db-1.2.0</id>
+                                <phase>generate-resources</phase>
+                                <goals>
+                                    <goal>updateSQL</goal>
+                                </goals>
+                                <configuration>
+                                    <contexts>upgrade_1_1_0_to_1_2_0</contexts>
+                                    <migrationSqlOutputFile>
+                                        ${project.build.directory}/db/generated-sql/oracle/upgrade_1_1_0_to_1_2_0/review_additions.sql
+                                    </migrationSqlOutputFile>
+                                    <url>offline:oracle?changeLogFile=target/sql/oracle/changelog_1_2_0.csv</url>
                                 </configuration>
                             </execution>
                         </executions>
@@ -179,7 +221,7 @@
                         <artifactId>liquibase-maven-plugin</artifactId>
                         <version>${liquibase-maven-plugin.version}</version>
                         <configuration>
-                            <changeLogFile>${basedir}/src/main/resources/db/db.changelog-master.xml</changeLogFile>
+                            <changeLogFile>${basedir}/src/main/resources/db/changelog/db.changelog-persistence.xml</changeLogFile>
                             <propertyFile>${basedir}/src/main/resources/liquibase.properties</propertyFile>
                             <outputChangeLogFile>${basedir}/src/main/resources/db/changelog/db.changelog-1.0.0.xml
                             </outputChangeLogFile>

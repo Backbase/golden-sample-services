@@ -6,11 +6,11 @@ server:
 # No service discovery setup
 app:
   product-service:
-    host: localhost
-    port: 9915
+    serviceId: localhost
+    servicePort: 9915
   review-service:
-    host: localhost
-    port: 9916
+    serviceId: localhost
+    servicePort: 9916
 
 # API Registry client configuration
 eureka:
@@ -59,3 +59,7 @@ logging:
   level:
     root: INFO
     com.backbase.goldensample: DEBUG
+
+store:
+  theme: original
+  theme@tid(rebrand_shop): rebranded

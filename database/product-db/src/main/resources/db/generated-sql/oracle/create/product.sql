@@ -1,3 +1,4 @@
+
 CREATE SEQUENCE seq_product START WITH 1 INCREMENT BY 5;
 
 CREATE TABLE product (id NUMBER(38, 0) NOT NULL, create_date TIMESTAMP NOT NULL, name VARCHAR2(255) NOT NULL, weight NUMBER(5), CONSTRAINT pk_product PRIMARY KEY (id));
@@ -130,3 +131,6 @@ CREATE INDEX ix_customer_external_id_upper ON customer(external_id_upper);
 INSERT INTO product(id, name, create_date) VALUES (seq_product.nextval, 'Savings Account', to_date('01/01/2021','DD/MM/YYYY'));
 
 COMMIT;
+
+ALTER TABLE product ADD additions CLOB;
+

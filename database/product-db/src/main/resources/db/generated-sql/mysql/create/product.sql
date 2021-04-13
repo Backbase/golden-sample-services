@@ -1,3 +1,4 @@
+
 CREATE TABLE product (id BIGINT AUTO_INCREMENT NOT NULL, create_date datetime NOT NULL COMMENT 'The date when the product was created', name VARCHAR(255) NOT NULL COMMENT 'The name of the product', weight SMALLINT NULL COMMENT 'The weight of the product in kgs', CONSTRAINT pk_product PRIMARY KEY (id)) COMMENT='Table to store the Products from our store';
 
 ALTER TABLE product COMMENT = 'Table to store the Products from our store';
@@ -63,3 +64,6 @@ CREATE INDEX ix_customer_external_id_upper ON customer(external_id_upper);
 INSERT INTO product (name, create_date) VALUES ('Savings Account', str_to_date('01/01/2021','%d/%m/%Y'));
 
 COMMIT;
+
+ALTER TABLE product ADD additions LONGTEXT NULL;
+

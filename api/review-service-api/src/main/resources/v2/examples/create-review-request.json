@@ -3,5 +3,8 @@
   "author": "John Doe",
   "content": "I have no words for it",
   "subject": "Very nice!",
-  "stars": 4
+  "stars": 4,
+  "additions": {
+    "verified": "true"
+  }
 }
