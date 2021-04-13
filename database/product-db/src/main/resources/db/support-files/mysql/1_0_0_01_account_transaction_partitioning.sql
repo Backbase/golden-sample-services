@@ -3,13 +3,13 @@
 -- Additional index is required for autoincrement ID column. So we can build complex Primary Key later
 CREATE INDEX ix_account_transaction_id ON account_transaction (id);
 
--- Drop temproraty Primary Key to create complex primary key required for Partitioning
+-- Drop temporary Primary Key to create complex primary key required for Partitioning
 ALTER TABLE account_transaction DROP PRIMARY KEY;
 
 -- Drop index
 DROP INDEX ix_account_transaction_01 ON account_transaction;
 
--- Primary Key should containt columns used for partitioning/sub-partitioning
+-- Primary Key should contain columns used for partitioning/sub-partitioning
 ALTER TABLE account_transaction ADD CONSTRAINT pk_account_transaction PRIMARY KEY (transaction_date, account_id, id);
 
 

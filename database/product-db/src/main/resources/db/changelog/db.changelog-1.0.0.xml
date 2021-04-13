@@ -9,39 +9,39 @@
 
     <property dbms="mysql" name="autoIncrement" value="true"/>
 
-    <property dbms="mssql"  name="charDataType" value="NCHAR"/>
-    <property dbms="mysql"  name="charDataType" value="CHAR"/>
+    <property dbms="mssql" name="charDataType" value="NCHAR"/>
+    <property dbms="mysql" name="charDataType" value="CHAR"/>
     <property dbms="oracle" name="charDataType" value="CHAR"/>
-    
-    <property dbms="mssql"  name="varcharDataType" value="NVARCHAR"/>
-    <property dbms="mysql"  name="varcharDataType" value="VARCHAR"/>
+
+    <property dbms="mssql" name="varcharDataType" value="NVARCHAR"/>
+    <property dbms="mysql" name="varcharDataType" value="VARCHAR"/>
     <property dbms="oracle" name="varcharDataType" value="VARCHAR2"/>
 
-    <property dbms="mssql"  name="fixedPointDataType" value="DECIMAL"/>
-    <property dbms="mysql"  name="fixedPointDataType" value="DECIMAL"/>
+    <property dbms="mssql" name="fixedPointDataType" value="DECIMAL"/>
+    <property dbms="mysql" name="fixedPointDataType" value="DECIMAL"/>
     <property dbms="oracle" name="fixedPointDataType" value="NUMBER"/>
 
-    <property dbms="mssql"  name="uuidDataType" value="UNIQUEIDENTIFIER"/>
-    <property dbms="mysql"  name="uuidDataType" value="VARBINARY(16)"/>
+    <property dbms="mssql" name="uuidDataType" value="UNIQUEIDENTIFIER"/>
+    <property dbms="mysql" name="uuidDataType" value="VARBINARY(16)"/>
     <property dbms="oracle" name="uuidDataType" value="RAW(16)"/>
 
-    <property dbms="mssql"  name="clobDataType" value="NVARCHAR(MAX)"/>
-    <property dbms="mysql"  name="clobDataType" value="LONGTEXT"/>
+    <property dbms="mssql" name="clobDataType" value="NVARCHAR(MAX)"/>
+    <property dbms="mysql" name="clobDataType" value="LONGTEXT"/>
     <property dbms="oracle" name="clobDataType" value="CLOB"/>
 
-    <property dbms="mssql"  name="dateTimeDataType" value="DATETIME2"/>
-    <property dbms="mysql"  name="dateTimeDataType" value="DATETIME"/>
+    <property dbms="mssql" name="dateTimeDataType" value="DATETIME2"/>
+    <property dbms="mysql" name="dateTimeDataType" value="DATETIME"/>
     <property dbms="oracle" name="dateTimeDataType" value="TIMESTAMP"/>
 
-    <property dbms="mssql"  name="timestampDataType" value="DATETIME2"/>
-    <property dbms="mysql"  name="timestampDataType" value="DATETIME"/>
+    <property dbms="mssql" name="timestampDataType" value="DATETIME2"/>
+    <property dbms="mysql" name="timestampDataType" value="DATETIME"/>
     <property dbms="oracle" name="timestampDataType" value="TIMESTAMP"/>
 
-    <property dbms="mysql"  name="db.type" value="mysql"/>
-    <property dbms="mssql"  name="db.type" value="mssql"/>
+    <property dbms="mysql" name="db.type" value="mysql"/>
+    <property dbms="mssql" name="db.type" value="mssql"/>
     <property dbms="oracle" name="db.type" value="oracle"/>
 
-    <changeSet id="1_0_0_001" context="initial_1_0_0" author="backbase" dbms="mssql, oracle">
+    <changeSet id="1_0_0_001" context="initial_1_0_0" author="backbase" dbms="!mysql">
         <comment>create sequence for the product table</comment>
         <createSequence sequenceName="seq_product" startValue="1" incrementBy="5"/>
     </changeSet>
@@ -57,15 +57,15 @@
             </column>
             <column name="name" type="${varcharDataType}(255)" remarks="The name of the product">
                 <constraints nullable="false"/>
-            </column>    
+            </column>
             <column name="weight" type="SMALLINT" remarks="The weight of the product in kgs"/>
         </createTable>
     </changeSet>
     <changeSet id="1_0_0_003" context="initial_1_0_0" author="backbase">
         <comment>add unique constraint for product table name column</comment>
-        <addUniqueConstraint columnNames="name" constraintName="uq_product_name"  tableName="product"/>
+        <addUniqueConstraint columnNames="name" constraintName="uq_product_name" tableName="product"/>
     </changeSet>
-    <changeSet id="1_0_0_004" context="initial_1_0_0" author="backbase" dbms="mssql, oracle">
+    <changeSet id="1_0_0_004" context="initial_1_0_0" author="backbase" dbms="!mysql">
         <comment>create sequence for the customer table</comment>
         <createSequence sequenceName="seq_customer" startValue="1" incrementBy="5"/>
     </changeSet>
@@ -96,17 +96,18 @@
             <column name="create_date" type="${dateTimeDataType}(3)" remarks="The date when the customer was created">
                 <constraints nullable="false"/>
             </column>
-            <column name="last_update_date" type="${dateTimeDataType}(3)" remarks="The date when the customer was modified last time"/>
+            <column name="last_update_date" type="${dateTimeDataType}(3)"
+                remarks="The date when the customer was modified last time"/>
             <column name="additions" type="${clobDataType}" remarks="Data model extension for customer"/>
         </createTable>
     </changeSet>
     <changeSet id="1_0_0_006" context="initial_1_0_0" author="backbase">
         <comment>add unique constraint for customer table internal_id column</comment>
-        <addUniqueConstraint columnNames="internal_id" constraintName="uq_customer_internal_id"  tableName="customer"/>
+        <addUniqueConstraint columnNames="internal_id" constraintName="uq_customer_internal_id" tableName="customer"/>
     </changeSet>
     <changeSet id="1_0_0_007" context="initial_1_0_0" author="backbase">
         <comment>add unique constraint for customer table external_id column</comment>
-        <addUniqueConstraint columnNames="external_id" constraintName="uq_customer_external_id"  tableName="customer"/>
+        <addUniqueConstraint columnNames="external_id" constraintName="uq_customer_external_id" tableName="customer"/>
     </changeSet>
     <changeSet id="1_0_0_008" context="initial_1_0_0" author="backbase">
         <comment>add index for customer table on surname column</comment>
@@ -114,7 +115,7 @@
             <column name="surname"/>
         </createIndex>
     </changeSet>
-    <changeSet id="1_0_0_009" context="initial_1_0_0" author="backbase" dbms="mssql, oracle">
+    <changeSet id="1_0_0_009" context="initial_1_0_0" author="backbase" dbms="!mysql">
         <comment>create sequence for the account table</comment>
         <createSequence sequenceName="seq_account" startValue="1" incrementBy="5"/>
     </changeSet>
@@ -154,17 +155,18 @@
             <column name="create_date" type="${dateTimeDataType}(3)" remarks="The date when the account was created">
                 <constraints nullable="false"/>
             </column>
-            <column name="last_update_date" type="${dateTimeDataType}(3)" remarks="The date when the account was modified last time"/>
+            <column name="last_update_date" type="${dateTimeDataType}(3)"
+                remarks="The date when the account was modified last time"/>
             <column name="additions" type="${clobDataType}" remarks="Data model extension for account"/>
         </createTable>
     </changeSet>
     <changeSet id="1_0_0_011" context="initial_1_0_0" author="backbase">
         <comment>add unique constraint for account table internal_id column</comment>
-        <addUniqueConstraint columnNames="internal_id" constraintName="uq_account_internal_id"  tableName="account"/>
+        <addUniqueConstraint columnNames="internal_id" constraintName="uq_account_internal_id" tableName="account"/>
     </changeSet>
     <changeSet id="1_0_0_012" context="initial_1_0_0" author="backbase">
         <comment>add unique constraint for account table external_id column</comment>
-        <addUniqueConstraint columnNames="external_id" constraintName="uq_account_external_id"  tableName="account"/>
+        <addUniqueConstraint columnNames="external_id" constraintName="uq_account_external_id" tableName="account"/>
     </changeSet>
     <changeSet id="1_0_0_013" context="initial_1_0_0" author="backbase">
         <comment>add index for account table on customer_id column</comment>
@@ -180,9 +182,11 @@
     </changeSet>
     <changeSet id="1_0_0_015" context="initial_1_0_0" author="backbase">
         <comment>add foreign key constraint to reference customer table id column</comment>
-        <addForeignKeyConstraint baseColumnNames="customer_id" baseTableName="account" constraintName="fk_account2customer_01" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="customer" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="customer_id" baseTableName="account"
+            constraintName="fk_account2customer_01" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
+            referencedTableName="customer" validate="true"/>
     </changeSet>
-    <changeSet id="1_0_0_016" context="initial_1_0_0" author="backbase" dbms="mssql, oracle">
+    <changeSet id="1_0_0_016" context="initial_1_0_0" author="backbase" dbms="!mysql">
         <comment>create sequence for the account_transaction table</comment>
         <createSequence sequenceName="seq_account_transaction" startValue="1" incrementBy="100"/>
     </changeSet>
@@ -190,7 +194,7 @@
         <comment>create account_transaction table</comment>
         <createTable tableName="account_transaction">
             <column name="id" type="BIGINT" autoIncrement="${autoIncrement}">
-            <constraints primaryKey="true" primaryKeyName="pk_account_transaction"/>
+                <constraints primaryKey="true" primaryKeyName="pk_account_transaction"/>
             </column>
             <column name="internal_id" type="${uuidDataType}" remarks="Internal transaction identifier - GUID">
                 <constraints nullable="false"/>
@@ -223,7 +227,7 @@
             <column name="account_id"/>
             <column name="transaction_date"/>
         </createIndex>
-    </changeSet>    
+    </changeSet>
     <changeSet id="1_0_0_019" context="initial_1_0_0" author="backbase">
         <comment>Partition account_transaction table for mysql mssql</comment>
         <sqlFile dbms="mysql,mssql"
@@ -233,10 +237,12 @@
             splitStatements="true"
             stripComments="true"/>
     </changeSet>
-    <changeSet  id="1_0_0_020" context="initial_1_0_0" author="backbase">
-        <preConditions  onFail="MARK_RAN">
-            <dbms  type="oracle"  />
-            <sqlCheck  expectedResult="1">select count(1) from v$option where parameter = 'Partitioning' and value='TRUE'</sqlCheck>
+    <changeSet id="1_0_0_020" context="initial_1_0_0" author="backbase">
+        <preConditions onFail="MARK_RAN">
+            <dbms type="oracle"/>
+            <sqlCheck expectedResult="1">select count(1) from v$option where parameter = 'Partitioning' and
+                value='TRUE'
+            </sqlCheck>
         </preConditions>
         <comment>Partition account_transaction table for oracle if partitioning is enabled</comment>
         <sqlFile dbms="oracle"
@@ -256,7 +262,7 @@
             stripComments="true"/>
     </changeSet>
 
-    <changeSet id="1_0_0_022" context="initial_1_0_0" author="backbase" >
+    <changeSet id="1_0_0_022" context="initial_1_0_0" author="backbase">
         <tagDatabase tag="1.0.0"/>
     </changeSet>
 </databaseChangeLog>
