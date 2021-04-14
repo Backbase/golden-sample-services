@@ -1,4 +1,4 @@
 
-ALTER TABLE product ADD additions varchar(MAX)
+ALTER TABLE product ADD additions nvarchar(MAX)
 GO
 
