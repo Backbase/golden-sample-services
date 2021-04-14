@@ -12,7 +12,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.backbase.buildingblocks.testutils.TestTokenUtil;
 import com.backbase.goldensample.store.Application;
 import com.backbase.goldensample.store.domain.Product;
-import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
