@@ -30,7 +30,7 @@
                         <artifactId>liquibase-maven-plugin</artifactId>
                         <version>${liquibase-maven-plugin.version}</version>
                         <configuration>
-                            <changeLogFile>${project.basedir}/src/main/resources/db/db.changelog-master.xml</changeLogFile>
+                            <changeLogFile>${project.basedir}/src/main/resources/db/changelog/db.changelog-persistence.xml</changeLogFile>
                             <outputFileEncoding>UTF-8</outputFileEncoding>
                             <password>backbase</password>
                             <username>root</username>
@@ -221,7 +221,7 @@
                         <artifactId>liquibase-maven-plugin</artifactId>
                         <version>${liquibase-maven-plugin.version}</version>
                         <configuration>
-                            <changeLogFile>${basedir}/src/main/resources/db/db.changelog-master.xml</changeLogFile>
+                            <changeLogFile>${basedir}/src/main/resources/db/changelog/db.changelog-persistence.xml</changeLogFile>
                             <propertyFile>${basedir}/src/main/resources/liquibase.properties</propertyFile>
                             <outputChangeLogFile>${basedir}/src/main/resources/db/changelog/db.changelog-1.0.0.xml
                             </outputChangeLogFile>

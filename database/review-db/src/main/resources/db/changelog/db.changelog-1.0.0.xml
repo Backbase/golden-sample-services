@@ -12,7 +12,7 @@
     <property dbms="mysql" name="varcharDataType" value="VARCHAR"/>
     <property dbms="oracle" name="varcharDataType" value="VARCHAR2"/>
 
-    <changeSet id="1_0_0_001" context="initial" author="backbase" dbms="mssql, oracle">
+    <changeSet id="1_0_0_001" context="initial" author="backbase" dbms="!mysql">
         <comment>create sequence for the review table</comment>
         <createSequence sequenceName="seq_review" startValue="1" incrementBy="5"/>
     </changeSet>
