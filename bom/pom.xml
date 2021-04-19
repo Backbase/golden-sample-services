@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.backbase</groupId>
+    <artifactId>golden-sample-bom</artifactId>
+    <version>2021.05.01-SNAPSHOT</version>
+    <name>Backbase Golden Sample - BOM</name>
+    <description>Billing of Materials for Backbase Backend Best Practices</description>
+    <packaging>pom</packaging>
+
+    <properties>
+        <product-service.version>1.0.0-SNAPSHOT</product-service.version>
+    </properties>
+
+    <organization>
+        <name>Backbase</name>
+        <url>https://www.backbase.com</url>
+    </organization>
+
+    <repositories>
+        <repository>
+            <id>backbase</id>
+            <url>https://repo.backbase.com/repo</url>
+            <releases>
+                <updatePolicy>always</updatePolicy>
+            </releases>
+        </repository>
+        <repository>
+            <id>repo-charts</id>
+            <url>https://repo.backbase.com/backbase-charts</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>backbase</id>
+            <url>https://repo.backbase.com/repo</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.backbase.goldensample</groupId>
+                <artifactId>product</artifactId>
+                <version>${product-service.version}</version>
+                <type>war</type>
+            </dependency>
+            <dependency>
+                <groupId>com.backbase.goldensample</groupId>
+                <artifactId>product</artifactId>
+                <version>${product-service.version}</version>
+                <type>jar</type>
+                <classifier>classes</classifier>
+            </dependency>
+            <dependency>
+                <groupId>com.backbase.goldensample</groupId>
+                <artifactId>product</artifactId>
+                <version>${product-service.version}</version>
+                <type>zip</type>
+                <classifier>api</classifier>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <profiles>
+        <profile>
+            <id>with-product</id>
+            <dependencies>
+                <dependency>
+                    <groupId>com.backbase.goldensample</groupId>
+                    <artifactId>product</artifactId>
+                    <type>war</type>
+                </dependency>
+                <dependency>
+                    <groupId>com.backbase.goldensample</groupId>
+                    <artifactId>product</artifactId>
+                    <type>jar</type>
+                    <classifier>classes</classifier>
+                </dependency>
+                <dependency>
+                    <groupId>com.backbase.goldensample</groupId>
+                    <artifactId>product</artifactId>
+                    <type>zip</type>
+                    <classifier>api</classifier>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
+    <build>
+        <defaultGoal>install</defaultGoal>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>1.2.2</version>
+                <executions>
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                        <configuration>
+                            <updatePomFile>true</updatePomFile>
+                            <flattenMode>bom</flattenMode>
+                            <pomElements>
+                                <pluginManagement>keep</pluginManagement>
+                                <properties>keep</properties>
+                                <repositories>keep</repositories>
+                                <scm>remove</scm>
+                                <distributionManagement>remove</distributionManagement>
+                                <profiles>keep</profiles>
+                            </pomElements>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>flatten-clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
