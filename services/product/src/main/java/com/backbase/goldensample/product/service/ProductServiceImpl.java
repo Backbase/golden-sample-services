@@ -1,12 +1,9 @@
 package com.backbase.goldensample.product.service;
 
 import com.backbase.buildingblocks.presentation.errors.NotFoundException;
-import com.backbase.goldensample.product.mapper.ProductMapper;
+import com.backbase.goldensample.product.persistence.ProductEntity;
 import com.backbase.goldensample.product.persistence.ProductRepository;
-import com.backbase.product.api.service.v1.model.Product;
-import java.time.Duration;
 import java.util.List;
-import java.util.Random;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,49 +14,37 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository repository;
 
-    private final ProductMapper mapper;
-    private final Random randomNumberGenerator = new Random();
-
     @Autowired
-    public ProductServiceImpl(ProductRepository repository, ProductMapper mapper) {
+    public ProductServiceImpl(ProductRepository repository) {
         this.repository = repository;
-        this.mapper = mapper;
     }
 
     @Override
-    public Product createProduct(Product body) {
+    public ProductEntity createProduct(ProductEntity body) {
         log.debug("Service creating product {}", body);
-        return mapper.entityToApi(repository
-            .save(mapper.apiToEntity(body)));
+        return repository.save(body);
     }
 
     @Override
-    public Product updateProduct(Product body) {
+    public ProductEntity updateProduct(ProductEntity body) {
         log.debug("Service updating product {}", body);
-        return mapper.entityToApi(repository
-            .save(mapper.apiToEntity(body)));
+        return repository.save(body);
     }
 
     @Override
-    public Product getProduct(long productId, int delay, int faultPercent) {
-        if (delay > 0) {
-            log.debug("Simulating delay of {}", delay);
-            simulateDelay(delay);
-        }
-
-        if (faultPercent > 0) {
-            log.debug("Introducing error in a %{}", faultPercent);
-            throwErrorIfBadLuck(faultPercent);
-        }
-
-        return repository.findById(productId).map(mapper::entityToApi)
+    public ProductEntity getProduct(long productId) {
+        log.debug("Get the Product with Id {}", productId);
+        return repository.findById(productId)
             .orElseThrow(() -> new NotFoundException(String.format("Item is not found with id : '%s'", productId)));
     }
 
     @Override
-    public List<Product> getAllProducts() {
+    public List<ProductEntity> getAllProducts() {
         //TODO add pagination
-        return mapper.entityListToApiList(repository.findAll());
+        List<ProductEntity> productEntityList = repository.findAll();
+        log.debug("Get all the Products, total: {}", productEntityList.size());
+        return productEntityList;
+
     }
 
     /*
@@ -74,32 +59,4 @@ public class ProductServiceImpl implements ProductService {
         repository.findById(productId).ifPresent(repository::delete);
     }
 
-    private void simulateDelay(int delay) {
-        log.debug("Sleeping for {} seconds...", delay);
-        try {
-            Thread.sleep(Duration.ofSeconds(delay).toMillis());
-        } catch (InterruptedException ignored) {
-        }
-        log.debug("Moving on...");
-    }
-
-    private void throwErrorIfBadLuck(int faultPercent) {
-        int randomThreshold = getRandomNumber(1, 100);
-        if (faultPercent < randomThreshold) {
-            log.debug("We got lucky, no error occurred, {} < {}", faultPercent, randomThreshold);
-        } else {
-            log.debug("Bad luck, an error occurred, {} >= {}", faultPercent, randomThreshold);
-            throw new RuntimeException("Something went wrong...");
-        }
-    }
-
-    private int getRandomNumber(int min, int max) {
-
-        if (max < min) {
-            log.warn("Max value {} show be greater than min {}", max, min);
-            throw new RuntimeException("Max must be greater than min");
-        }
-
-        return randomNumberGenerator.nextInt((max - min) + 1) + min;
-    }
 }

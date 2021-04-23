@@ -8,7 +8,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.backbase.goldensample.product.mapper.ProductMapper;
 import com.backbase.goldensample.product.persistence.ProductEntity;
 import com.backbase.goldensample.product.persistence.ProductRepository;
 import com.backbase.product.api.service.v1.model.Product;
@@ -19,7 +18,6 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mapstruct.factory.Mappers;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -31,8 +29,6 @@ class ProductServiceImplTest {
     @Mock
     private ProductRepository productRepository;
 
-    ProductMapper productMapper = Mappers.getMapper(ProductMapper.class);
-
     private static final LocalDate TODAY = LocalDate.of(2020, 1, 28);
 
     private final Product product = new Product().productId(1L).name("Product").weight(20).createDate(TODAY);
@@ -40,7 +36,7 @@ class ProductServiceImplTest {
 
     @BeforeEach
     public void init() {
-        productService = new ProductServiceImpl(productRepository, productMapper);
+        productService = new ProductServiceImpl(productRepository);
     }
 
     @Test
@@ -56,7 +52,7 @@ class ProductServiceImplTest {
 
         when(productRepository.findAll()).thenReturn(list);
 
-        List<Product> empList = productService.getAllProducts();
+        List<ProductEntity> empList = productService.getAllProducts();
 
         assertEquals(3, empList.size());
         verify(productRepository, times(1)).findAll();
@@ -66,7 +62,7 @@ class ProductServiceImplTest {
     void getProductByIdTest() {
         when(productRepository.findById(1L)).thenReturn(java.util.Optional.of(productEntity));
 
-        Product product = productService.getProduct(1, 0, 0);
+        ProductEntity product = productService.getProduct(1);
 
         assertAll(
             () -> assertEquals("Product1", product.getName()),
@@ -78,7 +74,7 @@ class ProductServiceImplTest {
     void getProductByIdWithDelayTest() {
         when(productRepository.findById(1L)).thenReturn(java.util.Optional.of(productEntity));
 
-        Product product = productService.getProduct(1, 1, 0);
+        ProductEntity product = productService.getProduct(1);
 
         assertAll(
             () -> assertEquals("Product1", product.getName()),
@@ -88,18 +84,18 @@ class ProductServiceImplTest {
 
     @Test
     void getProductByIdWithErrorTest() {
-        assertThrows(RuntimeException.class, () -> productService.getProduct(1, 0, 100));
+        assertThrows(RuntimeException.class, () -> productService.getProduct(1));
     }
 
     @Test
     void createProductTest() {
-        productService.createProduct(product);
+        productService.createProduct(productEntity);
         verify(productRepository, times(1)).save(any(ProductEntity.class));
     }
 
     @Test
     void updateProductTest() {
-        productService.updateProduct(product);
+        productService.updateProduct(productEntity);
         verify(productRepository, times(1)).save(any(ProductEntity.class));
     }
 

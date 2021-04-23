@@ -1,7 +1,7 @@
 package com.backbase.goldensample.product.service;
 
 
-import com.backbase.product.api.service.v1.model.Product;
+import com.backbase.goldensample.product.persistence.ProductEntity;
 import java.util.List;
 
 /**
@@ -18,24 +18,20 @@ public interface ProductService {
   /**
    * Get the product with Id from repository. It is a Non-Blocking API.
    *
-   * @param id is the product id that you are looking for. * @param delay Causes the getProduct API
-   *     on the product microservice to delay its response. * The parameter is specified in seconds
-   * @param faultPercent Causes the getProduct API on the product microservice to throw an exception
-   *     randomly with the probability specified by the query parameter, * from 0 to 100%. For
-   *     example, if the parameter is set to 25, it will cause * every fourth call to the API, on
-   *     average, to fail with an exception.
+   * @param id is the product id that you are looking for.
    * @return the product, if found, else null.
    * @since v0.1
    */
-  Product getProduct(long id, int delay, int faultPercent);
+  ProductEntity getProduct(long id);
 
   /**
    * Get all the products
    *
    *
    * @since v0.1
+   * @return
    */
-  List<Product> getAllProducts();
+  List<ProductEntity> getAllProducts();
 
   /**
    * Add product to the repository.
@@ -43,7 +39,7 @@ public interface ProductService {
    * @param body product to save.
    * @since v0.1
    */
-  default Product createProduct(Product body) {
+  default ProductEntity createProduct(ProductEntity body) {
     return null;
   }
 
@@ -53,7 +49,7 @@ public interface ProductService {
    * @param body product to save.
    * @since v0.1
    */
-  default Product updateProduct(Product body) {
+  default ProductEntity updateProduct(ProductEntity body) {
     return null;
   }
 
