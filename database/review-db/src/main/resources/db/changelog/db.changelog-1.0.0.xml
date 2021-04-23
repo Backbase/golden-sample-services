@@ -12,12 +12,12 @@
     <property dbms="mysql" name="varcharDataType" value="VARCHAR"/>
     <property dbms="oracle" name="varcharDataType" value="VARCHAR2"/>
 
-    <changeSet id="1_0_0_001" context="initial" author="backbase" dbms="!mysql">
+    <changeSet id="initial_2021.07_001" context="initial_2021.07" author="backbase" dbms="!mysql">
         <comment>create sequence for the review table</comment>
         <createSequence sequenceName="seq_review" startValue="1" incrementBy="5"/>
     </changeSet>
 
-    <changeSet id="1_0_0_002" context="initial" author="backbase">
+    <changeSet id="initial_2021.07_002" context="initial_2021.07" author="backbase">
         <comment>create the review table</comment>
         <createTable tableName="review" remarks="Table to store the Reviews of our Products">
             <column autoIncrement="${autoIncrement}" name="id" type="BIGINT">
@@ -30,12 +30,12 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="1_0_0_003" context="initial" author="backbase">
+    <changeSet id="initial_2021.07_003" context="initial_2021.07" author="backbase">
         <comment>create the review table</comment>
         <addUniqueConstraint tableName="review" columnNames="product_id, id"/>
     </changeSet>
 
-    <changeSet id="1_0_0_004" author="backbase">
-        <tagDatabase tag="1.0.0"/>
+    <changeSet id="initial_2021.07_004" author="backbase">
+        <tagDatabase tag="2021.07"/>
     </changeSet>
 </databaseChangeLog>
