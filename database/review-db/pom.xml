@@ -61,7 +61,7 @@
                                     <migrationSqlOutputFile>
                                         ${project.build.directory}/db/generated-sql/mysql/upgrade_1_0_0_to_1_1_0/review.sql
                                     </migrationSqlOutputFile>
-                                    <url>offline:mysql?changeLogFile=target/sql/mysql/changelog_1_1_0.csv</url>
+                                    <url>offline:mysql?changeLogFile=target/sql/mysql/changelog_2021.08.csv</url>
                                 </configuration>
                             </execution>
                             <execution>
@@ -71,11 +71,11 @@
                                     <goal>updateSQL</goal>
                                 </goals>
                                 <configuration>
-                                    <contexts>upgrade_1_1_0_to_1_2_0</contexts>
+                                    <contexts>upgrade_2021.08_to_2022.01</contexts>
                                     <migrationSqlOutputFile>
-                                        ${project.build.directory}/db/generated-sql/mysql/upgrade_1_1_0_to_1_2_0/review_additions.sql
+                                        ${project.build.directory}/db/generated-sql/mysql/upgrade_2021.08_to_2022.01/review_additions.sql
                                     </migrationSqlOutputFile>
-                                    <url>offline:mysql?changeLogFile=target/sql/mysql/changelog_1_2_0.csv</url>
+                                    <url>offline:mysql?changeLogFile=target/sql/mysql/changelog_2022.01.csv</url>
                                 </configuration>
                             </execution>
                             <execution>
@@ -98,11 +98,11 @@
                                     <goal>updateSQL</goal>
                                 </goals>
                                 <configuration>
-                                    <contexts>upgrade_1_0_0_to_1_1_0</contexts>
+                                    <contexts>upgrade_2021.07_to_2021.08</contexts>
                                     <migrationSqlOutputFile>
-                                        ${project.build.directory}/db/generated-sql/mssql/upgrade_1_0_0_to_1_1_0/review.sql
+                                        ${project.build.directory}/db/generated-sql/mssql/upgrade_2021.07_to_2021.08/review.sql
                                     </migrationSqlOutputFile>
-                                    <url>offline:mssql?changeLogFile=target/sql/mssql/changelog_1_1_0.csv</url>
+                                    <url>offline:mssql?changeLogFile=target/sql/mssql/changelog_2021.08.csv</url>
                                 </configuration>
                             </execution>
                             <execution>
@@ -112,11 +112,11 @@
                                     <goal>updateSQL</goal>
                                 </goals>
                                 <configuration>
-                                    <contexts>upgrade_1_1_0_to_1_2_0</contexts>
+                                    <contexts>upgrade_2021.08_to_2022.01</contexts>
                                     <migrationSqlOutputFile>
-                                        ${project.build.directory}/db/generated-sql/mssql/upgrade_1_1_0_to_1_2_0/review_additions.sql
+                                        ${project.build.directory}/db/generated-sql/mssql/upgrade_2021.08_to_2022.01/review_additions.sql
                                     </migrationSqlOutputFile>
-                                    <url>offline:mssql?changeLogFile=target/sql/mssql/changelog_1_2_0.csv</url>
+                                    <url>offline:mssql?changeLogFile=target/sql/mssql/changelog_2022.01.csv</url>
                                 </configuration>
                             </execution>
                             <execution>
@@ -139,11 +139,11 @@
                                     <goal>updateSQL</goal>
                                 </goals>
                                 <configuration>
-                                    <contexts>upgrade_1_0_0_to_1_1_0</contexts>
+                                    <contexts>upgrade_2021.07_to_2021.08</contexts>
                                     <migrationSqlOutputFile>
-                                        ${project.build.directory}/db/generated-sql/oracle/upgrade_1_0_0_to_1_1_0/review.sql
+                                        ${project.build.directory}/db/generated-sql/oracle/upgrade_2021.07_to_2021.08/review.sql
                                     </migrationSqlOutputFile>
-                                    <url>offline:oracle?changeLogFile=target/sql/oracle/changelog_1_1_0.csv</url>
+                                    <url>offline:oracle?changeLogFile=target/sql/oracle/changelog_2021.08.csv</url>
                                 </configuration>
                             </execution>
                             <execution>
@@ -153,11 +153,11 @@
                                     <goal>updateSQL</goal>
                                 </goals>
                                 <configuration>
-                                    <contexts>upgrade_1_1_0_to_1_2_0</contexts>
+                                    <contexts>upgrade_2021.08_to_2022.01</contexts>
                                     <migrationSqlOutputFile>
-                                        ${project.build.directory}/db/generated-sql/oracle/upgrade_1_1_0_to_1_2_0/review_additions.sql
+                                        ${project.build.directory}/db/generated-sql/oracle/upgrade_2021.08_to_2022.01/review_additions.sql
                                     </migrationSqlOutputFile>
-                                    <url>offline:oracle?changeLogFile=target/sql/oracle/changelog_1_2_0.csv</url>
+                                    <url>offline:oracle?changeLogFile=target/sql/oracle/changelog_2022.01.csv</url>
                                 </configuration>
                             </execution>
                         </executions>
