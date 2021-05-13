@@ -1,54 +1,24 @@
 package com.backbase.goldensample.product.archunit;
 
-import static com.tngtech.archunit.lang.SimpleConditionEvent.violated;
-import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
-
+import com.backbase.buildingblocks.archunit.ConfigurationRules;
 import com.backbase.goldensample.product.Application;
-import com.tngtech.archunit.core.domain.JavaClass;
 import com.tngtech.archunit.junit.AnalyzeClasses;
 import com.tngtech.archunit.junit.ArchTest;
-import com.tngtech.archunit.lang.ArchCondition;
 import com.tngtech.archunit.lang.ArchRule;
-import com.tngtech.archunit.lang.ConditionEvents;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.validation.annotation.Validated;
 
 @AnalyzeClasses(packagesOf = Application.class)
 public class ConfigurationRulesTest {
 
-    private static final String BACKBASE_CONFIG_KEY = "backbase.";
-
-    ArchCondition<JavaClass> backbaseKeyAnnotation = new ArchCondition<>("be under backbase key") {
-        @Override
-        public void check(JavaClass input, ConditionEvents events) {
-            ConfigurationProperties configurationProperties = input.getAnnotationOfType(ConfigurationProperties.class);
-            String value = configurationProperties.value();
-            if (value.isBlank()) {
-                value = configurationProperties.prefix();
-            }
-            if (!value.startsWith(BACKBASE_CONFIG_KEY)) {
-                String msg = String.format("@%s annotation on %s should have value starting with '%s'",
-                    ConfigurationProperties.class.getSimpleName(), input.getDescription(), BACKBASE_CONFIG_KEY);
-                events.add(violated(input, msg));
-            }
-        }
-    };
+    @ArchTest
+    ArchRule configurationClassesShouldBeUnderBackbaseKey = ConfigurationRules.CONFIGURATION_CLASSES_SHOULD_BE_UNDER_BACKBASE_KEY;
 
     @ArchTest
-    ArchRule configurationClassesShouldBeUnderBackbaseKey = classes().that()
-        .areAnnotatedWith(Configuration.class)
-        .and().areAnnotatedWith(ConfigurationProperties.class)
-        .should(backbaseKeyAnnotation);
+    ArchRule configurationClassesShouldBeValidated = ConfigurationRules.CONFIGURATION_CLASSES_SHOULD_BE_VALIDATED;
 
-    @ArchTest
-    ArchRule configurationClassesShouldBeValidated = classes().that()
-        .areAnnotatedWith(Configuration.class)
-        .should().beAnnotatedWith(Validated.class);
-
+// Multitenancy is not yet implemented: https://github.com/Backbase/golden-sample-services/issues/6
 //    @ArchTest
-//    ArchRule configurationClassesShouldBeContextScoped = classes().that()
-//        .areAnnotatedWith(Configuration.class)
-//        .should().beAnnotatedWith(ContextScoped.class)
-//        .because("multi-tenancy support requires context scoped beans");
+//    ArchRule configurationClassesShouldBeContextScoped = ConfigurationRules.CONFIGURATION_CLASSES_SHOULD_BE_CONTEXT_SCOPED;
+//
+//    @ArchTest
+//    ArchRule apiClientBeansShouldBeContextScoped = ConfigurationRules.API_CLIENT_BEANS_SHOULD_BE_CONTEXT_SCOPED;
 }

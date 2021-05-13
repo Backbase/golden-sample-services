@@ -1,42 +1,42 @@
 package com.backbase.goldensample.product.archunit;
 
-import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
-import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.methods;
-import static com.tngtech.archunit.library.Architectures.layeredArchitecture;
-
+import com.backbase.buildingblocks.archunit.ArchitectureRules;
 import com.backbase.goldensample.product.Application;
 import com.tngtech.archunit.junit.AnalyzeClasses;
 import com.tngtech.archunit.junit.ArchTest;
 import com.tngtech.archunit.lang.ArchRule;
-import javax.annotation.PostConstruct;
-import javax.validation.constraints.NotNull;
-import org.springframework.stereotype.Service;
 
 @AnalyzeClasses(packagesOf = Application.class)
 public class ArchitectureRulesTest {
 
     @ArchTest
-    ArchRule layeredArchitecture = layeredArchitecture()
-        .layer("Controller").definedBy("..api..")
-        .layer("Service").definedBy("..service..")
-        .layer("Mapping").definedBy("..mapper..")
-        .layer("Configuration").definedBy("..config..")
-        .layer("Persistence").definedBy("..persistence..")
-        .whereLayer("Controller").mayNotBeAccessedByAnyLayer()
-        .whereLayer("Mapping").mayOnlyBeAccessedByLayers("Controller", "Configuration", "Persistence")
-        .whereLayer("Service").mayOnlyBeAccessedByLayers("Controller");
+    ArchRule layeredArchitectureShouldBeAdopted = ArchitectureRules.LAYERED_ARCHITECTURE_SHOULD_BE_ADOPTED;
 
     @ArchTest
-    ArchRule serviceClassesShouldBeInServicePackage = classes().that()
-        .areAnnotatedWith(Service.class)
-        .or().haveNameMatching(".*Service*")
-        .should().resideInAPackage("..service..");
+    ArchRule controllerClassesShouldBeInAppropriatePackage = ArchitectureRules.CONTROLLER_CLASSES_SHOULD_BE_IN_APPROPRIATE_PACKAGE;
 
     @ArchTest
-    ArchRule securedServiceLayer = methods().that()
-        .areDeclaredInClassesThat().areAnnotatedWith(Service.class)
-        .and().arePublic()
-        .should().notBeAnnotatedWith(NotNull.class)
-        .orShould().beAnnotatedWith(PostConstruct.class);
+    ArchRule serviceClassesShouldBeInAppropriatePackage = ArchitectureRules.SERVICE_CLASSES_SHOULD_BE_IN_APPROPRIATE_PACKAGE;
 
+    @ArchTest
+    ArchRule mapperClassesShouldBeInAppropriatePackage = ArchitectureRules.MAPPER_CLASSES_SHOULD_BE_IN_APPROPRIATE_PACKAGE;
+
+    @ArchTest
+    ArchRule configurationClassesShouldBeInAppropriatePackage = ArchitectureRules.CONFIGURATION_CLASSES_SHOULD_BE_IN_APPROPRIATE_PACKAGE;
+
+    @ArchTest
+    ArchRule repositoryClassesShouldBeInAppropriatePackage = ArchitectureRules.REPOSITORY_CLASSES_SHOULD_BE_IN_APPROPRIATE_PACKAGE;
+
+    @ArchTest
+    ArchRule clientClassesShouldBeInAppropriatePackage = ArchitectureRules.CLIENT_CLASSES_SHOULD_BE_IN_APPROPRIATE_PACKAGE;
+
+    @ArchTest
+    ArchRule actuatorEndpointClassesShouldBeInAppropriatePackage = ArchitectureRules.ACTUATOR_ENDPOINT_CLASSES_SHOULD_BE_IN_APPROPRIATE_PACKAGE;
+
+    @ArchTest
+    ArchRule eventHandlerClassesShouldBeInAppropriatePackage = ArchitectureRules.EVENT_HANDLER_CLASSES_SHOULD_BE_IN_APPROPRIATE_PACKAGE;
+
+// Security is not yet implemented: https://github.com/Backbase/golden-sample-services/issues/4
+//    @ArchTest
+//    ArchRule servicesShouldBeSecured = ArchitectureRules.SERVICES_SHOULD_BE_SECURED;
 }

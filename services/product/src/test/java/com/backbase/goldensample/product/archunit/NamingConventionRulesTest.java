@@ -1,36 +1,32 @@
 package com.backbase.goldensample.product.archunit;
 
-import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
-
+import com.backbase.buildingblocks.archunit.NamingConventionRules;
 import com.backbase.goldensample.product.Application;
 import com.tngtech.archunit.junit.AnalyzeClasses;
 import com.tngtech.archunit.junit.ArchTest;
 import com.tngtech.archunit.lang.ArchRule;
-import org.mapstruct.Mapper;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RestController;
 
 @AnalyzeClasses(packagesOf = Application.class)
 public class NamingConventionRulesTest {
 
     @ArchTest
-    ArchRule controllersShouldBeSuffixed = classes().that()
-        .areAnnotatedWith(RestController.class)
-        .should().haveSimpleNameEndingWith("Controller");
+    ArchRule controllersShouldBeSuffixed = NamingConventionRules.CONTROLLERS_SHOULD_BE_SUFFIXED;
 
     @ArchTest
-    ArchRule servicesShouldHaveServiceInName = classes().that()
-        .areAnnotatedWith(Service.class)
-        .should().haveSimpleNameContaining("Service");
+    ArchRule servicesShouldHaveServiceInName = NamingConventionRules.SERVICES_SHOULD_HAVE_SERVICE_IN_NAME;
 
     @ArchTest
-    ArchRule mappersShouldBeSuffixed = classes().that()
-        .areAnnotatedWith(Mapper.class)
-        .should().haveSimpleNameEndingWith("Mapper");
+    ArchRule mappersShouldBeSuffixed = NamingConventionRules.MAPPERS_SHOULD_BE_SUFFIXED;
 
     @ArchTest
-    ArchRule configurationClassesShouldBeSuffixed = classes().that()
-        .areAnnotatedWith(Configuration.class)
-        .should().haveSimpleNameEndingWith("Configuration");
+    ArchRule configurationClassesShouldBeSuffixed = NamingConventionRules.CONFIGURATION_CLASSES_SHOULD_BE_SUFFIXED;
+
+    @ArchTest
+    ArchRule repositoryClassesShouldBeSuffixed = NamingConventionRules.REPOSITORY_CLASSES_SHOULD_BE_SUFFIXED;
+
+    @ArchTest
+    ArchRule actuatorEndpointClassesShouldBeSuffixed = NamingConventionRules.ACTUATOR_ENDPOINT_CLASSES_SHOULD_BE_SUFFIXED;
+
+    @ArchTest
+    ArchRule eventHandlerClassesShouldBeSuffixed = NamingConventionRules.EVENT_HANDLER_CLASSES_SHOULD_BE_SUFFIXED;
 }
