@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.backbase.goldensample.review.persistence.ReviewEntity;
-import com.backbase.goldensample.review.v2.mapper.ReviewMapperV2;
+import com.backbase.goldensample.review.v2.mapper.ReviewV2Mapper;
 import com.backbase.reviews.api.service.v2.model.Review;
 import java.util.Collections;
 import java.util.List;
@@ -14,8 +14,8 @@ import org.mapstruct.factory.Mappers;
 
 class MapperTests {
 
-    private final com.backbase.goldensample.review.v2.mapper.ReviewMapperV2 mapper = Mappers
-        .getMapper(ReviewMapperV2.class);
+    private final ReviewV2Mapper mapper = Mappers
+        .getMapper(ReviewV2Mapper.class);
 
     @Test
     void mapperTests() {

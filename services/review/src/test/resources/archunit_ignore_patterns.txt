@@ -1,0 +1,8 @@
+# Ignore configuration classes because multi-tenancy support is not done yet: https://github.com/Backbase/golden-sample-services/issues/6
+.*com\.backbase\.goldensample\.review\.config.*
+
+# Ignore service classes because security is not done yet: https://github.com/Backbase/golden-sample-services/issues/4
+.*com\.backbase\.goldensample\.review\.service.*
+
+# Ignore controllers due to the way multi-version support was implemented
+.*com\.backbase\.goldensample\.review.*\.api.*

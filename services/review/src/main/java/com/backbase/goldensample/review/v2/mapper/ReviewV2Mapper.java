@@ -8,7 +8,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
-public interface ReviewMapperV2 {
+public interface ReviewV2Mapper {
 
   @Mapping(source = "id", target = "reviewId")
   Review entityToApi(ReviewEntity entity);
