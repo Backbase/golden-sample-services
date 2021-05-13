@@ -62,10 +62,7 @@ public class ProductServiceApiController implements ProductServiceApi {
     @Override
     public ResponseEntity<ProductId> postProduct(@Valid Product product) {
         log.debug("Create a product {}", product);
-        ProductEntity entity = mapper.apiToEntity(product);
-        ProductEntity productWithId = prodService.createProduct(entity);
-        ProductId productId = new ProductId();
-        productId.setId(productWithId.getId());
+        ProductId productId = prodService.createProduct(product);
         log.debug("Product {} created", productId);
         return ResponseEntity.ok(productId);
     }
@@ -73,9 +70,8 @@ public class ProductServiceApiController implements ProductServiceApi {
     @Override
     public ResponseEntity<Void> putProduct(@Valid Product product) {
         log.debug("Update a product {}", product);
-        ProductEntity entity = mapper.apiToEntity(product);
-        ProductEntity productWithId = prodService.updateProduct(entity);
-        log.debug("product with id {} updated", productWithId.getId());
+        prodService.updateProduct(product);
+        log.debug("product with id {} updated", product.getProductId());
         return ResponseEntity.noContent().build();
     }
 }

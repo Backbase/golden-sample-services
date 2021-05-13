@@ -16,6 +16,7 @@ import com.backbase.buildingblocks.testutils.TestTokenUtil;
 import com.backbase.goldensample.product.Application;
 import com.backbase.goldensample.product.persistence.ProductEntity;
 import com.backbase.product.api.service.v1.model.Product;
+import com.backbase.product.api.service.v1.model.ProductId;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
@@ -87,8 +88,7 @@ class ProductServiceApiControllerMultitenancyTest extends ProductApiController {
             "    \"description\": \"long desc\"}\n" +
             "}";
 
-        when(productService.createProduct(any(ProductEntity.class)))
-            .thenReturn(productEntityOne);
+        when(productService.createProduct(any())).thenReturn(new ProductId().id(1L));
 
         MvcResult result = this.mockMvc
             .perform(post("/service-api/v1/products")
@@ -119,8 +119,7 @@ class ProductServiceApiControllerMultitenancyTest extends ProductApiController {
             "}";
 
         when(productMapper.apiToEntity(any(Product.class))).thenReturn(productEntityOne);
-        when(productService.createProduct(any(ProductEntity.class)))
-            .thenReturn(productEntityOne);
+        when(productService.createProduct(any())).thenReturn(new ProductId().id(1L));
 
         this
             .mockMvc

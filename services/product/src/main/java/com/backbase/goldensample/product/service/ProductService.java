@@ -2,6 +2,8 @@ package com.backbase.goldensample.product.service;
 
 
 import com.backbase.goldensample.product.persistence.ProductEntity;
+import com.backbase.product.api.service.v1.model.Product;
+import com.backbase.product.api.service.v1.model.ProductId;
 import java.util.List;
 
 /**
@@ -39,7 +41,7 @@ public interface ProductService {
    * @param body product to save.
    * @since v0.1
    */
-  default ProductEntity createProduct(ProductEntity body) {
+  default ProductId createProduct(Product body) {
     return null;
   }
 
@@ -49,8 +51,7 @@ public interface ProductService {
    * @param body product to save.
    * @since v0.1
    */
-  default ProductEntity updateProduct(ProductEntity body) {
-    return null;
+  default void updateProduct(Product body) {
   }
 
   /**

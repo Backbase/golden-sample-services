@@ -1,7 +1,6 @@
 package com.backbase.goldensample.product.persistence;
 
 import com.backbase.goldensample.product.config.IdentityStrategyOverrideConfiguration;
-import com.backbase.goldensample.product.mapper.MapToJsonConverter;
 import java.time.LocalDate;
 import java.util.Map;
 import java.util.Objects;

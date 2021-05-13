@@ -8,6 +8,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.backbase.goldensample.product.mapper.ProductMapper;
 import com.backbase.goldensample.product.persistence.ProductEntity;
 import com.backbase.goldensample.product.persistence.ProductRepository;
 import com.backbase.product.api.service.v1.model.Product;
@@ -18,6 +19,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mapstruct.factory.Mappers;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -36,7 +38,7 @@ class ProductServiceImplTest {
 
     @BeforeEach
     public void init() {
-        productService = new ProductServiceImpl(productRepository);
+        productService = new ProductServiceImpl(Mappers.getMapper(ProductMapper.class), productRepository);
     }
 
     @Test
@@ -89,13 +91,14 @@ class ProductServiceImplTest {
 
     @Test
     void createProductTest() {
-        productService.createProduct(productEntity);
+        when(productRepository.save(any())).thenReturn(productEntity);
+        productService.createProduct(product);
         verify(productRepository, times(1)).save(any(ProductEntity.class));
     }
 
     @Test
     void updateProductTest() {
-        productService.updateProduct(productEntity);
+        productService.updateProduct(product);
         verify(productRepository, times(1)).save(any(ProductEntity.class));
     }
 

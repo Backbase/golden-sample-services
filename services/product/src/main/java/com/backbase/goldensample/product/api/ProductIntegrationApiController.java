@@ -1,7 +1,6 @@
 package com.backbase.goldensample.product.api;
 
 import com.backbase.goldensample.product.mapper.ProductMapper;
-import com.backbase.goldensample.product.persistence.ProductEntity;
 import com.backbase.goldensample.product.service.ProductService;
 import com.backbase.product.api.integration.v1.ProductIntegrationApi;
 import com.backbase.product.api.service.v1.model.Product;
@@ -54,10 +53,7 @@ public class ProductIntegrationApiController implements ProductIntegrationApi {
     @Override
     public ResponseEntity<ProductId> postProduct(@Valid Product product) {
         log.debug("Create a product {}", product);
-        ProductEntity entity = mapper.apiToEntity(product);
-        ProductEntity productWithId = prodService.createProduct(entity);
-        ProductId productId = new ProductId();
-        productId.setId(productWithId.getId());
+        ProductId productId = prodService.createProduct(product);
         log.debug("Product {} created", productId);
         return ResponseEntity.ok(productId);
     }
@@ -65,9 +61,8 @@ public class ProductIntegrationApiController implements ProductIntegrationApi {
     @Override
     public ResponseEntity<Void> putProduct(@Valid Product product) {
         log.debug("Update a product {}", product);
-        ProductEntity entity = mapper.apiToEntity(product);
-        ProductEntity productWithId = prodService.updateProduct(entity);
-        log.debug("product with {} updated.", productWithId.getId());
+        prodService.updateProduct(product);
+        log.debug("product with {} updated.", product.getProductId());
         return ResponseEntity.noContent().build();
     }
 }

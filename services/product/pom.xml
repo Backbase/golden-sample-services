@@ -140,6 +140,12 @@
             <artifactId>archunit-junit5</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- present to enable importing all available rules -->
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>events</artifactId>
+            <scope>test</scope>
+        </dependency>
         <!-- End - ArchUnit rule checks -->
     </dependencies>
 

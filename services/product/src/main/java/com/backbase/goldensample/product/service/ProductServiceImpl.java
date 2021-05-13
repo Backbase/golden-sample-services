@@ -1,34 +1,41 @@
 package com.backbase.goldensample.product.service;
 
 import com.backbase.buildingblocks.presentation.errors.NotFoundException;
+import com.backbase.goldensample.product.mapper.ProductMapper;
 import com.backbase.goldensample.product.persistence.ProductEntity;
 import com.backbase.goldensample.product.persistence.ProductRepository;
+import com.backbase.product.api.service.v1.model.Product;
+import com.backbase.product.api.service.v1.model.ProductId;
 import java.util.List;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
+@AllArgsConstructor
+@Transactional
 public class ProductServiceImpl implements ProductService {
 
+    private final ProductMapper mapper;
     private final ProductRepository repository;
 
-    @Autowired
-    public ProductServiceImpl(ProductRepository repository) {
-        this.repository = repository;
+    @Override
+    public ProductId createProduct(Product body) {
+        ProductEntity entity = mapper.apiToEntity(body);
+        log.debug("Service creating product {}", entity);
+        ProductEntity entityWithId = repository.save(entity);
+        ProductId productId = new ProductId();
+        productId.setId(entityWithId.getId());
+        return productId;
     }
 
     @Override
-    public ProductEntity createProduct(ProductEntity body) {
-        log.debug("Service creating product {}", body);
-        return repository.save(body);
-    }
-
-    @Override
-    public ProductEntity updateProduct(ProductEntity body) {
-        log.debug("Service updating product {}", body);
-        return repository.save(body);
+    public void updateProduct(Product body) {
+        ProductEntity entity = mapper.apiToEntity(body);
+        log.debug("Service updating product {}", entity);
+        repository.save(entity);
     }
 
     @Override

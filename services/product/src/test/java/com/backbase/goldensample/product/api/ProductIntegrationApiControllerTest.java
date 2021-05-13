@@ -14,6 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.backbase.goldensample.product.persistence.ProductEntity;
 import com.backbase.product.api.service.v1.model.Product;
+import com.backbase.product.api.service.v1.model.ProductId;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -51,8 +52,7 @@ class ProductIntegrationApiControllerTest extends ProductApiController {
             "}";
 
         when(productMapper.apiToEntity(any(Product.class))).thenReturn(productEntityOne);
-        when(productService.createProduct(any(ProductEntity.class)))
-            .thenReturn(productEntityOne);
+        when(productService.createProduct(any())).thenReturn(new ProductId().id(1L));
 
         this
             .mockMvc
@@ -74,8 +74,6 @@ class ProductIntegrationApiControllerTest extends ProductApiController {
             "}";
 
         when(productMapper.apiToEntity(any(Product.class))).thenReturn(productEntityOne);
-        when(productService.updateProduct(any(ProductEntity.class)))
-            .thenReturn(productEntityOne);
 
         this
             .mockMvc
