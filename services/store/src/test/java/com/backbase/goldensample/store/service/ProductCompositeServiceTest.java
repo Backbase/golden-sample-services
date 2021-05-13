@@ -9,6 +9,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.backbase.buildingblocks.presentation.errors.InternalServerErrorException;
+import com.backbase.goldensample.store.client.ProductClient;
+import com.backbase.goldensample.store.client.ReviewClient;
 import com.backbase.goldensample.store.domain.Product;
 import com.backbase.goldensample.store.domain.Review;
 import com.fasterxml.jackson.databind.ObjectMapper;

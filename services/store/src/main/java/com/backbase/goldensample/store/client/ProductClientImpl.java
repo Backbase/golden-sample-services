@@ -1,8 +1,8 @@
-package com.backbase.goldensample.store.service.product;
+package com.backbase.goldensample.store.client;
 
 import com.backbase.goldensample.product.api.client.v1.ProductServiceApi;
 import com.backbase.goldensample.store.domain.Product;
-import com.backbase.goldensample.store.service.ProductClient;
+import com.backbase.goldensample.store.mapper.ProductMapper;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
