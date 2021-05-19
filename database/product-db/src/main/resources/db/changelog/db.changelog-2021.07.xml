@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="initial_2021.07" context="initial_2021.07" author="backbase">
+        <comment>Creating products</comment>
+        <sqlFile dbms="mysql,mssql,oracle"
+            encoding="UTF-8"
+            path="../generated-sql/${db.type}/create/product.sql"
+            relativeToChangelogFile="true"
+            splitStatements="true"
+            stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="initial_2021.07_022" context="initial_2021.07" author="backbase">
+        <tagDatabase tag="1.0.0"/>
+    </changeSet>
+</databaseChangeLog>
