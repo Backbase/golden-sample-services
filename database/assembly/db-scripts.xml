@@ -10,6 +10,7 @@
     </formats>
 
     <includeBaseDirectory>false</includeBaseDirectory>
+
     <fileSets>
         <fileSet>
             <directory>${project.basedir}/src/main/resources/db/generated-sql</directory>

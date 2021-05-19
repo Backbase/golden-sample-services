@@ -7,8 +7,6 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    <include file="db.changelog-1.0.0.xml" relativeToChangelogFile="true"/>
-    <include file="db.changelog-1.1.0.xml" relativeToChangelogFile="true"/>
-    <include file="db.changelog-1.2.0.xml" relativeToChangelogFile="true"/>
+    <include file="db.changelog-2021.07.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>
