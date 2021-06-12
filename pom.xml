@@ -47,4 +47,8 @@
         </pluginRepository>
     </pluginRepositories>
 
+    <build>
+        <defaultGoal>install</defaultGoal>
+    </build>
+
 </project>
