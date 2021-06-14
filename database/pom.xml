@@ -21,7 +21,6 @@
         <liquibase-maven-plugin.version>3.10.2</liquibase-maven-plugin.version>
         <maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
         <blimp-maven-plugin.version>0.15.0</blimp-maven-plugin.version>
-        <hibernate-core.version>5.4.32.Final</hibernate-core.version>
     </properties>
 
     <build>
@@ -53,7 +52,7 @@
                         <dependency>
                             <groupId>org.hibernate</groupId>
                             <artifactId>hibernate-core</artifactId>
-                            <version>${hibernate-core.version}</version>
+                            <version>${hibernate.version}</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -73,6 +72,17 @@
     <profiles>
         <profile>
             <id>SSDK-13</id>
+            <!--
+            This profile uses "liquibase-lint-extension" which is part of SSDK-13.+
+
+            At the moment I created this PR, SSDK-13 was not yet published to repo.backbase.com,
+            so the compilation failed.
+
+            Note that currently, Golden Sample depends on SSDK-12.2.0, but this doesn't
+            matter because "liquibase-lint-extension" is used like any other library.
+            
+            Eventually, this profile will be removed.
+            -->
             <properties>
                 <liquibase-lint-extension.version>13.0.0</liquibase-lint-extension.version>
             </properties>
