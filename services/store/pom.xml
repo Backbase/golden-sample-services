@@ -78,6 +78,7 @@
         <dependency>
             <groupId>com.backbase.buildingblocks</groupId>
             <artifactId>service-sdk-archunit</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.tngtech.archunit</groupId>
