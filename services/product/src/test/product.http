@@ -1,7 +1,8 @@
 POST http://localhost:9915/service-api/v1/products/
 Content-Type: application/json
 
-{"name": "Product 1",
+{"name": "Product 17899",
+  "responsive": 0,
 "weight":  "5",
 "createDate":  "2020-12-01"}
 

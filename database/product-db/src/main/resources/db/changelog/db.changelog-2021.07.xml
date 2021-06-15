@@ -20,4 +20,5 @@
     <changeSet id="initial_2021.07_022" context="initial_2021.07" author="backbase">
         <tagDatabase tag="1.0.0"/>
     </changeSet>
+    
 </databaseChangeLog>

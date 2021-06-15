@@ -82,6 +82,7 @@ class ProductServiceApiControllerTest extends ProductApiController {
         String requestBody = "{\n" +
             "  \"name\": \"Product 1\",\n" +
             "  \"weight\": \"23\",\n" +
+            "  \"responsive\": \"hola\",\n" +
             "  \"createDate\": \"2020-12-01\"\n" +
             "}";
 

@@ -26,6 +26,7 @@
         <boat-maven-plugin.version>0.13.0</boat-maven-plugin.version>
         <jqno.equalsverifier.version>3.4.3</jqno.equalsverifier.version>
         <docker.repo.project>experimental/golden-sample</docker.repo.project>
+        <hibernate-types.version>2.11.1</hibernate-types.version>
     </properties>
 
     <dependencyManagement>
