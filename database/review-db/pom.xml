@@ -29,6 +29,9 @@
                     <plugin>
                         <groupId>com.backbase.oss</groupId>
                         <artifactId>blimp-maven-plugin</artifactId>
+                        <configuration>
+                            <serviceName>review</serviceName>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>
