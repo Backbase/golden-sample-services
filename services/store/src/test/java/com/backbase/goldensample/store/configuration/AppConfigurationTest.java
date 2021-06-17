@@ -7,7 +7,6 @@ import com.backbase.buildingblocks.communication.http.HttpCommunicationConfigura
 import com.backbase.goldensample.store.Application;
 import com.backbase.goldensample.store.config.ProductClientConfiguration;
 import com.backbase.goldensample.store.config.ReviewClientConfiguration;
-import com.backbase.goldensample.store.client.ReviewClientV2Impl;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 
@@ -53,13 +52,13 @@ class AppConfigurationTest {
         ApplicationContextRunner context = new ApplicationContextRunner()
             .withUserConfiguration(Application.class)
             .withPropertyValues(
-                "app.review-service.api-version=v2")
+                "app.review-service.api-version=v2", "spring.application.name=store")
             .withSystemProperties("SIG_SECRET_KEY=JWTSecretKeyDontUseInProduction!");
 
         context.run(it -> {
             assertAll(
                 () -> assertThat(it).hasBean("reviewServiceImplApiV2"),
-                () -> assertThat(it).getBean("reviewClientImpl").isInstanceOf(ReviewClientV2Impl.class));
+                () -> assertThat(it).getBean("reviewServiceImplApiV2").isInstanceOf(com.backbase.goldensample.review.api.client.v2.ReviewServiceApi.class));
             });
     }
 }

@@ -143,6 +143,11 @@
         </dependency>
         <!-- present to enable importing all available rules -->
         <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-kahadb-store</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>com.backbase.buildingblocks</groupId>
             <artifactId>events</artifactId>
             <scope>test</scope>

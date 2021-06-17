@@ -1,4 +1,0 @@
-spring:
-  activemq:
-    in-memory: true
-    broker-url: vm://localhost?broker.persistent=false
