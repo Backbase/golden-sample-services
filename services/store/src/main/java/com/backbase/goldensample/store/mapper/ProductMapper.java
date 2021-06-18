@@ -1,4 +1,4 @@
-package com.backbase.goldensample.store.service.product;
+package com.backbase.goldensample.store.mapper;
 
 import com.backbase.goldensample.store.domain.Product;
 import org.mapstruct.Mapper;

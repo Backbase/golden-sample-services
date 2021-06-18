@@ -1,8 +1,6 @@
 package com.backbase.goldensample.review.persistence;
 
 import com.backbase.goldensample.review.config.IdentityStrategyOverrideConfiguration;
-import com.backbase.goldensample.review.mapper.MapToJsonConverter;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -91,7 +89,7 @@ public class ReviewEntity {
     @Lob
     @Column(name = "additions", columnDefinition = "CLOB")
     @Convert(converter = MapToJsonConverter.class)
-    private Map<String, String> additions = new HashMap<>();
+    private Map<String, String> additions = Map.of();
 
     //No-Op
     public ReviewEntity() {

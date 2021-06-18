@@ -1,9 +1,7 @@
 package com.backbase.goldensample.product.persistence;
 
 import com.backbase.goldensample.product.config.IdentityStrategyOverrideConfiguration;
-import com.backbase.goldensample.product.mapper.MapToJsonConverter;
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -74,7 +72,7 @@ public class ProductEntity {
     @Lob
     @Column(name = "additions", columnDefinition = "CLOB")
     @Convert(converter = MapToJsonConverter.class)
-    private Map<String, String> additions = new HashMap<>();
+    private Map<String, String> additions = Map.of();
 
     //No-Op
     public ProductEntity() {

@@ -2,7 +2,6 @@ package com.backbase.goldensample.review.service;
 
 
 import com.backbase.goldensample.review.persistence.ReviewEntity;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,7 +25,7 @@ public interface ReviewService {
      * @return list of reviews for this product, or empty list if there are no reviews.
      */
     default List<ReviewEntity> getReviewsByProductId(long productId) {
-        return new ArrayList<>();
+        return List.of();
     }
 
     /**

@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.backbase.goldensample.review.persistence.ReviewEntity;
 import com.backbase.goldensample.review.service.ReviewService;
 import com.backbase.goldensample.review.v2.api.ReviewServiceApiController;
-import com.backbase.goldensample.review.v2.mapper.ReviewMapperV2;
+import com.backbase.goldensample.review.v2.mapper.ReviewV2Mapper;
 import com.backbase.reviews.api.service.v2.model.Review;
 import java.util.List;
 import org.hamcrest.Matchers;
@@ -39,7 +39,7 @@ class ReviewServiceApiControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    ReviewMapperV2 reviewMapper;
+    ReviewV2Mapper reviewMapper;
 
     private final Review reviewOne = createReview(1L, 1L, "author", "subject", "long content", 4);
     private final ReviewEntity reviewEntity = createEntity();

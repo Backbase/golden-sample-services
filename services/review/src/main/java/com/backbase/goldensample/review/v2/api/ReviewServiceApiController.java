@@ -2,7 +2,7 @@ package com.backbase.goldensample.review.v2.api;
 
 import com.backbase.goldensample.review.persistence.ReviewEntity;
 import com.backbase.goldensample.review.service.ReviewService;
-import com.backbase.goldensample.review.v2.mapper.ReviewMapperV2;
+import com.backbase.goldensample.review.v2.mapper.ReviewV2Mapper;
 import com.backbase.reviews.api.service.v2.ReviewServiceApi;
 import com.backbase.reviews.api.service.v2.model.Review;
 import com.backbase.reviews.api.service.v2.model.ReviewId;
@@ -25,10 +25,10 @@ public class ReviewServiceApiController implements ReviewServiceApi {
 
   /** Review service business logic interface. */
   private final ReviewService reviewService;
-  private final ReviewMapperV2 mapper;
+  private final ReviewV2Mapper mapper;
 
   @Autowired
-  public ReviewServiceApiController(ReviewService reviewService, ReviewMapperV2 mapper) {
+  public ReviewServiceApiController(ReviewService reviewService, ReviewV2Mapper mapper) {
     this.reviewService = reviewService;
     this.mapper = mapper;
   }

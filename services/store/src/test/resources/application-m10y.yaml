@@ -1,0 +1,9 @@
+backbase:
+  multi-tenancy:
+    enabled: true
+  product-service:
+    service-id@tid(rebrand_shop): rs-product
+    service-port@tid(rebrand_shop): 8815
+  review-service:
+    service-id@tid(rebrand_shop): rs-review
+    service-port@tid(rebrand_shop): 8816
