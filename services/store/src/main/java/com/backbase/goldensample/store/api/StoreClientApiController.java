@@ -3,7 +3,7 @@ package com.backbase.goldensample.store.api;
 import com.backbase.buildingblocks.presentation.errors.NotFoundException;
 import com.backbase.goldensample.store.api.service.v1.ProductCompositeClientApi;
 import com.backbase.goldensample.store.api.service.v1.model.ProductAggregate;
-import com.backbase.goldensample.store.config.StoreViewConfig;
+import com.backbase.goldensample.store.config.StoreViewConfiguration;
 import com.backbase.goldensample.store.domain.Product;
 import com.backbase.goldensample.store.mapper.StoreMapper;
 import com.backbase.goldensample.store.service.ProductCompositeService;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class StoreClientApiController implements ProductCompositeClientApi {
 
     private final ProductCompositeService productCompositeService;
-    private final StoreViewConfig storeViewConfig;
+    private final StoreViewConfiguration storeViewConfiguration;
     private final StoreMapper storeMapper;
 
     @Override
@@ -55,7 +55,7 @@ public class StoreClientApiController implements ProductCompositeClientApi {
     }
 
     private BodyBuilder withThemeHeader(BodyBuilder responseEntity) {
-        return responseEntity.header(StoreViewConfig.STORE_THEME_RESPONSE_HEADER_NAME, storeViewConfig.getTheme());
+        return responseEntity.header(StoreViewConfiguration.STORE_THEME_RESPONSE_HEADER_NAME, storeViewConfiguration.getTheme());
     }
 
 }

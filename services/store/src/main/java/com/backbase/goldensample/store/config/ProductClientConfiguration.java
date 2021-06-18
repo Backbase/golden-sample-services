@@ -7,15 +7,17 @@ import com.backbase.goldensample.product.api.client.v1.ProductServiceApi;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.validation.annotation.Validated;
 
+@Validated
 @Configuration
-@ConfigurationProperties("app.product-service")
+@ConfigurationProperties("backbase.product-service")
 @ContextScoped
-public class ProductClientConfig extends ApiClientConfig {
+public class ProductClientConfiguration extends ApiClientConfig {
 
     private static final String DEFAULT_SERVICE_ID = "product";
 
-    public ProductClientConfig() {
+    public ProductClientConfiguration() {
         super(DEFAULT_SERVICE_ID);
     }
 

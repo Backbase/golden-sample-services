@@ -7,15 +7,17 @@ import com.backbase.goldensample.review.api.client.v1.ReviewServiceApi;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.validation.annotation.Validated;
 
+@Validated
 @Configuration
-@ConfigurationProperties("app.review-service")
+@ConfigurationProperties("backbase.review-service")
 @ContextScoped
-public class ReviewClientConfig extends ApiClientConfig {
+public class ReviewClientConfiguration extends ApiClientConfig {
 
     private static final String DEFAULT_SERVICE_ID = "review";
 
-    public ReviewClientConfig() {
+    public ReviewClientConfiguration() {
         super(DEFAULT_SERVICE_ID);
     }
 

@@ -1,4 +1,4 @@
-package com.backbase.goldensample.store.service;
+package com.backbase.goldensample.store.client;
 
 import com.backbase.goldensample.store.domain.Review;
 import java.util.List;

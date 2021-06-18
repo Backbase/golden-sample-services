@@ -1,4 +1,4 @@
-package com.backbase.goldensample.review.mapper;
+package com.backbase.goldensample.review.persistence;
 
 import static org.springframework.util.CollectionUtils.isEmpty;
 
