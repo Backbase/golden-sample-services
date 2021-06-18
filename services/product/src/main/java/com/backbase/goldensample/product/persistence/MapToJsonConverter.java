@@ -1,4 +1,4 @@
-package com.backbase.goldensample.product.mapper;
+package com.backbase.goldensample.product.persistence;
 
 import static org.springframework.util.CollectionUtils.isEmpty;
 

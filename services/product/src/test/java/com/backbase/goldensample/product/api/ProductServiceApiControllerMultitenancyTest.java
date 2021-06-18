@@ -14,10 +14,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.backbase.buildingblocks.testutils.TestTokenUtil;
 import com.backbase.goldensample.product.Application;
+import com.backbase.goldensample.product.persistence.ProductEntity;
 import com.backbase.product.api.service.v1.model.Product;
+import com.backbase.product.api.service.v1.model.ProductId;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -49,10 +53,14 @@ class ProductServiceApiControllerMultitenancyTest extends ProductApiController {
     }
 
     @Test
+    @DisplayName("should return a list of products")
     void shouldGetProductsWhenServiceReturnsProducts() throws Exception {
-        Product productTwo= createProduct(2L, "Product 2", 32, LocalDate.now());
+        ProductEntity productEntityTwo= createProductEntity("Product 2", 32, LocalDate.now(), Collections
+            .singletonMap("popularity","29%"));
+        Product productTwo = createProduct(2L, "Product 2", 32, TODAY);
 
-        when(productService.getAllProducts()).thenReturn(List.of(productOne, productTwo));
+        when(productMapper.entityListToApiList(any(List.class))).thenReturn((List.of(productOne, productTwo)));
+        when(productService.getAllProducts()).thenReturn(List.of(productEntityOne, productEntityTwo));
 
         this.mockMvc
             .perform(get("/service-api/v1/products")
@@ -63,10 +71,8 @@ class ProductServiceApiControllerMultitenancyTest extends ProductApiController {
             .andExpect(status().is(200))
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.size()", is(2)))
-            .andExpect(jsonPath("$[0].productId", is(1)))
             .andExpect(jsonPath("$[0].name", is("Product 1")))
             .andExpect(jsonPath("$[0].weight", is(23)))
-            .andExpect(jsonPath("$[1].productId", is(2)))
             .andExpect(jsonPath("$[1].name", is("Product 2")))
             .andExpect(jsonPath("$[1].weight", is(32)));
     }
@@ -82,8 +88,7 @@ class ProductServiceApiControllerMultitenancyTest extends ProductApiController {
             "    \"description\": \"long desc\"}\n" +
             "}";
 
-        when(productService.createProduct(any(Product.class)))
-            .thenReturn(productOne);
+        when(productService.createProduct(any())).thenReturn(new ProductId().id(1L));
 
         MvcResult result = this.mockMvc
             .perform(post("/service-api/v1/products")
@@ -103,6 +108,7 @@ class ProductServiceApiControllerMultitenancyTest extends ProductApiController {
     }
 
     @Test
+    @DisplayName("should create a new Product with valid additions for tenant")
     void shouldCreateNewProductWithRecognisedAdditionsForTenantRebrandShop() throws Exception {
         String requestBody = "{\n" +
             "  \"name\": \"Product 1\",\n" +
@@ -112,8 +118,8 @@ class ProductServiceApiControllerMultitenancyTest extends ProductApiController {
             "    \"description\": \"long desc\"}\n" +
             "}";
 
-        when(productService.createProduct(any(Product.class)))
-            .thenReturn(productOne);
+        when(productMapper.apiToEntity(any(Product.class))).thenReturn(productEntityOne);
+        when(productService.createProduct(any())).thenReturn(new ProductId().id(1L));
 
         this
             .mockMvc

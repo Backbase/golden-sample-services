@@ -1,5 +1,7 @@
 package com.backbase.goldensample.product.api;
 
+import com.backbase.goldensample.product.mapper.ProductMapper;
+import com.backbase.goldensample.product.persistence.ProductEntity;
 import com.backbase.goldensample.product.service.ProductService;
 import com.backbase.product.api.service.v1.ProductServiceApi;
 import com.backbase.product.api.service.v1.model.Product;
@@ -26,10 +28,12 @@ public class ProductServiceApiController implements ProductServiceApi {
      * Product service business logic interface.
      */
     private final ProductService prodService;
+    private final ProductMapper mapper;
 
     @Autowired
-    public ProductServiceApiController(ProductService prodService) {
+    public ProductServiceApiController(ProductService prodService, ProductMapper mapper) {
         this.prodService = prodService;
+        this.mapper = mapper;
     }
 
 
@@ -43,22 +47,22 @@ public class ProductServiceApiController implements ProductServiceApi {
 
     @Override
     public ResponseEntity<List<Product>> getProducts() {
-        log.debug("Get list of products");
-        return ResponseEntity.ok(prodService.getAllProducts());
+        List<ProductEntity> productList = prodService.getAllProducts();
+        log.debug("Get list of products available, total: {}", productList.size());
+        return ResponseEntity.ok(mapper.entityListToApiList(productList));
     }
 
     @Override
     public ResponseEntity<Product> getProductById(Long productId) {
         log.debug("Get product by id {}", productId);
-        return ResponseEntity.ok(prodService.getProduct(productId, 0, 0));
+        Product product = mapper.entityToApi(prodService.getProduct(productId));
+        return ResponseEntity.ok(product);
     }
 
     @Override
     public ResponseEntity<ProductId> postProduct(@Valid Product product) {
         log.debug("Create a product {}", product);
-        Product productWithId = prodService.createProduct(product);
-        ProductId productId = new ProductId();
-        productId.setId(productWithId.getProductId());
+        ProductId productId = prodService.createProduct(product);
         log.debug("Product {} created", productId);
         return ResponseEntity.ok(productId);
     }
@@ -66,8 +70,8 @@ public class ProductServiceApiController implements ProductServiceApi {
     @Override
     public ResponseEntity<Void> putProduct(@Valid Product product) {
         log.debug("Update a product {}", product);
-        Product productWithId = prodService.updateProduct(product);
-        log.debug("product with id {} updated", productWithId.getProductId());
+        prodService.updateProduct(product);
+        log.debug("product with id {} updated", product.getProductId());
         return ResponseEntity.noContent().build();
     }
 }

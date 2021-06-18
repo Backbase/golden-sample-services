@@ -4,6 +4,7 @@ import javax.persistence.GenerationType;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.validation.annotation.Validated;
 
 /**
  * <p>This class is required to conditionally override primary key generation strategy for batch entities.</p>
@@ -17,6 +18,7 @@ import org.springframework.context.annotation.PropertySource;
  * <p>Liquibase change log generates sequences or auto increment columns according to database type.</p>
  *
  */
+@Validated
 @Configuration
 @PropertySource("classpath:db/mapping/mysql_entities_identity_strategy_override.yml")
 @ConditionalOnExpression("'${backbase.entities-identity-strategy-override}' eq 'true' "

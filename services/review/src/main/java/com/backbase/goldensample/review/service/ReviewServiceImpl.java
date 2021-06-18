@@ -5,12 +5,14 @@ import com.backbase.buildingblocks.presentation.errors.NotFoundException;
 import com.backbase.goldensample.review.persistence.ReviewEntity;
 import com.backbase.goldensample.review.persistence.ReviewRepository;
 import java.util.List;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Log4j2
+@Slf4j
+@Transactional
 public class ReviewServiceImpl implements ReviewService {
 
     private final ReviewRepository repository;

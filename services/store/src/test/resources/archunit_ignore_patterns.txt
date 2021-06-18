@@ -1,0 +1,5 @@
+# Ignore OpenAPI generated classes
+.*com\.backbase\.goldensample\.store\.api\.service\.v1\.model.*
+
+# Ignore configuration classes because multi-tenancy support is not done yet: https://github.com/Backbase/golden-sample-services/issues/6
+.*com\.backbase\.goldensample\.store\.config.*

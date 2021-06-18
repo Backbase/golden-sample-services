@@ -64,3 +64,10 @@ node_modules/
 
 # Local History for Visual Studio Code
 .history/
+
+### Theia ###
+.theia
+.classpath
+.factorypath
+.project
+.settings
