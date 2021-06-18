@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -11,7 +10,6 @@
     </parent>
 
     <artifactId>database</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -22,6 +20,99 @@
     <properties>
         <liquibase-maven-plugin.version>3.10.2</liquibase-maven-plugin.version>
         <maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
+        <blimp-maven-plugin.version>0.15.1</blimp-maven-plugin.version>
     </properties>
 
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.backbase.oss</groupId>
+                    <artifactId>blimp-maven-plugin</artifactId>
+                    <version>${blimp-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>generate</goal>
+                                <goal>assemble</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <changeLogFile>db/changelog/db.changelog-persistence.xml</changeLogFile>
+                        <databases>
+                            <database>mssql</database>
+                            <database>mysql</database>
+                            <database>oracle</database>
+                        </databases>
+                        <stripComments>true</stripComments>
+                    </configuration>
+                    <dependencies>
+                        <!-- Use Blimp interface to Hibernate SQL formatter -->
+                        <dependency>
+                            <groupId>org.hibernate</groupId>
+                            <artifactId>hibernate-core</artifactId>
+                            <version>${hibernate.version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <configuration>
+                            <excludes>
+                                <exclude>db/generated-sql/**</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>SSDK-13</id>
+            <!--
+            This profile uses "liquibase-lint-extension" which is part of SSDK-13.+
+
+            At the moment I created this PR, SSDK-13 was not yet published to repo.backbase.com,
+            so the compilation failed.
+
+            Note that currently, Golden Sample depends on SSDK-12.2.0, but this doesn't
+            matter because "liquibase-lint-extension" is used like any other library.
+            
+            Eventually, this profile will be removed.
+            -->
+            <properties>
+                <liquibase-lint-extension.version>13.0.0</liquibase-lint-extension.version>
+            </properties>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>com.backbase.oss</groupId>
+                            <artifactId>blimp-maven-plugin</artifactId>
+                            <version>${blimp-maven-plugin.version}</version>
+                            <configuration>
+                                <scriptsDirectory>${project.build.directory}/generated-resources/lint</scriptsDirectory>
+                                <properties>
+                                    <!-- disable Blimp formatter inherited from no-profile <pluginManagement/> -->
+                                    <blimp.format-sql>false</blimp.format-sql>
+                                </properties>
+                                <classifier>lint</classifier>
+                                <attach>false</attach>
+                            </configuration>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>com.backbase.buildingblocks</groupId>
+                                    <artifactId>liquibase-lint-extension</artifactId>
+                                    <version>${liquibase-lint-extension.version}</version>
+                                </dependency>
+                            </dependencies>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+    </profiles>
 </project>
