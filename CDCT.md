@@ -122,24 +122,24 @@ Set up the required mocks:
 
 Set up the configuration which specifies the controllers being tested:
 
-    @TestTemplate
-    @ExtendWith(PactVerificationSpringProvider.class)
-    void pactVerificationTestTemplate(PactVerificationContext context) {
-        if (context != null) {
-            context.verifyInteraction();
-        }
-    }
-    
-    @BeforeEach
-    void before(PactVerificationContext context) {
-        if (context != null) {
-            context.setTarget(new MockMvcTestTarget(MockMvcBuilders
-                                    .standaloneSetup(new ProductServiceApiController(service, mapper))
-                                    .setMessageConverters(new MappingJackson2HttpMessageConverter(objectMapper))
-                                    .setControllerAdvice(exceptionHandlers)
-                                    .build()));
-        }
-    }
+	@TestTemplate
+	@ExtendWith(PactVerificationSpringProvider.class)
+	void pactVerificationTestTemplate(PactVerificationContext context) {
+		if (context != null) {
+			context.verifyInteraction();
+		}
+	}
+
+	@BeforeEach
+	void before(PactVerificationContext context) {
+		if (context != null) {
+			context.setTarget(new MockMvcTestTarget(MockMvcBuilders
+								.standaloneSetup(new ProductServiceApiController(service, mapper))
+								.setMessageConverters(new MappingJackson2HttpMessageConverter(objectMapper))
+								.setControllerAdvice(exceptionHandlers)
+								.build()));
+		}
+	}
     
 For each state defined in the pact there must be a corresponding method created which mocks the expected behaviour. Note that the value defined in the `@State` annotation must match the state provided in the pact.
 
