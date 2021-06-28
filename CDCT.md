@@ -18,6 +18,8 @@ In consumer driven testing, the service consumer has control over what is tested
 
 When using Pact, the consumer creates a collection of tests based on their specific use cases of a provider. This ensures that testing covers the parts of communication that are actually used by consumers. Each test case covers a single request/response pair. Pact generates a contract during the execution of these consumer tests which is shared with the provider to be validated. The required interactions captured in the contract are verified against the provider to confirm that the behaviour will match the expectations of the consumer.
 
+Generally a broker is used to store pacts and verification results. This allows pact contracts to be easily shared between consumer and provider systems and manages versions of contracts which creates a clear compatibility matrix between multiple versions of systems. For more information, see [Sharing Pacts with the Pact Broker](https://docs.pact.io/getting_started/sharing_pacts/).
+
 ## Implementing CDCT
 
 ### As a consumer
@@ -80,7 +82,7 @@ For each pact there must be a corresponding test created which calls the endpoin
 		assertEquals(1l, productId.getId());
 	}
 	
-A successful execution of the tests will generate a pact contract which can then be shared with the provider and validated. By default this is located within `target/pacts`
+A successful execution of the tests will generate a pact contract which can then be shared with the provider and validated. By default this is located within `target/pacts`. Within this example the pacts are shared manually rather than using a broker.
 
 ### As a provider
 
@@ -109,6 +111,8 @@ Annotate the class with:
 	@ExtendWith({SpringExtension.class})
 	@ContextConfiguration(classes = {MvcConfiguration.class, JacksonAutoConfiguration.class, ApiConfiguration.class})
 	
+This tags the tests to allow provider tests to be run easily, defines the location of the pact contracts as well as the provider and consumer and sets up the required extensions and context configuration.
+	
 Set up the required mocks:
 
 	public ProductServiceApiProviderPactTest() {
@@ -116,7 +120,7 @@ Set up the required mocks:
 		mapper = Mockito.mock(ProductMapper.class);
 	}
 
-And configuration which specifies the controllers being tested:
+Set up the configuration which specifies the controllers being tested:
 
     @TestTemplate
     @ExtendWith(PactVerificationSpringProvider.class)
