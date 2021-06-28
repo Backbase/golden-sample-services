@@ -1,0 +1,137 @@
+{
+  "provider": {
+    "name": "product_service"
+  },
+  "consumer": {
+    "name": "store_service"
+  },
+  "interactions": [
+    {
+      "description": "a valid request",
+      "request": {
+        "method": "POST",
+        "path": "/service-api/v1/products",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "productId": 1,
+          "additions": null,
+          "name": "Coke",
+          "weight": 100,
+          "createDate": [
+            2021,
+            1,
+            9
+          ]
+        },
+        "matchingRules": {
+          "path": {
+            "matchers": [
+              {
+                "match": "regex",
+                "regex": "/service-api/v1/products"
+              }
+            ],
+            "combine": "AND"
+          },
+          "body": {
+            "$.name": {
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.productId": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.weight": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.createDate[0]": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.createDate[1]": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            },
+            "$.createDate[2]": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            }
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "id": 1
+        },
+        "matchingRules": {
+          "body": {
+            "$.id": {
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ],
+              "combine": "AND"
+            }
+          },
+          "header": {
+            "Content-Type": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "application/json(;\\s?charset=[\\w\\-]+)?"
+                }
+              ],
+              "combine": "AND"
+            }
+          }
+        }
+      },
+      "providerStates": [
+        {
+          "name": "a product is created"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "3.0.0"
+    },
+    "pact-jvm": {
+      "version": "4.1.18"
+    }
+  }
+}

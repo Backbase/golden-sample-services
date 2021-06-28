@@ -17,6 +17,7 @@
     <properties>
         <jsr305.version>3.0.2</jsr305.version>
         <commons-collections.version>3.2.2</commons-collections.version>
+        <pact.version>4.1.18</pact.version>
     </properties>
     <dependencies>
         <dependency>
@@ -107,6 +108,11 @@
             <artifactId>service-sdk-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+       	<dependency>
+			<groupId>au.com.dius.pact.consumer</groupId>
+			<artifactId>junit5</artifactId>
+			<version>${pact.version}</version>
+		</dependency>
     </dependencies>
 
     <build>
