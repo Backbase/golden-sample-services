@@ -1,0 +1,208 @@
+openapi: 3.0.3
+info:
+  title: Review Service API
+  version: 2.0.0
+  description: Description of the API...
+  license:
+    name: Copyright Backbase
+    url: https://www.backbase.com/legal
+  x-icon: credit_card
+servers:
+  - description: Prism mock server
+    url: http://localhost:4010
+  - description: Service running locally
+    url: http://localhost:9916
+tags:
+  - name: review-service
+paths:
+  /service-api/v2/products/{productId}/reviews:
+    get:
+      tags:
+        - review-service
+      summary: List reviews by product
+      description: Returns a list of reviews for the specified product
+      operationId: getReviewListByProductId
+      parameters:
+        - name: productId
+          in: path
+          description: productId
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          $ref: 'v2/schemas/definitions.yaml#/components/responses/200ReviewList'
+        '400':
+          $ref: 'lib/common-types.yaml#/components/responses/400BadRequest'
+        '401':
+          $ref: 'lib/common-types.yaml#/components/responses/401Unauthorized'
+        '500':
+          $ref: 'lib/common-types.yaml#/components/responses/500InternalServerError'
+    delete:
+      tags:
+        - review-service
+      summary: Delete all product reviews
+      description: Deletes all reviews for the specified product
+      operationId: deleteReviewsByProductId
+      parameters:
+        - name: productId
+          in: path
+          description: productId
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: If the reviews have been deleted successfully
+        '400':
+          $ref: 'lib/common-types.yaml#/components/responses/400BadRequest'
+        '401':
+          $ref: 'lib/common-types.yaml#/components/responses/401Unauthorized'
+        '403':
+          $ref: 'lib/common-types.yaml#/components/responses/403Forbidden'
+        '500':
+          $ref: 'lib/common-types.yaml#/components/responses/500InternalServerError'
+
+  /service-api/v2/reviews:
+    post:
+      tags:
+        - review-service
+      summary: Create a review
+      description: Creates a new review for the specified product
+      operationId: postReview
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: 'v2/schemas/definitions.yaml#/components/schemas/Review'
+            example:
+              $ref: v2/examples/create-review-request.json
+      responses:
+        '204':
+          $ref: 'v2/schemas/definitions.yaml#/components/responses/204ReviewId'
+        '400':
+          $ref: 'lib/common-types.yaml#/components/responses/400BadRequest'
+        '401':
+          $ref: 'lib/common-types.yaml#/components/responses/401Unauthorized'
+        '403':
+          $ref: 'lib/common-types.yaml#/components/responses/403Forbidden'
+        '500':
+          $ref: 'lib/common-types.yaml#/components/responses/500InternalServerError'
+    put:
+      tags:
+        - review-service
+      summary: Update a review
+      description: Updates an existing review
+      operationId: putReview
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: 'v2/schemas/definitions.yaml#/components/schemas/Review'
+            example:
+              $ref: v2/examples/update-review-request.json
+      responses:
+        '204':
+          $ref: 'v2/schemas/definitions.yaml#/components/responses/204ReviewId'
+        '400':
+          $ref: 'lib/common-types.yaml#/components/responses/400BadRequest'
+        '401':
+          $ref: 'lib/common-types.yaml#/components/responses/401Unauthorized'
+        '403':
+          $ref: 'lib/common-types.yaml#/components/responses/403Forbidden'
+        '500':
+          $ref: 'lib/common-types.yaml#/components/responses/500InternalServerError'
+
+  /service-api/v2/reviews/{reviewId}:
+    put:
+      tags:
+        - review-service
+      summary: Update a review
+      description: Updates an existing review
+      operationId: putReviewById
+      parameters:
+        - name: reviewId
+          in: path
+          description: reviewId
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: 'v2/schemas/definitions.yaml#/components/schemas/Review'
+            example:
+              $ref: v2/examples/update-review-request.json
+      responses:
+        '204':
+          $ref: 'v2/schemas/definitions.yaml#/components/responses/204ReviewId'
+        '400':
+          $ref: 'lib/common-types.yaml#/components/responses/400BadRequest'
+        '401':
+          $ref: 'lib/common-types.yaml#/components/responses/401Unauthorized'
+        '403':
+          $ref: 'lib/common-types.yaml#/components/responses/403Forbidden'
+        '500':
+          $ref: 'lib/common-types.yaml#/components/responses/500InternalServerError'
+    get:
+      tags:
+        - review-service
+      summary: Retrieve review by ID
+      description: Returns a view of the specified review ID
+      operationId: getReviewById
+      parameters:
+        - name: reviewId
+          in: path
+          description: reviewId
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: If the review is found successfully
+          content:
+            application/json:
+              schema:
+                $ref: 'v2/schemas/definitions.yaml#/components/schemas/Review'
+              example:
+                $ref: v2/examples/get-review-response.json
+        '400':
+          $ref: 'lib/common-types.yaml#/components/responses/400BadRequest'
+        '401':
+          $ref: 'lib/common-types.yaml#/components/responses/401Unauthorized'
+        '403':
+          $ref: 'lib/common-types.yaml#/components/responses/403Forbidden'
+        '404':
+          $ref: 'lib/common-types.yaml#/components/responses/404NotFound'
+        '500':
+          $ref: 'lib/common-types.yaml#/components/responses/500InternalServerError'
+    delete:
+      tags:
+        - review-service
+      summary: Delete a review by ID
+      description: Deletes an existing review
+      operationId: deleteReview
+      parameters:
+        - name: reviewId
+          in: path
+          description: reviewId
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: If the review has been deleted successfully
+        '400':
+          $ref: 'lib/common-types.yaml#/components/responses/400BadRequest'
+        '401':
+          $ref: 'lib/common-types.yaml#/components/responses/401Unauthorized'
+        '403':
+          $ref: 'lib/common-types.yaml#/components/responses/403Forbidden'
+        '500':
+          $ref: 'lib/common-types.yaml#/components/responses/500InternalServerError'

@@ -1,0 +1,26 @@
+backbase:
+  context:
+    error-on-invalid-property-name: false
+  multi-tenancy:
+    enabled: true
+    tenants:
+      - id: org_shop
+      - id: rebrand_shop
+  api:
+    extensions:
+      classes:
+        com.backbase.goldensample.store.api.service.v1.model.ProductAggregate: ext-product
+        com.backbase.goldensample.store.api.service.v1.model.ReviewSummary: ext-review
+      property-sets:
+        ext-product: popularity
+        ext-product@tid(rebrand_shop): popularity,description
+        ext-review: verified
+        ext-review@tid(rebrand_shop): verified,purchaseDate
+
+app:
+  product-service:
+    serviceId@tid(rebrand_shop): rs-product
+    servicePort@tid(rebrand_shop): 8815
+  review-service:
+    serviceId@tid(rebrand_shop): rs-review
+    servicePort@tid(rebrand_shop): 8816

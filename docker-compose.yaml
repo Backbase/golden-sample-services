@@ -28,7 +28,7 @@ x-database-variables: &database-variables
   spring.jpa.hibernate.ddl-auto: none
   spring.datasource.username: root
   spring.datasource.password: backbase
-  spring.datasource.driver-class-name: com.mysql.jdbc.Driver
+  spring.datasource.driver-class-name: com.mysql.cj.jdbc.Driver
   spring.jpa.database-platform: org.hibernate.dialect.MySQL5Dialect
   spring.jpa.properties.hibernate.dialect: org.hibernate.dialect.MySQL5Dialect
 
@@ -65,7 +65,7 @@ services:
       - ./config/database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
 
   edge:
-    image: repo.backbase.com/backbase-docker-releases/edge:IPS-1.12.0
+    image: repo.backbase.com/backbase-docker-releases/edge:IPS-1.12.6.1
     ports:
       - "8080:8080"
     environment:
@@ -77,12 +77,12 @@ services:
       - token-converter
 
   registry:
-    image: repo.backbase.com/backbase-docker-releases/registry:IPS-1.12.0
+    image: repo.backbase.com/backbase-docker-releases/registry:IPS-1.12.6.1
     ports:
       - "8761:8080"
 
   token-converter:
-    image: repo.backbase.com/backbase-docker-releases/bb-authentication-token-converter-service:IPS-1.12.0
+    image: repo.backbase.com/backbase-docker-releases/bb-authentication-token-converter-service:IPS-1.12.6.1
     ports:
       - "7779:8080"
     environment:
@@ -91,42 +91,49 @@ services:
       - registry
 
   auth:
-    image: repo.backbase.com/backbase-docker-releases/authentication-dev:IPS-1.12.0-no-production
+    image: repo.backbase.com/backbase-docker-releases/authentication-dev:IPS-1.12.6.1-no-production
     ports:
       - "7778:8080"
     environment:
       <<: *common-variables
       <<: *message-broker-variables
+      AUTHENTICATION_USERS_RESOURCE: file:/etc/auth/backbase_users.json
+    volumes:
+      - ./config/auth/backbase_users.json:/etc/auth/backbase_users.json:ro
     links:
       - registry
       - message-broker
 
   product:
-    image: harbor.backbase.eu/experimental/golden-sample/product:latest
+    image: ghcr.io/backbase/golden-sample/product
     ports:
       - "9915:8080"
     environment:
       <<: *common-variables
       <<: *database-variables
       spring.datasource.url: jdbc:mysql://mysql:3306/product?cacheServerConfiguration=true&createDatabaseIfNotExist=true
+      DB_HOST: mysql
+      SPRING_PROFILES_ACTIVE: ${COMPOSE_APP_PROFILE}
     links:
       - registry
       - mysql
 
   review:
-    image: harbor.backbase.eu/experimental/golden-sample/review:latest
+    image: ghcr.io/backbase/golden-sample/review
     ports:
       - "9916:8080"
     environment:
       <<: *common-variables
       <<: *database-variables
       spring.datasource.url: jdbc:mysql://mysql:3306/review?cacheServerConfiguration=true&createDatabaseIfNotExist=true
+      DB_HOST: mysql
+      SPRING_PROFILES_ACTIVE: ${COMPOSE_APP_PROFILE}
     links:
       - registry
       - mysql
 
   store:
-    image: harbor.backbase.eu/experimental/golden-sample/store:latest
+    image: ghcr.io/backbase/golden-sample/store
     ports:
       - "9917:8080"
     environment:
@@ -135,6 +142,8 @@ services:
       app.product-service.port: 8080
       app.review-service.host: review
       app.review-service.port: 8080
+      SPRING_PROFILES_ACTIVE: ${COMPOSE_APP_PROFILE}
+      logging.level.com.backbase.buildingblocks.communication.http.InterServiceLogger: DEBUG
     links:
       - registry
 

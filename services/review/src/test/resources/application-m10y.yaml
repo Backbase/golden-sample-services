@@ -1,0 +1,26 @@
+backbase:
+  multi-tenancy:
+    enabled: true
+    tenants:
+      - id: org_shop
+        datasource:
+          url: jdbc:tc:mysql:5.7:///testdb1
+          username: test
+          password: test
+      - id: rebrand_shop
+        datasource:
+          url: jdbc:tc:mysql:5.7:///testdb2
+          username: test
+          password: test
+    datasource:
+      strategy: SWITCH_DATASOURCE
+      defaults:
+        driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+  api:
+    extensions:
+      classes:
+        com.backbase.reviews.api.service.v1.model.Review: ext-review
+        com.backbase.reviews.api.service.v2.model.Review: ext-review
+      property-sets:
+        ext-review: verified
+        ext-review@tid(rebrand_shop): verified,purchaseDate

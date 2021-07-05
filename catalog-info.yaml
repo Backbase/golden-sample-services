@@ -1,0 +1,35 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: golden-sample
+  description: This project is a development of a small set of [Backbase Service SDK](https://community.backbase.com/documentation/ServiceSDK/latest/index) (**Spring Boot** and **Cloud**) based Microservices projects that implement cloud-native intuitive, Microservices design patterns, and coding best practices.
+  tags:
+    - java
+    - spring
+    - ssdk
+  links:
+    - url: https://example.com/user
+      title: Examples Users
+      icon: user
+    - url: https://example.com/group
+      title: Example Group
+      icon: group
+    - url: https://example.com/cloud
+      title: Link with Cloud Icon
+      icon: cloud
+    - url: https://example.com/dashboard
+      title: Dashboard
+      icon: dashboard
+    - url: https://example.com/help
+      title: Support
+      icon: help
+    - url: https://example.com/web
+      title: Website
+      icon: web
+    - url: https://example.com/alert
+      title: Alerts
+      icon: alert
+spec:
+  type: service
+  lifecycle: production
+  owner: backend-guild

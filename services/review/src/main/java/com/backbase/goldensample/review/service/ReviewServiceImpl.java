@@ -2,57 +2,52 @@ package com.backbase.goldensample.review.service;
 
 
 import com.backbase.buildingblocks.presentation.errors.NotFoundException;
-import com.backbase.goldensample.review.mapper.ReviewMapper;
 import com.backbase.goldensample.review.persistence.ReviewEntity;
 import com.backbase.goldensample.review.persistence.ReviewRepository;
-import com.backbase.reviews.api.service.v2.model.Review;
 import java.util.List;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Log4j2
+@Slf4j
+@Transactional
 public class ReviewServiceImpl implements ReviewService {
 
     private final ReviewRepository repository;
-    private final ReviewMapper mapper;
 
     @Autowired
-    public ReviewServiceImpl(ReviewRepository repository, ReviewMapper mapper) {
+    public ReviewServiceImpl(ReviewRepository repository) {
         this.repository = repository;
-        this.mapper = mapper;
     }
 
     @Override
-    public Review createReview(Review review) {
+    public ReviewEntity createReview(ReviewEntity entity) {
 
-        log.debug("creating review {}", review);
-        ReviewEntity entity = mapper.apiToEntity(review);
+        log.debug("creating review {}", entity);
         ReviewEntity newEntity = repository.save(entity);
-
         log.debug(
             "created a review entity: {}/{}", newEntity.getProductId(), newEntity.getId());
-        return mapper.entityToApi(newEntity);
+        return newEntity;
 
     }
 
     @Override
-    public Review updateReview(Review review) {
-        log.debug("updating review {}", review);
-        ReviewEntity entity = mapper.apiToEntity(review);
+    public ReviewEntity updateReview(ReviewEntity entity) {
+        log.debug("updating review {}", entity);
         ReviewEntity newEntity = repository.save(entity);
 
         log.debug(
             "update a review entity: {}/{}", newEntity.getProductId(), newEntity.getId());
-        return mapper.entityToApi(newEntity);
+        return newEntity;
     }
 
     @Override
-    public List<Review> getReviewsByProductId(long productId) {
+    public List<ReviewEntity> getReviewsByProductId(long productId) {
 
         log.debug("get reviews by product id {}", productId);
-        List<Review> list = mapper.entityListToApiList(repository.findByProductId(productId));
+        List<ReviewEntity> list = repository.findByProductId(productId);
 
         log.debug("response size: {}", list.size());
 
@@ -60,12 +55,11 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public Review getReview(long reviewId) {
+    public ReviewEntity getReview(long reviewId) {
 
         log.debug("get review with id: {}", reviewId);
 
-        return repository.findById(reviewId).map(mapper::entityToApi)
-            .orElseThrow(() -> new NotFoundException(String.format("Item is not found with id : '%s'", reviewId)));
+        return repository.findById(reviewId).orElseThrow(() -> new NotFoundException(String.format("Item is not found with id : '%s'", reviewId)));
     }
 
     @Override

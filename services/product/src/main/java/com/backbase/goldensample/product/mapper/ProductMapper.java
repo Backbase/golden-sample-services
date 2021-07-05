@@ -1,7 +1,7 @@
 package com.backbase.goldensample.product.mapper;
 
 import com.backbase.goldensample.product.persistence.ProductEntity;
-import com.backbase.product.api.service.v2.model.Product;
+import com.backbase.product.api.service.v1.model.Product;
 import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

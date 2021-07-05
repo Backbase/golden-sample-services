@@ -1,0 +1,5 @@
+date=2021-01-15 15:19:27+0100
+os=Mac OS X 10.15.7
+schemaspy-version=6.1.0
+schemaspy-build=6.1.0.41 2019-09-17 21:52:57
+diagramImplementation=Graphviz dot 2.44

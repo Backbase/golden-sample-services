@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="2021.08_001" context="upgrade_2021.07_to_2021.08" author="backbase">
+        <comment>add a new column to save the rating in stars</comment>
+        <addColumn tableName="review">
+            <column name="stars" type="TINYINT" remarks="number of stars from 1-5 the reviewer gives to the Product"></column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2021.08_002" author="backbase" context="upgrade_2021.07_to_2021.08">
+        <tagDatabase tag="2021.08"/>
+    </changeSet>
+</databaseChangeLog>

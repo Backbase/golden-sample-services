@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <property dbms="mysql" name="autoIncrement" value="true"/>
+    <property dbms="mssql" name="varcharDataType" value="NVARCHAR"/>
+    <property dbms="mysql" name="varcharDataType" value="VARCHAR"/>
+    <property dbms="oracle" name="varcharDataType" value="VARCHAR2"/>
+
+    <changeSet id="initial_2021.07_001" context="initial_2021.07" author="backbase" dbms="!mysql">
+        <comment>create sequence for the review table</comment>
+        <createSequence sequenceName="seq_review" startValue="1" incrementBy="5"/>
+    </changeSet>
+
+    <changeSet id="initial_2021.07_002" context="initial_2021.07" author="backbase">
+        <comment>create the review table</comment>
+        <createTable tableName="review" remarks="Table to store the Reviews of our Products">
+            <column autoIncrement="${autoIncrement}" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="author" type="${varcharDataType}(50)" remarks="The author of the Review"/>
+            <column name="content" type="${varcharDataType}(255)" remarks="The content of the Review"/>
+            <column name="subject" type="${varcharDataType}(255)" remarks="the Subject of the Review"/>
+            <column name="product_id" type="BIGINT" remarks="The id of product this review belongs to"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="initial_2021.07_003" context="initial_2021.07" author="backbase">
+        <comment>create the review table</comment>
+        <addUniqueConstraint tableName="review" columnNames="product_id, id"/>
+    </changeSet>
+
+    <changeSet id="initial_2021.07_004" author="backbase">
+        <tagDatabase tag="2021.07"/>
+    </changeSet>
+</databaseChangeLog>

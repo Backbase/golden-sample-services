@@ -3,15 +3,6 @@ server:
   error:
     include-message: always
 
-# No service discovery setup
-app:
-  product-service:
-    host: localhost
-    port: 9915
-  review-service:
-    host: localhost
-    port: 9916
-
 # API Registry client configuration
 eureka:
   instance:
@@ -33,6 +24,16 @@ sso:
           value: SIG_SECRET_KEY
 
 backbase:
+  # No service discovery setup
+  product-service:
+    serviceId: localhost
+    servicePort: 9915
+  review-service:
+    serviceId: localhost
+    servicePort: 9916
+  store:
+    theme: original
+    theme@tid(rebrand_shop): rebranded
   security:
     mtls:
       enabled: false

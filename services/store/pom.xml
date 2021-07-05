@@ -4,17 +4,20 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.backbase</groupId>
+        <groupId>com.backbase.goldensample</groupId>
         <artifactId>services</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.backbase</groupId>
     <artifactId>store</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>Backbase :: store-service</name>
 
+    <properties>
+        <jsr305.version>3.0.2</jsr305.version>
+        <commons-collections.version>3.2.2</commons-collections.version>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>com.backbase.buildingblocks</groupId>
@@ -26,7 +29,18 @@
             <groupId>com.backbase.buildingblocks</groupId>
             <artifactId>communication</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>validation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>multi-tenancy</artifactId>
+        </dependency>
         <!-- Start - POJO creation made easy -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -52,7 +66,46 @@
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>jsr305</artifactId>
-            <version>3.0.2</version>
+            <version>${jsr305.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>${commons-collections.version}</version>
+        </dependency>
+
+        <!-- Start - ArchUnit rule checks -->
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>service-sdk-archunit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.tngtech.archunit</groupId>
+            <artifactId>archunit-junit5</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- present to enable importing all available rules -->
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>events</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- End - ArchUnit rule checks -->
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-kahadb-store</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>service-sdk-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -84,8 +137,8 @@
                         <phase>generate-sources</phase>
                         <configuration>
                             <inputSpec>${project.build.directory}/specs/client-api-v1.0.0.yaml</inputSpec>
-                            <apiPackage>com.backbase.goldensample.store.api.service.v2</apiPackage>
-                            <modelPackage>com.backbase.goldensample.store.api.service.v2.model</modelPackage>
+                            <apiPackage>com.backbase.goldensample.store.api.service.v1</apiPackage>
+                            <modelPackage>com.backbase.goldensample.store.api.service.v1.model</modelPackage>
                         </configuration>
                     </execution>
                     <execution>
@@ -98,12 +151,12 @@
                             <inputSpec>
                                 ${project.basedir}/../../api/product-api/src/main/resources/product-service-api-v1.yaml
                             </inputSpec>
-                            <apiPackage>com.backbase.goldensample.product.api.client.v2</apiPackage>
-                            <modelPackage>com.backbase.goldensample.product.api.client.v2.model</modelPackage>
+                            <apiPackage>com.backbase.goldensample.product.api.client.v1</apiPackage>
+                            <modelPackage>com.backbase.goldensample.product.api.client.v1.model</modelPackage>
                         </configuration>
                     </execution>
                     <execution>
-                        <id>generate-review-client-api-code</id>
+                        <id>generate-review-client-api-code-v1</id>
                         <goals>
                             <goal>generate-rest-template-embedded</goal>
                         </goals>
@@ -126,8 +179,8 @@
                             <useTags>true</useTags>
                             <java8>true</java8>
                             <useOptional>false</useOptional>
-                            <apiPackage>com.backbase.goldensample.product.api.client.v2</apiPackage>
-                            <modelPackage>com.backbase.goldensample.product.api.client.v2.model</modelPackage>
+                            <apiPackage>com.backbase.goldensample.product.api.client.v1</apiPackage>
+                            <modelPackage>com.backbase.goldensample.product.api.client.v1.model</modelPackage>
                           </configOptions>
                         </configuration>
                         -->
@@ -135,6 +188,20 @@
                         <configuration>
                             <inputSpec>
                                 ${project.basedir}/../../api/review-service-api/src/main/resources/openapi-v1.yaml
+                            </inputSpec>
+                            <apiPackage>com.backbase.goldensample.review.api.client.v1</apiPackage>
+                            <modelPackage>com.backbase.goldensample.review.api.client.v1.model</modelPackage>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-review-client-api-code-v2</id>
+                        <goals>
+                            <goal>generate-rest-template-embedded</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <inputSpec>
+                                ${project.basedir}/../../api/review-service-api/src/main/resources/openapi-v2.yaml
                             </inputSpec>
                             <apiPackage>com.backbase.goldensample.review.api.client.v2</apiPackage>
                             <modelPackage>com.backbase.goldensample.review.api.client.v2.model</modelPackage>
@@ -163,6 +230,24 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                 <groupId>org.codehaus.mojo</groupId>
+                 <artifactId>build-helper-maven-plugin</artifactId>
+                 <executions>
+                     <execution>
+                         <id>add-source</id>
+                         <phase>generate-sources</phase>
+                         <goals>
+                             <goal>add-source</goal>
+                         </goals>
+                         <configuration>
+                             <sources>
+                                 <source>${project.build.directory}/generated-sources/openapi/src/main/java</source>
+                             </sources>
+                         </configuration>
+                     </execution>
+                 </executions>
+             </plugin>
         </plugins>
     </build>
 

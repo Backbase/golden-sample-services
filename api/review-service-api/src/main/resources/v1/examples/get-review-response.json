@@ -1,0 +1,10 @@
+{
+  "reviewId": 1,
+  "productId": 1,
+  "author": "John Doe",
+  "content": "I have no words for it",
+  "subject": "Very nice!",
+  "additions": {
+    "verified": "true"
+  }
+}

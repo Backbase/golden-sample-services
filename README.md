@@ -1,3 +1,5 @@
+![](logo.svg)
+
 # Backbase Golden Sample MicroServices system
 
 - This project is a development of a small set of [Backbase Service SDK](https://community.backbase.com/documentation/ServiceSDK/latest/index) (**Spring Boot** and **Cloud**) based Microservices projects that implement cloud-native intuitive, Microservices design patterns, and coding best practices.
@@ -14,12 +16,26 @@ Backbase Golden Sample --> Parent folder.
 |- config --> All system configuration files 
 |- config-server --> Centralized Configuration server
 |- diagrams --> All docs and diagrams. 
+|-charts --> Helm Charts for easy deployment in k8s
+  |- product
+  |- review
+  |- store
+|-database 
+  |- assembly 
+  |- docs  
+  |- product-db
+  |- review-db
 |-api 
-  |- api-linting --> API specification linters. 
-  |- product-integration-api  
-  |- product-service-api 
-  |- review-service-api  
-  |- store-client-api   
+  |- product-api  
+    |- src/main/resources
+       |- product-integration-api-v1.yaml
+       |- product-service-api-v1.yaml
+  |- review-service-api 
+    |- src/main/resources 
+       |- openapi-v1.yaml
+  |- store-client-api  
+    |- src/main/resources 
+       |- openapi-v1.yaml
 |-services 
   |- product --> Product Microservice 
   |- review --> Review Microservice 
@@ -86,6 +102,8 @@ Follow the installation guide for each software website link and check your soft
 We recommend that you work with your Java code using an IDE that supports the development of Spring Boot applications such as Spring Tool Suite or IntelliJ IDEA Ultimate Edition. So you can use the Spring Boot Dashboard to run the services, run each microservice test case, and many more.
 
 All that you want to do is just fire up your IDE **->** open or import the parent folder `backbase-golden-sample,` and everything will be ready for you.
+
+Lombok plugin is required for your IDE: https://projectlombok.org/setup/overview
 
 ## Playing With Backbase Golden Sample Project
 

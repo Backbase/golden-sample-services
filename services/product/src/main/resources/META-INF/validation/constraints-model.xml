@@ -1,0 +1,18 @@
+<constraint-mappings
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://jboss.org/xml/ns/javax/validation/mapping validation-mapping-1.1.xsd"
+    xmlns="http://jboss.org/xml/ns/javax/validation/mapping" version="1.1">
+
+    <bean class="com.backbase.product.api.service.v1.model.Product" ignore-annotations="false">
+        <class>
+            <constraint annotation="com.backbase.buildingblocks.backend.validation.AdditionalProperties"/>
+        </class>
+    </bean>
+
+    <constraint-definition annotation="com.backbase.buildingblocks.backend.validation.AdditionalProperties">
+        <validated-by include-existing-validators="true">
+            <value>com.backbase.buildingblocks.backend.validation.AdditionalPropertiesValidatorProxy</value>
+        </validated-by>
+    </constraint-definition>
+
+</constraint-mappings>

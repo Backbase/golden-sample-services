@@ -1,4 +1,0 @@
-databaseChangeLog:
-  - include:
-      file: "changelog/000-create.yaml"
-      relativeToChangelogFile: true

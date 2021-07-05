@@ -1,0 +1,20 @@
+spring:
+  liquibase:
+    change-log: "classpath:/db/changelog/db.changelog-persistence.xml"
+    enabled: true
+  jpa:
+    show-sql: true
+    open-in-view: false
+    # Strongly recommend to set this property to "none"
+    # production environment!
+    hibernate.ddl-auto: none
+  datasource:
+    ## You often do not need to specify the driver-class-name,
+    ## since Spring Boot can deduce it for most databases from the url.
+    url: jdbc:tc:mysql:5.7:///databasename
+    username: test
+    password: test
+
+security:
+  disabled: true
+

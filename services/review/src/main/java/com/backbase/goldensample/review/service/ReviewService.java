@@ -1,8 +1,7 @@
 package com.backbase.goldensample.review.service;
 
 
-import com.backbase.reviews.api.service.v2.model.Review;
-import java.util.ArrayList;
+import com.backbase.goldensample.review.persistence.ReviewEntity;
 import java.util.List;
 
 /**
@@ -25,8 +24,8 @@ public interface ReviewService {
      * @param productId that you are looking for its reviews.
      * @return list of reviews for this product, or empty list if there are no reviews.
      */
-    default List<Review> getReviewsByProductId(long productId) {
-        return new ArrayList<>();
+    default List<ReviewEntity> getReviewsByProductId(long productId) {
+        return List.of();
     }
 
     /**
@@ -35,8 +34,8 @@ public interface ReviewService {
      * @param body review to be created.
      * @return just created review.
      */
-    default Review createReview(
-        Review body) {
+    default ReviewEntity createReview(
+        ReviewEntity body) {
         return null;
     }
 
@@ -46,8 +45,8 @@ public interface ReviewService {
      * @param body review to be created.
      * @return just created review.
      */
-    default Review updateReview(
-        Review body) {
+    default ReviewEntity updateReview(
+        ReviewEntity body) {
         return null;
     }
 
@@ -63,8 +62,9 @@ public interface ReviewService {
      * Get a review per Id
      *
      * @param reviewId to get the review
+     * @return
      */
-    default Review getReview(long reviewId) {
+    default ReviewEntity getReview(long reviewId) {
         return null;
     }
 

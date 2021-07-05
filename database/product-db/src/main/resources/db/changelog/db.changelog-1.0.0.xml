@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <property dbms="mysql" name="autoIncrement" value="true"/>
+
+    <property dbms="mssql" name="charDataType" value="NCHAR"/>
+    <property dbms="mysql" name="charDataType" value="CHAR"/>
+    <property dbms="oracle" name="charDataType" value="CHAR"/>
+
+    <property dbms="mssql" name="varcharDataType" value="NVARCHAR"/>
+    <property dbms="mysql" name="varcharDataType" value="VARCHAR"/>
+    <property dbms="oracle" name="varcharDataType" value="VARCHAR2"/>
+
+    <property dbms="mssql" name="fixedPointDataType" value="DECIMAL"/>
+    <property dbms="mysql" name="fixedPointDataType" value="DECIMAL"/>
+    <property dbms="oracle" name="fixedPointDataType" value="NUMBER"/>
+
+    <property dbms="mssql" name="uuidDataType" value="UNIQUEIDENTIFIER"/>
+    <property dbms="mysql" name="uuidDataType" value="VARBINARY(16)"/>
+    <property dbms="oracle" name="uuidDataType" value="RAW(16)"/>
+
+    <property dbms="mssql" name="clobDataType" value="NVARCHAR(MAX)"/>
+    <property dbms="mysql" name="clobDataType" value="LONGTEXT"/>
+    <property dbms="oracle" name="clobDataType" value="CLOB"/>
+
+    <property dbms="mssql" name="dateTimeDataType" value="DATETIME2"/>
+    <property dbms="mysql" name="dateTimeDataType" value="DATETIME"/>
+    <property dbms="oracle" name="dateTimeDataType" value="TIMESTAMP"/>
+
+    <property dbms="mssql" name="timestampDataType" value="DATETIME2"/>
+    <property dbms="mysql" name="timestampDataType" value="DATETIME"/>
+    <property dbms="oracle" name="timestampDataType" value="TIMESTAMP"/>
+
+    <property dbms="mysql" name="db.type" value="mysql"/>
+    <property dbms="mssql" name="db.type" value="mssql"/>
+    <property dbms="oracle" name="db.type" value="oracle"/>
+
+    <changeSet id="initial_2021.07_001" context="initial_2021.07" author="backbase" dbms="!mysql">
+        <comment>create sequence for the product table</comment>
+        <createSequence sequenceName="seq_product" startValue="1" incrementBy="5"/>
+    </changeSet>
+
+    <changeSet id="initial_2021.07_002" context="initial_2021.07" author="backbase">
+        <comment>create the product table</comment>
+        <createTable tableName="product" remarks="Table to store the Products from our store">
+            <column name="id" type="BIGINT" autoIncrement="${autoIncrement}">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_product"/>
+            </column>
+            <column name="create_date" type="${dateTimeDataType}" remarks="The date when the product was created">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="${varcharDataType}(255)" remarks="The name of the product">
+                <constraints nullable="false"/>
+            </column>
+            <column name="weight" type="SMALLINT" remarks="The weight of the product in kgs"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="initial_2021.07_003" context="initial_2021.07" author="backbase">
+        <comment>add unique constraint for product table name column</comment>
+        <addUniqueConstraint columnNames="name" constraintName="uq_product_name" tableName="product"/>
+    </changeSet>
+    <changeSet id="initial_2021.07_004" context="initial_2021.07" author="backbase" dbms="!mysql">
+        <comment>create sequence for the customer table</comment>
+        <createSequence sequenceName="seq_customer" startValue="1" incrementBy="5"/>
+    </changeSet>
+    <changeSet id="initial_2021.07_005" context="initial_2021.07" author="backbase">
+        <comment>create customer table</comment>
+        <createTable tableName="customer">
+            <column name="id" type="BIGINT" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" primaryKeyName="pk_customer"/>
+            </column>
+            <column name="internal_id" type="${uuidDataType}" remarks="Internal customer identifier - GUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="external_id" type="${varcharDataType}(36)" remarks="External customer identifier">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="${varcharDataType}(128)" remarks="Customer name">
+                <constraints nullable="false"/>
+            </column>
+            <column name="surname" type="${varcharDataType}(128)" remarks="Customer surname">
+                <constraints nullable="false"/>
+            </column>
+            <column name="birthdate" type="DATE" remarks="Customer birthdate">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_active" type="BOOLEAN" defaultValueNumeric="1" remarks="Is customer active">
+                <constraints nullable="false"/>
+            </column>
+            <column name="create_date" type="${dateTimeDataType}(3)" remarks="The date when the customer was created">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_update_date" type="${dateTimeDataType}(3)"
+                remarks="The date when the customer was modified last time"/>
+            <column name="additions" type="${clobDataType}" remarks="Data model extension for customer"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="initial_2021.07_006" context="initial_2021.07" author="backbase">
+        <comment>add unique constraint for customer table internal_id column</comment>
+        <addUniqueConstraint columnNames="internal_id" constraintName="uq_customer_internal_id" tableName="customer"/>
+    </changeSet>
+    <changeSet id="initial_2021.07_007" context="initial_2021.07" author="backbase">
+        <comment>add unique constraint for customer table external_id column</comment>
+        <addUniqueConstraint columnNames="external_id" constraintName="uq_customer_external_id" tableName="customer"/>
+    </changeSet>
+    <changeSet id="initial_2021.07_008" context="initial_2021.07" author="backbase">
+        <comment>add index for customer table on surname column</comment>
+        <createIndex indexName="ix_customer_surname" tableName="customer">
+            <column name="surname"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="initial_2021.07_009" context="initial_2021.07" author="backbase" dbms="!mysql">
+        <comment>create sequence for the account table</comment>
+        <createSequence sequenceName="seq_account" startValue="1" incrementBy="5"/>
+    </changeSet>
+    <changeSet id="initial_2021.07_010" context="initial_2021.07" author="backbase">
+        <comment>create account table</comment>
+        <createTable tableName="account">
+            <column name="id" type="BIGINT" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" primaryKeyName="pk_account"/>
+            </column>
+            <column name="internal_id" type="${uuidDataType}" remarks="Internal account identifier - GUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="external_id" type="${varcharDataType}(36)" remarks="External account identifier">
+                <constraints nullable="false"/>
+            </column>
+            <column name="customer_id" type="BIGINT" remarks="Reference to customer ID in customer table">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="${varcharDataType}(128)" remarks="Account name">
+                <constraints nullable="false"/>
+            </column>
+            <column name="iban" type="${varcharDataType}(128)" remarks="IBAN account number">
+                <constraints nullable="false"/>
+            </column>
+            <column name="currency" type="${charDataType}(3)" remarks="Currency code ISO">
+                <constraints nullable="false"/>
+            </column>
+            <column name="balance" type="${fixedPointDataType}(23,5)" remarks="Account balance">
+                <constraints nullable="false"/>
+            </column>
+            <column name="available_balance" type="${fixedPointDataType}(23,5)" remarks="Account available balance">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_active" type="BOOLEAN" defaultValueNumeric="1" remarks="Is account active">
+                <constraints nullable="false"/>
+            </column>
+            <column name="create_date" type="${dateTimeDataType}(3)" remarks="The date when the account was created">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_update_date" type="${dateTimeDataType}(3)"
+                remarks="The date when the account was modified last time"/>
+            <column name="additions" type="${clobDataType}" remarks="Data model extension for account"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="initial_2021.07_011" context="initial_2021.07" author="backbase">
+        <comment>add unique constraint for account table internal_id column</comment>
+        <addUniqueConstraint columnNames="internal_id" constraintName="uq_account_internal_id" tableName="account"/>
+    </changeSet>
+    <changeSet id="initial_2021.07_012" context="initial_2021.07" author="backbase">
+        <comment>add unique constraint for account table external_id column</comment>
+        <addUniqueConstraint columnNames="external_id" constraintName="uq_account_external_id" tableName="account"/>
+    </changeSet>
+    <changeSet id="initial_2021.07_013" context="initial_2021.07" author="backbase">
+        <comment>add index for account table on customer_id column</comment>
+        <createIndex indexName="ix_account_03" tableName="account">
+            <column name="customer_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="initial_2021.07_014" context="initial_2021.07" author="backbase">
+        <comment>add index for account table on iban column</comment>
+        <createIndex indexName="ix_account_iban" tableName="account">
+            <column name="iban"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="initial_2021.07_015" context="initial_2021.07" author="backbase">
+        <comment>add foreign key constraint to reference customer table id column</comment>
+        <addForeignKeyConstraint baseColumnNames="customer_id" baseTableName="account"
+            constraintName="fk_account2customer_01" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
+            referencedTableName="customer" validate="true"/>
+    </changeSet>
+    <changeSet id="initial_2021.07_016" context="initial_2021.07" author="backbase" dbms="!mysql">
+        <comment>create sequence for the account_transaction table</comment>
+        <createSequence sequenceName="seq_account_transaction" startValue="1" incrementBy="100"/>
+    </changeSet>
+    <changeSet id="initial_2021.07_017" context="initial_2021.07" author="backbase">
+        <comment>create account_transaction table</comment>
+        <createTable tableName="account_transaction">
+            <column name="id" type="BIGINT" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" primaryKeyName="pk_account_transaction"/>
+            </column>
+            <column name="internal_id" type="${uuidDataType}" remarks="Internal transaction identifier - GUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="external_id" type="${varcharDataType}(36)" remarks="External transaction identifier">
+                <constraints nullable="false"/>
+            </column>
+            <column name="account_id" type="BIGINT" remarks="Reference to account ID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="${varcharDataType}(128)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_debit" type="BOOLEAN" remarks="DR CR identifier">
+                <constraints nullable="false"/>
+            </column>
+            <column name="amount" type="${fixedPointDataType}(23,5)" remarks="Transaction amount">
+                <constraints nullable="false"/>
+            </column>
+            <column name="booking_date" type="DATE" remarks="Transaction booking date"/>
+            <column name="transaction_date" type="${dateTimeDataType}(3)" remarks="Transaction datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="additions" type="${clobDataType}" remarks="Data model extension for transaction"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="initial_2021.07_018" context="initial_2021.07" author="backbase">
+        <comment>add index for account_transaction table on (account_id, transaction_date) columns</comment>
+        <createIndex indexName="ix_account_transaction_01" tableName="account_transaction">
+            <column name="account_id"/>
+            <column name="transaction_date"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="initial_2021.07_019" context="initial_2021.07" author="backbase">
+        <comment>Partition account_transaction table for mysql mssql</comment>
+        <sqlFile dbms="mysql,mssql"
+            encoding="UTF-8"
+            path="../support-files/${db.type}/1_0_0_01_account_transaction_partitioning.sql"
+            relativeToChangelogFile="true"
+            splitStatements="true"
+            stripComments="true"/>
+    </changeSet>
+    <changeSet id="initial_2021.07_020" context="initial_2021.07" author="backbase">
+        <preConditions onFail="MARK_RAN">
+            <dbms type="oracle"/>
+            <sqlCheck expectedResult="1">select count(1) from v$option where parameter = 'Partitioning' and
+                value='TRUE'
+            </sqlCheck>
+        </preConditions>
+        <comment>Partition account_transaction table for oracle if partitioning is enabled</comment>
+        <sqlFile dbms="oracle"
+            encoding="UTF-8"
+            path="../support-files/${db.type}/1_0_0_01_account_transaction_partitioning.sql"
+            relativeToChangelogFile="true"
+            splitStatements="true"
+            stripComments="true"/>
+    </changeSet>
+    <changeSet id="initial_2021.07_021" context="initial_2021.07" author="backbase">
+        <comment>Creating products</comment>
+        <sqlFile dbms="mysql,mssql,oracle"
+            encoding="UTF-8"
+            path="../support-files/${db.type}/1_0_0_02_product_table_data.sql"
+            relativeToChangelogFile="true"
+            splitStatements="true"
+            stripComments="true"/>
+    </changeSet>
+
+    <changeSet id="initial_2021.07_022" context="initial_2021.07" author="backbase">
+        <tagDatabase tag="1.0.0"/>
+    </changeSet>
+</databaseChangeLog>

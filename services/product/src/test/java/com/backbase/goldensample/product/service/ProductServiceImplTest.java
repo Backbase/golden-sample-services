@@ -15,9 +15,10 @@ import com.backbase.buildingblocks.backend.communication.event.proxy.EventBus;
 import com.backbase.goldensample.product.mapper.ProductMapper;
 import com.backbase.goldensample.product.persistence.ProductEntity;
 import com.backbase.goldensample.product.persistence.ProductRepository;
-import com.backbase.product.api.service.v2.model.Product;
+import com.backbase.product.api.service.v1.model.Product;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.hamcrest.core.IsInstanceOf;
 import org.junit.jupiter.api.BeforeEach;
@@ -48,20 +49,21 @@ class ProductServiceImplTest {
 
     private static final LocalDate TODAY = LocalDate.of(2020, 1, 28);
 
-    private final Product product = new Product().productId(1L).name("Product1").weight(20).createDate(TODAY);
-    private final ProductEntity productEntity = new ProductEntity(1L, "Product1", 20, TODAY);
+    private final Product product = new Product().productId(1L).name("Product").weight(20).createDate(TODAY);
+    private final ProductEntity productEntity = new ProductEntity(1L, "Product1", 20, TODAY, Collections.singletonMap("popularity","29%"));
 
     @BeforeEach
     public void init() {
+        productService = new ProductServiceImpl(Mappers.getMapper(ProductMapper.class), productRepository);
         productService = new ProductServiceImpl(productRepository, productMapper, eventBus, context);
     }
 
     @Test
     void getAllProductsTest() {
         List<ProductEntity> list = new ArrayList<>();
-        ProductEntity productOne = new ProductEntity(1L, "Product1", 20, TODAY);
-        ProductEntity productTwo = new ProductEntity(2L, "Product2", 21, TODAY);
-        ProductEntity productThree = new ProductEntity(3L, "Product3", 22, TODAY);
+        ProductEntity productOne = new ProductEntity(1L, "Product1", 20, TODAY, null);
+        ProductEntity productTwo = new ProductEntity(2L, "Product2", 21, TODAY, null);
+        ProductEntity productThree = new ProductEntity(3L, "Product3", 22, TODAY, null);
 
         list.add(productOne);
         list.add(productTwo);
@@ -69,7 +71,7 @@ class ProductServiceImplTest {
 
         when(productRepository.findAll()).thenReturn(list);
 
-        List<Product> empList = productService.getAllProducts();
+        List<ProductEntity> empList = productService.getAllProducts();
 
         assertEquals(3, empList.size());
         verify(productRepository, times(1)).findAll();
@@ -79,7 +81,7 @@ class ProductServiceImplTest {
     void getProductByIdTest() {
         when(productRepository.findById(1L)).thenReturn(java.util.Optional.of(productEntity));
 
-        Product product = productService.getProduct(1, 0, 0);
+        ProductEntity product = productService.getProduct(1);
 
         assertAll(
             () -> assertEquals("Product1", product.getName()),
@@ -91,7 +93,7 @@ class ProductServiceImplTest {
     void getProductByIdWithDelayTest() {
         when(productRepository.findById(1L)).thenReturn(java.util.Optional.of(productEntity));
 
-        Product product = productService.getProduct(1, 1, 0);
+        ProductEntity product = productService.getProduct(1);
 
         assertAll(
             () -> assertEquals("Product1", product.getName()),
@@ -101,12 +103,12 @@ class ProductServiceImplTest {
 
     @Test
     void getProductByIdWithErrorTest() {
-        assertThrows(RuntimeException.class, () -> productService.getProduct(1, 0, 100));
+        assertThrows(RuntimeException.class, () -> productService.getProduct(1));
     }
 
     @Test
     void createProductTest() {
-        when(productRepository.save(any(ProductEntity.class))).thenReturn(productEntity);
+        when(productRepository.save(any())).thenReturn(productEntity);
         productService.createProduct(product);
         verify(productRepository, times(1)).save(any(ProductEntity.class));
     }

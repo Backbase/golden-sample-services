@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="2021.08_001" author="backbase" context="upgrade_2021.07_to_2021.08">
+        <comment>create index in the product table for the create date column</comment>
+        <createIndex tableName="product" indexName="ix_product_create_date">
+            <column name="create_date" descending="true"></column>
+        </createIndex>
+    </changeSet>
+    <changeSet id="2021.08_002" author="backbase" context="upgrade_2021.07_to_2021.08">
+        <comment>add address column to customer table</comment>
+        <addColumn tableName="customer">
+            <column name="address"
+                type="${varcharDataType}(255)">
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="2021.08_003" context="upgrade_2021.07_to_2021.08" author="backbase">
+        <comment>Add computed column UPPER(external_id) for customer table</comment>
+        <sqlFile dbms="mysql,mssql,oracle"
+            encoding="UTF-8"
+            path="../support-files/${db.type}/1_1_0_02_customer_table_upper_external_id.sql"
+            relativeToChangelogFile="true"
+            splitStatements="true"
+            stripComments="true"/>
+        <rollback>
+            <sql>
+                alter table customer drop column external_id_upper
+            </sql>
+        </rollback>
+    </changeSet>
+    <changeSet id="2021.08_004" author="backbase" context="upgrade_2021.07_to_2021.08">
+        <comment>create index in the customer table for the external_id_upper column</comment>
+        <createIndex tableName="customer" indexName="ix_customer_external_id_upper">
+            <column name="external_id_upper"></column>
+        </createIndex>
+    </changeSet>
+    <changeSet id="2021.08_005" context="upgrade_2021.07_to_2021.08" author="backbase">
+        <comment>Add savings product</comment>
+        <sqlFile dbms="mysql,mssql,oracle"
+            encoding="UTF-8"
+            path="../support-files/${db.type}/1_1_0_01_product_table_data.sql"
+            relativeToChangelogFile="true"
+            splitStatements="true"
+            stripComments="true"/>
+        <rollback>
+            <sql>
+                delete from product where name = 'Savings Account'
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2021.08_006" author="backbase" context="upgrade_2021.07_to_2021.08">
+        <tagDatabase tag="2021.08"/>
+    </changeSet>
+</databaseChangeLog>

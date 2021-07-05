@@ -13,11 +13,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
-import com.backbase.product.api.service.v2.model.Product;
+import com.backbase.goldensample.product.persistence.ProductEntity;
+import com.backbase.product.api.service.v1.model.Product;
+import com.backbase.product.api.service.v1.model.ProductId;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.HttpHeaders;
@@ -41,10 +44,14 @@ class ProductServiceApiControllerTest extends ProductApiController {
     }
 
     @Test
+    @DisplayName("should return a list of products")
     void shouldGetProductsWhenServiceReturnsProducts() throws Exception {
-        Product productTwo= createProduct(2L, "Product 2", 32, LocalDate.now());
+        ProductEntity productEntityTwo= createProductEntity("Product 2", 32, LocalDate.now(), Collections
+            .singletonMap("popularity","29%"));
+        Product productTwo = createProduct(2L, "Product 2", 32, TODAY);
 
-        when(productService.getAllProducts()).thenReturn(List.of(productOne, productTwo));
+        when(productMapper.entityListToApiList(any(List.class))).thenReturn((List.of(productOne, productTwo)));
+        when(productService.getAllProducts()).thenReturn(List.of(productEntityOne, productEntityTwo));
 
         this.mockMvc
             .perform(get("/service-api/v1/products")
@@ -61,8 +68,10 @@ class ProductServiceApiControllerTest extends ProductApiController {
     }
 
     @Test
+    @DisplayName("should get a Product when service receives a valid id")
     void shouldGetProductWhenServiceReturnProduct() throws Exception {
-        when(productService.getProduct(1,0,0)).thenReturn(productOne);
+        when(productMapper.entityToApi(any(ProductEntity.class))).thenReturn(productOne);
+        when(productService.getProduct(1)).thenReturn(productEntityOne);
 
         this.mockMvc
             .perform(get("/service-api/v1/products/{productId}", 1L)
@@ -73,10 +82,11 @@ class ProductServiceApiControllerTest extends ProductApiController {
             .andExpect(jsonPath("$.name", is("Product 1")))
             .andExpect(jsonPath("$.weight", is(23)));
 
-        verify(productService).getProduct(1L, 0, 0);
+        verify(productService).getProduct(1L);
     }
 
     @Test
+    @DisplayName("should create a new Product with a valid a payload")
     void shouldCreateNewProductWithValidPayload() throws Exception {
         String requestBody = "{\n" +
             "  \"name\": \"Product 1\",\n" +
@@ -84,8 +94,8 @@ class ProductServiceApiControllerTest extends ProductApiController {
             "  \"createDate\": \"2020-12-01\"\n" +
             "}";
 
-        when(productService.createProduct(any(Product.class)))
-            .thenReturn(productOne);
+        when(productMapper.apiToEntity(any(Product.class))).thenReturn(productEntityOne);
+        when(productService.createProduct(any())).thenReturn(new ProductId().id(1L));
 
         this
             .mockMvc
@@ -96,28 +106,7 @@ class ProductServiceApiControllerTest extends ProductApiController {
     }
 
     @Test
-    void shouldUpdateAProductWithValidPayloadAndId() throws Exception {
-
-        String requestBody = "{\n" +
-            "  \"productId\": \"1\",\n" +
-            "  \"name\": \"Product 1\",\n" +
-            "  \"weight\": \"5\",\n" +
-            "  \"createDate\": \"2020-12-01\"\n" +
-            "}";
-
-        when(productService.updateProduct(any(Product.class)))
-            .thenReturn(productOne);
-
-        this
-            .mockMvc
-            .perform(put("/service-api/v2/products/{productId}", 1L)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(requestBody))
-            .andExpect(status().isNoContent());
-
-    }
-
-    @Test
+    @DisplayName("should update a Product with a valid a payload")
     void shouldUpdateAProductWithValidPayload() throws Exception {
 
         String requestBody = "{\n" +
@@ -127,8 +116,7 @@ class ProductServiceApiControllerTest extends ProductApiController {
             "  \"createDate\": \"2020-12-01\"\n" +
             "}";
 
-        when(productService.updateProduct(any(Product.class)))
-            .thenReturn(productOne);
+        when(productMapper.apiToEntity(any(Product.class))).thenReturn(productEntityOne);
 
         this
             .mockMvc

@@ -4,22 +4,40 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.backbase</groupId>
+        <groupId>com.backbase.goldensample</groupId>
         <artifactId>services</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.backbase</groupId>
     <artifactId>review</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>Backbase :: review-service</name>
 
     <dependencies>
         <dependency>
             <groupId>com.backbase.buildingblocks</groupId>
-            <artifactId>service-sdk-starter-test</artifactId>
-            <scope>test</scope>
+            <artifactId>auth-security</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>validation</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>multi-tenancy</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>multi-tenancy-liquibase</artifactId>
         </dependency>
 
         <dependency>
@@ -30,6 +48,18 @@
         <dependency>
             <groupId>com.backbase.buildingblocks</groupId>
             <artifactId>persistence</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>service-sdk-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.backbase.goldensample</groupId>
+            <artifactId>review-db</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
 
 
@@ -47,6 +77,13 @@
             <artifactId>service-sdk-starter-mapping</artifactId>
         </dependency>
         <!-- End - POJO <-> Entity conversion made easy -->
+
+        <dependency>
+            <groupId>nl.jqno.equalsverifier</groupId>
+            <artifactId>equalsverifier</artifactId>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>testcontainers</artifactId>
@@ -92,6 +129,30 @@
             <artifactId>mariadb-java-client</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!-- Start - ArchUnit rule checks -->
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>service-sdk-archunit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.tngtech.archunit</groupId>
+            <artifactId>archunit-junit5</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- present to enable importing all available rules -->
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-kahadb-store</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>events</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- End - ArchUnit rule checks -->
     </dependencies>
 
     <build>
@@ -101,7 +162,7 @@
                 <artifactId>boat-maven-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>bundle-specs</id>
+                        <id>bundle-specs-v1</id>
                         <!-- bundles the open api specs, and sets the proper version number in the filename -->
                         <phase>generate-sources</phase>
                         <goals>
@@ -115,7 +176,21 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>generate-client-api-code</id>
+                        <id>bundle-specs-v2</id>
+                        <!-- bundles the open api specs, and sets the proper version number in the filename -->
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>bundle</goal>
+                        </goals>
+                        <configuration>
+                            <input>${project.basedir}/../../api/review-service-api/src/main/resources/openapi-v2.yaml
+                            </input>
+                            <output>${project.build.directory}/specs/review-service-api-v2.yaml</output>
+                            <versionFileName>true</versionFileName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-client-api-code-v1</id>
                         <goals>
                             <goal>generate-spring-boot-embedded</goal>
                         </goals>
@@ -145,6 +220,18 @@
                         <phase>generate-sources</phase>
                         <configuration>
                             <inputSpec>${project.build.directory}/specs/review-service-api-v1.0.0.yaml</inputSpec>
+                            <apiPackage>com.backbase.reviews.api.service.v1</apiPackage>
+                            <modelPackage>com.backbase.reviews.api.service.v1.model</modelPackage>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-client-api-code-v2</id>
+                        <goals>
+                            <goal>generate-spring-boot-embedded</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <inputSpec>${project.build.directory}/specs/review-service-api-v2.0.0.yaml</inputSpec>
                             <apiPackage>com.backbase.reviews.api.service.v2</apiPackage>
                             <modelPackage>com.backbase.reviews.api.service.v2.model</modelPackage>
                         </configuration>
@@ -172,6 +259,24 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                 <groupId>org.codehaus.mojo</groupId>
+                 <artifactId>build-helper-maven-plugin</artifactId>
+                 <executions>
+                     <execution>
+                         <id>add-source</id>
+                         <phase>generate-sources</phase>
+                         <goals>
+                             <goal>add-source</goal>
+                         </goals>
+                         <configuration>
+                             <sources>
+                                 <source>${project.build.directory}/generated-sources/openapi/src/main/java</source>
+                             </sources>
+                         </configuration>
+                     </execution>
+                 </executions>
+             </plugin>
         </plugins>
     </build>
 

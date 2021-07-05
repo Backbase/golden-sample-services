@@ -5,15 +5,15 @@
 
     <parent>
         <groupId>com.backbase.buildingblocks</groupId>
-        <version>11.2.1</version>
+        <version>12.2.0</version>
         <artifactId>backbase-openapi-spec-starter-parent</artifactId>
         <relativePath/>
     </parent>
 
-    <groupId>com.backbase</groupId>
+    <groupId>com.backbase.goldensample</groupId>
     <artifactId>api</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
 
     <modules>
         <module>product-api</module>
@@ -23,7 +23,7 @@
 
     <properties>
         <frontend-plugin.version>1.8.0</frontend-plugin.version>
-        <boat-maven-plugin.version>0.11.3</boat-maven-plugin.version>
+        <boat-maven-plugin.version>0.13.0</boat-maven-plugin.version>
     </properties>
 
     <build>
@@ -32,7 +32,34 @@
                 <plugin>
                     <groupId>com.github.eirslett</groupId>
                     <artifactId>frontend-maven-plugin</artifactId>
-                    <version>${frontend-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>install node and yarn</id>
+                            <goals>
+                                <goal>install-node-and-yarn</goal>
+                            </goals>
+                            <configuration>
+                                <nodeVersion>v12.18.4</nodeVersion>
+                                <yarnVersion>v1.22.5</yarnVersion>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>yarn install</id>
+                            <goals>
+                                <goal>yarn</goal>
+                            </goals>
+                            <configuration>
+                                <arguments>install</arguments>
+                            </configuration>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <installDirectory>target</installDirectory>
+                        <workingDirectory>${project.basedir}/../</workingDirectory>
+                        <environmentVariables>
+                            <BASE_PATH>${project.build.directory}/spec-unversioned</BASE_PATH>
+                        </environmentVariables>
+                    </configuration>
                 </plugin>
 
                 <plugin>

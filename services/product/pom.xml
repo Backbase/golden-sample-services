@@ -4,14 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.backbase</groupId>
+        <groupId>com.backbase.goldensample</groupId>
         <artifactId>services</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.backbase</groupId>
     <artifactId>product</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>Backbase :: product-service</name>
 
@@ -21,7 +20,10 @@
             <artifactId>service-sdk-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>auth-security</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.backbase.buildingblocks</groupId>
             <artifactId>communication</artifactId>
@@ -32,6 +34,36 @@
             <artifactId>persistence</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>service-sdk-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.backbase.goldensample</groupId>
+            <artifactId>product-db</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>validation</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>multi-tenancy</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>multi-tenancy-liquibase</artifactId>
+        </dependency>
 
         <!-- Start - POJO creation made easy -->
         <dependency>
@@ -51,6 +83,13 @@
             <artifactId>events</artifactId>
         </dependency>
         <!-- End - POJO <-> Entity conversion made easy -->
+
+        <dependency>
+            <groupId>nl.jqno.equalsverifier</groupId>
+            <artifactId>equalsverifier</artifactId>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>testcontainers</artifactId>
@@ -96,6 +135,25 @@
             <artifactId>mariadb-java-client</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!-- Start - ArchUnit rule checks -->
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>service-sdk-archunit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.tngtech.archunit</groupId>
+            <artifactId>archunit-junit5</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- present to enable importing all available rules -->
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>events</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- End - ArchUnit rule checks -->
     </dependencies>
 
     <build>
@@ -164,8 +222,8 @@
                                         <useTags>true</useTags>
                                         <java8>true</java8>
                                         <useOptional>false</useOptional>
-                                        <apiPackage>com.backbase.product.api.service.v2</apiPackage>
-                                        <modelPackage>com.backbase.product.api.service.v2.model</modelPackage>
+                                        <apiPackage>com.backbase.product.api.service.v1</apiPackage>
+                                        <modelPackage>com.backbase.product.api.service.v1.model</modelPackage>
                                       </configOptions>
 
                                       https://github.com/Backbase/backbase-openapi-tools/blob/dev/boat-maven-plugin/src/main/java/com/backbase/oss/boat/GenerateSpringBootEmbeddedMojo.java
@@ -173,8 +231,8 @@
                         <phase>generate-sources</phase>
                         <configuration>
                             <inputSpec>${project.build.directory}/specs/product-service-api-v1.0.0.yaml</inputSpec>
-                            <apiPackage>com.backbase.product.api.service.v2</apiPackage>
-                            <modelPackage>com.backbase.product.api.service.v2.model</modelPackage>
+                            <apiPackage>com.backbase.product.api.service.v1</apiPackage>
+                            <modelPackage>com.backbase.product.api.service.v1.model</modelPackage>
                         </configuration>
                     </execution>
                     <execution>
@@ -185,8 +243,8 @@
                         <phase>generate-sources</phase>
                         <configuration>
                             <inputSpec>${project.build.directory}/specs/product-integration-api-v1.0.0.yaml</inputSpec>
-                            <apiPackage>com.backbase.product.api.integration.v2</apiPackage>
-                            <modelPackage>com.backbase.product.api.service.v2.model</modelPackage>
+                            <apiPackage>com.backbase.product.api.integration.v1</apiPackage>
+                            <modelPackage>com.backbase.product.api.service.v1.model</modelPackage>
                         </configuration>
                     </execution>
                 </executions>
@@ -241,7 +299,24 @@
                     </execution>
                 </executions>
             </plugin>
-
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/generated-sources/openapi/src/main/java</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 

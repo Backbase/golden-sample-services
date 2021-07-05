@@ -1,0 +1,76 @@
+# Default values come from backbase-app.
+# review values configure a vanilla environment without multi-tenancy. Defaults to mysql, activemq.
+review:
+  # review.chartName is the name of the chart.
+  chartName: "review"
+
+  # review.jwt sets the JWT related environment variables in the application pod.
+  jwt:
+    # review.jwt.enabled if true will configure the environment variables related with the JWT token secrets.
+    enabled: true
+    # review.jwt.existingSecret is name of external kubernetes secret containing the jwt values
+    existingSecret: "backbase-env-jwt"
+    # review.jwt.SIG_SECRET_KEY_fromSecret will set the variable SIG_SECRET_KEY with the value from the secret  jwt-internal-secretkey secret key.
+    SIG_SECRET_KEY_fromSecret: true
+    # review.jwt.EXTERNAL_SIG_SECRET_KEY_fromSecret will set the variable EXTERNAL_SIG_SECRET_KEY with the value from the jwt-external-secretkey secret key.
+    EXTERNAL_SIG_SECRET_KEY_fromSecret: true
+    # review.jwt.EXTERNAL_ENC_SECRET_KEY_fromSecret will set the variable EXTERNAL_ENC_SECRET_KEY with the value from the jwt-external-enc-secretkey secret key.
+    EXTERNAL_ENC_SECRET_KEY_fromSecret: true
+    # review.jwt.USERCTX_KEY_fromSecret will set the variable USERCTX_KEY with the value from the userctx-key secret key.
+    USERCTX_KEY_fromSecret: true
+
+  # review.registry is used to configure the connection to the eureka registry. We do not recommend eureka for kubernetes deployments.
+  registry:
+    # review.registry.enabled will configure the application to run with eureka registry. This option is discouraged.
+    enabled: false
+
+  activemq:
+    # review.activemq.enabled is true by default. If enabled, it will set automatically these environment variables:
+    # SPRING_ACTIVEMQ_BROKER_URL, SPRING_ACTIVEMQ_USER, SPRING_ACTIVEMQ_PASSWORD
+    enabled: false
+
+  # review.replicaCount is the number of replicas for this deployment.
+  replicaCount: 1
+  # review.app configures metadata and images of the app to be deployed.
+  app:
+    metadata:
+      tier: ""
+
+    # review.app.image configures the docker image to use.
+    image:
+      # app.image.registry is the docker repository tag for this deployment.
+      registry: "repo.backbase.com/backbase-docker-releases"
+      # app.image.repository is the docker repository tag for this deployment.
+      repository: "review"
+      # app.image.tag is the docker image tag for this deployment.
+      tag: ""
+
+    # review.app.resources configures the kubernetes resource requests and limits for the deployment.
+    resources:
+      memory:
+        ram: 512
+      cpu:
+        minShares: 100
+        maxShares: 1000
+
+  # review.database sets the Database init container health-checks and configure the deployment SPRING_DATASOURCE environment variables.
+  database:
+    # database.enabled is true by default. If enabled, it will set automatically these environment variables:
+    # SPRING_DATASOURCE_URL, SPRING_DATASOURCE_USERNAME, SPRING_DATASOURCE_PASSWORD, SPRING_DATASOURCE_DRIVER_CLASS_NAME
+    enabled: true
+    # review.database.sid is the database sid.
+    sid: review
+
+  # review.service allows kubernetes to expose the deployment through a service.
+  service:
+    # review.service.enabled if true will create a kubernetes service mapped to the application deployment.
+    enabled: true
+    nameOverride: review
+
+  # review.env allows to override environment variables in the pod
+  env:
+    "EUREKA_CLIENT_ENABLED": "false"
+    "SPRING_CLOUD_KUBERNETES_ENABLED": "true"
+    "SPRING_CLOUD_KUBERNETES_RELOAD_ENABLED": "true"
+    "SPRING_CLOUD_KUBERNETES_LOADBALANCER_MODE": "SERVICE"
+    "SPRING_AUTOCONFIGURE_EXCLUDE": "org.springframework.cloud.function.context.config.ContextFunctionCatalogAutoConfiguration"

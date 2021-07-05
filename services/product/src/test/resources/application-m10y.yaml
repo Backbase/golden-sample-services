@@ -1,0 +1,25 @@
+backbase:
+  multi-tenancy:
+    enabled: true
+    tenants:
+      - id: org_shop
+        datasource:
+          url: jdbc:tc:mysql:5.7:///testdb1
+          username: test
+          password: test
+      - id: rebrand_shop
+        datasource:
+          url: jdbc:tc:mysql:5.7:///testdb2
+          username: test
+          password: test
+    datasource:
+      strategy: SWITCH_DATASOURCE
+      defaults:
+        driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+  api:
+    extensions:
+      classes:
+        com.backbase.product.api.service.v1.model.Product: ext-product
+      property-sets:
+        ext-product: popularity
+        ext-product@tid(rebrand_shop): popularity,description

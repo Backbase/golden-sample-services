@@ -2,5 +2,8 @@
   "productId": 1,
   "name": "Coke",
   "weight": 100,
-  "createDate": "2020-09-01"
+  "createDate": "2020-09-01",
+  "additions": {
+    "description": "refreshing beverage"
+  }
 }

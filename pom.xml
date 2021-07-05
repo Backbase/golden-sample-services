@@ -3,21 +3,52 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.backbase</groupId>
+    <!-- The simplest way to build a service with service-sdk-starter-core
+    is to use it as a parent in your project’s POM file, and alternative If you
+    don’t want to use service-sdk-starter-core as your project’s parent, you
+    can declare it as a dependency instead, see pom-as-dependency.xml -->
+    <parent>
+        <artifactId>service-sdk-starter-core</artifactId>
+        <groupId>com.backbase.buildingblocks</groupId>
+        <version>13.0.0</version>
+        <relativePath />
+    </parent>
+
+    <groupId>com.backbase.goldensample</groupId>
     <artifactId>backbase-golden-sample</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <name>backbase-golden-example</name>
     <description>Demo project for Backbase Backend Best Practices</description>
     <packaging>pom</packaging>
 
-
-    <properties>
-        <java.version>11</java.version>
-    </properties>
-
     <modules>
         <module>api</module>
+        <module>database</module>
         <module>services</module>
     </modules>
+
+    <repositories>
+        <repository>
+            <id>backbase</id>
+            <url>https://repo.backbase.com/repo</url>
+            <releases>
+                <updatePolicy>always</updatePolicy>
+            </releases>
+        </repository>
+        <repository>
+            <id>repo-charts</id>
+            <url>https://repo.backbase.com/backbase-charts</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>backbase</id>
+            <url>https://repo.backbase.com/repo</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <build>
+        <defaultGoal>install</defaultGoal>
+    </build>
 
 </project>

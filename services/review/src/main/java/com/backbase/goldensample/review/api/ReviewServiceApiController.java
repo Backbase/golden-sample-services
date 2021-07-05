@@ -1,9 +1,11 @@
 package com.backbase.goldensample.review.api;
 
+import com.backbase.goldensample.review.mapper.ReviewMapper;
+import com.backbase.goldensample.review.persistence.ReviewEntity;
 import com.backbase.goldensample.review.service.ReviewService;
-import com.backbase.reviews.api.service.v2.ReviewServiceApi;
-import com.backbase.reviews.api.service.v2.model.Review;
-import com.backbase.reviews.api.service.v2.model.ReviewId;
+import com.backbase.reviews.api.service.v1.ReviewServiceApi;
+import com.backbase.reviews.api.service.v1.model.Review;
+import com.backbase.reviews.api.service.v1.model.ReviewId;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.extern.log4j.Log4j2;
@@ -16,17 +18,23 @@ import org.springframework.web.bind.annotation.RestController;
  * definition.
  *
  * @see ReviewServiceApi
+ *
+ * @deprecated Will be removed next major released. Use {@link ReviewServiceApiController} instead.
  */
+
+@Deprecated
 @RestController
 @Log4j2
 public class ReviewServiceApiController implements ReviewServiceApi {
 
   /** Review service business logic interface. */
   private final ReviewService reviewService;
+  private final ReviewMapper mapper;
 
   @Autowired
-  public ReviewServiceApiController(ReviewService reviewService) {
+  public ReviewServiceApiController(ReviewService reviewService, ReviewMapper mapper) {
     this.reviewService = reviewService;
+    this.mapper = mapper;
   }
 
 
@@ -49,31 +57,33 @@ public class ReviewServiceApiController implements ReviewServiceApi {
   @Override
   public ResponseEntity<List<Review>> getReviewListByProductId(Long productId) {
     log.debug("Get product {} reviews", productId);
-    List<Review> listReview = reviewService.getReviewsByProductId(productId);
+    List<Review> listReview = mapper.entityListToApiList(reviewService.getReviewsByProductId(productId));
     return ResponseEntity.ok(listReview);
   }
 
   @Override
   public ResponseEntity<Review> getReviewById(Long reviewId) {
     log.debug("Get review id {}", reviewId);
-    Review review = reviewService.getReview(reviewId);
+    Review review = mapper.entityToApi(reviewService.getReview(reviewId));
     return ResponseEntity.ok(review);
   }
 
   @Override
   public ResponseEntity<ReviewId> postReview(@Valid Review review) {
     log.debug("creating review {}", review);
-    Review reviewWithId = reviewService.createReview(review);
+    ReviewEntity entity = mapper.apiToEntity(review);
+    ReviewEntity reviewWithId = reviewService.createReview(entity);
     log.debug("review with id {} created", reviewWithId.getProductId());
     ReviewId reviewId = new ReviewId();
-    reviewId.setId(reviewWithId.getReviewId());
+    reviewId.setId(reviewWithId.getId());
     return ResponseEntity.ok(reviewId);
   }
 
   @Override
   public ResponseEntity<ReviewId> putReview(@Valid Review review) {
     log.debug("updating review {}", review);
-    Review reviewWithId = reviewService.updateReview(review);
+    ReviewEntity entity = mapper.apiToEntity(review);
+    ReviewEntity reviewWithId = reviewService.updateReview(entity);
     log.debug("review with id {} updated", reviewWithId.getProductId());
     return ResponseEntity.noContent().build();
   }
