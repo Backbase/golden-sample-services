@@ -34,11 +34,6 @@
             <artifactId>persistence</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.backbase.buildingblocks</groupId>
-            <artifactId>service-sdk-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
 
         <dependency>
             <groupId>com.backbase.goldensample</groupId>
@@ -147,12 +142,7 @@
             <artifactId>archunit-junit5</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- present to enable importing all available rules -->
-        <dependency>
-            <groupId>com.backbase.buildingblocks</groupId>
-            <artifactId>events</artifactId>
-            <scope>test</scope>
-        </dependency>
+
         <!-- End - ArchUnit rule checks -->
     </dependencies>
 
@@ -294,7 +284,7 @@
                         </goals>
                         <configuration>
                             <packageName>product</packageName>
-                            <inputFile>${project.basedir}/src/main/resources/events</inputFile>
+                            <inputFile>${project.parent.parent.basedir}/api/product-api/src/main/resources/events</inputFile>
                         </configuration>
                     </execution>
                 </executions>
