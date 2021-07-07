@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "destination": "queue-destination-custom-name",
+  "type": "object",
+  "properties": {
+    "weight": {
+      "description": "weight of the product",
+      "type": "string"
+    },
+    "deleteDate": {
+      "description": "Date indicating when the product was updated",
+      "type": "string",
+      "format": "date"
+    },
+    "name": {
+      "description": "name of the product",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 36
+    },
+    "productId": {
+      "description": "The unique product id",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 36
+    }
+  },
+  "required": [
+    "data"
+  ]
+}

@@ -14,7 +14,6 @@ import org.mapstruct.factory.Mappers;
 class MapperTests {
 
     private final com.backbase.goldensample.review.mapper.ReviewMapper mapper = Mappers.getMapper(ReviewMapper.class);
-    ;
 
     @Test
     void mapperTests() {
