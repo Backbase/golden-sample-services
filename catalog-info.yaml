@@ -8,27 +8,21 @@ metadata:
     - spring
     - ssdk
   links:
-    - url: https://example.com/user
-      title: Examples Users
+    - url: https://100daysof.backbase.com/ssdk/golden-sample.html
+      title: Community
       icon: user
-    - url: https://example.com/group
-      title: Example Group
+    - url: https://github.com/Backbase/golden-sample-services/wiki
+      title: Confluence space
       icon: group
-    - url: https://example.com/cloud
-      title: Link with Cloud Icon
+    - url: https://github.com/Backbase/golden-sample-services/pkgs/container/golden-sample%2Fproduct
+      title: Docker image
       icon: cloud
-    - url: https://example.com/dashboard
-      title: Dashboard
+    - url: https://github.com/Backbase/golden-sample-services/tree/main/charts
+      title: Helm Chart
       icon: dashboard
-    - url: https://example.com/help
-      title: Support
+    - url: https://backbase.slack.com/archives/CG2C5NH8D
+      title: Support channel
       icon: help
-    - url: https://example.com/web
-      title: Website
-      icon: web
-    - url: https://example.com/alert
-      title: Alerts
-      icon: alert
 spec:
   type: service
   lifecycle: production
