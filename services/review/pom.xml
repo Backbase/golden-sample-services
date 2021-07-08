@@ -65,11 +65,6 @@
             <artifactId>review-db</artifactId>
             <version>${golden.sample.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.backbase.goldensample</groupId>
-            <artifactId>product</artifactId>
-            <version>${golden.sample.version}</version>
-        </dependency>
 
         <!-- Start - POJO creation made easy -->
         <dependency>
@@ -83,6 +78,7 @@
         <dependency>
             <groupId>com.backbase.buildingblocks</groupId>
             <artifactId>service-sdk-starter-mapping</artifactId>
+
         </dependency>
         <!-- End - POJO <-> Entity conversion made easy -->
 
@@ -156,14 +152,45 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+        <!-- End - ArchUnit rule checks -->
             <groupId>com.backbase.buildingblocks</groupId>
             <artifactId>events</artifactId>
         </dependency>
-        <!-- End - ArchUnit rule checks -->
+        <!-- https://mvnrepository.com/artifact/org.awaitility/awaitility -->
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+            <version>3.0.0</version>
+            <scope>test</scope>
+        </dependency>
+
+
     </dependencies>
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>com.backbase.codegen</groupId>
+                <artifactId>jsonschema-events-maven-plugin</artifactId>
+                <configuration>
+                    <useJavaTime>true</useJavaTime>
+                    <packageVersion>1</packageVersion>
+                    <outputFile>${codegen.generated-sources-dir}</outputFile>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>generate-events-payment-order-persistence-spec</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>events-generation</goal>
+                        </goals>
+                        <configuration>
+                            <packageName>product</packageName>
+                            <inputFile>${project.parent.parent.basedir}/api/product-api/src/main/resources/events</inputFile>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>com.backbase.oss</groupId>
                 <artifactId>boat-maven-plugin</artifactId>
