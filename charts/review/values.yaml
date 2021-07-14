@@ -39,7 +39,7 @@ review:
     # review.app.image configures the docker image to use.
     image:
       # app.image.registry is the docker repository tag for this deployment.
-      registry: "repo.backbase.com/backbase-docker-releases"
+      registry: ""
       # app.image.repository is the docker repository tag for this deployment.
       repository: "review"
       # app.image.tag is the docker image tag for this deployment.

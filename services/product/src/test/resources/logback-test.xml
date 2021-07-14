@@ -11,5 +11,6 @@
     </root>
 
     <logger name="org.testcontainers" level="DEBUG"/>
+    <logger name="au.com.dius.pact" level="DEBUG"/>
     <logger name="com.github.dockerjava" level="WARN"/>
 </configuration>
