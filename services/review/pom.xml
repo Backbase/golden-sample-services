@@ -1,6 +1,5 @@
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns="http://maven.apache.org/POM/4.0.0"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -16,38 +15,60 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.backbase.buildingblocks</groupId>
-            <artifactId>auth-security</artifactId>
+            <groupId>com.backbase.goldensample</groupId>
+            <artifactId>review-db</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
-
         <dependency>
             <groupId>com.backbase.buildingblocks</groupId>
             <artifactId>api</artifactId>
         </dependency>
-
         <dependency>
             <groupId>com.backbase.buildingblocks</groupId>
-            <artifactId>validation</artifactId>
+            <artifactId>auth-security</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>com.backbase.buildingblocks</groupId>
-            <artifactId>multi-tenancy</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.backbase.buildingblocks</groupId>
-            <artifactId>multi-tenancy-liquibase</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>com.backbase.buildingblocks</groupId>
             <artifactId>communication</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>events</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>multi-tenancy</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>multi-tenancy-liquibase</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.backbase.buildingblocks</groupId>
             <artifactId>persistence</artifactId>
+        </dependency>
+        <!-- POJO <-> Entity conversion made easy
+            https://community.backbase.com/documentation/ServiceSDK/latest/service_sdk_ref_service_sdk_starter_mapping -->
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>service-sdk-starter-mapping</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>validation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>jackson-databind-nullable</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
         </dependency>
 
         <dependency>
@@ -55,43 +76,35 @@
             <artifactId>service-sdk-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
-        <dependency>
-            <groupId>com.backbase.goldensample</groupId>
-            <artifactId>review-db</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-
-        <!-- Start - POJO creation made easy -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <!-- End - POJO creation made easy -->
-        <!-- Start - POJO <-> Entity conversion made easy
-             https://community.backbase.com/documentation/ServiceSDK/latest/service_sdk_ref_service_sdk_starter_mapping -->
         <dependency>
             <groupId>com.backbase.buildingblocks</groupId>
-            <artifactId>service-sdk-starter-mapping</artifactId>
-
+            <artifactId>service-sdk-archunit</artifactId>
+            <scope>test</scope>
         </dependency>
-        <!-- End - POJO <-> Entity conversion made easy -->
-
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-kahadb-store</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.tngtech.archunit</groupId>
+            <artifactId>archunit-junit5</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+            <version>3.0.0</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>nl.jqno.equalsverifier</groupId>
             <artifactId>equalsverifier</artifactId>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>testcontainers</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>mysql</artifactId>
+            <artifactId>mariadb</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -101,27 +114,12 @@
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>mariadb</artifactId>
+            <artifactId>mysql</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-annotations</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.openapitools</groupId>
-            <artifactId>jackson-databind-nullable</artifactId>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc -->
-        <dependency>
-            <groupId>com.microsoft.sqlserver</groupId>
-            <artifactId>mssql-jdbc</artifactId>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -129,38 +127,16 @@
             <artifactId>mariadb-java-client</artifactId>
             <scope>test</scope>
         </dependency>
-
-        <!-- Start - ArchUnit rule checks -->
         <dependency>
-            <groupId>com.backbase.buildingblocks</groupId>
-            <artifactId>service-sdk-archunit</artifactId>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.tngtech.archunit</groupId>
-            <artifactId>archunit-junit5</artifactId>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- present to enable importing all available rules -->
-        <dependency>
-            <groupId>org.apache.activemq</groupId>
-            <artifactId>activemq-kahadb-store</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-        <!-- End - ArchUnit rule checks -->
-            <groupId>com.backbase.buildingblocks</groupId>
-            <artifactId>events</artifactId>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.awaitility/awaitility -->
-        <dependency>
-            <groupId>org.awaitility</groupId>
-            <artifactId>awaitility</artifactId>
-            <version>3.0.0</version>
-            <scope>test</scope>
-        </dependency>
-
-
     </dependencies>
 
     <build>
@@ -168,15 +144,6 @@
             <plugin>
                 <groupId>com.backbase.codegen</groupId>
                 <artifactId>jsonschema-events-maven-plugin</artifactId>
-                <configuration>
-                    <inputFile>${project.basedir}/../../api/product-api/src/main/resources/events</inputFile>
-                    <outputFile>${project.build.directory}/generated-sources/events</outputFile>
-                    <packageName>product</packageName>
-                    <useJavaTime>true</useJavaTime>
-                    <packageVersion>1</packageVersion>
-                    <generatedResourcesDirectory>${project.build.directory}/generated-resources</generatedResourcesDirectory>
-                    <generatedSpringFactoriesDir>${project.build.directory}/generated-spring-factories</generatedSpringFactoriesDir>
-                </configuration>
                 <executions>
                     <execution>
                         <id>generate-events-review</id>
@@ -186,6 +153,15 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <inputFile>${project.basedir}/../../api/product-api/src/main/resources/events</inputFile>
+                    <outputFile>${project.build.directory}/generated-sources/events</outputFile>
+                    <packageName>product</packageName>
+                    <useJavaTime>true</useJavaTime>
+                    <packageVersion>1</packageVersion>
+                    <generatedResourcesDirectory>${project.build.directory}/generated-resources</generatedResourcesDirectory>
+                    <generatedSpringFactoriesDir>${project.build.directory}/generated-spring-factories</generatedSpringFactoriesDir>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>com.backbase.oss</groupId>
@@ -199,8 +175,7 @@
                             <goal>bundle</goal>
                         </goals>
                         <configuration>
-                            <input>${project.basedir}/../../api/review-service-api/src/main/resources/openapi-v1.yaml
-                            </input>
+                            <input>${project.basedir}/../../api/review-service-api/src/main/resources/openapi-v1.yaml</input>
                             <output>${project.build.directory}/specs/review-service-api-v1.yaml</output>
                             <versionFileName>true</versionFileName>
                         </configuration>
@@ -213,17 +188,13 @@
                             <goal>bundle</goal>
                         </goals>
                         <configuration>
-                            <input>${project.basedir}/../../api/review-service-api/src/main/resources/openapi-v2.yaml
-                            </input>
+                            <input>${project.basedir}/../../api/review-service-api/src/main/resources/openapi-v2.yaml</input>
                             <output>${project.build.directory}/specs/review-service-api-v2.yaml</output>
                             <versionFileName>true</versionFileName>
                         </configuration>
                     </execution>
                     <execution>
                         <id>generate-client-api-code-v1</id>
-                        <goals>
-                            <goal>generate-spring-boot-embedded</goal>
-                        </goals>
                         <!--            With that goal BOAT is using the following defaults
                         <configuration>
                           <output>${project.build.directory}/generated-sources/openapi</output>
@@ -248,6 +219,9 @@
                           </configOptions>
             -->
                         <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate-spring-boot-embedded</goal>
+                        </goals>
                         <configuration>
                             <inputSpec>${project.build.directory}/specs/review-service-api-v1.0.0.yaml</inputSpec>
                             <apiPackage>com.backbase.reviews.api.service.v1</apiPackage>
@@ -256,10 +230,10 @@
                     </execution>
                     <execution>
                         <id>generate-client-api-code-v2</id>
+                        <phase>generate-sources</phase>
                         <goals>
                             <goal>generate-spring-boot-embedded</goal>
                         </goals>
-                        <phase>generate-sources</phase>
                         <configuration>
                             <inputSpec>${project.build.directory}/specs/review-service-api-v2.0.0.yaml</inputSpec>
                             <apiPackage>com.backbase.reviews.api.service.v2</apiPackage>
@@ -277,10 +251,10 @@
                 <executions>
                     <execution>
                         <id>assemble-api-zip</id>
+                        <phase>package</phase>
                         <goals>
                             <goal>single</goal>
                         </goals>
-                        <phase>package</phase>
                         <configuration>
                             <descriptors>
                                 <descriptor>../assembly/api.xml</descriptor>
@@ -290,23 +264,23 @@
                 </executions>
             </plugin>
             <plugin>
-                 <groupId>org.codehaus.mojo</groupId>
-                 <artifactId>build-helper-maven-plugin</artifactId>
-                 <executions>
-                     <execution>
-                         <id>add-source</id>
-                         <phase>generate-sources</phase>
-                         <goals>
-                             <goal>add-source</goal>
-                         </goals>
-                         <configuration>
-                             <sources>
-                                 <source>${project.build.directory}/generated-sources/openapi/src/main/java</source>
-                             </sources>
-                         </configuration>
-                     </execution>
-                 </executions>
-             </plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/generated-sources/openapi/src/main/java</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
@@ -328,12 +302,12 @@
             <id>docker-image</id>
             <dependencies>
                 <dependency>
-                    <groupId>mysql</groupId>
-                    <artifactId>mysql-connector-java</artifactId>
-                </dependency>
-                <dependency>
                     <groupId>com.microsoft.sqlserver</groupId>
                     <artifactId>mssql-jdbc</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>mysql</groupId>
+                    <artifactId>mysql-connector-java</artifactId>
                 </dependency>
             </dependencies>
         </profile>

@@ -1,6 +1,5 @@
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns="http://maven.apache.org/POM/4.0.0"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -18,46 +17,34 @@
         <jsr305.version>3.0.2</jsr305.version>
         <commons-collections.version>3.2.2</commons-collections.version>
     </properties>
-    <dependencies>
-        <dependency>
-            <groupId>com.backbase.buildingblocks</groupId>
-            <artifactId>service-sdk-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
 
-        <dependency>
-            <groupId>com.backbase.buildingblocks</groupId>
-            <artifactId>communication</artifactId>
-        </dependency>
+    <dependencies>
         <dependency>
             <groupId>com.backbase.buildingblocks</groupId>
             <artifactId>api</artifactId>
         </dependency>
         <dependency>
             <groupId>com.backbase.buildingblocks</groupId>
-            <artifactId>validation</artifactId>
+            <artifactId>communication</artifactId>
         </dependency>
         <dependency>
             <groupId>com.backbase.buildingblocks</groupId>
             <artifactId>multi-tenancy</artifactId>
         </dependency>
-        <!-- Start - POJO creation made easy -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <!-- End - POJO creation made easy -->
         <!-- Start - POJO <-> Entity conversion made easy
              https://community.backbase.com/documentation/ServiceSDK/latest/service_sdk_ref_service_sdk_starter_mapping -->
         <dependency>
             <groupId>com.backbase.buildingblocks</groupId>
             <artifactId>service-sdk-starter-mapping</artifactId>
         </dependency>
-        <!-- End - POJO <-> Entity conversion made easy -->
         <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-annotations</artifactId>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>validation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>${commons-collections.version}</version>
         </dependency>
         <dependency>
             <groupId>org.openapitools</groupId>
@@ -69,20 +56,23 @@
             <version>${jsr305.version}</version>
         </dependency>
         <dependency>
-            <groupId>commons-collections</groupId>
-            <artifactId>commons-collections</artifactId>
-            <version>${commons-collections.version}</version>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
         </dependency>
 
-        <!-- Start - ArchUnit rule checks -->
         <dependency>
             <groupId>com.backbase.buildingblocks</groupId>
-            <artifactId>service-sdk-archunit</artifactId>
+            <artifactId>service-sdk-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.tngtech.archunit</groupId>
-            <artifactId>archunit-junit5</artifactId>
+            <groupId>com.backbase.buildingblocks</groupId>
+            <artifactId>service-sdk-archunit</artifactId>
             <scope>test</scope>
         </dependency>
         <!-- present to enable importing all available rules -->
@@ -92,19 +82,13 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-jpa</artifactId>
+            <groupId>com.tngtech.archunit</groupId>
+            <artifactId>archunit-junit5</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- End - ArchUnit rule checks -->
         <dependency>
             <groupId>org.apache.activemq</groupId>
             <artifactId>activemq-kahadb-store</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.backbase.buildingblocks</groupId>
-            <artifactId>service-sdk-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -123,18 +107,17 @@
                             <goal>bundle</goal>
                         </goals>
                         <configuration>
-                            <input>${project.basedir}/../../api/store-client-api/src/main/resources/openapi-v1.yaml
-                            </input>
+                            <input>${project.basedir}/../../api/store-client-api/src/main/resources/openapi-v1.yaml</input>
                             <output>${project.build.directory}/specs/client-api-v1.yaml</output>
                             <versionFileName>true</versionFileName>
                         </configuration>
                     </execution>
                     <execution>
                         <id>generate-client-api-code</id>
+                        <phase>generate-sources</phase>
                         <goals>
                             <goal>generate-spring-boot-embedded</goal>
                         </goals>
-                        <phase>generate-sources</phase>
                         <configuration>
                             <inputSpec>${project.build.directory}/specs/client-api-v1.0.0.yaml</inputSpec>
                             <apiPackage>com.backbase.goldensample.store.api.service.v1</apiPackage>
@@ -143,23 +126,18 @@
                     </execution>
                     <execution>
                         <id>generate-product-client-api-code</id>
+                        <phase>generate-sources</phase>
                         <goals>
                             <goal>generate-rest-template-embedded</goal>
                         </goals>
-                        <phase>generate-sources</phase>
                         <configuration>
-                            <inputSpec>
-                                ${project.basedir}/../../api/product-api/src/main/resources/product-service-api-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${project.basedir}/../../api/product-api/src/main/resources/product-service-api-v1.yaml</inputSpec>
                             <apiPackage>com.backbase.goldensample.product.api.client.v1</apiPackage>
                             <modelPackage>com.backbase.goldensample.product.api.client.v1.model</modelPackage>
                         </configuration>
                     </execution>
                     <execution>
                         <id>generate-review-client-api-code-v1</id>
-                        <goals>
-                            <goal>generate-rest-template-embedded</goal>
-                        </goals>
                         <!--            With that goal BOAT is using the following defaults
                         <configuration>
                           <output>${project.build.directory}/generated-sources/openapi</output>
@@ -185,24 +163,23 @@
                         </configuration>
                         -->
                         <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate-rest-template-embedded</goal>
+                        </goals>
                         <configuration>
-                            <inputSpec>
-                                ${project.basedir}/../../api/review-service-api/src/main/resources/openapi-v1.yaml
-                            </inputSpec>
+                            <inputSpec>${project.basedir}/../../api/review-service-api/src/main/resources/openapi-v1.yaml</inputSpec>
                             <apiPackage>com.backbase.goldensample.review.api.client.v1</apiPackage>
                             <modelPackage>com.backbase.goldensample.review.api.client.v1.model</modelPackage>
                         </configuration>
                     </execution>
                     <execution>
                         <id>generate-review-client-api-code-v2</id>
+                        <phase>generate-sources</phase>
                         <goals>
                             <goal>generate-rest-template-embedded</goal>
                         </goals>
-                        <phase>generate-sources</phase>
                         <configuration>
-                            <inputSpec>
-                                ${project.basedir}/../../api/review-service-api/src/main/resources/openapi-v2.yaml
-                            </inputSpec>
+                            <inputSpec>${project.basedir}/../../api/review-service-api/src/main/resources/openapi-v2.yaml</inputSpec>
                             <apiPackage>com.backbase.goldensample.review.api.client.v2</apiPackage>
                             <modelPackage>com.backbase.goldensample.review.api.client.v2.model</modelPackage>
                         </configuration>
@@ -218,10 +195,10 @@
                 <executions>
                     <execution>
                         <id>assemble-api-zip</id>
+                        <phase>package</phase>
                         <goals>
                             <goal>single</goal>
                         </goals>
-                        <phase>package</phase>
                         <configuration>
                             <descriptors>
                                 <descriptor>../assembly/api.xml</descriptor>
@@ -231,23 +208,23 @@
                 </executions>
             </plugin>
             <plugin>
-                 <groupId>org.codehaus.mojo</groupId>
-                 <artifactId>build-helper-maven-plugin</artifactId>
-                 <executions>
-                     <execution>
-                         <id>add-source</id>
-                         <phase>generate-sources</phase>
-                         <goals>
-                             <goal>add-source</goal>
-                         </goals>
-                         <configuration>
-                             <sources>
-                                 <source>${project.build.directory}/generated-sources/openapi/src/main/java</source>
-                             </sources>
-                         </configuration>
-                     </execution>
-                 </executions>
-             </plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/generated-sources/openapi/src/main/java</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
