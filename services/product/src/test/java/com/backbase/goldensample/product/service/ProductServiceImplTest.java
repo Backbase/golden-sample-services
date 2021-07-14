@@ -9,11 +9,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.backbase.buildingblocks.backend.communication.context.OriginatorContext;
-import com.backbase.buildingblocks.backend.communication.context.OriginatorContextUtil;
 import com.backbase.buildingblocks.backend.communication.event.EnvelopedEvent;
 import com.backbase.buildingblocks.backend.communication.event.proxy.EventBus;
-import com.backbase.buildingblocks.backend.internalrequest.InternalRequestContext;
 import com.backbase.goldensample.product.mapper.ProductMapper;
 import com.backbase.goldensample.product.persistence.ProductEntity;
 import com.backbase.goldensample.product.persistence.ProductRepository;
@@ -25,19 +22,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import org.hamcrest.core.IsInstanceOf;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
 import org.mockito.ArgumentCaptor;
-import org.mockito.ArgumentMatchers;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class ProductServiceImplTest {
-
-    private ProductService productService;
 
     @Mock
     private ProductRepository productRepository;
@@ -45,22 +40,18 @@ class ProductServiceImplTest {
     @Mock
     private EventBus eventBus;
 
-    @Mock
-    private OriginatorContextUtil originatorContextUtil;
+    @Spy
+    private ProductMapper mapper = Mappers.getMapper(ProductMapper.class);
 
-    private final OriginatorContext context = new OriginatorContext();
+    @InjectMocks
+    private ProductServiceImpl productService;
 
-    ProductMapper productMapper = Mappers.getMapper(ProductMapper.class);
 
     private static final LocalDate TODAY = LocalDate.of(2020, 1, 28);
 
     private final Product product = new Product().productId(1L).name("Product").weight(20).createDate(TODAY);
     private final ProductEntity productEntity = new ProductEntity(1L, "Product", 20, TODAY, Collections.singletonMap("popularity","29%"));
 
-    @BeforeEach
-    public void init() {
-        productService = new ProductServiceImpl(productMapper, productRepository, eventBus, originatorContextUtil);
-    }
 
     @Test
     void getAllProductsTest() {

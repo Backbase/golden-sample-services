@@ -26,8 +26,6 @@
         <boat-maven-plugin.version>0.13.0</boat-maven-plugin.version>
         <jqno.equalsverifier.version>3.4.3</jqno.equalsverifier.version>
         <docker.repo.project>experimental/golden-sample</docker.repo.project>
-        <liquibase-maven-plugin.version>3.10.2</liquibase-maven-plugin.version>
-        <codegen.generated-sources-dir>${project.build.directory}/generated-sources</codegen.generated-sources-dir>
     </properties>
 
     <dependencyManagement>

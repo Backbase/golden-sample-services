@@ -80,6 +80,11 @@
         <!-- End - POJO <-> Entity conversion made easy -->
 
         <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-kahadb-store</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>nl.jqno.equalsverifier</groupId>
             <artifactId>equalsverifier</artifactId>
             <scope>test</scope>
@@ -271,21 +276,21 @@
                 <groupId>com.backbase.codegen</groupId>
                 <artifactId>jsonschema-events-maven-plugin</artifactId>
                 <configuration>
+                    <inputFile>${project.basedir}/../../api/product-api/src/main/resources/events</inputFile>
+                    <outputFile>${project.build.directory}/generated-sources/events</outputFile>
+                    <packageName>product</packageName>
                     <useJavaTime>true</useJavaTime>
                     <packageVersion>1</packageVersion>
-                    <outputFile>${codegen.generated-sources-dir}</outputFile>
+                    <generatedResourcesDirectory>${project.build.directory}/generated-resources</generatedResourcesDirectory>
+                    <generatedSpringFactoriesDir>${project.build.directory}/generated-spring-factories</generatedSpringFactoriesDir>
                 </configuration>
                 <executions>
                     <execution>
-                        <id>generate-events-payment-order-persistence-spec</id>
+                        <id>generate-events-product</id>
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>events-generation</goal>
                         </goals>
-                        <configuration>
-                            <packageName>product</packageName>
-                            <inputFile>${project.parent.parent.basedir}/api/product-api/src/main/resources/events</inputFile>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>

@@ -14,10 +14,6 @@
     <packaging>war</packaging>
     <name>Backbase :: review-service</name>
 
-    <properties>
-        <golden.sample.version>1.0.0-SNAPSHOT</golden.sample.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>com.backbase.buildingblocks</groupId>
@@ -63,7 +59,7 @@
         <dependency>
             <groupId>com.backbase.goldensample</groupId>
             <artifactId>review-db</artifactId>
-            <version>${golden.sample.version}</version>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
 
         <!-- Start - POJO creation made easy -->
@@ -173,21 +169,21 @@
                 <groupId>com.backbase.codegen</groupId>
                 <artifactId>jsonschema-events-maven-plugin</artifactId>
                 <configuration>
+                    <inputFile>${project.basedir}/../../api/product-api/src/main/resources/events</inputFile>
+                    <outputFile>${project.build.directory}/generated-sources/events</outputFile>
+                    <packageName>product</packageName>
                     <useJavaTime>true</useJavaTime>
                     <packageVersion>1</packageVersion>
-                    <outputFile>${codegen.generated-sources-dir}</outputFile>
+                    <generatedResourcesDirectory>${project.build.directory}/generated-resources</generatedResourcesDirectory>
+                    <generatedSpringFactoriesDir>${project.build.directory}/generated-spring-factories</generatedSpringFactoriesDir>
                 </configuration>
                 <executions>
                     <execution>
-                        <id>generate-events-payment-order-persistence-spec</id>
+                        <id>generate-events-review</id>
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>events-generation</goal>
                         </goals>
-                        <configuration>
-                            <packageName>product</packageName>
-                            <inputFile>${project.parent.parent.basedir}/api/product-api/src/main/resources/events</inputFile>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>

@@ -1,6 +1,5 @@
 package com.backbase.goldensample.product.service;
 
-import com.backbase.buildingblocks.backend.communication.context.OriginatorContextUtil;
 import com.backbase.buildingblocks.backend.communication.event.EnvelopedEvent;
 import com.backbase.buildingblocks.backend.communication.event.proxy.EventBus;
 import com.backbase.buildingblocks.presentation.errors.NotFoundException;
@@ -15,7 +14,6 @@ import java.time.LocalDate;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +26,6 @@ public class ProductServiceImpl implements ProductService {
     private final ProductMapper mapper;
     private final ProductRepository repository;
     private final EventBus eventBus;
-    private final OriginatorContextUtil originatorContextUtil;
 
     @Override
     public ProductId createProduct(Product body) {
@@ -38,11 +35,7 @@ public class ProductServiceImpl implements ProductService {
         ProductId productId = new ProductId();
         productId.setId(entityWithId.getId());
 
-        ProductCreatedEvent event = new ProductCreatedEvent();
-        event.setName(body.getName());
-        event.setProductId(body.getProductId().toString());
-        event.setWeight(body.getWeight().toString());
-        event.setCreateDateAsLocalDate(body.getCreateDate());
+        ProductCreatedEvent event = mapper.entityToCreatedEvent(entityWithId);
         EnvelopedEvent<com.backbase.product.event.spec.v1.ProductCreatedEvent> envelopedEvent = new EnvelopedEvent<>();
         envelopedEvent.setEvent(event);
         eventBus.emitEvent(envelopedEvent);
@@ -81,12 +74,9 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProduct(long productId) {
 
         log.debug("deleteProduct: tries to delete an entity with productId: {}", productId);
-        ProductDeletedEvent event = new ProductDeletedEvent();
 
         repository.findById(productId).ifPresent(productEntity -> {
-            event.setName(productEntity.getName());
-            event.setProductId(productEntity.getId().toString());
-            event.setWeight(productEntity.getWeight().toString());
+            ProductDeletedEvent event = mapper.entityToDeletedEvent(productEntity);
             event.setDeleteDateAsLocalDate(LocalDate.now());
             EnvelopedEvent<ProductDeletedEvent> envelopedEvent = new EnvelopedEvent<>();
             envelopedEvent.setEvent(event);
