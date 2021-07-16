@@ -36,7 +36,7 @@ public class ProductServiceImpl implements ProductService {
         productId.setId(entityWithId.getId());
 
         ProductCreatedEvent event = mapper.entityToCreatedEvent(entityWithId);
-        EnvelopedEvent<com.backbase.product.event.spec.v1.ProductCreatedEvent> envelopedEvent = new EnvelopedEvent<>();
+        EnvelopedEvent<ProductCreatedEvent> envelopedEvent = new EnvelopedEvent<>();
         envelopedEvent.setEvent(event);
         eventBus.emitEvent(envelopedEvent);
         return productId;
@@ -76,13 +76,16 @@ public class ProductServiceImpl implements ProductService {
         log.debug("deleteProduct: tries to delete an entity with productId: {}", productId);
 
         repository.findById(productId).ifPresent(productEntity -> {
+            // send event
             ProductDeletedEvent event = mapper.entityToDeletedEvent(productEntity);
             event.setDeleteDateAsLocalDate(LocalDate.now());
             EnvelopedEvent<ProductDeletedEvent> envelopedEvent = new EnvelopedEvent<>();
             envelopedEvent.setEvent(event);
             eventBus.emitEvent(envelopedEvent);
+
+            // remove product
+            repository.delete(productEntity);
         });
-        repository.findById(productId).ifPresent(repository::delete);
     }
 
 }

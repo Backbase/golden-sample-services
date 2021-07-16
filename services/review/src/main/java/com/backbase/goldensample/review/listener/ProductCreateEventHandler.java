@@ -6,10 +6,12 @@ import com.backbase.goldensample.review.mapper.EventMapper;
 import com.backbase.goldensample.review.persistence.ReviewEntity;
 import com.backbase.goldensample.review.service.ReviewService;
 import com.backbase.product.event.spec.v1.ProductCreatedEvent;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+@Slf4j
 public class ProductCreateEventHandler implements EventHandler<ProductCreatedEvent> {
 
     private final ReviewService reviewService;
@@ -25,6 +27,8 @@ public class ProductCreateEventHandler implements EventHandler<ProductCreatedEve
     public void handle(EnvelopedEvent<ProductCreatedEvent> envelopedEvent) {
         ProductCreatedEvent event = envelopedEvent.getEvent();
         ReviewEntity entity = eventMapper.eventToEntity(event);
+
+        log.debug("productCreateEvent - received event with productId: {}", event.getProductId());
 
         reviewService.createReview(entity);
     }
