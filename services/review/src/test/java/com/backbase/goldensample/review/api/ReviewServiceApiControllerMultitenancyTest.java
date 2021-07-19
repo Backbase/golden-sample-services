@@ -14,8 +14,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.backbase.buildingblocks.testutils.TestTokenUtil;
 import com.backbase.goldensample.review.Application;
+import com.backbase.goldensample.review.dto.ReviewDTO;
 import com.backbase.goldensample.review.mapper.ReviewMapper;
-import com.backbase.goldensample.review.persistence.ReviewEntity;
 import com.backbase.goldensample.review.service.ReviewService;
 import com.backbase.reviews.api.service.v1.model.Review;
 import java.util.Collections;
@@ -49,7 +49,7 @@ class ReviewServiceApiControllerMultitenancyTest {
     private MockMvc mockMvc;
 
     private final Review reviewOne = createReview(1L, 1L, "author", "subject", "long content", Collections.singletonMap("verified", "true"));
-    private final ReviewEntity reviewEntity = createEntity();
+    private final ReviewDTO reviewEntity = createDto();
 
     @Test
     void shouldGetEmptyArrayWhenNoReviews() throws Exception {
@@ -70,7 +70,7 @@ class ReviewServiceApiControllerMultitenancyTest {
     void shouldGetReviewsWhenServiceReturnsReviewsOfAProductWithAdditions() throws Exception {
         Review reviewTwo = createReview(2L, 1L, "another author", "another subject", "super long content", Collections.singletonMap("verified", "false"));
 
-        when(reviewMapper.entityListToApiList(any(List.class))).thenReturn((List.of(reviewOne, reviewTwo)));
+        when(reviewMapper.dtoListToApiList(any(List.class))).thenReturn((List.of(reviewOne, reviewTwo)));
 
         this.mockMvc
             .perform(get("/service-api/v1/products/{productId}/reviews", 1L)
@@ -106,7 +106,7 @@ class ReviewServiceApiControllerMultitenancyTest {
             "    \"purchaseDate\": \"today\"}\n" +
             "}";
 
-        when(reviewMapper.entityToApi(any(ReviewEntity.class))).thenReturn(reviewOne);
+        when(reviewMapper.dtoToApi(any(ReviewDTO.class))).thenReturn(reviewOne);
         when(reviewService.getReview(1)).thenReturn(reviewEntity);
 
         MvcResult result = this.mockMvc
@@ -136,8 +136,8 @@ class ReviewServiceApiControllerMultitenancyTest {
             "    \"purchaseDate\": \"today\"}\n" +
             "}";
 
-        when(reviewMapper.apiToEntity(any(Review.class))).thenReturn(reviewEntity);
-        when(reviewService.createReview(any(ReviewEntity.class))).thenReturn(reviewEntity);
+        when(reviewMapper.apiToDto(any(Review.class))).thenReturn(reviewEntity);
+        when(reviewService.createReview(any(ReviewDTO.class))).thenReturn(reviewEntity);
 
         this.mockMvc
             .perform(post("/service-api/v1/reviews")
@@ -155,8 +155,8 @@ class ReviewServiceApiControllerMultitenancyTest {
         return result;
     }
 
-    private ReviewEntity createEntity(){
-        ReviewEntity reviewIdentity = new ReviewEntity();
+    private ReviewDTO createDto(){
+        ReviewDTO reviewIdentity = new ReviewDTO();
         reviewIdentity.setId(1L);
         return reviewIdentity;
     }

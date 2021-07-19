@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -10,8 +9,8 @@
     </parent>
 
     <artifactId>services</artifactId>
-    <packaging>pom</packaging>
     <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
     <modules>
         <module>product</module>
@@ -30,54 +29,48 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- Start - POJO creation made easy -->
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>${org.lombok.version}</version>
-                <optional>true</optional>
-            </dependency>
-            <!-- End - POJO creation made easy -->
-            <dependency>
-                <groupId>org.testcontainers</groupId>
-                <artifactId>testcontainers-bom</artifactId>
-                <version>${testcontainers.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
             <dependency>
                 <groupId>nl.jqno.equalsverifier</groupId>
                 <artifactId>equalsverifier</artifactId>
                 <version>${jqno.equalsverifier.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.swagger</groupId>
-                <artifactId>swagger-annotations</artifactId>
-                <version>1.6.0</version>
             </dependency>
             <dependency>
                 <groupId>org.openapitools</groupId>
                 <artifactId>jackson-databind-nullable</artifactId>
                 <version>0.2.1</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
             <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <version>${mysql.version}</version>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${org.lombok.version}</version>
+                <optional>true</optional>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc -->
+            <dependency>
+                <groupId>org.mariadb.jdbc</groupId>
+                <artifactId>mariadb-java-client</artifactId>
+                <version>${mariadb.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.microsoft.sqlserver</groupId>
                 <artifactId>mssql-jdbc</artifactId>
                 <version>${mssql-jdbc.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.mariadb.jdbc</groupId>
-                <artifactId>mariadb-java-client</artifactId>
-                <version>${mariadb.version}</version>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>1.6.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers-bom</artifactId>
+                <version>${testcontainers.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

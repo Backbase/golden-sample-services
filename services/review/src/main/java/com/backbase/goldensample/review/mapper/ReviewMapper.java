@@ -1,7 +1,7 @@
 package com.backbase.goldensample.review.mapper;
 
 
-import com.backbase.goldensample.review.persistence.ReviewEntity;
+import com.backbase.goldensample.review.dto.ReviewDTO;
 import com.backbase.reviews.api.service.v1.model.Review;
 import java.util.List;
 import org.mapstruct.Mapper;
@@ -12,12 +12,12 @@ import org.mapstruct.Mapping;
 public interface ReviewMapper {
 
   @Mapping(source = "id", target = "reviewId")
-  Review entityToApi(ReviewEntity entity);
+  Review dtoToApi(ReviewDTO dto);
 
   @Mapping(source = "reviewId", target = "id")
-  ReviewEntity apiToEntity(Review api);
+  ReviewDTO apiToDto(Review api);
 
-  List<Review> entityListToApiList(List<ReviewEntity> entity);
+  List<Review> dtoListToApiList(List<ReviewDTO> entity);
 
-  List<ReviewEntity> apiListToEntityList(List<Review> api);
+  List<ReviewDTO> apiListToDtoList(List<Review> api);
 }

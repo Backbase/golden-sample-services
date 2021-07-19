@@ -4,6 +4,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 **/src/main/resources/lib/
+**/activemq-data/
 
 ### STS ###
 .apt_generated
