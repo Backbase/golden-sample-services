@@ -1,7 +1,7 @@
 package com.backbase.goldensample.review.api;
 
+import com.backbase.goldensample.review.dto.ReviewDTO;
 import com.backbase.goldensample.review.mapper.ReviewMapper;
-import com.backbase.goldensample.review.persistence.ReviewEntity;
 import com.backbase.goldensample.review.service.ReviewService;
 import com.backbase.reviews.api.service.v1.ReviewServiceApi;
 import com.backbase.reviews.api.service.v1.model.Review;
@@ -57,22 +57,22 @@ public class ReviewServiceApiController implements ReviewServiceApi {
   @Override
   public ResponseEntity<List<Review>> getReviewListByProductId(Long productId) {
     log.debug("Get product {} reviews", productId);
-    List<Review> listReview = mapper.entityListToApiList(reviewService.getReviewsByProductId(productId));
+    List<Review> listReview = mapper.dtoListToApiList(reviewService.getReviewsByProductId(productId));
     return ResponseEntity.ok(listReview);
   }
 
   @Override
   public ResponseEntity<Review> getReviewById(Long reviewId) {
     log.debug("Get review id {}", reviewId);
-    Review review = mapper.entityToApi(reviewService.getReview(reviewId));
+    Review review = mapper.dtoToApi(reviewService.getReview(reviewId));
     return ResponseEntity.ok(review);
   }
 
   @Override
   public ResponseEntity<ReviewId> postReview(@Valid Review review) {
     log.debug("creating review {}", review);
-    ReviewEntity entity = mapper.apiToEntity(review);
-    ReviewEntity reviewWithId = reviewService.createReview(entity);
+    ReviewDTO dto = mapper.apiToDto(review);
+    ReviewDTO reviewWithId = reviewService.createReview(dto);
     log.debug("review with id {} created", reviewWithId.getProductId());
     ReviewId reviewId = new ReviewId();
     reviewId.setId(reviewWithId.getId());
@@ -82,8 +82,8 @@ public class ReviewServiceApiController implements ReviewServiceApi {
   @Override
   public ResponseEntity<ReviewId> putReview(@Valid Review review) {
     log.debug("updating review {}", review);
-    ReviewEntity entity = mapper.apiToEntity(review);
-    ReviewEntity reviewWithId = reviewService.updateReview(entity);
+    ReviewDTO dto = mapper.apiToDto(review);
+    ReviewDTO reviewWithId = reviewService.updateReview(dto);
     log.debug("review with id {} updated", reviewWithId.getProductId());
     return ResponseEntity.noContent().build();
   }

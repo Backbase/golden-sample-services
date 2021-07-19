@@ -2,6 +2,8 @@ package com.backbase.goldensample.review.service;
 
 
 import com.backbase.buildingblocks.presentation.errors.NotFoundException;
+import com.backbase.goldensample.review.dto.ReviewDTO;
+import com.backbase.goldensample.review.mapper.EntityMapper;
 import com.backbase.goldensample.review.persistence.ReviewEntity;
 import com.backbase.goldensample.review.persistence.ReviewRepository;
 import java.util.List;
@@ -16,50 +18,54 @@ import org.springframework.transaction.annotation.Transactional;
 public class ReviewServiceImpl implements ReviewService {
 
     private final ReviewRepository repository;
+    private final EntityMapper mapper;
 
     @Autowired
-    public ReviewServiceImpl(ReviewRepository repository) {
+    public ReviewServiceImpl(ReviewRepository repository, EntityMapper mapper) {
         this.repository = repository;
+        this.mapper = mapper;
     }
 
     @Override
-    public ReviewEntity createReview(ReviewEntity entity) {
+    public ReviewDTO createReview(ReviewDTO dto) {
 
-        log.debug("creating review {}", entity);
-        ReviewEntity newEntity = repository.save(entity);
+        log.debug("creating review {}", dto);
+        ReviewEntity newEntity = repository.save(mapper.dtoToEntity(dto));
         log.debug(
             "created a review entity: {}/{}", newEntity.getProductId(), newEntity.getId());
-        return newEntity;
+        return mapper.entityToDto(newEntity);
 
     }
 
     @Override
-    public ReviewEntity updateReview(ReviewEntity entity) {
-        log.debug("updating review {}", entity);
-        ReviewEntity newEntity = repository.save(entity);
+    public ReviewDTO updateReview(ReviewDTO dto) {
+        log.debug("updating review {}", dto);
+        ReviewEntity newEntity = repository.save(mapper.dtoToEntity(dto));
 
         log.debug(
             "update a review entity: {}/{}", newEntity.getProductId(), newEntity.getId());
-        return newEntity;
+        return mapper.entityToDto(newEntity);
     }
 
     @Override
-    public List<ReviewEntity> getReviewsByProductId(long productId) {
+    public List<ReviewDTO> getReviewsByProductId(long productId) {
 
         log.debug("get reviews by product id {}", productId);
         List<ReviewEntity> list = repository.findByProductId(productId);
 
         log.debug("response size: {}", list.size());
 
-        return list;
+        return mapper.entityListToDtoList(list);
     }
 
     @Override
-    public ReviewEntity getReview(long reviewId) {
+    public ReviewDTO getReview(long reviewId) {
 
         log.debug("get review with id: {}", reviewId);
 
-        return repository.findById(reviewId).orElseThrow(() -> new NotFoundException(String.format("Item is not found with id : '%s'", reviewId)));
+        return mapper.entityToDto(
+            repository.findById(reviewId)
+                .orElseThrow(() -> new NotFoundException(String.format("Item is not found with id : '%s'", reviewId))));
     }
 
     @Override
