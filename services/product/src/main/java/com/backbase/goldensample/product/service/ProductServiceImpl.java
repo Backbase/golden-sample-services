@@ -35,13 +35,10 @@ public class ProductServiceImpl implements ProductService {
         ProductId productId = new ProductId();
         productId.setId(entityWithId.getId());
 
-        ProductCreatedEvent event = mapper.entityToCreatedEvent(entityWithId);
-        EnvelopedEvent<ProductCreatedEvent> envelopedEvent = new EnvelopedEvent<>();
-        envelopedEvent.setEvent(event);
-        eventBus.emitEvent(envelopedEvent);
+        emitCreatedEvent(entityWithId);
+
         return productId;
     }
-
 
     @Override
     public void updateProduct(Product body) {
@@ -76,16 +73,35 @@ public class ProductServiceImpl implements ProductService {
         log.debug("deleteProduct: tries to delete an entity with productId: {}", productId);
 
         repository.findById(productId).ifPresent(productEntity -> {
-            // send event
-            ProductDeletedEvent event = mapper.entityToDeletedEvent(productEntity);
-            event.setDeleteDateAsLocalDate(LocalDate.now());
-            EnvelopedEvent<ProductDeletedEvent> envelopedEvent = new EnvelopedEvent<>();
-            envelopedEvent.setEvent(event);
-            eventBus.emitEvent(envelopedEvent);
+            emitDeletedEvent(productEntity);
 
-            // remove product
             repository.delete(productEntity);
         });
+    }
+
+    /**
+     * Create product created event and add it to the queue.
+     *
+     * @param productEntity product
+     */
+    private void emitCreatedEvent(ProductEntity productEntity) {
+        ProductCreatedEvent event = mapper.entityToCreatedEvent(productEntity);
+        EnvelopedEvent<ProductCreatedEvent> envelopedEvent = new EnvelopedEvent<>();
+        envelopedEvent.setEvent(event);
+        eventBus.emitEvent(envelopedEvent);
+    }
+
+    /**
+     * Create product deleted event and add it to the queue.
+     *
+     * @param productEntity product
+     */
+    private void emitDeletedEvent(ProductEntity productEntity) {
+        ProductDeletedEvent event = mapper.entityToDeletedEvent(productEntity);
+        event.setDeleteDateAsLocalDate(LocalDate.now());
+        EnvelopedEvent<ProductDeletedEvent> envelopedEvent = new EnvelopedEvent<>();
+        envelopedEvent.setEvent(event);
+        eventBus.emitEvent(envelopedEvent);
     }
 
 }
