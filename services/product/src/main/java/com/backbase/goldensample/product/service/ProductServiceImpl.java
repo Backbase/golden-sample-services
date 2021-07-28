@@ -1,11 +1,16 @@
 package com.backbase.goldensample.product.service;
 
+import com.backbase.buildingblocks.backend.communication.event.EnvelopedEvent;
+import com.backbase.buildingblocks.backend.communication.event.proxy.EventBus;
 import com.backbase.buildingblocks.presentation.errors.NotFoundException;
 import com.backbase.goldensample.product.mapper.ProductMapper;
 import com.backbase.goldensample.product.persistence.ProductEntity;
 import com.backbase.goldensample.product.persistence.ProductRepository;
 import com.backbase.product.api.service.v1.model.Product;
 import com.backbase.product.api.service.v1.model.ProductId;
+import com.backbase.product.event.spec.v1.ProductCreatedEvent;
+import com.backbase.product.event.spec.v1.ProductDeletedEvent;
+import java.time.LocalDate;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +25,7 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductMapper mapper;
     private final ProductRepository repository;
+    private final EventBus eventBus;
 
     @Override
     public ProductId createProduct(Product body) {
@@ -28,6 +34,9 @@ public class ProductServiceImpl implements ProductService {
         ProductEntity entityWithId = repository.save(entity);
         ProductId productId = new ProductId();
         productId.setId(entityWithId.getId());
+
+        emitCreatedEvent(entityWithId);
+
         return productId;
     }
 
@@ -63,7 +72,36 @@ public class ProductServiceImpl implements ProductService {
 
         log.debug("deleteProduct: tries to delete an entity with productId: {}", productId);
 
-        repository.findById(productId).ifPresent(repository::delete);
+        repository.findById(productId).ifPresent(productEntity -> {
+            emitDeletedEvent(productEntity);
+
+            repository.delete(productEntity);
+        });
+    }
+
+    /**
+     * Create product created event and add it to the queue.
+     *
+     * @param productEntity product
+     */
+    private void emitCreatedEvent(ProductEntity productEntity) {
+        ProductCreatedEvent event = mapper.entityToCreatedEvent(productEntity);
+        EnvelopedEvent<ProductCreatedEvent> envelopedEvent = new EnvelopedEvent<>();
+        envelopedEvent.setEvent(event);
+        eventBus.emitEvent(envelopedEvent);
+    }
+
+    /**
+     * Create product deleted event and add it to the queue.
+     *
+     * @param productEntity product
+     */
+    private void emitDeletedEvent(ProductEntity productEntity) {
+        ProductDeletedEvent event = mapper.entityToDeletedEvent(productEntity);
+        event.setDeleteDateAsLocalDate(LocalDate.now());
+        EnvelopedEvent<ProductDeletedEvent> envelopedEvent = new EnvelopedEvent<>();
+        envelopedEvent.setEvent(event);
+        eventBus.emitEvent(envelopedEvent);
     }
 
 }

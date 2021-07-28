@@ -7,6 +7,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.backbase.goldensample.review.dto.ReviewDTO;
+import com.backbase.goldensample.review.mapper.EntityMapper;
 import com.backbase.goldensample.review.persistence.ReviewEntity;
 import com.backbase.goldensample.review.persistence.ReviewRepository;
 import com.backbase.reviews.api.service.v2.model.Review;
@@ -15,6 +17,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mapstruct.factory.Mappers;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -26,13 +29,16 @@ class ReviewServiceImplTest {
     @Mock
     private ReviewRepository reviewRepository;
 
+    private final EntityMapper mapper = Mappers.getMapper(EntityMapper.class);
+
     private final Review review = new Review().reviewId(1L).productId(1L).author("author").subject("subject")
         .content("long content").stars(5);
     private final ReviewEntity reviewEntity = new ReviewEntity(1L, 1L, "author", "subject", "long content", 5, null);
+    private final ReviewDTO reviewDto = new ReviewDTO(1L, 1L, "author", "subject", "long content", 5, null);
 
     @BeforeEach
     public void init() {
-        reviewService = new ReviewServiceImpl(reviewRepository);
+        reviewService = new ReviewServiceImpl(reviewRepository, mapper);
     }
 
     @Test
@@ -46,7 +52,7 @@ class ReviewServiceImplTest {
 
         when(reviewRepository.findByProductId(1L)).thenReturn(list);
 
-        List<ReviewEntity> reviews = reviewService.getReviewsByProductId(1L);
+        List<ReviewDTO> reviews = reviewService.getReviewsByProductId(1L);
 
         assertEquals(2, reviews.size());
         verify(reviewRepository, times(1)).findByProductId(1L);
@@ -56,7 +62,7 @@ class ReviewServiceImplTest {
     void getReviewByIdTest() {
         when(reviewRepository.findById(1L)).thenReturn(java.util.Optional.of(reviewEntity));
 
-        ReviewEntity review = reviewService.getReview(1);
+        ReviewDTO review = reviewService.getReview(1);
 
         assertAll(
             () -> assertEquals(1L, review.getId()),
@@ -70,14 +76,14 @@ class ReviewServiceImplTest {
     @Test
     void createReviewTest() {
         when(reviewRepository.save(any(ReviewEntity.class))).thenReturn(reviewEntity);
-        reviewService.createReview(reviewEntity);
+        reviewService.createReview(reviewDto);
         verify(reviewRepository, times(1)).save(any(ReviewEntity.class));
     }
 
     @Test
     void updateReviewTest() {
         when(reviewRepository.save(any(ReviewEntity.class))).thenReturn(reviewEntity);
-        reviewService.updateReview(reviewEntity);
+        reviewService.updateReview(reviewDto);
         verify(reviewRepository, times(1)).save(any(ReviewEntity.class));
     }
 

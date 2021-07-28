@@ -13,8 +13,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.backbase.goldensample.review.dto.ReviewDTO;
 import com.backbase.goldensample.review.mapper.ReviewMapper;
-import com.backbase.goldensample.review.persistence.ReviewEntity;
 import com.backbase.goldensample.review.service.ReviewService;
 import com.backbase.reviews.api.service.v1.model.Review;
 import java.util.List;
@@ -41,7 +41,7 @@ class ReviewServiceApiControllerTest {
     private MockMvc mockMvc;
 
     private final Review reviewOne = createReview(1L, 1L, "author", "subject", "long content");
-    private final ReviewEntity reviewEntity = createEntity();
+    private final ReviewDTO reviewDto = createDto();
 
     @Test
     void shouldGetEmptyArrayWhenNoReviews() throws Exception {
@@ -60,7 +60,7 @@ class ReviewServiceApiControllerTest {
     void shouldGetReviewsWhenServiceReturnsReviewsOfAProduct() throws Exception {
         Review reviewTwo = createReview(2L, 1L, "another author", "another subject", "super long content");
 
-        when(reviewMapper.entityListToApiList(any(List.class))).thenReturn((List.of(reviewOne, reviewTwo)));
+        when(reviewMapper.dtoListToApiList(any(List.class))).thenReturn((List.of(reviewOne, reviewTwo)));
 
         this.mockMvc
             .perform(get("/service-api/v1/products/{productId}/reviews", 1L)
@@ -82,8 +82,8 @@ class ReviewServiceApiControllerTest {
 
     @Test
     void shouldGetReviewWhenServiceReturnReviewById() throws Exception {
-        when(reviewMapper.entityToApi(any(ReviewEntity.class))).thenReturn(reviewOne);
-        when(reviewService.getReview(1)).thenReturn(reviewEntity);
+        when(reviewMapper.dtoToApi(any(ReviewDTO.class))).thenReturn(reviewOne);
+        when(reviewService.getReview(1)).thenReturn(reviewDto);
 
         this.mockMvc
             .perform(get("/service-api/v1/reviews/{reviewId}", 1L)
@@ -126,8 +126,8 @@ class ReviewServiceApiControllerTest {
             "  \"content\": \"long content\"\n" +
             "}";
 
-        when(reviewMapper.apiToEntity(any(Review.class))).thenReturn(reviewEntity);
-        when(reviewService.createReview(any(ReviewEntity.class))).thenReturn(reviewEntity);
+        when(reviewMapper.apiToDto(any(Review.class))).thenReturn(reviewDto);
+        when(reviewService.createReview(any(ReviewDTO.class))).thenReturn(reviewDto);
 
         this
             .mockMvc
@@ -147,8 +147,8 @@ class ReviewServiceApiControllerTest {
             "  \"content\": \"long content\"\n" +
             "}";
 
-        when(reviewMapper.apiToEntity(any(Review.class))).thenReturn(reviewEntity);
-        when(reviewService.updateReview(any(ReviewEntity.class))).thenReturn(reviewEntity);
+        when(reviewMapper.apiToDto(any(Review.class))).thenReturn(reviewDto);
+        when(reviewService.updateReview(any(ReviewDTO.class))).thenReturn(reviewDto);
 
         this
             .mockMvc
@@ -185,8 +185,8 @@ class ReviewServiceApiControllerTest {
         return result;
     }
 
-    private ReviewEntity createEntity(){
-        ReviewEntity reviewIdentity = new ReviewEntity();
+    private ReviewDTO createDto(){
+        ReviewDTO reviewIdentity = new ReviewDTO();
         reviewIdentity.setId(1L);
         return reviewIdentity;
     }
