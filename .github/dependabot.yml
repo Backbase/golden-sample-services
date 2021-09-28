@@ -10,8 +10,8 @@ registries:
   bb-artifactory:
     type: maven-repository
     url: https://repo.backbase.com/
-    username: ${{secrets.MAVEN_USERNAME}}
-    password: ${{secrets.MAVEN_PASSWORD}}
+    username: ${{ secrets.MAVEN_USERNAME }}
+    password: ${{ secrets.MAVEN_PASSWORD }}
 updates:
   # Enable version updates for npm
   - package-ecosystem: "maven"
