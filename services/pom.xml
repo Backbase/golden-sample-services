@@ -21,7 +21,7 @@
     <properties>
         <org.lombok.version>1.18.12</org.lombok.version>
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
-        <testcontainers.version>1.15.1</testcontainers.version>
+        <testcontainers.version>1.16.0</testcontainers.version>
         <boat-maven-plugin.version>0.13.0</boat-maven-plugin.version>
         <jqno.equalsverifier.version>3.4.3</jqno.equalsverifier.version>
         <docker.repo.project>experimental/golden-sample</docker.repo.project>
