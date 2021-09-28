@@ -19,6 +19,7 @@ updates:
     directory: "/"
     registries:
       - bb-artifactory
-    # Check the npm registry for updates every day (weekdays)
+    # Check the registry for updates every week
     schedule:
       interval: "weekly"
+    open-pull-requests-limit: 10
