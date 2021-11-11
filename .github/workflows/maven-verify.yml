@@ -43,12 +43,12 @@ jobs:
                 "username": "${{ secrets.MAVEN_USERNAME }}",
                 "password": "${{ secrets.MAVEN_PASSWORD }}"
             }]
-      - name: Build and test project
-      - run: mvn --batch-mode --update-snapshots verify
-      - name: Move and upload the war
-      - run: mkdir staging && cp services/product/target/*.war staging
-      - uses: actions/upload-artifact@v2
-        with:
-          name: Package
-          path: staging
+#      - name: Build and test project
+#      - run: mvn --batch-mode --update-snapshots verify
+#      - name: Move and upload the war
+#      - run: mkdir staging && cp services/product/target/*.war staging
+#      - uses: actions/upload-artifact@v2
+#        with:
+#          name: Package
+#          path: staging
 
