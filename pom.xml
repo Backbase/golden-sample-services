@@ -27,6 +27,14 @@
         <module>services</module>
     </modules>
 
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/backbase/backbase-golden-sample</url>
+        </repository>
+    </distributionManagement>
+
     <repositories>
         <repository>
             <id>backbase</id>
