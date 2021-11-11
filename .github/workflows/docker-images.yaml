@@ -6,8 +6,7 @@
 name: Create and publish a Docker image to Github packages
 
 on:
-  on:
-    workflow_dispatch:
+  workflow_dispatch:
   push:
     branches: ['release']
 
