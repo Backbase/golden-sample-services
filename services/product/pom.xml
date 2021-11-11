@@ -14,7 +14,7 @@
     <name>Backbase :: product-service</name>
     
     <properties>
-    	<pact.version>4.1.18</pact.version>
+    	<pact.version>4.2.14</pact.version>
     </properties>
 
     <dependencies>
