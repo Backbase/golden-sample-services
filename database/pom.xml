@@ -20,7 +20,7 @@
     <properties>
         <liquibase-maven-plugin.version>4.5.0</liquibase-maven-plugin.version>
         <maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
-        <blimp-maven-plugin.version>0.16.0</blimp-maven-plugin.version>
+        <blimp-maven-plugin.version>0.16.5</blimp-maven-plugin.version>
         <blimp-lint-rules.version>0.1.0</blimp-lint-rules.version>
     </properties>
 
