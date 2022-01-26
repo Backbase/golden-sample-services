@@ -25,8 +25,8 @@
         <comment>Add computed column UPPER(external_id) for customer table</comment>
         <sqlFile dbms="mysql,mssql,oracle"
             encoding="UTF-8"
-            path="../support-files/${db.type}/1_1_0_02_customer_table_upper_external_id.sql"
-            relativeToChangelogFile="true"
+            path="/db/support-files/${db.type}/1_1_0_02_customer_table_upper_external_id.sql"
+            relativeToChangelogFile="false"
             splitStatements="true"
             stripComments="true"/>
         <rollback>
@@ -45,8 +45,8 @@
         <comment>Add savings product</comment>
         <sqlFile dbms="mysql,mssql,oracle"
             encoding="UTF-8"
-            path="../support-files/${db.type}/1_1_0_01_product_table_data.sql"
-            relativeToChangelogFile="true"
+            path="/db/support-files/${db.type}/1_1_0_01_product_table_data.sql"
+            relativeToChangelogFile="false"
             splitStatements="true"
             stripComments="true"/>
         <rollback>
