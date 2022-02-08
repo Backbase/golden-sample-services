@@ -32,6 +32,11 @@
             <groupId>com.backbase.buildingblocks</groupId>
             <artifactId>multi-tenancy</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
         <!-- Start - POJO <-> Entity conversion made easy
              https://community.backbase.com/documentation/ServiceSDK/latest/service_sdk_ref_service_sdk_starter_mapping -->
         <dependency>
@@ -59,11 +64,6 @@
         <dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-annotations</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
         </dependency>
 
         <dependency>
