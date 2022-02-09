@@ -63,6 +63,7 @@
             <groupId>com.backbase.buildingblocks</groupId>
             <artifactId>persistence</artifactId>
         </dependency>
+        <!-- lombok has to appear before mapstruct, otherwise mapstruct fails to generate the mappers -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
