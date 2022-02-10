@@ -24,7 +24,7 @@ x-common-variables: &common-variables
 
 x-database-variables: &database-variables
   spring.liquibase.enabled: 'true'
-  spring.liquibase.change-log: "classpath:/db/db.changelog-master.yaml"
+  spring.liquibase.change-log: "classpath:/db/changelog/db.changelog-persistence.xml"
   spring.jpa.hibernate.ddl-auto: none
   spring.datasource.username: root
   spring.datasource.password: backbase
@@ -111,7 +111,8 @@ services:
     environment:
       <<: *common-variables
       <<: *database-variables
-      spring.datasource.url: jdbc:mysql://mysql:3306/product?cacheServerConfiguration=true&createDatabaseIfNotExist=true
+      <<: *message-broker-variables
+      spring.datasource.url: jdbc:mysql://mysql:3306/product?cacheServerConfiguration=true&createDatabaseIfNotExist=true&useSSL=false
       DB_HOST: mysql
       SPRING_PROFILES_ACTIVE: ${COMPOSE_APP_PROFILE}
     links:
@@ -125,7 +126,8 @@ services:
     environment:
       <<: *common-variables
       <<: *database-variables
-      spring.datasource.url: jdbc:mysql://mysql:3306/review?cacheServerConfiguration=true&createDatabaseIfNotExist=true
+      <<: *message-broker-variables
+      spring.datasource.url: jdbc:mysql://mysql:3306/review?cacheServerConfiguration=true&createDatabaseIfNotExist=true&useSSL=false
       DB_HOST: mysql
       SPRING_PROFILES_ACTIVE: ${COMPOSE_APP_PROFILE}
     links:
@@ -138,10 +140,9 @@ services:
       - "9917:8080"
     environment:
       <<: *common-variables
-      app.product-service.host: product
-      app.product-service.port: 8080
-      app.review-service.host: review
-      app.review-service.port: 8080
+      <<: *message-broker-variables
+      backbase.product-service.service-id: product
+      backbase.review-service.service-id: review
       SPRING_PROFILES_ACTIVE: ${COMPOSE_APP_PROFILE}
       logging.level.com.backbase.buildingblocks.communication.http.InterServiceLogger: DEBUG
     links:

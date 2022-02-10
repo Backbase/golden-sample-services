@@ -28,6 +28,12 @@
 			<groupId>au.com.dius.pact.provider</groupId>
 			<artifactId>junit5spring</artifactId>
 			<version>${pact.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-webflux</artifactId>
+                </exclusion>
+            </exclusions>
 		</dependency>
     
         <dependency>
@@ -84,7 +90,12 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok-mapstruct-binding</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>

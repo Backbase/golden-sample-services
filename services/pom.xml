@@ -46,6 +46,12 @@
                 <optional>true</optional>
             </dependency>
             <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok-mapstruct-binding</artifactId>
+                <version>0.2.0</version>
+                <optional>true</optional>
+            </dependency>
+            <dependency>
                 <groupId>org.mariadb.jdbc</groupId>
                 <artifactId>mariadb-java-client</artifactId>
                 <version>${mariadb.version}</version>
