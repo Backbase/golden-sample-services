@@ -19,6 +19,7 @@
         <module>product-api</module>
         <module>review-service-api</module>
         <module>store-client-api</module>
+        <module>store-integration-enricher-api</module>
     </modules>
 
     <properties>

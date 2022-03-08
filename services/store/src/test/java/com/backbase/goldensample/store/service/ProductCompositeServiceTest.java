@@ -13,6 +13,7 @@ import com.backbase.goldensample.store.client.ProductClient;
 import com.backbase.goldensample.store.client.ReviewClient;
 import com.backbase.goldensample.store.domain.Product;
 import com.backbase.goldensample.store.domain.Review;
+import com.backbase.goldensample.store.service.extension.ProductEnricher;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDate;
 import java.util.Collections;
@@ -42,6 +43,9 @@ class ProductCompositeServiceTest {
     @Mock
     ObjectMapper objectMapper;
 
+    @Mock
+    private ProductEnricher productEnricher;
+
     private static final LocalDate TODAY = LocalDate.of(2020, 1, 28);
 
     private final Product product = createProduct(1L, "Product", 20, TODAY);
@@ -50,7 +54,8 @@ class ProductCompositeServiceTest {
 
     @BeforeEach
     public void init() {
-        productCompositeService = new ProductCompositeService(productClient, reviewClient, objectMapper);
+        productCompositeService = new ProductCompositeService(
+                productClient, reviewClient, objectMapper, productEnricher);
     }
 
     @Test
@@ -70,6 +75,7 @@ class ProductCompositeServiceTest {
 
         verify(productClient, times(1)).getProductById(1L);
         verify(reviewClient, times(1)).getReviewListByProductId(1L);
+        verify(productEnricher, times(1)).enrichProduct(product);
     }
 
     @Test
@@ -83,6 +89,7 @@ class ProductCompositeServiceTest {
         assertTrue(product1.isEmpty());
         verify(productClient, times(1)).getProductById(1L);
         verify(reviewClient, times(0)).getReviewListByProductId(1L);
+        verify(productEnricher, times(0)).enrichProduct(any());
     }
 
     @Test

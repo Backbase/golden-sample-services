@@ -9,6 +9,7 @@ import com.backbase.goldensample.store.client.ProductClient;
 import com.backbase.goldensample.store.client.ReviewClient;
 import com.backbase.goldensample.store.domain.Product;
 import com.backbase.goldensample.store.domain.Review;
+import com.backbase.goldensample.store.service.extension.ProductEnricher;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.List;
@@ -29,6 +30,7 @@ public class ProductCompositeService {
     private final ProductClient productClient;
     private final ReviewClient reviewClient;
     private final ObjectMapper mapper;
+    private final ProductEnricher productEnricher;
 
     /**
      * Retrieve a product with its reviews.
@@ -40,6 +42,7 @@ public class ProductCompositeService {
         try {
             Optional<Product> product = productClient.getProductById(productId);
             product.ifPresent(this::addReviews);
+            product.ifPresent(productEnricher::enrichProduct);
             return product;
         } catch (HttpClientErrorException ex) {
             throw handleHttpClientException(ex);

@@ -34,6 +34,9 @@ backbase:
   store:
     theme: original
     theme@tid(rebrand_shop): rebranded
+    extensions:
+      product-enricher:
+        service-id:
   security:
     mtls:
       enabled: false
