@@ -183,9 +183,13 @@
                         </goals>
                         <configuration>
                             <inputSpec>${project.basedir}/../../api/store-integration-enricher-api/src/main/resources/store-integration-enricher-api-v1.yaml</inputSpec>
-                            <apiPackage>com.backbase.goldensample.store.service.extension.api.client.v2</apiPackage>
-                            <modelPackage>com.backbase.goldensample.store.service.extension.api.client.v2.model</modelPackage>
-                            <additionalProperties>restTemplateBeanName=interServiceRestTemplate</additionalProperties>
+                            <!--
+                                Putting the API in a package that is included in component scan will cause spring to
+                                discover the ApiClient class as a @Component while we intend to use a @Configuration to
+                                create an ApiClient that is initiated with the correct RestTemplate & basePath.
+                            -->
+                            <apiPackage>com.backbase.goldensample.productenricher.webhook.api.client.v2</apiPackage>
+                            <modelPackage>com.backbase.goldensample.productenricher.webhook.api.client.v2.model</modelPackage>
                         </configuration>
                     </execution>
                 </executions>

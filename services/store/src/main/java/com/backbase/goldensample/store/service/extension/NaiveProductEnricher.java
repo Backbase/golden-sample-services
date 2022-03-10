@@ -9,10 +9,21 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * Does a very naive implementation of censoring reviews for bad language
+ * This class implements the default ("out of the box" :beer:) behaviour that can be overriden using the web-hook
+ * extension. There might not always be "default" behaviour. Would there not be default enrichment in this case,
+ * a NoopProductEnricher would have been created that would implement enrichProduct as
+ * <pre>{@code
+ *     @Override
+ *     public void enrichProduct(Product product) {
+ *         // Do nothing.
+ *     }
+ * }</pre>
  */
 @Component
-@ConditionalOnProperty(matchIfMissing = true, value = "backbase.store.extensions.product-enricher.client.service-id")
+@ConditionalOnProperty(
+        value = "backbase.store.extensions.product-enricher.enabled",
+        havingValue = "false",
+        matchIfMissing = true)
 public class NaiveProductEnricher implements ProductEnricher {
 
     // According to Google, these are the bad words.

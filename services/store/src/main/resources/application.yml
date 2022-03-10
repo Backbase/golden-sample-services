@@ -36,7 +36,10 @@ backbase:
     theme@tid(rebrand_shop): rebranded
     extensions:
       product-enricher:
-        service-id:
+        enabled: false
+#        ignoreErrorResponse: true  -   Configure how to handle errors
+#        client:
+#          service-id:                  Configure service id when enabled.
   security:
     mtls:
       enabled: false

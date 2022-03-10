@@ -1,10 +1,13 @@
 package com.backbase.goldensample.store.service.extension;
 
+import com.backbase.goldensample.productenricher.webhook.api.client.v2.model.ProductAggregate;
+import com.backbase.goldensample.productenricher.webhook.api.client.v2.model.ReviewSummary;
 import com.backbase.goldensample.store.domain.Product;
 import com.backbase.goldensample.store.domain.Review;
-import com.backbase.goldensample.store.service.extension.api.client.v2.model.ProductAggregate;
-import com.backbase.goldensample.store.service.extension.api.client.v2.model.ReviewSummary;
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.ReportingPolicy;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface ProductEnricherMapper {

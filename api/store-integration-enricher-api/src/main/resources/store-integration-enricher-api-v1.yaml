@@ -24,11 +24,13 @@ paths:
         # Normal response
         The enriched (or unmodified) product will be returned to client.
         
-        # 404 response.
-        Product aggregate will be retuned unmodified (same as returning unchanged product with 200 code).
+        # 204 response.
+        Product aggregate will be retuned unmodified 
+        (same as returning unchanged product with 200 code, but less overhead).
         
-        $ 500 response
-        Depending on service config.
+        $ 4xx/500 response
+        Depending on service configuration: The service can ignore the error and return the product as is. If the 
+        extension is critical, the service can treat failure to call extension is internal server error and return 500.
 
       operationId: enrichProduct
       requestBody:
@@ -42,7 +44,7 @@ paths:
       responses:
         '200':
           $ref: 'schemas/definitions.yaml#/components/responses/200ProductAggregate'
-        '400':
-          $ref: 'lib/common-types.yaml#/components/responses/400BadRequest'
+        '204':
+          description: No changes to apply to product.
         '404':
           $ref: 'lib/common-types.yaml#/components/responses/404NotFound'
