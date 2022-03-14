@@ -9,7 +9,7 @@ import static org.mockito.Mockito.when;
 class ReviewServiceApiMockHelper {
 
     static void initMock(ReviewServiceApi reviewServiceApi) {
-        // People are logging
+        // api client is accessed to log its basepath
         ApiClient apiClient = Mockito.mock(ApiClient.class);
         when(apiClient.getBasePath()).thenReturn("basePath");
         when(reviewServiceApi.getApiClient()).thenReturn(apiClient);
