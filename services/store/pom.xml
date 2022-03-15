@@ -150,30 +150,6 @@
                     </execution>
                     <execution>
                         <id>generate-review-client-api-code-v1</id>
-                        <!--            With that goal BOAT is using the following defaults
-                        <configuration>
-                          <output>${project.build.directory}/generated-sources/openapi</output>
-                          <generateSupportingFiles>true</generateSupportingFiles>
-                          <generatorName>java</generatorName>
-                          <strictSpec>true</strictSpec>
-                          <generateApiTests>false</generateApiTests>
-                          <generateModelTests>false</generateModelTests>
-                          <inputSpec>${project.basedir}/../api/product-service-api/src/main/resources/openapi.yaml</inputSpec>
-                          <configOptions>
-                            <library>resttemplate</library>
-                            <dateLibrary>java8</dateLibrary>
-                            <interfaceOnly>true</interfaceOnly>
-                            <skipDefaultInterface>true</skipDefaultInterface>
-                            <useBeanValidation>true</useBeanValidation>
-                            <useClassLevelBeanValidation>false</useClassLevelBeanValidation>
-                            <useTags>true</useTags>
-                            <java8>true</java8>
-                            <useOptional>false</useOptional>
-                            <apiPackage>com.backbase.goldensample.product.api.client.v1</apiPackage>
-                            <modelPackage>com.backbase.goldensample.product.api.client.v1.model</modelPackage>
-                          </configOptions>
-                        </configuration>
-                        -->
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>generate-rest-template-embedded</goal>
@@ -194,6 +170,26 @@
                             <inputSpec>${project.basedir}/../../api/review-service-api/src/main/resources/openapi-v2.yaml</inputSpec>
                             <apiPackage>com.backbase.goldensample.review.api.client.v2</apiPackage>
                             <modelPackage>com.backbase.goldensample.review.api.client.v2.model</modelPackage>
+                            <configOptions>
+                                <restTemplateBeanName>interServiceRestTemplate</restTemplateBeanName>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-product-enricher-client-api-code-v2</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate-rest-template-embedded</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/../../api/store-integration-enricher-api/src/main/resources/store-integration-enricher-api-v1.yaml</inputSpec>
+                            <!--
+                                Putting the API in a package that is included in component scan will cause spring to
+                                discover the ApiClient class as a @Component while we intend to use a @Configuration to
+                                create an ApiClient that is initiated with the correct RestTemplate & basePath.
+                            -->
+                            <apiPackage>com.backbase.goldensample.productenricher.webhook.api.client.v2</apiPackage>
+                            <modelPackage>com.backbase.goldensample.productenricher.webhook.api.client.v2.model</modelPackage>
                         </configuration>
                     </execution>
                 </executions>

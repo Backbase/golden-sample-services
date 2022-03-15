@@ -1,0 +1,18 @@
+components:
+  schemas:
+    ReviewSummary:
+      $ref: ../schemas/review-summary.yaml
+    ProductAggregate:
+      $ref: ../schemas/product-aggregate.yaml
+    Additions:
+      $ref: ../lib/schemas/additions.yaml
+
+  responses:
+    200ProductAggregate:
+      description: Enriched product aggregate
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProductAggregate'
+          example:
+            $ref: ../examples/product-aggregate.json

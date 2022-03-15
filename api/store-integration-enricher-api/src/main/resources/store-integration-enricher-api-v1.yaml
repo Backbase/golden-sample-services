@@ -1,0 +1,50 @@
+openapi: 3.0.3
+info:
+  title: Store Intgration Enricher Webhook API
+  version: 1.0.0
+  description: Description of the API...
+  license:
+    name: License
+    url: http://atorres.es
+  x-icon: credit_card
+servers:
+  - description: Prism mock server
+    url: http://localhost:4010
+  - description: Service running locally
+    url: http://localhost:9917
+tags:
+  - name: store-integration-webhook
+paths:
+  /service-api/v1/web-hooks/product-composites/enrich:
+    put:
+      tags:
+        - store-integration-webhook
+      summary: Submits a product composite for enrichment.
+      description: |
+        # Normal response
+        The enriched (or unmodified) product will be returned to client.
+        
+        # 204 response.
+        Product aggregate will be retuned unmodified 
+        (same as returning unchanged product with 200 code, but less overhead).
+        
+        $ 4xx/500 response
+        Depending on service configuration: The service can ignore the error and return the product as is. If the 
+        extension is critical, the service can treat failure to call extension is internal server error and return 500.
+
+      operationId: enrichProduct
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: 'schemas/definitions.yaml#/components/schemas/ProductAggregate'
+            example:
+              $ref: examples/product-aggregate.json
+
+      responses:
+        '200':
+          $ref: 'schemas/definitions.yaml#/components/responses/200ProductAggregate'
+        '204':
+          description: No changes to apply to product.
+        '404':
+          $ref: 'lib/common-types.yaml#/components/responses/404NotFound'

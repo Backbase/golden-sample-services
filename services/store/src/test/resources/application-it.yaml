@@ -1,0 +1,11 @@
+
+sso.jwt.internal.signature.key:
+  type: VALUE
+  value: JWTSecretKeyDontUseInProduction!
+
+ribbon.eureka.enabled: false
+eureka.client.enabled: false
+
+app:
+  review-service:
+    api-version: v2

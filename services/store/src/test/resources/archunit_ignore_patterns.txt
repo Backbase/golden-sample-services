@@ -3,3 +3,9 @@
 
 # Ignore configuration classes because multi-tenancy support is not done yet: https://github.com/Backbase/golden-sample-services/issues/6
 .*com\.backbase\.goldensample\.store\.config.*
+
+
+# The extension related classes are kept together in a single package, so not following the
+# Config-should-reside-in-config-package/Mapper-should-reside-in-mapper-package rules
+Class.*\.ProductEnricherWebhookConfiguration.*reside.*package.*config.*
+Class.*\.ProductEnricherMapper.*reside.*package.*mapper.*

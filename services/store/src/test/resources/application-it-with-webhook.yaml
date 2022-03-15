@@ -1,0 +1,9 @@
+
+backbase:
+  store:
+    extensions:
+      product-enricher:
+        enabled: true
+        ignoreErrorResponse: true
+        client:
+          service-id: my-extension-service
