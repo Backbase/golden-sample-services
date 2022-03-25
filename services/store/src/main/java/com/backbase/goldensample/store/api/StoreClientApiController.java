@@ -3,6 +3,7 @@ package com.backbase.goldensample.store.api;
 import com.backbase.buildingblocks.presentation.errors.NotFoundException;
 import com.backbase.goldensample.store.api.service.v1.ProductCompositeClientApi;
 import com.backbase.goldensample.store.api.service.v1.model.ProductAggregate;
+import com.backbase.goldensample.store.api.service.v1.model.Stars;
 import com.backbase.goldensample.store.config.StoreViewConfiguration;
 import com.backbase.goldensample.store.domain.Product;
 import com.backbase.goldensample.store.mapper.StoreMapper;
@@ -13,6 +14,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.ResponseEntity.BodyBuilder;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -52,6 +56,23 @@ public class StoreClientApiController implements ProductCompositeClientApi {
             product.getProductId());
 
         return withThemeHeader(ResponseEntity.ok()).body(storeMapper.map(product));
+    }
+
+    @RequestMapping(
+            value = "/client-api/v1/product-composite/{productId}/stars",
+            produces = {"application/json"},
+            method = RequestMethod.GET)
+    @Override
+    public ResponseEntity<Stars> getStarsForProductById(Long productId) {
+        return ResponseEntity.ok(new Stars().stars(4));
+    }
+
+    @RequestMapping(
+            value = "/client-api/v1/product-composite/{productId}/stars",
+            produces = {"text/plain"},
+            method = RequestMethod.GET)
+    public ResponseEntity<String> getStarsForProductByIdAsString(@PathVariable("productId") Long productId) {
+        return ResponseEntity.ok("4");
     }
 
     private BodyBuilder withThemeHeader(BodyBuilder responseEntity) {

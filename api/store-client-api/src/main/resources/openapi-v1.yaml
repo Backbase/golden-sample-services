@@ -64,6 +64,34 @@ paths:
         '500':
           $ref: 'lib/common-types.yaml#/components/responses/500InternalServerError'
 
+  /client-api/v1/product-composite/{productId}/stars:
+    get:
+      tags:
+        - product-composite-client
+      summary: Stars for a product
+      description: Get stars
+      operationId: getStarsForProductById
+      parameters:
+        - name: productId
+          in: path
+          description: productId
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful stars response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stars'
+            text/plain:
+              schema:
+                type: string
+        '400':
+          $ref: 'lib/common-types.yaml#/components/responses/400BadRequest'
+
   /client-api/v1/product-composite:
     post:
       tags:
@@ -81,3 +109,11 @@ paths:
       responses:
         '200':
           $ref: 'schemas/definitions.yaml#/components/responses/200ProductAggregate'
+components:
+  schemas:
+    Stars:
+      type: object
+      properties:
+        stars:
+          type: integer
+          required: true
