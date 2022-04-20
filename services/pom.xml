@@ -97,6 +97,36 @@
                 <plugin>
                     <artifactId>maven-assembly-plugin</artifactId>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>enforce-banned-dependencies</id>
+                            <goals>
+                                <goal>enforce</goal>
+                            </goals>
+                            <configuration>
+                                <rules>
+                                    <bannedDependencies>
+                                        <excludes>
+                                            <exclude>mysql:mysql-connector-java:*:jar</exclude>
+                                            <exclude>com.microsoft.sqlserver:mssql-jdbc:*:jar</exclude>
+                                            <exclude>com.oracle.database.jdbc:ojdbc8:*:jar</exclude>
+                                        </excludes>
+                                        <includes>
+                                            <!--only test is allowed-->
+                                            <include>mysql:mysql-connector-java:*:jar:test</include>
+                                            <include>com.microsoft.sqlserver:mssql-jdbc:*:jar:test</include>
+                                            <include>com.oracle.database.jdbc:ojdbc8:*:jar:test</include>
+                                        </includes>
+                                    </bannedDependencies>
+                                </rules>
+                                <fail>true</fail>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
