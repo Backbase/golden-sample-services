@@ -4,6 +4,7 @@ package com.backbase.goldensample.product.service;
 import com.backbase.goldensample.product.persistence.ProductEntity;
 import com.backbase.product.api.service.v1.model.Product;
 import com.backbase.product.api.service.v1.model.ProductId;
+import com.blazebit.persistence.PagedList;
 import java.util.List;
 
 /**
@@ -62,4 +63,8 @@ public interface ProductService {
    * @since v0.1
    */
   default void deleteProduct(long id){}
+
+  public PagedList<ProductEntity> firstLatestPosts(int pageSize);
+
+  public PagedList<ProductEntity> findNextLatestPosts(PagedList<ProductEntity> previousPage);
 }

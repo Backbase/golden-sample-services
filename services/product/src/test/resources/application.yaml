@@ -17,6 +17,8 @@ spring:
     url: jdbc:tc:mysql:5.7:///test
     username: test
     password: test
-
+eureka:
+  client:
+    enabled: false
 security:
   disabled: true

@@ -5,15 +5,18 @@ import com.backbase.buildingblocks.backend.communication.event.proxy.EventBus;
 import com.backbase.buildingblocks.presentation.errors.NotFoundException;
 import com.backbase.goldensample.product.mapper.ProductMapper;
 import com.backbase.goldensample.product.persistence.ProductEntity;
+import com.backbase.goldensample.product.persistence.ProductEntity_;
 import com.backbase.goldensample.product.persistence.ProductRepository;
 import com.backbase.product.api.service.v1.model.Product;
 import com.backbase.product.api.service.v1.model.ProductId;
 import com.backbase.product.event.spec.v1.ProductCreatedEvent;
 import com.backbase.product.event.spec.v1.ProductDeletedEvent;
+import com.blazebit.persistence.PagedList;
 import java.time.LocalDate;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -102,6 +105,34 @@ public class ProductServiceImpl implements ProductService {
         EnvelopedEvent<ProductDeletedEvent> envelopedEvent = new EnvelopedEvent<>();
         envelopedEvent.setEvent(event);
         eventBus.emitEvent(envelopedEvent);
+    }
+
+    public PagedList<ProductEntity> firstLatestPosts(
+        int pageSize) {
+        return repository.findTopN(
+            Sort.by(
+                ProductEntity_.CREATE_DATE
+            ).descending().and(
+                Sort.by(
+                    ProductEntity_.ID
+                ).descending()
+            ),
+            pageSize
+        );
+    }
+
+    public PagedList<ProductEntity> findNextLatestPosts(
+        PagedList<ProductEntity> previousPage) {
+        return repository.findNextN(
+            Sort.by(
+                ProductEntity_.CREATE_DATE
+            ).descending().and(
+                Sort.by(
+                    ProductEntity_.ID
+                ).descending()
+            ),
+            previousPage
+        );
     }
 
 }
