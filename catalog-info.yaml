@@ -6,14 +6,14 @@ metadata:
   annotations:
     backbase/public: "true"
     backbase/maint-component: Identity
-    backbase/maint-subcomponent: 'Account Statements'
-    backbase/build-job-link: https://jenkins.backbase.eu/job/F5/job/AS/job/account-statement-service
-    backbase/docs-link: https://community.backbase.com/documentation/DBS/latest/account_statements_reference
+    backbase/maint-subcomponent: 'Identity Auth Server'
+    backbase/build-job-link: https://jenkins.backbase.eu/job/Cardiff/job/IAM/job/backbase-identity/job/master/
+    backbase/docs-link: https://community.backbase.com/documentation/identity/latest/index
     backbase/api-docs-link: https://developer.backbase.com/api/specs/account-statement/account-statement-client-api/2.0.6/,https://developer.backbase.com/api/specs/account-statement/account-statement-integration-outbound-api/2.0.5/
-    backbase/slack-channel-name: s-account-statements
-    backbase/public-docker-images-link: https://repo.backbase.com/ui/native/backbase-docker-releases/account-statement
+    backbase/slack-channel-name: s-identity
+    backbase/public-docker-images-link: https://repo.backbase.com/ui/native/backbase-docker-releases/backbase-identity
     backbase/public-openapi-specs-link: https://repo.backbase.com/ui/native/specs/account-statement
-    backbase/public-helm-files-link: https://repo.backbase.com/artifactory/charts/account-statement
+    backbase/public-helm-files-link: https://repo.backbase.com/ui/native/charts/backbase-identity/
     backbase/public-capability-bom-link: https://repo.backbase.com/ui/native/backbase-dbs-releases/com/backbase/account-statements-bom/
     backbase/rc-exec-jars-link: https://artifacts.backbase.com/ui/native/staging/com/backbase/dbs/account/account-statement-service
     backbase/rc-war-files-link: https://artifacts.backbase.com/ui/native/staging/com/backbase/dbs/account/account-statement-service
@@ -29,19 +29,19 @@ metadata:
     - iam
     - quarkus
   links:
-    - url: https://community.backbase.com/documentation/DBS/latest/accountstatements_understand
+    - url: https://community.backbase.com/documentation/identity/latest/index
       title: Community
       icon: help
-    - url: https://jenkins.backbase.eu/job/F5/job/AS/
+    - url: https://jenkins.backbase.eu/job/Cardiff/job/IAM/job/backbase-identity/
       title: Jenkins
       icon: cloud
     - url: https://sonar.backbase.eu/dashboard?id=AS%3Aaccount-statement
       title: SonarQube
       icon: dashboard
-    - url: https://repo.backbase.com/ui/native/backbase-charts/account-statement
+    - url: https://repo.backbase.com/ui/native/charts/backbase-identity/
       title: Helm charts
       icon: dashboard
-    - url: https://backbase.slack.com/archives/CG3JKK2A2
+    - url: https://backbase.slack.com/archives/CG3JKRPCN
       title: Slack support channel
       icon: help
     - url: https://backbase.atlassian.net/wiki/spaces/F5/pages/2246607178/Account+Statements
