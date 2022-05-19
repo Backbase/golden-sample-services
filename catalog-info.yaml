@@ -1,29 +1,49 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: golden-sample
-  description: This project is a development of a small set of [Backbase Service SDK](https://community.backbase.com/documentation/ServiceSDK/latest/index) (**Spring Boot** and **Cloud**) based Microservices projects that implement cloud-native intuitive, Microservices design patterns, and coding best practices.
+  name: backbase-identity
+  description: This service acts as an identity provider (IdP), defines the authentication flows that a user must follow to authenticate, and issues access tokens
+  annotations:
+    backbase/public: "true"
+    backbase.com/maint-component: Identity
+    backbase.com/maint-subcomponent: 'Identity Auth Server'
+    jenkins.io/job-full-name: 'Cardiff/job/IAM/job/backbase-identity/'
+    sonarqube.org/project-key: 'IAM'
   tags:
-    - java
-    - spring
-    - ssdk
+    - iam
+    - identity
+    - identity-core
+    - identity-auth-server
+    - quarkus
   links:
-    - url: https://100daysof.backbase.com/ssdk/golden-sample.html
+    - url: https://community.backbase.com/documentation/identity/latest/identity_core
       title: Community
-      icon: user
-    - url: https://github.com/Backbase/golden-sample-services/wiki
-      title: Confluence space
-      icon: group
-    - url: https://github.com/Backbase/golden-sample-services/pkgs/container/golden-sample%2Fproduct
-      title: Docker image
+      icon: help
+    - url: https://jenkins.backbase.eu/job/Cardiff/job/IAM/job/backbase-identity/
+      title: Jenkins
       icon: cloud
-    - url: https://github.com/Backbase/golden-sample-services/tree/main/charts
-      title: Helm Chart
+    - url: https://sonar.backbase.eu/dashboard?id=IAM:backbase-identity
+      title: SonarQube
       icon: dashboard
-    - url: https://backbase.slack.com/archives/CG2C5NH8D
-      title: Support channel
+    - url: https://backbase.blackducksoftware.com/api/projects/a2cf4598-9aef-47fc-8ccd-87bc48dd29dc
+      title: BlackDuck
+      icon: dashboard
+    - url: https://repo.backbase.com/ui/native/identity/com/backbase/identity/backbase-identity/
+      title: Maven artifacts
+      icon: dashboard
+    - url: https://repo.backbase.com/ui/native/backbase-docker-releases/backbase-identity/
+      title: Docker images
+      icon: dashboard
+    - url: https://repo.backbase.com/backbase-charts/backbase-identity/
+      title: Helm charts
+      icon: dashboard
+    - url: https://backbase.slack.com/archives/CG3JKRPCN
+      title: Slack support channel
+      icon: help
+    - url: https://backbase.atlassian.net/wiki/spaces/ID/overview
+      title: Confluence
       icon: help
 spec:
   type: service
   lifecycle: production
-  owner: backend-guild
+  owner: identity--core-services
