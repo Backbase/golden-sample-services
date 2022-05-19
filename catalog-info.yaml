@@ -1,11 +1,11 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: account-statements
-  description: This service retrieves account statements and downloads in different formats.
+  name: backbase-identity
+  description: This service acts as an identity provider (IdP), defines the authentication flows that a user must follow to authenticate, and issues access tokens.
   annotations:
     backbase/public: "true"
-    backbase/maint-component: Digital Banking Services (DBS)
+    backbase/maint-component: Identity
     backbase/maint-subcomponent: 'Account Statements'
     backbase/build-job-link: https://jenkins.backbase.eu/job/F5/job/AS/job/account-statement-service
     backbase/docs-link: https://community.backbase.com/documentation/DBS/latest/account_statements_reference
@@ -26,9 +26,8 @@ metadata:
     sonarqube.org/project-key: 'AS:account-statement-service'
   tags:
     - java
-    - account-statement
-    - spring
-    - ssdk
+    - iam
+    - quarkus
   links:
     - url: https://community.backbase.com/documentation/DBS/latest/accountstatements_understand
       title: Community
@@ -51,12 +50,4 @@ metadata:
 spec:
   type: service
   lifecycle: production
-  owner: ninjas
-  subcomponentOf: account-statement
-  providesApis:
-    - account-statement-client-api-v2
-    - account-statement-integration-outbound-api-v2
-  consumesApis:
-    - access-control-service-api-v2
-    - user-manager-service-api-v2
-    - arrangement-service-api-v2
+  owner: identity--core-services
