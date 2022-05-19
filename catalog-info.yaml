@@ -1,49 +1,62 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: backbase-identity
-  description: This service acts as an identity provider (IdP), defines the authentication flows that a user must follow to authenticate, and issues access tokens
+  name: account-statements
+  description: This service retrieves account statements and downloads in different formats.
   annotations:
     backbase/public: "true"
-    backbase.com/maint-component: Identity
-    backbase.com/maint-subcomponent: 'Identity Auth Server'
-    jenkins.io/job-full-name: 'Cardiff/job/IAM/job/backbase-identity/'
-    sonarqube.org/project-key: 'IAM'
+    backbase/maint-component: Digital Banking Services (DBS)
+    backbase/maint-subcomponent: 'Account Statements'
+    backbase/build-job-link: https://jenkins.backbase.eu/job/F5/job/AS/job/account-statement-service
+    backbase/docs-link: https://community.backbase.com/documentation/DBS/latest/account_statements_reference
+    backbase/api-docs-link: https://developer.backbase.com/api/specs/account-statement/account-statement-client-api/2.0.6/,https://developer.backbase.com/api/specs/account-statement/account-statement-integration-outbound-api/2.0.5/
+    backbase/slack-channel-name: s-account-statements
+    backbase/public-docker-images-link: https://repo.backbase.com/ui/native/backbase-docker-releases/account-statement
+    backbase/public-openapi-specs-link: https://repo.backbase.com/ui/native/specs/account-statement
+    backbase/public-helm-files-link: https://repo.backbase.com/artifactory/charts/account-statement
+    backbase/public-capability-bom-link: https://repo.backbase.com/ui/native/backbase-dbs-releases/com/backbase/account-statements-bom/
+    backbase/rc-exec-jars-link: https://artifacts.backbase.com/ui/native/staging/com/backbase/dbs/account/account-statement-service
+    backbase/rc-war-files-link: https://artifacts.backbase.com/ui/native/staging/com/backbase/dbs/account/account-statement-service
+    backbase/rc-openapi-specs-link: https://artifacts.backbase.com/ui/native/specs/account-statement
+    backbase/rc-capability-bom-link: https://artifacts.backbase.com/ui/native/staging/com/backbase/account-statements-bom
+    backbase/public-exec-jars-link: https://repo.backbase.com/ui/native/backbase-dbs-releases/com/backbase/dbs/account/account-statement/
+    backbase/public-war-files-link: https://repo.backbase.com/ui/native/backbase-dbs-releases/com/backbase/dbs/account/account-statement/
+    backbase/blackduck-project-name: account-statement
+    backbase/blackduck-link: https://backbase.blackducksoftware.com/api/search/project-versions?limit=100&offset=0&q=account-statement
+    sonarqube.org/project-key: 'AS:account-statement-service'
   tags:
-    - iam
-    - identity
-    - identity-core
-    - identity-auth-server
-    - quarkus
+    - java
+    - account-statement
+    - spring
+    - ssdk
   links:
-    - url: https://community.backbase.com/documentation/identity/latest/identity_core
+    - url: https://community.backbase.com/documentation/DBS/latest/accountstatements_understand
       title: Community
       icon: help
-    - url: https://jenkins.backbase.eu/job/Cardiff/job/IAM/job/backbase-identity/
+    - url: https://jenkins.backbase.eu/job/F5/job/AS/
       title: Jenkins
       icon: cloud
-    - url: https://sonar.backbase.eu/dashboard?id=IAM:backbase-identity
+    - url: https://sonar.backbase.eu/dashboard?id=AS%3Aaccount-statement
       title: SonarQube
       icon: dashboard
-    - url: https://backbase.blackducksoftware.com/api/projects/a2cf4598-9aef-47fc-8ccd-87bc48dd29dc
-      title: BlackDuck
-      icon: dashboard
-    - url: https://repo.backbase.com/ui/native/identity/com/backbase/identity/backbase-identity/
-      title: Maven artifacts
-      icon: dashboard
-    - url: https://repo.backbase.com/ui/native/backbase-docker-releases/backbase-identity/
-      title: Docker images
-      icon: dashboard
-    - url: https://repo.backbase.com/backbase-charts/backbase-identity/
+    - url: https://repo.backbase.com/ui/native/backbase-charts/account-statement
       title: Helm charts
       icon: dashboard
-    - url: https://backbase.slack.com/archives/CG3JKRPCN
+    - url: https://backbase.slack.com/archives/CG3JKK2A2
       title: Slack support channel
       icon: help
-    - url: https://backbase.atlassian.net/wiki/spaces/ID/overview
+    - url: https://backbase.atlassian.net/wiki/spaces/F5/pages/2246607178/Account+Statements
       title: Confluence
       icon: help
 spec:
   type: service
   lifecycle: production
-  owner: identity--core-services
+  owner: ninjas
+  subcomponentOf: account-statement
+  providesApis:
+    - account-statement-client-api-v2
+    - account-statement-integration-outbound-api-v2
+  consumesApis:
+    - access-control-service-api-v2
+    - user-manager-service-api-v2
+    - arrangement-service-api-v2
