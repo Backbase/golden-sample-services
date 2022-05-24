@@ -1,29 +1,53 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: golden-sample
-  description: This project is a development of a small set of [Backbase Service SDK](https://community.backbase.com/documentation/ServiceSDK/latest/index) (**Spring Boot** and **Cloud**) based Microservices projects that implement cloud-native intuitive, Microservices design patterns, and coding best practices.
+  name: backbase-identity
+  description: This service acts as an identity provider (IdP), defines the authentication flows that a user must follow to authenticate, and issues access tokens.
+  annotations:
+    backbase/public: "true"
+    backbase/maint-component: Identity
+    backbase/maint-subcomponent: 'Identity Auth Server'
+    backbase/build-job-link: https://jenkins.backbase.eu/job/Cardiff/job/IAM/job/backbase-identity/job/master/
+    backbase/docs-link: https://community.backbase.com/documentation/identity/latest/index
+    backbase/api-docs-link: https://developer.backbase.com/api/specs/account-statement/account-statement-client-api/2.0.6/,https://developer.backbase.com/api/specs/account-statement/account-statement-integration-outbound-api/2.0.5/
+    backbase/slack-channel-name: s-identity
+    backbase/public-docker-images-link: https://repo.backbase.com/ui/native/backbase-docker-releases/backbase-identity
+    backbase/public-openapi-specs-link: https://repo.backbase.com/ui/native/specs/account-statement
+    backbase/public-helm-files-link: https://repo.backbase.com/ui/native/charts/backbase-identity/
+    backbase/public-capability-bom-link: https://repo.backbase.com/ui/native/backbase-dbs-releases/com/backbase/account-statements-bom/
+    backbase/rc-exec-jars-link: https://artifacts.backbase.com/ui/native/staging/com/backbase/dbs/account/account-statement-service
+    backbase/rc-war-files-link: https://artifacts.backbase.com/ui/native/staging/com/backbase/dbs/account/account-statement-service
+    backbase/rc-openapi-specs-link: https://artifacts.backbase.com/ui/native/specs/account-statement
+    backbase/rc-capability-bom-link: https://artifacts.backbase.com/ui/native/staging/com/backbase/account-statements-bom
+    backbase/public-exec-jars-link: https://repo.backbase.com/ui/native/backbase-dbs-releases/com/backbase/dbs/account/account-statement/
+    backbase/public-war-files-link: https://repo.backbase.com/ui/native/backbase-dbs-releases/com/backbase/dbs/account/account-statement/
+    backbase/blackduck-project-name: account-statement
+    backbase/blackduck-link: https://backbase.blackducksoftware.com/api/search/project-versions?limit=100&offset=0&q=account-statement
+    sonarqube.org/project-key: 'AS:account-statement-service'
   tags:
     - java
-    - spring
-    - ssdk
+    - iam
+    - quarkus
   links:
-    - url: https://100daysof.backbase.com/ssdk/golden-sample.html
+    - url: https://community.backbase.com/documentation/identity/latest/index
       title: Community
-      icon: user
-    - url: https://github.com/Backbase/golden-sample-services/wiki
-      title: Confluence space
-      icon: group
-    - url: https://github.com/Backbase/golden-sample-services/pkgs/container/golden-sample%2Fproduct
-      title: Docker image
+      icon: help
+    - url: https://jenkins.backbase.eu/job/Cardiff/job/IAM/job/backbase-identity/
+      title: Jenkins
       icon: cloud
-    - url: https://github.com/Backbase/golden-sample-services/tree/main/charts
-      title: Helm Chart
+    - url: https://sonar.backbase.eu/dashboard?id=AS%3Aaccount-statement
+      title: SonarQube
       icon: dashboard
-    - url: https://backbase.slack.com/archives/CG2C5NH8D
-      title: Support channel
+    - url: https://repo.backbase.com/ui/native/charts/backbase-identity/
+      title: Helm charts
+      icon: dashboard
+    - url: https://backbase.slack.com/archives/CG3JKRPCN
+      title: Slack support channel
+      icon: help
+    - url: https://backbase.atlassian.net/wiki/spaces/F5/pages/2246607178/Account+Statements
+      title: Confluence
       icon: help
 spec:
   type: service
   lifecycle: production
-  owner: backend-guild
+  owner: identity--core-services
