@@ -1,1 +1,0 @@
-spring.jpa.mapping-resources: db/mapping/mysql-orm.xml

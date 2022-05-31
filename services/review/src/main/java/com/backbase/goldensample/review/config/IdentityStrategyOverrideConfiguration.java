@@ -20,7 +20,7 @@ import org.springframework.validation.annotation.Validated;
  */
 @Validated
 @Configuration
-@PropertySource("classpath:db/mapping/mysql_entities_identity_strategy_override.yml")
+@PropertySource("classpath:db/mapping/mysql_entities_identity_strategy_override.properties")
 @ConditionalOnExpression("'${backbase.entities-identity-strategy-override}' eq 'true' "
     + "|| ("
     + "'${backbase.entities-identity-strategy-override}' ne 'false' "
