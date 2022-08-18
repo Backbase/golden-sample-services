@@ -72,9 +72,7 @@ class ProductClientImplTest {
         when(productServiceApi.getProductById(PRODUCT_ID))
             .thenThrow(new HttpClientErrorException(HttpStatus.BAD_REQUEST));
 
-        assertThrows(HttpClientErrorException.class, () -> {
-            productClientImpl.getProductById(PRODUCT_ID);
-        });
+        assertThrows(HttpClientErrorException.class, () -> productClientImpl.getProductById(PRODUCT_ID));
 
         verify(productServiceApi, times(1)).getProductById(PRODUCT_ID);
         verify(productMapper, times(0)).map(MODEL_PRODUCT);

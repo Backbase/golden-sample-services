@@ -98,15 +98,16 @@ public class ReviewServiceApiControllerMultitenancyTest {
 
     @Test
     void shouldFailWithUnrecognisedAdditionsForTenantOrgShop() throws Exception {
-        String requestBody = "{\n" +
-            "  \"productId\": \"1\",\n" +
-            "  \"author\": \"author\",\n" +
-            "  \"subject\": \"subject\",\n" +
-            "  \"content\": \"long content\",\n" +
-            "  \"stars\": \"4\",\n" +
-            "  \"additions\": {\n" +
-            "    \"purchaseDate\": \"today\"}\n" +
-            "}";
+        String requestBody = """
+            {
+              "productId": "1",
+              "author": "author",
+              "subject": "subject",
+              "content": "long content",
+              "stars": "4",
+              "additions": {
+                "purchaseDate": "today"}
+            }""";
 
         when(reviewMapper.dtoToApi(any(ReviewDTO.class))).thenReturn(reviewOne);
         when(reviewService.getReview(1)).thenReturn(reviewDto);
@@ -129,15 +130,16 @@ public class ReviewServiceApiControllerMultitenancyTest {
 
     @Test
     void shouldCreateNewProductWithRecognisedAdditionsForTenantRebrandShop() throws Exception {
-        String requestBody = "{\n" +
-            "  \"productId\": \"1\",\n" +
-            "  \"author\": \"author\",\n" +
-            "  \"subject\": \"subject\",\n" +
-            "  \"content\": \"long content\",\n" +
-            "  \"stars\": \"4\",\n" +
-            "  \"additions\": {\n" +
-            "    \"purchaseDate\": \"today\"}\n" +
-            "}";
+        String requestBody = """
+            {
+              "productId": "1",
+              "author": "author",
+              "subject": "subject",
+              "content": "long content",
+              "stars": "4",
+              "additions": {
+                "purchaseDate": "today"}
+            }""";
 
         when(reviewMapper.apiToDto(any(Review.class))).thenReturn(reviewDto);
         when(reviewService.createReview(any(ReviewDTO.class))).thenReturn(reviewDto);

@@ -74,9 +74,7 @@ class ReviewClientV1ImplTest {
         when(reviewServiceApi.getReviewListByProductId(PRODUCT_ID))
             .thenThrow(new HttpClientErrorException(HttpStatus.BAD_REQUEST));
 
-        assertThrows(HttpClientErrorException.class, () -> {
-            reviewClientV2Impl.getReviewListByProductId(PRODUCT_ID);
-        });
+        assertThrows(HttpClientErrorException.class, () -> reviewClientV2Impl.getReviewListByProductId(PRODUCT_ID));
 
         verify(reviewServiceApi, times(1)).getReviewListByProductId(PRODUCT_ID);
         verify(reviewV2Mapper, times(0)).map(MODEL_REVIEW);

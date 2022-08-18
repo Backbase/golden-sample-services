@@ -106,12 +106,13 @@ class ReviewServiceApiControllerTest {
     @Test
     void shouldRejectNewReviewWithInvalidPayload() throws Exception {
 
-        String requestBody = "{\n" +
-            "  \"productId\": \"1\",\n" +
-            "  \"author\": \"name\",\n" +
-            "  \"subject\": \"subject\",\n" +
-            "  \"content\": \"long content\"\n" +
-            "}";
+        String requestBody = """
+            {
+              "productId": "1",
+              "author": "name",
+              "subject": "subject",
+              "content": "long content"
+            }""";
 
         this
             .mockMvc
@@ -123,13 +124,14 @@ class ReviewServiceApiControllerTest {
 
     @Test
     void shouldCreateNewReviewWithValidPayload() throws Exception {
-        String requestBody = "{\n" +
-            "  \"productId\": \"1\",\n" +
-            "  \"author\": \"author\",\n" +
-            "  \"subject\": \"subject\",\n" +
-            "  \"content\": \"long content\",\n" +
-            "  \"stars\": \"4\"\n" +
-            "}";
+        String requestBody = """
+            {
+              "productId": "1",
+              "author": "author",
+              "subject": "subject",
+              "content": "long content",
+              "stars": "4"
+            }""";
 
         when(reviewMapper.apiToDto(any(Review.class))).thenReturn(reviewDto);
         when(reviewService.createReview(any(ReviewDTO.class))).thenReturn(reviewDto);
@@ -145,13 +147,14 @@ class ReviewServiceApiControllerTest {
     @Test
     void shouldUpdateReviewWithValidPayload() throws Exception {
 
-        String requestBody = "{\n" +
-            "  \"productId\": \"1\",\n" +
-            "  \"author\": \"author\",\n" +
-            "  \"subject\": \"subject\",\n" +
-            "  \"content\": \"long content\",\n" +
-            "  \"stars\": \"4\"\n" +
-            "}";
+        String requestBody = """
+            {
+              "productId": "1",
+              "author": "author",
+              "subject": "subject",
+              "content": "long content",
+              "stars": "4"
+            }""";
 
         when(reviewMapper.apiToDto(any(Review.class))).thenReturn(reviewDto);
         when(reviewService.updateReview(any(ReviewDTO.class))).thenReturn(reviewDto);

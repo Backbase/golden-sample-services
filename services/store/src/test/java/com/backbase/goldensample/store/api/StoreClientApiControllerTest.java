@@ -77,18 +77,19 @@ class StoreClientApiControllerTest extends StoreClientApiControllerTestHelper {
     @DisplayName("Should Create a Product and its Reviews")
     void shouldCreateAProductAndItsReviews() throws Exception {
 
-        String requestBody = "{\n" +
-            "  \"name\": \"Product 1\",\n" +
-            "  \"weight\": \"23\",\n" +
-            "  \"createDate\": \"2020-12-01\",\n" +
-            "  \"reviews\": [\n" +
-            "{\n" +
-            "  \"author\": \"author\",\n" +
-            "  \"subject\": \"subject\",\n" +
-            "  \"content\": \"long content\"\n" +
-            "}\n" +
-            "]\n" +
-            "}";
+        String requestBody = """
+            {
+              "name": "Product 1",
+              "weight": "23",
+              "createDate": "2020-12-01",
+              "reviews": [
+            {
+              "author": "author",
+              "subject": "subject",
+              "content": "long content"
+            }
+            ]
+            }""";
 
         when(productCompositeService.createProductWithReviews(any())).thenReturn(productOne);
 
@@ -107,24 +108,25 @@ class StoreClientApiControllerTest extends StoreClientApiControllerTestHelper {
 
         Product productOne = new Product();
 
-        String requestBody = "{\n" +
-            "  \"name\": \"Product 1\",\n" +
-            "  \"weight\": \"23\",\n" +
-            "  \"createDate\": \"2020-12-01\",\n" +
-            "  \"reviews\": [\n" +
-            "{\n" +
-            "  \"author\": \"author\",\n" +
-            "  \"subject\": \"subject\",\n" +
-            "  \"content\": \"long content\",\n" +
-            "  \"additions\": {\n" +
-                "  \"param-rev1\": \"valr1\"\n" +
-                "}\n" +
-            "}\n" +
-            "],\n" +
-            "  \"additions\": {\n" +
-                "  \"param-prod1\": \"valp1\"\n" +
-                "}\n" +
-            "}";
+        String requestBody = """
+            {
+              "name": "Product 1",
+              "weight": "23",
+              "createDate": "2020-12-01",
+              "reviews": [
+            {
+              "author": "author",
+              "subject": "subject",
+              "content": "long content",
+              "additions": {
+              "param-rev1": "valr1"
+            }
+            }
+            ],
+              "additions": {
+              "param-prod1": "valp1"
+            }
+            }""";
 
         when(productCompositeService.createProductWithReviews(any(Product.class))).thenReturn(productOne);
 

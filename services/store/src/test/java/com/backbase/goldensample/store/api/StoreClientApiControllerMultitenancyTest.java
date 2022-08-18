@@ -32,24 +32,25 @@ class StoreClientApiControllerMultitenancyTest extends StoreClientApiControllerT
 
         when(productCompositeService.createProductWithReviews(any(Product.class))).thenReturn(productOne);
 
-        String requestBody = "{\n" +
-            "  \"name\": \"Product 1\",\n" +
-            "  \"weight\": \"23\",\n" +
-            "  \"createDate\": \"2020-12-01\",\n" +
-            "  \"reviews\": [\n" +
-            "{\n" +
-            "  \"author\": \"author\",\n" +
-            "  \"subject\": \"subject\",\n" +
-            "  \"content\": \"long content\",\n" +
-            "  \"additions\": {\n" +
-                "  \"purchaseDate\": \"date1\"\n" +
-                "}\n" +
-            "}\n" +
-            "],\n" +
-            "  \"additions\": {\n" +
-                "  \"description\": \"desc1\"\n" +
-                "}\n" +
-            "}";
+        String requestBody = """
+            {
+              "name": "Product 1",
+              "weight": "23",
+              "createDate": "2020-12-01",
+              "reviews": [
+            {
+              "author": "author",
+              "subject": "subject",
+              "content": "long content",
+              "additions": {
+              "purchaseDate": "date1"
+            }
+            }
+            ],
+              "additions": {
+              "description": "desc1"
+            }
+            }""";
 
         MvcResult result = this.mockMvc
             .perform(post("/client-api/v1/product-composite")

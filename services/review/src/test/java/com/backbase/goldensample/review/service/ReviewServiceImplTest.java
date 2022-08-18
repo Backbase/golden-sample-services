@@ -43,7 +43,7 @@ class ReviewServiceImplTest {
 
     @Test
     void getAllReviewsByProductTest() {
-        List<ReviewEntity> list = new ArrayList<ReviewEntity>();
+        List<ReviewEntity> list = new ArrayList<>();
         ReviewEntity reviewEntity1 = new ReviewEntity(1L, "author", "subject", "content", 5, null);
         ReviewEntity reviewEntity2 = new ReviewEntity(1L, "angryauthor", "angry subject", "worst product ever", 1, null);
 

@@ -88,11 +88,12 @@ class ProductServiceApiControllerTest extends ProductApiController {
     @Test
     @DisplayName("should create a new Product with a valid a payload")
     void shouldCreateNewProductWithValidPayload() throws Exception {
-        String requestBody = "{\n" +
-            "  \"name\": \"Product 1\",\n" +
-            "  \"weight\": \"23\",\n" +
-            "  \"createDate\": \"2020-12-01\"\n" +
-            "}";
+        String requestBody = """
+            {
+            "name": "Product 1",
+            "weight": "23",
+            "createDate": "2020-12-01"
+            }""";
 
         when(productMapper.apiToEntity(any(Product.class))).thenReturn(productEntityOne);
         when(productService.createProduct(any())).thenReturn(new ProductId().id(1L));
@@ -109,12 +110,13 @@ class ProductServiceApiControllerTest extends ProductApiController {
     @DisplayName("should update a Product with a valid a payload")
     void shouldUpdateAProductWithValidPayload() throws Exception {
 
-        String requestBody = "{\n" +
-            "  \"productId\": \"1\",\n" +
-            "  \"name\": \"Product 1\",\n" +
-            "  \"weight\": \"5\",\n" +
-            "  \"createDate\": \"2020-12-01\"\n" +
-            "}";
+        String requestBody = """
+            {
+            "productId": "1",
+            "name": "Product 1",
+            "weight": "5",
+            "createDate": "2020-12-01"
+            }""";
 
         when(productMapper.apiToEntity(any(Product.class))).thenReturn(productEntityOne);
 
