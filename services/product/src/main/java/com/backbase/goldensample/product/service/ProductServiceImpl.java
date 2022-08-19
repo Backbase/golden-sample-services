@@ -98,7 +98,7 @@ public class ProductServiceImpl implements ProductService {
      */
     private void emitDeletedEvent(ProductEntity productEntity) {
         ProductDeletedEvent event = mapper.entityToDeletedEvent(productEntity);
-        event.setDeleteDateAsLocalDate(LocalDate.now());
+        event.setDeleteDate(LocalDate.now());
         EnvelopedEvent<ProductDeletedEvent> envelopedEvent = new EnvelopedEvent<>();
         envelopedEvent.setEvent(event);
         eventBus.emitEvent(envelopedEvent);

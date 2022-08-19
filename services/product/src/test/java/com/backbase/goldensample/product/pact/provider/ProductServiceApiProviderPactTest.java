@@ -80,7 +80,7 @@ class ProductServiceApiProviderPactTest {
     
     @State("a product is created")
     public void productIsCreated() {
-		when(service.createProduct(any(Product.class))).thenReturn(new ProductId().id(1l));
+		when(service.createProduct(any(Product.class))).thenReturn(new ProductId().id(1L));
     }
 
 }

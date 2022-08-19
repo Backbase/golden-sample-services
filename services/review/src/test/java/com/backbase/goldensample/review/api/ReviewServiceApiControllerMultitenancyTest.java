@@ -97,14 +97,15 @@ class ReviewServiceApiControllerMultitenancyTest {
 
     @Test
     void shouldFailWithUnrecognisedAdditionsForTenantOrgShop() throws Exception {
-        String requestBody = "{\n" +
-            "  \"productId\": \"1\",\n" +
-            "  \"author\": \"author\",\n" +
-            "  \"subject\": \"subject\",\n" +
-            "  \"content\": \"long content\",\n" +
-            "  \"additions\": {\n" +
-            "    \"purchaseDate\": \"today\"}\n" +
-            "}";
+        String requestBody = """
+            {
+              "productId": "1",
+              "author": "author",
+              "subject": "subject",
+              "content": "long content",
+              "additions": {
+                "purchaseDate": "today"}
+            }""";
 
         when(reviewMapper.dtoToApi(any(ReviewDTO.class))).thenReturn(reviewOne);
         when(reviewService.getReview(1)).thenReturn(reviewEntity);
@@ -127,14 +128,15 @@ class ReviewServiceApiControllerMultitenancyTest {
 
     @Test
     void shouldCreateNewProductWithRecognisedAdditionsForTenantRebrandShop() throws Exception {
-        String requestBody = "{\n" +
-            "  \"productId\": \"1\",\n" +
-            "  \"author\": \"author\",\n" +
-            "  \"subject\": \"subject\",\n" +
-            "  \"content\": \"long content\",\n" +
-            "  \"additions\": {\n" +
-            "    \"purchaseDate\": \"today\"}\n" +
-            "}";
+        String requestBody = """
+            {
+              "productId": "1",
+              "author": "author",
+              "subject": "subject",
+              "content": "long content",
+              "additions": {
+                "purchaseDate": "today"}
+            }""";
 
         when(reviewMapper.apiToDto(any(Review.class))).thenReturn(reviewEntity);
         when(reviewService.createReview(any(ReviewDTO.class))).thenReturn(reviewEntity);

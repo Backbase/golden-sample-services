@@ -48,9 +48,9 @@ class ProductServiceApiConsumerPactTest {
 						.integerType("productId", 1)
 						.integerType("weight", 100)
 						.array("createDate")
-							.integerType(2021l)
-							.integerType(1l)
-							.integerType(9l)
+							.integerType(2021L)
+							.integerType(1L)
+							.integerType(9L)
 						.closeArray().asBody()
 						.nullValue("additions"))
 				.willRespondWith()
@@ -67,10 +67,10 @@ class ProductServiceApiConsumerPactTest {
 		
 		ProductId productId = client.postProduct(new Product()
 				.name("Coke")
-				.productId(1l)
+				.productId(1L)
 				.weight(100)
 				.createDate(LocalDate.of(2021, 1, 9)));
 		
-		assertEquals(1l, productId.getId());
+		assertEquals(1L, productId.getId());
 	}
 }

@@ -97,9 +97,7 @@ class ProductCompositeServiceTest {
     void getProductHttpClientErrorException() {
         when(productClient.getProductById(1L)).thenThrow(new HttpClientErrorException(HttpStatus.BAD_REQUEST));
 
-        Assertions.assertThrows(InternalServerErrorException.class, () -> {
-            productCompositeService.retrieveProductWithReviews(1L);
-        });
+        Assertions.assertThrows(InternalServerErrorException.class, () -> productCompositeService.retrieveProductWithReviews(1L));
         verify(productClient, times(1)).getProductById(1L);
     }
 
@@ -133,9 +131,7 @@ class ProductCompositeServiceTest {
     void shouldCreateAProductException () {
         when(productClient.postProduct(product)).thenThrow(new HttpClientErrorException(HttpStatus.BAD_REQUEST));
 
-        Assertions.assertThrows(InternalServerErrorException.class, () -> {
-            productCompositeService.createProductWithReviews(product);
-        });
+        Assertions.assertThrows(InternalServerErrorException.class, () -> productCompositeService.createProductWithReviews(product));
         verify(productClient, times(1)).postProduct(product);
     }
 
@@ -164,9 +160,7 @@ class ProductCompositeServiceTest {
         Product myNewProduct = createProduct(1L, "new", 1, TODAY);
         myNewProduct.setReviews(Collections.singletonList(review));
 
-        Assertions.assertThrows(InternalServerErrorException.class, () -> {
-            productCompositeService.createProductWithReviews(myNewProduct);
-        });
+        Assertions.assertThrows(InternalServerErrorException.class, () -> productCompositeService.createProductWithReviews(myNewProduct));
         verify(reviewClient, times(1)).postReview(review);
     }
 
