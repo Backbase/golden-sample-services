@@ -4,12 +4,12 @@ backbase:
     tenants:
       - id: org_shop
         datasource:
-          url: jdbc:tc:mysql:5.7:///testdb1
+          url: jdbc:tc:mysql:5.7:///testdb1?TC_MY_CNF=db/mysql_conf_override
           username: test
           password: test
       - id: rebrand_shop
         datasource:
-          url: jdbc:tc:mysql:5.7:///testdb2
+          url: jdbc:tc:mysql:5.7:///testdb2?TC_MY_CNF=db/mysql_conf_override
           username: test
           password: test
     datasource:

@@ -11,7 +11,7 @@ spring:
   datasource:
     ## You often do not need to specify the driver-class-name,
     ## since Spring Boot can deduce it for most databases from the url.
-    url: jdbc:tc:mysql:5.7:///databasename
+    url: jdbc:tc:mysql:5.7:///databasename?TC_MY_CNF=db/mysql_conf_override
     username: test
     password: test
 

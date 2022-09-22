@@ -197,6 +197,13 @@ For more information about tmpfs mount, see the [official Docker documentation](
 
 More info: https://www.testcontainers.org/modules/databases/jdbc/
 
+##### Running MySql container overriding my.cnf settings
+
+For MySQL databases, it is possible to override configuration settings using resources on the classpath. 
+Assuming `db/mysql_conf_override` is a directory on the classpath containing `.cnf` files, the following URL can be used:
+
+`jdbc:tc:mysql:5.7:///databasename?TC_MY_CNF=db/mysql_conf_override`
+
 ##### Database container objects
 In case you can't use the URL support, or need to fine-tune the container, you can instantiate it yourself.
 Add a `@Rule` or `@ClassRule` to your test class, e.g.:
