@@ -19,7 +19,7 @@
     </modules>
 
     <properties>
-        <org.lombok.version>1.18.22</org.lombok.version>
+        <org.lombok.version>1.18.24</org.lombok.version>
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
         <testcontainers.version>1.16.3</testcontainers.version>
         <boat-maven-plugin.version>0.15.4</boat-maven-plugin.version>
