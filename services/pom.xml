@@ -19,7 +19,6 @@
     </modules>
 
     <properties>
-        <org.lombok.version>1.18.22</org.lombok.version>
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
         <testcontainers.version>1.17.5</testcontainers.version>
         <boat-maven-plugin.version>0.15.4</boat-maven-plugin.version>
@@ -38,12 +37,6 @@
                 <groupId>org.openapitools</groupId>
                 <artifactId>jackson-databind-nullable</artifactId>
                 <version>0.2.2</version>
-            </dependency>
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>${org.lombok.version}</version>
-                <optional>true</optional>
             </dependency>
             <dependency>
                 <groupId>org.projectlombok</groupId>
