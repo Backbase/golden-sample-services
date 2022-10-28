@@ -21,8 +21,10 @@
     <properties>
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
         <testcontainers.version>1.17.5</testcontainers.version>
-        <boat-maven-plugin.version>0.15.4</boat-maven-plugin.version>
-        <jqno.equalsverifier.version>3.8.3</jqno.equalsverifier.version>
+        <boat-maven-plugin.version>0.16.5</boat-maven-plugin.version>
+        <jqno.equalsverifier.version>3.10.1</jqno.equalsverifier.version>
+        <jackson-databind-nullable.version>0.2.3</jackson-databind-nullable.version>
+        <swagger-annotations.version>1.6.8</swagger-annotations.version>
         <docker.repo.project>experimental/golden-sample</docker.repo.project>
     </properties>
 
@@ -36,7 +38,7 @@
             <dependency>
                 <groupId>org.openapitools</groupId>
                 <artifactId>jackson-databind-nullable</artifactId>
-                <version>0.2.2</version>
+                <version>${jackson-databind-nullable.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.projectlombok</groupId>
@@ -62,7 +64,7 @@
             <dependency>
                 <groupId>io.swagger</groupId>
                 <artifactId>swagger-annotations</artifactId>
-                <version>1.6.3</version>
+                <version>${swagger-annotations.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.testcontainers</groupId>
