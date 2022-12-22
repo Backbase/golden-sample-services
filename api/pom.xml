@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.backbase.buildingblocks</groupId>
         <artifactId>backbase-openapi-spec-starter-parent</artifactId>
-        <version>15.1.0</version>
+        <version>15.2.0</version>
         <relativePath/>
     </parent>
 
