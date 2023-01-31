@@ -16,7 +16,7 @@
     <properties>
         <jsr305.version>3.0.2</jsr305.version>
         <commons-collections.version>3.2.2</commons-collections.version>
-        <pact.version>4.1.18</pact.version>
+        <pact.version>4.4.4</pact.version>
     </properties>
 
     <dependencies>

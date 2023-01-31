@@ -101,10 +101,9 @@ public class ProductEntity {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof ProductEntity)) {
+        if (!(o instanceof ProductEntity that)) {
             return false;
         }
-        ProductEntity that = (ProductEntity) o;
         return id != null && Objects.equals(id, that.id);
     }
 

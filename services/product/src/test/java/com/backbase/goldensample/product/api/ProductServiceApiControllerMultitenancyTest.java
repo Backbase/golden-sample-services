@@ -80,13 +80,15 @@ class ProductServiceApiControllerMultitenancyTest extends ProductApiController {
 
     @Test
     void shouldFailWithUnrecognisedAdditionsForTenantOrgShop() throws Exception {
-        String requestBody = "{\n" +
-            "  \"name\": \"Product 1\",\n" +
-            "  \"weight\": \"23\",\n" +
-            "  \"createDate\": \"2020-12-01\",\n" +
-            "  \"additions\": {\n" +
-            "    \"description\": \"long desc\"}\n" +
-            "}";
+        String requestBody = """
+            {
+              "name": "Product 1",
+              "weight": "23",
+              "createDate": "2020-12-01",
+              "additions": {
+              "description": "long desc"}
+            }
+            """;
 
         when(productService.createProduct(any())).thenReturn(new ProductId().id(1L));
 
@@ -102,21 +104,25 @@ class ProductServiceApiControllerMultitenancyTest extends ProductApiController {
             .andReturn();
 
         String content = result.getResponse().getContentAsString();
-        assertThat(content, containsString("{\"message\":\"Bad Request\""));
+        assertThat(content, containsString("""
+            {"message":"Bad Request\""""));
         assertThat(content, containsString(
-            "{\"message\":\"The key is unexpected\",\"key\":\"api.AdditionalProperties.additions[description]\",\"context\":{\"rejectedValue\":\"long desc\"}}"));
+            """
+                     {"message":"The key is unexpected","key":"api.AdditionalProperties.additions[description]","context":{"rejectedValue":"long desc"}}"""));
     }
 
     @Test
     @DisplayName("should create a new Product with valid additions for tenant")
     void shouldCreateNewProductWithRecognisedAdditionsForTenantRebrandShop() throws Exception {
-        String requestBody = "{\n" +
-            "  \"name\": \"Product 1\",\n" +
-            "  \"weight\": \"23\",\n" +
-            "  \"createDate\": \"2020-12-01\",\n" +
-            "  \"additions\": {\n" +
-            "    \"description\": \"long desc\"}\n" +
-            "}";
+        String requestBody = """
+            {
+              "name": "Product 1",
+              "weight": "23",
+              "createDate": "2020-12-01",
+              "additions": {
+              "description": "long desc"}
+            }
+            """;
 
         when(productMapper.apiToEntity(any(Product.class))).thenReturn(productEntityOne);
         when(productService.createProduct(any())).thenReturn(new ProductId().id(1L));

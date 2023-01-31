@@ -3,6 +3,7 @@ package com.backbase.goldensample.store;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -14,9 +15,9 @@ class HttpErrorTest {
         HttpErrorInfo httpErrorInfoEmpty = new HttpErrorInfo();
 
         assertAll(
-            () -> assertEquals(null, httpErrorInfoEmpty.getTimestamp()),
-            () -> assertEquals(null, httpErrorInfoEmpty.getMessage()),
-            () -> assertEquals(null, httpErrorInfoEmpty.getPath()));
+            () -> assertNull(httpErrorInfoEmpty.getTimestamp()),
+            () -> assertNull(httpErrorInfoEmpty.getMessage()),
+            () -> assertNull(httpErrorInfoEmpty.getPath()));
     }
 
     @Test

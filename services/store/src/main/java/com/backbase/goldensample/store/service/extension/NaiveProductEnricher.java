@@ -31,12 +31,10 @@ public class NaiveProductEnricher implements ProductEnricher {
 
     @Override
     public void enrichProduct(Product product) {
-        product.getReviews().stream().forEach(this::censor);
+        product.getReviews().forEach(this::censor);
     }
 
     private void censor(Review review) {
-        badWords.forEach(word -> {
-            review.setContent(StringUtils.replace(review.getContent(), word, "***"));
-        });
+        badWords.forEach(word -> review.setContent(StringUtils.replace(review.getContent(), word, "***")));
     }
 }

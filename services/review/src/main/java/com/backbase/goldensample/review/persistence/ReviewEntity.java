@@ -120,10 +120,9 @@ public class ReviewEntity {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof ReviewEntity)) {
+        if (!(o instanceof ReviewEntity that)) {
             return false;
         }
-        ReviewEntity that = (ReviewEntity) o;
         return id != null && Objects.equals(id, that.id);
     }
 

@@ -6,6 +6,8 @@ import au.com.dius.pact.consumer.dsl.PactDslJsonBody;
 import au.com.dius.pact.consumer.dsl.PactDslWithProvider;
 import au.com.dius.pact.consumer.junit5.PactConsumerTestExt;
 import au.com.dius.pact.consumer.junit5.PactTestFor;
+import au.com.dius.pact.consumer.junit5.ProviderType;
+import au.com.dius.pact.core.model.PactSpecVersion;
 import au.com.dius.pact.core.model.RequestResponsePact;
 import au.com.dius.pact.core.model.annotations.Pact;
 import com.backbase.goldensample.product.api.client.ApiClient;
@@ -27,7 +29,7 @@ import org.springframework.http.MediaType;
  */
 @Tag("PactConsumer")
 @ExtendWith(PactConsumerTestExt.class)
-@PactTestFor(providerName = "product_service", port = "4010")
+@PactTestFor(providerName = "product_service", port = "4010", pactVersion = PactSpecVersion.V3)
 class ProductServiceApiConsumerPactTest {
 	
 	private static final Map<String, String> DEFAULT_RESPONSE_HEADERS =
@@ -48,9 +50,9 @@ class ProductServiceApiConsumerPactTest {
 						.integerType("productId", 1)
 						.integerType("weight", 100)
 						.array("createDate")
-							.integerType(2021l)
-							.integerType(1l)
-							.integerType(9l)
+							.integerType(2021L)
+							.integerType(1L)
+							.integerType(9L)
 						.closeArray().asBody()
 						.nullValue("additions"))
 				.willRespondWith()
@@ -67,10 +69,10 @@ class ProductServiceApiConsumerPactTest {
 		
 		ProductId productId = client.postProduct(new Product()
 				.name("Coke")
-				.productId(1l)
+				.productId(1L)
 				.weight(100)
 				.createDate(LocalDate.of(2021, 1, 9)));
 		
-		assertEquals(1l, productId.getId());
+		assertEquals(1L, productId.getId());
 	}
 }

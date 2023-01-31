@@ -45,13 +45,13 @@ class MapperTests {
         assertAll(() -> assertEquals(api.getProductId().toString(), createdEvent.getProductId(), "Product ID is different"),
             () -> assertEquals(api.getName(), createdEvent.getName(), "Name is different"),
             () -> assertEquals(api.getWeight().toString(), createdEvent.getWeight(), "Weight is different"),
-            () -> assertEquals(api.getCreateDate(), createdEvent.getCreateDateAsLocalDate(), "Create Date is different"));
+            () -> assertEquals(api.getCreateDate(), createdEvent.getCreateDate(), "Create Date is different"));
 
         ProductDeletedEvent deletedEvent = mapper.entityToDeletedEvent(entity);
 
         assertAll(() -> assertEquals(api.getProductId().toString(), deletedEvent.getProductId(), "Product ID is different"),
             () -> assertEquals(api.getName(), deletedEvent.getName(), "Name is different"),
             () -> assertEquals(api.getWeight().toString(), deletedEvent.getWeight(), "Weight is different"),
-            () -> assertNull(deletedEvent.getDeleteDateAsLocalDate(), "Create Date is different"));
+            () -> assertNull(deletedEvent.getDeleteDate(), "Delete is different"));
     }
 }

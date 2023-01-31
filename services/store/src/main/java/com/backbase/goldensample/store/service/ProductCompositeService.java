@@ -17,12 +17,13 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
 /**
  * Business logic of building and storing a composite of product and reviews.
  */
-@Component
+@Service
 @Slf4j
 @RequiredArgsConstructor
 public class ProductCompositeService {
@@ -40,6 +41,7 @@ public class ProductCompositeService {
      */
     public Optional<Product> retrieveProductWithReviews(long productId) {
         try {
+            log.debug("Retrieve product with reviews with id: {}", productId);
             Optional<Product> product = productClient.getProductById(productId);
             product.ifPresent(this::addReviews);
             product.ifPresent(productEnricher::enrichProduct);
