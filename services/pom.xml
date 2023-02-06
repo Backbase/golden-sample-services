@@ -92,6 +92,43 @@
                 <plugin>
                     <artifactId>maven-assembly-plugin</artifactId>
                 </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>copy-zips</id>
+                            <phase>prepare-package</phase>
+                            <goals>
+                                <goal>copy</goal>
+                            </goals>
+                            <configuration>
+                                <stripClassifier>true</stripClassifier>
+                                <stripVersion>true</stripVersion>
+                                <artifactItems>
+                                </artifactItems>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>attach-zips</id>
+                            <goals>
+                                <goal>attach-artifact</goal>
+                            </goals>
+                            <phase>package</phase>
+                            <configuration>
+                                <artifacts>
+                                </artifacts>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
