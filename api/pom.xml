@@ -24,7 +24,7 @@
 
     <properties>
         <frontend-plugin.version>1.8.0</frontend-plugin.version>
-        <boat-maven-plugin.version>0.16.6</boat-maven-plugin.version>
+        <boat-maven-plugin.version>0.16.10</boat-maven-plugin.version>
     </properties>
 
     <build>
