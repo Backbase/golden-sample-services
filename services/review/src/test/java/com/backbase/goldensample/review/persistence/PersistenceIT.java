@@ -46,6 +46,8 @@ class PersistenceIT {
     @BeforeAll
     public static void envSetup() {
         System.setProperty("SIG_SECRET_KEY", "JWTSecretKeyDontUseInProduction!");
+        //Liquibase should work offline with your service, as no production environment will allow outgoing connectivity for security reasons
+        System.setProperty("socksProxyHost", "127.0.0.1");
     }
 
 
