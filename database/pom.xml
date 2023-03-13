@@ -18,7 +18,7 @@
     </modules>
 
     <properties>
-        <liquibase-maven-plugin.version>4.19.0</liquibase-maven-plugin.version>
+        <liquibase-maven-plugin.version>4.20.0</liquibase-maven-plugin.version>
         <maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
         <blimp-maven-plugin.version>0.16.5</blimp-maven-plugin.version>
         <blimp-lint-rules.version>0.1.0</blimp-lint-rules.version>
