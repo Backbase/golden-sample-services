@@ -22,7 +22,7 @@
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
         <testcontainers.version>1.17.6</testcontainers.version>
         <boat-maven-plugin.version>0.16.6</boat-maven-plugin.version>
-        <jqno.equalsverifier.version>3.12.4</jqno.equalsverifier.version>
+        <jqno.equalsverifier.version>3.14.1</jqno.equalsverifier.version>
         <jackson-databind-nullable.version>0.2.4</jackson-databind-nullable.version>
         <swagger-annotations.version>1.6.9</swagger-annotations.version>
         <docker.repo.project>experimental/golden-sample</docker.repo.project>
