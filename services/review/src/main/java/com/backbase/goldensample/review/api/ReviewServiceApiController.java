@@ -7,7 +7,7 @@ import com.backbase.reviews.api.service.v1.ReviewServiceApi;
 import com.backbase.reviews.api.service.v1.model.Review;
 import com.backbase.reviews.api.service.v1.model.ReviewId;
 import java.util.List;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

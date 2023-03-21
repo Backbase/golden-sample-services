@@ -1,9 +1,9 @@
 package com.backbase.goldensample.store.archunit;
 
-import com.backbase.buildingblocks.archunit.ArchitectureRules;
 import com.backbase.buildingblocks.archunit.test.AllArchitectureRules;
 import com.backbase.buildingblocks.archunit.test.AllConfigurationRules;
 import com.backbase.buildingblocks.archunit.test.AllControllerRules;
+import com.backbase.buildingblocks.archunit.test.AllDataMappingRules;
 import com.backbase.buildingblocks.archunit.test.AllGeneralCodingRules;
 import com.backbase.buildingblocks.archunit.test.AllLoggingRules;
 import com.backbase.buildingblocks.archunit.test.AllNamingConventionRules;
@@ -13,7 +13,6 @@ import com.tngtech.archunit.core.importer.ImportOption;
 import com.tngtech.archunit.junit.AnalyzeClasses;
 import com.tngtech.archunit.junit.ArchTest;
 import com.tngtech.archunit.junit.ArchTests;
-import com.tngtech.archunit.lang.syntax.elements.GivenClassesConjunction;
 
 @AnalyzeClasses(packagesOf = Application.class, importOptions = ImportOption.DoNotIncludeTests.class)
 public class ArchUnitRulesTest {
@@ -26,6 +25,9 @@ public class ArchUnitRulesTest {
 
     @ArchTest
     ArchTests controllerRules = ArchTests.in(AllControllerRules.class);
+
+    @ArchTest
+    ArchTests dataMappingRules = ArchTests.in(AllDataMappingRules.class);
 
     @ArchTest
     ArchTests generalCodingRules = ArchTests.in(AllGeneralCodingRules.class);

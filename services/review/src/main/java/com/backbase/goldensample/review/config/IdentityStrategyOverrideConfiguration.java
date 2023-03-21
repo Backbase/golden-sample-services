@@ -1,6 +1,6 @@
 package com.backbase.goldensample.review.config;
 
-import javax.persistence.GenerationType;
+import jakarta.persistence.GenerationType;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;

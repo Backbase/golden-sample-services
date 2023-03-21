@@ -54,7 +54,7 @@ class StoreClientApiControllerTest extends StoreClientApiControllerTestHelper {
         when(productCompositeService.retrieveProductWithReviews(1L)).thenReturn(Optional.of(productOne));
 
         this.mockMvc
-            .perform(get("/client-api/v1/product-composite/{productId}/", 1L)
+            .perform(get("/client-api/v1/product-composite/{productId}", 1L)
                 .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON))
             .andExpect(status().is(200))
             .andExpect(header().string("x-store-theme", "original"))

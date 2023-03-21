@@ -39,10 +39,10 @@ public class ProductEnricherWebhookInvoker implements ProductEnricher {
         try {
             ProductAggregate productAggregate = mapper.map(product);
             ResponseEntity<ProductAggregate> entity = webhook.enrichProductWithHttpInfo(productAggregate);
-            switch (entity.getStatusCode()) {
-                case NO_CONTENT:
+            switch (entity.getStatusCode().value()) {
+                case 204:
                     break;
-                case OK:
+                case 200:
                     mapper.map(product, entity.getBody());
                     break;
                 default:

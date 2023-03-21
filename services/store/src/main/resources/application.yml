@@ -47,15 +47,6 @@ backbase:
       paths:
         - "/**"
 
-buildingblocks:
-  security:
-    csrf:
-      autoconfig: true
-      enabled: false
-
-security:
-  disabled: true
-
 # Spring health monitoring
 management:
   health:

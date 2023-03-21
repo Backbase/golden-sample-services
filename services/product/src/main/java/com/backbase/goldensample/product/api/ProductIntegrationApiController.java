@@ -5,7 +5,7 @@ import com.backbase.goldensample.product.service.ProductService;
 import com.backbase.product.api.integration.v1.ProductIntegrationApi;
 import com.backbase.product.api.service.v1.model.Product;
 import com.backbase.product.api.service.v1.model.ProductId;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
