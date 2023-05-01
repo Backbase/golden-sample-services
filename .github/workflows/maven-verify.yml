@@ -39,8 +39,8 @@ jobs:
           servers: |
             [{
                 "id": "backbase",
-                "username": "${{ secrets.MAVEN_USERNAME }}",
-                "password": "${{ secrets.MAVEN_PASSWORD }}"
+                "username": "${{ secrets.REPO_USERNAME }}",
+                "password": "${{ secrets.REPO_PASSWORD }}"
             }]
       - run: mvn --batch-mode --update-snapshots verify
         name: Build and test project
