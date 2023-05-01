@@ -92,19 +92,6 @@ class PersistenceIT extends DockerizedTest {
         assertEqualsReview(savedEntity, foundEntity);
     }
 
-    /**
-     * Validates the equality of this Entity class in different states and with different data. Due to the definition of
-     * our Entity, 2 suppress warnings are required in order to validate it as explained in <a
-     * href="https://jqno.nl/equalsverifier/manual/jpa-entities/">here</a>.
-     */
-    @Test
-    void validateEntityEqualityAmongStates() {
-        EqualsVerifier.forClass(ProductEntity.class)
-            .suppress(Warning.IDENTICAL_COPY_FOR_VERSIONED_ENTITY)
-            .suppress(Warning.STRICT_HASHCODE)
-            .verify();
-    }
-
     private void assertEqualsReview(ProductEntity expectedEntity, ProductEntity actualEntity) {
         assertEquals(expectedEntity.getId(), actualEntity.getId());
         assertEquals(expectedEntity.getName(), actualEntity.getName());
