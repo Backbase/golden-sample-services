@@ -2,9 +2,10 @@
   <source media="(prefers-color-scheme: dark)">
   <img alt="Backbase" src="logo-white.svg">
 </picture>
+
 <picture>
   <source media="(prefers-color-scheme: light)">
-  <img alt="Backbase" src="logo-black-svg">
+  <img alt="Backbase" src="logo-black.svg">
 </picture>
 
 # Backbase Golden Sample MicroServices system
