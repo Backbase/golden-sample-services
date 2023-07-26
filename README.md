@@ -1,12 +1,5 @@
-<picture>
-  <source media="(prefers-color-scheme: dark)">
-  <img alt="Backbase" src="logo-white.svg">
-</picture>
-
-<picture>
-  <source media="(prefers-color-scheme: light)">
-  <img alt="Backbase" src="logo-black.svg">
-</picture>
+![Backbase](logo-white.svg#gh-dark-mode-only)
+![Backbase](logo-black.svg#gh-light-mode-only)
 
 # Backbase Golden Sample MicroServices system
 
