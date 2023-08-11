@@ -16,7 +16,7 @@
     <properties>
         <jsr305.version>3.0.2</jsr305.version>
         <commons-collections.version>3.2.2</commons-collections.version>
-        <pact.version>4.4.4</pact.version>
+        <pact.version>4.6.1</pact.version>
     </properties>
 
     <dependencies>
@@ -144,39 +144,82 @@
                         <id>generate-product-client-api-code</id>
                         <phase>generate-sources</phase>
                         <goals>
-                            <goal>generate-rest-template-embedded</goal>
+                            <goal>generate</goal>
                         </goals>
                         <configuration>
+                            <generatorName>java</generatorName>
                             <inputSpec>${project.basedir}/../../api/product-api/src/main/resources/product-service-api-v1.yaml</inputSpec>
-                            <apiPackage>com.backbase.goldensample.product.api.client.v1</apiPackage>
+                            <configOptions>
+                                <library>resttemplate</library>
+                                <dateLibrary>java8</dateLibrary>
+                                <interfaceOnly>true</interfaceOnly>
+                                <skipDefaultInterface>true</skipDefaultInterface>
+                                <useBeanValidation>true</useBeanValidation>
+                                <useClassLevelBeanValidation>false</useClassLevelBeanValidation>
+                                <useTags>true</useTags>
+                                <java8>true</java8>
+                                <useOptional>false</useOptional>
+                                <useSpringBoot3>true</useSpringBoot3>
+                                <useJakartaEe>true</useJakartaEe>
+                                <containerDefaultToNull>true</containerDefaultToNull>
+                            </configOptions>
                             <modelPackage>com.backbase.goldensample.product.api.client.v1.model</modelPackage>
+                            <apiPackage>com.backbase.goldensample.product.api.client.v1</apiPackage>
                         </configuration>
                     </execution>
                     <execution>
                         <id>generate-review-client-api-code-v1</id>
                         <phase>generate-sources</phase>
                         <goals>
-                            <goal>generate-rest-template-embedded</goal>
+                            <goal>generate</goal>
                         </goals>
                         <configuration>
+                            <generatorName>java</generatorName>
                             <inputSpec>${project.basedir}/../../api/review-service-api/src/main/resources/openapi-v1.yaml</inputSpec>
-                            <apiPackage>com.backbase.goldensample.review.api.client.v1</apiPackage>
+                            <configOptions>
+                                <library>resttemplate</library>
+                                <dateLibrary>java8</dateLibrary>
+                                <interfaceOnly>true</interfaceOnly>
+                                <skipDefaultInterface>true</skipDefaultInterface>
+                                <useBeanValidation>true</useBeanValidation>
+                                <useClassLevelBeanValidation>false</useClassLevelBeanValidation>
+                                <useTags>true</useTags>
+                                <java8>true</java8>
+                                <useOptional>false</useOptional>
+                                <useSpringBoot3>true</useSpringBoot3>
+                                <useJakartaEe>true</useJakartaEe>
+                                <containerDefaultToNull>true</containerDefaultToNull>
+                            </configOptions>
                             <modelPackage>com.backbase.goldensample.review.api.client.v1.model</modelPackage>
+                            <apiPackage>com.backbase.goldensample.review.api.client.v1</apiPackage>
                         </configuration>
                     </execution>
                     <execution>
                         <id>generate-review-client-api-code-v2</id>
                         <phase>generate-sources</phase>
                         <goals>
-                            <goal>generate-rest-template-embedded</goal>
+                            <goal>generate</goal>
                         </goals>
                         <configuration>
+                            <generatorName>java</generatorName>
                             <inputSpec>${project.basedir}/../../api/review-service-api/src/main/resources/openapi-v2.yaml</inputSpec>
-                            <apiPackage>com.backbase.goldensample.review.api.client.v2</apiPackage>
-                            <modelPackage>com.backbase.goldensample.review.api.client.v2.model</modelPackage>
                             <configOptions>
+                                <library>resttemplate</library>
+                                <dateLibrary>java8</dateLibrary>
+                                <interfaceOnly>true</interfaceOnly>
+                                <skipDefaultInterface>true</skipDefaultInterface>
+                                <useBeanValidation>true</useBeanValidation>
+                                <useClassLevelBeanValidation>false</useClassLevelBeanValidation>
+                                <useTags>true</useTags>
+                                <java8>true</java8>
+                                <useOptional>false</useOptional>
+                                <useSpringBoot3>true</useSpringBoot3>
+                                <useJakartaEe>true</useJakartaEe>
+                                <containerDefaultToNull>true</containerDefaultToNull>
                                 <restTemplateBeanName>interServiceRestTemplate</restTemplateBeanName>
                             </configOptions>
+                            <modelPackage>com.backbase.goldensample.review.api.client.v2.model</modelPackage>
+                            <apiPackage>com.backbase.goldensample.review.api.client.v2</apiPackage>
                         </configuration>
                     </execution>
                     <execution>
