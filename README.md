@@ -1,4 +1,5 @@
-![](logo.svg)
+![Backbase](logo-white.svg#gh-dark-mode-only)
+![Backbase](logo-black.svg#gh-light-mode-only)
 
 # Backbase Golden Sample MicroServices system
 

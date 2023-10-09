@@ -23,7 +23,7 @@
     </modules>
 
     <properties>
-        <frontend-plugin.version>1.8.0</frontend-plugin.version>
+        <frontend-plugin.version>1.12.1</frontend-plugin.version>
         <boat-maven-plugin.version>0.17.24</boat-maven-plugin.version>
     </properties>
 

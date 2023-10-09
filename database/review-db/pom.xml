@@ -29,23 +29,6 @@
 
     <profiles>
         <profile>
-            <id>generateSQL</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>com.backbase.oss</groupId>
-                        <artifactId>blimp-maven-plugin</artifactId>
-                        <configuration>
-                            <serviceName>review</serviceName>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
             <id>generateChangeLog</id>
             <build>
                 <plugins>

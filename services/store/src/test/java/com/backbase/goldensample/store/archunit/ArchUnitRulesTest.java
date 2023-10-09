@@ -7,7 +7,6 @@ import com.backbase.buildingblocks.archunit.test.AllDataMappingRules;
 import com.backbase.buildingblocks.archunit.test.AllGeneralCodingRules;
 import com.backbase.buildingblocks.archunit.test.AllLoggingRules;
 import com.backbase.buildingblocks.archunit.test.AllNamingConventionRules;
-import com.backbase.buildingblocks.archunit.test.AllRelationalPersistenceRules;
 import com.backbase.goldensample.store.Application;
 import com.tngtech.archunit.core.importer.ImportOption;
 import com.tngtech.archunit.junit.AnalyzeClasses;
@@ -37,8 +36,4 @@ public class ArchUnitRulesTest {
 
     @ArchTest
     ArchTests namingConventionRules = ArchTests.in(AllNamingConventionRules.class);
-
-    // No Persistence in this module.
-    // @ArchTest
-    // ArchTests relationalPersistenceRules = ArchTests.in(AllRelationalPersistenceRules.class);
 }

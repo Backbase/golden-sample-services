@@ -22,10 +22,8 @@
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
         <testcontainers.version>1.19.1</testcontainers.version>
         <boat-maven-plugin.version>0.17.24</boat-maven-plugin.version>
-        <jqno.equalsverifier.version>3.12.4</jqno.equalsverifier.version>
-        <jackson-databind-nullable.version>0.2.4</jackson-databind-nullable.version>
+        <jqno.equalsverifier.version>3.14.1</jqno.equalsverifier.version>
         <docker.repo.project>experimental/golden-sample</docker.repo.project>
-<!--        <archunit.noFailOnError>true</archunit.noFailOnError>-->
     </properties>
 
     <dependencyManagement>
@@ -34,11 +32,6 @@
                 <groupId>nl.jqno.equalsverifier</groupId>
                 <artifactId>equalsverifier</artifactId>
                 <version>${jqno.equalsverifier.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.openapitools</groupId>
-                <artifactId>jackson-databind-nullable</artifactId>
-                <version>${jackson-databind-nullable.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.projectlombok</groupId>
@@ -82,7 +75,7 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>versions-maven-plugin</artifactId>
-                    <version>2.14.2</version>
+                    <version>2.15.0</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-assembly-plugin</artifactId>
