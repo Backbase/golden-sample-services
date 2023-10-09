@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.backbase.buildingblocks</groupId>
         <artifactId>backbase-openapi-spec-starter-parent</artifactId>
-        <version>16.0.0-rc.42</version>
+        <version>16.0.1</version>
         <relativePath/>
     </parent>
 
@@ -24,7 +24,7 @@
 
     <properties>
         <frontend-plugin.version>1.8.0</frontend-plugin.version>
-        <boat-maven-plugin.version>0.17.7</boat-maven-plugin.version>
+        <boat-maven-plugin.version>0.17.24</boat-maven-plugin.version>
     </properties>
 
     <build>

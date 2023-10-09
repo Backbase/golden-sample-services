@@ -150,6 +150,9 @@
                             <inputSpec>${project.basedir}/../../api/product-api/src/main/resources/product-service-api-v1.yaml</inputSpec>
                             <apiPackage>com.backbase.goldensample.product.api.client.v1</apiPackage>
                             <modelPackage>com.backbase.goldensample.product.api.client.v1.model</modelPackage>
+                            <configOptions>
+                                <containerDefaultToNull>true</containerDefaultToNull>
+                            </configOptions>
                         </configuration>
                     </execution>
                     <execution>
