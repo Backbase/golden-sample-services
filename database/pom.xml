@@ -22,7 +22,7 @@
         <maven-assembly-plugin.version>3.5.0</maven-assembly-plugin.version>
         <blimp-maven-plugin.version>0.16.5</blimp-maven-plugin.version>
         <blimp-lint-rules.version>0.1.0</blimp-lint-rules.version>
-        <archunit.skip>true</archunit.skip>
+        <archunit.skip>false</archunit.skip>
     </properties>
 
     <build>
