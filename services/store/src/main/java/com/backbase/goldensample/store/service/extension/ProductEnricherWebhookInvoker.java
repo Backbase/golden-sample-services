@@ -9,6 +9,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ import org.springframework.stereotype.Component;
 @Component
 @ConditionalOnProperty(havingValue = "true", value = "backbase.store.extensions.product-enricher.enabled")
 @ConfigurationProperties("backbase.store.extensions.product-enricher")
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @Slf4j
 public class ProductEnricherWebhookInvoker implements ProductEnricher {
 
@@ -39,10 +40,10 @@ public class ProductEnricherWebhookInvoker implements ProductEnricher {
         try {
             ProductAggregate productAggregate = mapper.map(product);
             ResponseEntity<ProductAggregate> entity = webhook.enrichProductWithHttpInfo(productAggregate);
-            switch (entity.getStatusCode()) {
-                case NO_CONTENT:
+            switch (entity.getStatusCode().value()) {
+                case 204:
                     break;
-                case OK:
+                case 200:
                     mapper.map(product, entity.getBody());
                     break;
                 default:

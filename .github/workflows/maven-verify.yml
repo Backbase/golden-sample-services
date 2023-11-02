@@ -44,8 +44,8 @@ jobs:
             }]
       - run: mvn --batch-mode --update-snapshots verify
         name: Build and test project
-      - run: mkdir staging && cp services/product/target/*.war staging
-        name: Move and upload the war
+      - run: mkdir staging && cp services/product/target/*.jar staging
+        name: Move and upload the jar
       - uses: actions/upload-artifact@v2
         with:
           name: Package

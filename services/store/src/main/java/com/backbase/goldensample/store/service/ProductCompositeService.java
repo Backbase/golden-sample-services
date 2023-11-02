@@ -102,12 +102,12 @@ public class ProductCompositeService {
     }
 
     private RuntimeException handleHttpClientException(HttpClientErrorException ex) {
-        switch (ex.getStatusCode()) {
+        switch (ex.getStatusCode().value()) {
 
-            case NOT_FOUND:
+            case 404:
                 return new NotFoundException(getErrorMessage(ex));
 
-            case BAD_REQUEST:
+            case 400:
                 // Our bad request cannot simply be blamed on the client that called us.
                 return new InternalServerErrorException();
 

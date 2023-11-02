@@ -3,6 +3,7 @@ package com.backbase.goldensample.product.archunit;
 import com.backbase.buildingblocks.archunit.test.AllArchitectureRules;
 import com.backbase.buildingblocks.archunit.test.AllConfigurationRules;
 import com.backbase.buildingblocks.archunit.test.AllControllerRules;
+import com.backbase.buildingblocks.archunit.test.AllDataMappingRules;
 import com.backbase.buildingblocks.archunit.test.AllGeneralCodingRules;
 import com.backbase.buildingblocks.archunit.test.AllLoggingRules;
 import com.backbase.buildingblocks.archunit.test.AllNamingConventionRules;
@@ -24,6 +25,9 @@ public class ArchUnitRulesTest {
 
     @ArchTest
     ArchTests controllerRules = ArchTests.in(AllControllerRules.class);
+
+    @ArchTest
+    ArchTests dataMappingRules = ArchTests.in(AllDataMappingRules.class);
 
     @ArchTest
     ArchTests generalCodingRules = ArchTests.in(AllGeneralCodingRules.class);

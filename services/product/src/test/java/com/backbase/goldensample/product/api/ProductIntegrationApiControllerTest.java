@@ -12,16 +12,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.backbase.goldensample.product.config.WebSecurityConfiguration;
 import com.backbase.goldensample.product.persistence.ProductEntity;
 import com.backbase.product.api.service.v1.model.Product;
 import com.backbase.product.api.service.v1.model.ProductId;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
 @WebMvcTest(ProductIntegrationApiController.class)
+@Import(WebSecurityConfiguration.class)
 class ProductIntegrationApiControllerTest extends ProductApiController {
 
     @Test

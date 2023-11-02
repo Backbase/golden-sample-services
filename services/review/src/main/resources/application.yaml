@@ -36,14 +36,6 @@ backbase:
       paths:
         - "/**"
 
-buildingblocks:
-  security:
-    csrf:
-      enabled: false
-
-security:
-  disabled: true
-
 spring:
   liquibase:
     change-log: "classpath:/db/changelog/db.changelog-persistence.xml"

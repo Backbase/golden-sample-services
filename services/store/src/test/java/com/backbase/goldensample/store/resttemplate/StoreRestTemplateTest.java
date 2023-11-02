@@ -22,6 +22,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.web.client.AutoConfigureWebClient;
 import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
 import org.springframework.context.annotation.Import;
@@ -34,6 +35,7 @@ import org.springframework.test.web.client.match.MockRestRequestMatchers;
 import org.springframework.test.web.client.response.MockRestResponseCreators;
 import org.springframework.web.client.HttpClientErrorException.NotFound;
 import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.client.RestTemplate;
 
 @RestClientTest(value = {ProductServiceApi.class, ReviewServiceApi.class})
 @AutoConfigureWebClient(registerRestTemplate = true)
@@ -52,6 +54,10 @@ public class StoreRestTemplateTest {
     private ReviewServiceApi reviewServiceApi;
 
     @Autowired
+    @Qualifier("interServiceRestTemplate")
+    private RestTemplate restTemplate;
+
+    @Autowired
     private MockRestServiceServer mockRestServiceServer;
 
     private final Product product = new Product().productId(1L).name("Product").weight(20).createDate(LocalDate.now());
@@ -60,7 +66,7 @@ public class StoreRestTemplateTest {
 
     @BeforeEach
     void init() {
-        this.mockRestServiceServer = MockRestServiceServer.bindTo(productServiceApi.getApiClient().getRestTemplate()).build();
+        this.mockRestServiceServer = MockRestServiceServer.bindTo(restTemplate).build();
     }
 
     @Test

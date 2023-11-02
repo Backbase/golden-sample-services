@@ -13,6 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.backbase.goldensample.review.config.WebSecurityConfiguration;
 import com.backbase.goldensample.review.dto.ReviewDTO;
 import com.backbase.goldensample.review.service.ReviewService;
 import com.backbase.goldensample.review.v2.api.ReviewServiceApiController;
@@ -24,12 +25,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 @WebMvcTest(ReviewServiceApiController.class)
+@Import(WebSecurityConfiguration.class)
 class ReviewServiceApiControllerTest {
 
     @MockBean
@@ -161,7 +164,7 @@ class ReviewServiceApiControllerTest {
 
         this
             .mockMvc
-            .perform(put("/service-api/v2/reviews/")
+            .perform(put("/service-api/v2/reviews")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody))
             .andExpect(status().isNoContent());

@@ -5,11 +5,11 @@
     <parent>
         <groupId>com.backbase.goldensample</groupId>
         <artifactId>backbase-golden-sample</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>2.0.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>services</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>2.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -20,11 +20,9 @@
 
     <properties>
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
-        <testcontainers.version>1.17.6</testcontainers.version>
-        <boat-maven-plugin.version>0.16.6</boat-maven-plugin.version>
+        <testcontainers.version>1.19.1</testcontainers.version>
+        <boat-maven-plugin.version>0.17.24</boat-maven-plugin.version>
         <jqno.equalsverifier.version>3.14.1</jqno.equalsverifier.version>
-        <jackson-databind-nullable.version>0.2.6</jackson-databind-nullable.version>
-        <swagger-annotations.version>1.6.10</swagger-annotations.version>
         <docker.repo.project>experimental/golden-sample</docker.repo.project>
     </properties>
 
@@ -34,11 +32,6 @@
                 <groupId>nl.jqno.equalsverifier</groupId>
                 <artifactId>equalsverifier</artifactId>
                 <version>${jqno.equalsverifier.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.openapitools</groupId>
-                <artifactId>jackson-databind-nullable</artifactId>
-                <version>${jackson-databind-nullable.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.projectlombok</groupId>
@@ -57,14 +50,9 @@
                 <version>${mssql-jdbc.version}</version>
             </dependency>
             <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
+                <groupId>com.mysql</groupId>
+                <artifactId>mysql-connector-j</artifactId>
                 <version>${mysql.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.swagger</groupId>
-                <artifactId>swagger-annotations</artifactId>
-                <version>${swagger-annotations.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.testcontainers</groupId>
