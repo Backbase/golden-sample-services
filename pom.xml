@@ -10,7 +10,7 @@
     <parent>
         <artifactId>service-sdk-starter-core</artifactId>
         <groupId>com.backbase.buildingblocks</groupId>
-        <version>16.0.1</version>
+        <version>16.1.5</version>
         <relativePath />
     </parent>
 
