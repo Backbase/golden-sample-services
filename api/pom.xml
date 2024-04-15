@@ -13,7 +13,7 @@
     <groupId>com.backbase.goldensample</groupId>
     <artifactId>api</artifactId>
     <packaging>pom</packaging>
-    <version>2.1.0-SNAPSHOT</version>
+    <version>3.0.0-SNAPSHOT</version>
 
     <modules>
         <module>product-api</module>
@@ -24,7 +24,7 @@
 
     <properties>
         <frontend-plugin.version>1.12.1</frontend-plugin.version>
-        <boat-maven-plugin.version>0.17.24</boat-maven-plugin.version>
+        <boat-maven-plugin.version>0.17.32</boat-maven-plugin.version>
     </properties>
 
     <build>

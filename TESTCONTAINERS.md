@@ -126,18 +126,18 @@ As long as we have TestContainers and the appropriate JDBC driver on your classp
 - For Spring Boot (Before version 2.3.0) you need to specify the driver manually
 `spring.datasource.driver-class-name=org.testcontainers.jdbc.ContainerDatabaseDriver`
     
-Original URL: `jdbc:mysql:5.7://somehostname:someport/databasename`
+Original URL: `jdbc:mysql:8.0://somehostname:someport/databasename`
 
 Insert `tc:` after `jdbc:` as follows. Note that the hostname, port and database name will be ignored; you can leave these as-is or set them to any value.
 
-TestContainers URL with a specific version: `jdbc:tc:mysql:5.7:///databasename`
+TestContainers URL with a specific version: `jdbc:tc:mysql:8.0:///databasename`
 
 For multiple databases testing we can use different profiles:
 
     # application-mysql.yaml
     spring:
       datasource:
-        url: jdbc:tc:mysql:5.7://localhost:3306/dbs
+        url: jdbc:tc:mysql:8.0://localhost:3306/dbs
         username: root
         password: root
         driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
@@ -155,19 +155,19 @@ For multiple databases testing we can use different profiles:
 ##### Using a classpath init script
 Testcontainers can run an init script after the database container is started, but before your code is given a connection to it. The script must be on the classpath, and is referenced as follows:
 
-`jdbc:tc:mysql:5.7.22:///databasename?TC_INITSCRIPT=somepath/init_mysql.sql`
+`jdbc:tc:mysql:8.0.22:///databasename?TC_INITSCRIPT=somepath/init_mysql.sql`
 
 This is useful if you have a fixed script for setting up database schema, etc.
 
 ##### Using an init script from a file
 If the init script path is prefixed file:, it will be loaded from a file (relative to the working directory, which will usually be the project root).
 
-`jdbc:tc:mysql:5.7.22:///databasename?TC_INITSCRIPT=file:src/main/resources/init_mysql.sql`
+`jdbc:tc:mysql:8.0.22:///databasename?TC_INITSCRIPT=file:src/main/resources/init_mysql.sql`
 
 ##### Using an init function
 Instead of running a fixed script for DB setup, it may be useful to call a Java function that you define. This is intended to allow you to trigger database schema migration tools. To do this, add TC_INITFUNCTION to the URL as follows, passing a full path to the class name and method:
 
-`jdbc:tc:mysql:5.7.22:///databasename?TC_INITFUNCTION=org.testcontainers.jdbc.JDBCDriverTest::sampleInitFunction`
+`jdbc:tc:mysql:8.0:///databasename?TC_INITFUNCTION=org.testcontainers.jdbc.JDBCDriverTest::sampleInitFunction`
 
 The init function must be a public static method which takes a java.sql.Connection as its only parameter, e.g.
 
@@ -180,7 +180,7 @@ The init function must be a public static method which takes a java.sql.Connecti
 ##### Running container in daemon mode
 By default database container is being stopped as soon as last connection is closed. There are cases when you might need to start container and keep it running till you stop it explicitly or JVM is shutdown. To do this, add TC_DAEMON parameter to the URL as follows:
 
-`jdbc:tc:mysql:5.7.22:///databasename?TC_DAEMON=true`
+`jdbc:tc:mysql:8.0:///databasename?TC_DAEMON=true`
 
 With this parameter database container will keep running even when there're no open connections.
 
@@ -202,14 +202,14 @@ More info: https://www.testcontainers.org/modules/databases/jdbc/
 For MySQL databases, it is possible to override configuration settings using resources on the classpath. 
 Assuming `db/mysql_conf_override` is a directory on the classpath containing `.cnf` files, the following URL can be used:
 
-`jdbc:tc:mysql:5.7:///databasename?TC_MY_CNF=db/mysql_conf_override`
+`jdbc:tc:mysql:8.0:///databasename?TC_MY_CNF=db/mysql_conf_override`
 
 ##### Database container objects
 In case you can't use the URL support, or need to fine-tune the container, you can instantiate it yourself.
 Add a `@Rule` or `@ClassRule` to your test class, e.g.:
 
     @ClassRule
-    public static MySQLContainer mysqlSQLContainer = new MySQLContainer("mysql:5.7");
+    public static MySQLContainer mysqlSQLContainer = new MySQLContainer("mysql:8.0");
      
     static class Initializer
             implements ApplicationContextInitializer<ConfigurableApplicationContext> {
