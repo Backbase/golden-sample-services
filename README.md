@@ -3,11 +3,11 @@
 
 # Backbase Golden Sample MicroServices system
 
-- This project is a development of a small set of [Backbase Service SDK](https://community.backbase.com/documentation/ServiceSDK/latest/index) (**Spring Boot** and **Cloud**) based Microservices projects that implement cloud-native intuitive, Microservices design patterns, and coding best practices.
-- The project follows [**CloudNative**](https://www.cncf.io/) recommendations and the [**twelve-factor app**](https://12factor.net/) methodology for building *software-as-a-service apps* to show how μServices should be developed and deployed.
+- This project is a development of a small set of [Backbase Service SDK](https://community.backbase.com/documentation/ServiceSDK/latest/index) (**Spring Boot** and **Cloud**) based Microservices projects that implement cloud-native intuitive, microservices design patterns, and coding best practices.
+- The project follows [**CloudNative**](https://www.cncf.io/) recommendations and the [**twelve-factor app**](https://12factor.net/) methodology for building *software-as-a-service apps* to show how μServices are developed and deployed.
 - This project uses technologies used in broadly Backbase like Docker, Kubernetes, Java SE 11, Spring Boot, Spring Cloud, 
 TestContainers and Liquibase among others, all components covering integration & performance testing, and many more.
- - This project is going to be developed as stages
+ - This project is going to be developed in stages
 ---
 ## Description
 ### System Structure
