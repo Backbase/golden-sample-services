@@ -24,9 +24,9 @@ jobs:
 #          restore-keys: |
 #            ${{ runner.os }}-maven-
       - uses: actions/setup-java@v2
-        name: Set up JDK 17
+        name: Set up JDK 21
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'adopt'
 #      - name: Set up Apache Maven Central
 #        uses: actions/setup-java@v2
