@@ -24,9 +24,9 @@ jobs:
 #          restore-keys: |
 #            ${{ runner.os }}-maven-
       - uses: actions/setup-java@v2
-        name: Set up JDK 17
+        name: Set up JDK 21
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'adopt'
 #      - name: Set up Apache Maven Central
 #        uses: actions/setup-java@v2
@@ -46,7 +46,7 @@ jobs:
         name: Build and test project
       - run: mkdir staging && cp services/product/target/*.jar staging
         name: Move and upload the jar
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         with:
           name: Package
           path: staging

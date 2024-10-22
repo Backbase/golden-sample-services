@@ -88,7 +88,7 @@ The following are the initially required software pieces:
 
 2. **Git**: it can be downloaded and installed from https://git-scm.com/downloads.
 
-3. **Java 17 EA**: it can be downloaded and installed from https://jdk.java.net/17/.
+3. **Java 21 EA**: it can be downloaded and installed from https://jdk.java.net/21/.
 
 4. **Spring Boot Initializer**: This *Initializer* generates *spring* boot project with just what you need to start quickly! Start from here https://start.spring.io/.
 
