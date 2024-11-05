@@ -20,7 +20,6 @@
 
     <properties>
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
-        <testcontainers.version>1.19.7</testcontainers.version>
         <boat-maven-plugin.version>0.17.32</boat-maven-plugin.version>
         <jqno.equalsverifier.version>3.14.1</jqno.equalsverifier.version>
         <docker.repo.project>experimental/golden-sample</docker.repo.project>
