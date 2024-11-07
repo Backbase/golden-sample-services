@@ -6,14 +6,14 @@
     <parent>
         <groupId>com.backbase.buildingblocks</groupId>
         <artifactId>backbase-openapi-spec-starter-parent</artifactId>
-        <version>16.0.1</version>
+        <version>18.0.1</version>
         <relativePath/>
     </parent>
 
     <groupId>com.backbase.goldensample</groupId>
     <artifactId>api</artifactId>
     <packaging>pom</packaging>
-    <version>2.0.0-SNAPSHOT</version>
+    <version>3.0.0-SNAPSHOT</version>
 
     <modules>
         <module>product-api</module>
@@ -24,7 +24,7 @@
 
     <properties>
         <frontend-plugin.version>1.12.1</frontend-plugin.version>
-        <boat-maven-plugin.version>0.17.24</boat-maven-plugin.version>
+        <boat-maven-plugin.version>0.17.32</boat-maven-plugin.version>
     </properties>
 
     <build>

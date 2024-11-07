@@ -13,8 +13,8 @@ spring:
 #    ## since Spring Boot can deduce it for most databases from the url.
     driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
 #   Useful if we want to load the Database with a lot of data before the test kick in (disable liquibase first)
-#    url: jdbc:tc:mysql:5.7:///test?TC_INITSCRIPT=file:src/test/resources/product-10k-rows.sql
-    url: jdbc:tc:mysql:5.7:///test?TC_MY_CNF=db/mysql_conf_override
+#    url: jdbc:tc:mysql:8.0.36:///test?TC_INITSCRIPT=file:src/test/resources/product-10k-rows.sql
+    url: jdbc:tc:mysql:8.0.36:///test?TC_MY_CNF=db/mysql_conf_override
     username: test
     password: test
 

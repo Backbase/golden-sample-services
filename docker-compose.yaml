@@ -52,7 +52,7 @@ services:
       - "61614:61614"
 
   mysql:
-    image: mysql:5.7.18
+    image: mysql:8.0.36
     # Set max_allowed_packet to 512M for provisioning
     command: --max-allowed-packet=512M --performance-schema=FALSE --transaction-isolation=READ-COMMITTED --init-connect='SET collation_connection=utf8_bin' --init-connect='SET NAMES utf8;' --character-set-server=utf8 --collation-server=utf8_bin --lower-case-table-names=2 --max-connections=500
     container_name: demo_mysql
