@@ -97,7 +97,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId> org.apache.activemq</groupId>
+            <groupId>org.apache.activemq</groupId>
             <artifactId>activemq-broker</artifactId>
             <scope>test</scope>
         </dependency>
