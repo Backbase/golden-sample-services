@@ -51,33 +51,23 @@ Integrate the container management into the build. Just start the database conta
 Use TestContainers and manage the database in your test code.
 Let's review this approach more in deep and what steps we need to apply:
 
-#### Add the TestContainers dependency, test scoped
-
-    <dependency>
-        <groupId>org.testcontainers</groupId>
-        <artifactId>testcontainers</artifactId>
-        <version>${testcontainers.version}</version>
-        <scope>test</scope>
-    </dependency>
+#### TestContainers dependency is managed by spring boot
     
 #### Add the database module you want to test, e.g. MySQL, Oracle, MSSQL, MariaDB:
 
     <dependency>
         <groupId>org.testcontainers</groupId>
         <artifactId>mysql</artifactId>
-        <version>${testcontainers.version}</version>
         <scope>test</scope>
     </dependency>
     <dependency>
         <groupId>org.testcontainers</groupId>
         <artifactId>oracle-xe</artifactId>
-        <version>${testcontainers.version}</version>
         <scope>test</scope>
     </dependency>
     <dependency>
         <groupId>org.testcontainers</groupId>
         <artifactId>mssqlserver</artifactId>
-        <version>${testcontainers.version}</version>
         <scope>test</scope>
     </dependency>
 
@@ -126,7 +116,7 @@ As long as we have TestContainers and the appropriate JDBC driver on your classp
 - For Spring Boot (Before version 2.3.0) you need to specify the driver manually
 `spring.datasource.driver-class-name=org.testcontainers.jdbc.ContainerDatabaseDriver`
     
-Original URL: `jdbc:mysql:8.0://somehostname:someport/databasename`
+Original URL: `jdbc:mysql:8.0.36://somehostname:someport/databasename`
 
 Insert `tc:` after `jdbc:` as follows. Note that the hostname, port and database name will be ignored; you can leave these as-is or set them to any value.
 
