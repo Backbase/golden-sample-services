@@ -1,6 +1,15 @@
 ![Backbase](logo-white.svg#gh-dark-mode-only)
 ![Backbase](logo-black.svg#gh-light-mode-only)
 
+# ⚠️ Deprecated:
+
+This repository is no longer actively maintained as it does not adhere to current best practices. Development has moved to a new repository where improvements  are being actively worked on.
+
+We recommend transitioning to the new version once it's available. More details about the new repo will be shared here soon!
+
+# 🔗 New Repository (Soon to be Available)
+[Link to New Repo – Placeholder]
+
 # Backbase Golden Sample MicroServices system
 
 - This project is a development of a small set of [Backbase Service SDK](https://community.backbase.com/documentation/ServiceSDK/latest/index) (**Spring Boot** and **Cloud**) based Microservices projects that implement cloud-native intuitive, Microservices design patterns, and coding best practices.
